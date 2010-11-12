@@ -1,0 +1,416 @@
+<!--
+    Together XPDL Model
+    Copyright (C) 2010 Together Teamsolutions Co., Ltd.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or 
+    (at your option) any later version.
+ 
+    This program is distributed in the hope that it will be useful, 
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+    GNU General Public License for more details.
+ 
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see http://www.gnu.org/licenses
+-->
+<project name="TXM" default="help" basedir=".">
+
+   <!-- =================================================================== -->
+   <!-- Initiate TXM building                                               -->
+   <!-- =================================================================== -->
+   <target name="init">
+
+      <replace file="build.properties" token="\" value="/"/>
+      <property file="build.properties"/>
+
+      <!-- Project constants -->
+      <property name="targetVM" value="1.5" />
+      <property name="app.name" value="txm"/>
+
+      <property name="jar.name"         value="jxpdl"/>
+      <property name="classes.dir"      location="${basedir}/classes" />
+      <property name="lib.dir"          location="${basedir}/lib"/>
+      <property name="output.dir"       location="${basedir}/output"/>
+      <property name="build.dir"        location="${output.dir}/${app.name}-${version}-${release}"/>
+      <property name="output.lib.dir"   location="${build.dir}/lib"/>
+      <property name="output.doc.dir"   location="${build.dir}/doc"/>
+      <property name="util.dir"         location="${basedir}/util"/>
+      <property name="input.dir"        location="${basedir}/input"/>
+      <property name="licenses.dir"     location="${basedir}/licenses"/>
+
+      <property name="doc.dir" location="${basedir}/doc" />
+      <!-- Distribution directories -->
+      <property name="dist.dir" location="${basedir}/distribution/${app.name}-${version}-${release}" />
+      <property name="dist.file.name" value="${app.name}-${version}-${release}" />
+
+      <!-- Set the directories -->
+      <property name="dist.community.dir" location="${dist.dir}/community" />
+      <property name="dist.dependencies.dir" location="${dist.dir}/dependencies" />
+      <property name="dist.internal.dir" location="${dist.dir}/internal" />
+      <property name="dist.doc.dir" location="${dist.dir}/documentation" />
+
+      <!-- Including external if task-->
+      <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" 
+            classpath="${util.dir}/build/antcontrib.jar"/>
+
+      <!-- Windows/Linux specific target definitions -->        
+      <condition property="os.prepare.target" value="prepareForLinux">
+         <os family="unix"/>
+      </condition>
+      <property name="os.prepare.target" value="prepareForWindows"/>
+
+      <condition property="os.buildSrc.target" value="buildSrcForLinux">
+         <os family="unix"/>
+      </condition>
+      <property name="os.buildSrc.target" value="buildSrcForWindows"/>
+
+      <condition property="os.buildBin.target" value="buildBinForLinux">
+         <os family="unix"/>
+      </condition>
+      <property name="os.buildBin.target" value="buildBinForWindows"/>
+
+      <!-- If install.dir is set the install target should be available -->
+      <condition property="install.exist" value="true">
+         <not>
+            <equals arg1="${install.dir}X" arg2="X"/>
+         </not>
+      </condition>
+   </target>
+
+   <!-- =================================================================== -->
+   <!-- Prepare TXM module                                                  -->
+   <!-- =================================================================== -->
+   <target name="prepare" depends="init">
+      <!-- create directory structure -->
+      <mkdir dir="${output.lib.dir}"/>
+      <mkdir dir="${build.dir}/examples"/>
+
+      <!--Update build timestamp-->
+      <tstamp>
+         <format property="build.timestamp" pattern="yyyyMMdd-HHmm" locale="en,UK" />
+      </tstamp>
+      <echo file="${build.dir}/BuildID.txt" message="${build.timestamp}" />
+
+
+
+      <!-- copy everything from lib directory -->
+      <copy todir="${output.lib.dir}">
+         <fileset dir="${lib.dir}"/>
+      </copy>
+
+      <!-- copy everything from examples directory -->
+      <copy todir="${build.dir}/examples">
+         <fileset dir="${basedir}/examples"/>
+      </copy>
+
+      <copy todir="${build.dir}/licenses">
+         <fileset dir="${licenses.dir}" includes="*.*" excludes="txm-includes*" />
+      </copy>
+      <copy todir="${build.dir}/licenses">
+         <fileset dir="${licenses.dir}" includes="*.*" />
+         <mapper type="regexp" from="txm-includes.xlsx" to="txm-includes-${version}-${release}.xlsx" />
+      </copy>
+      
+   </target>
+        
+   <!-- =================================================================== -->
+   <!-- Compile Generator module                                            -->
+   <!-- =================================================================== -->
+   <target name="compile" depends="prepare">
+      <mkdir dir="${classes.dir}"/>
+      <javac target="${targetVM}" source="${targetVM}"
+            srcdir="${basedir}/src" 
+            destdir="${classes.dir}" 
+            nowarn="yes"
+            debug="${build.debug}"
+            encoding="ISO-8859-1">
+         <classpath>
+            <pathelement location="${lib.dir}/xercesImpl.jar"/>
+            <pathelement location="${lib.dir}/xml-apis.jar"/>
+         </classpath>
+      </javac>
+      <copy todir="${classes.dir}/org/enhydra/jxpdl">
+         <fileset dir="${licenses.dir}" includes="License.txt"/>
+      </copy>
+
+   </target>
+
+   <target name="_versionUp2date">
+      <uptodate property="versionUp2date" targetfile="${basedir}/src/org/enhydra/jxpdl/resources/version.properties" >
+         <srcfiles dir= "${basedir}/src" includes="**/*.java"/>
+      </uptodate>
+   </target>
+
+   <target name="updateVersion" unless="versionUp2date">
+      <propertyfile file="${basedir}/src/org/enhydra/jxpdl/resources/version.properties">
+         <entry key="udate" type="date" value="now" pattern="yyyy/MM/dd HH:mm:ss" />
+         <entry key="count" type="int" operation="+" default="1" pattern="00000" />
+      </propertyfile>
+   </target>
+   
+   <!-- =================================================================== -->
+   <!-- Making oyster.jar and oyster_tests.jar                              -->
+   <!-- =================================================================== -->
+   <target name="jar" depends="compile,_versionUp2date,updateVersion">
+      <echo message=""/>
+      <echo message="******************************************"/>
+      <echo message="Building TXM jar libraries ..."/>
+      <echo message="******************************************"/>
+      <echo message=""/>
+      <jar jarfile="${output.lib.dir}/${jar.name}.jar"
+            basedir="${classes.dir}"
+            compress="false">
+         <manifest>
+				<attribute name="Implementation-Version" value="${version}-${release}" />
+         </manifest>
+      </jar>
+   </target>
+
+        
+   <!-- =================================================================== -->
+   <!-- Building all                                                        -->
+   <!-- =================================================================== -->
+   <target name="buildAll" depends="jar, buildAllDoc">
+   </target>
+
+
+   <!-- =================================================================== -->
+   <!-- Building without documentation                                      -->
+   <!-- =================================================================== -->
+   <target name="buildNoDoc" depends="jar">
+   </target>
+    
+
+   <!-- Builds Documentation                                                 -->
+   <!-- ==================================================================== -->
+   <target name="buildAllDoc" depends="init">
+      <ant dir="${doc.dir}" />
+   </target>
+
+   <!-- ==================================================================== -->
+   <!-- Builds DocBook Documentation                                         -->
+   <!-- ==================================================================== -->
+   <target name="buildDoc" depends="init">
+      <ant dir="${doc.dir}" target="buildDocBook" />
+   </target>
+
+   <target name="initDist">
+      <mkdir dir="${dist.community.dir}" />
+      <if>
+         <equals arg1="${os}" arg2="windows" />
+         <then>
+            <mkdir dir="${dist.internal.dir}" />
+            <mkdir dir="${dist.doc.dir}" />
+         </then>
+      </if>
+   </target>
+   
+   <!-- =================================================================== -->
+   <!-- Build distribution                                                  -->
+   <!-- =================================================================== -->
+   <target name="distributions" depends="clean, prepare, initDist">
+      <antcall target="${os.buildSrc.target}"/>
+      <antcall target="buildAll"/>
+      <antcall target="${os.buildBin.target}"/>
+
+      <echo message="Distribution of ${app.name}-${version}-${release} with complete documentation has been built!"/>
+   </target>
+
+
+   <!-- =================================================================== -->
+   <!-- Build binary for Linux                                              -->
+   <!-- =================================================================== -->
+   <target name="buildBinForLinux">
+      <echo message=""/>
+      <echo message="******************************************"/>
+      <echo message="Creating ${dist.file.name}.tar.gz binary arhive, please wait ..."/>
+      <echo message="******************************************"/>
+      <echo message=""/>
+
+      <tar destfile="${dist.community.dir}/${dist.file.name}.tar" longfile="gnu">
+         <tarfileset dir="${output.dir}" mode="666">
+         </tarfileset>
+      </tar>
+      <gzip src="${dist.community.dir}/${dist.file.name}.tar"
+            zipfile="${dist.community.dir}/${dist.file.name}.tar.gz"/>
+      <delete file="${dist.community.dir}/${dist.file.name}.tar" quiet="true"/>
+      <chmod file="${dist.community.dir}/${dist.file.name}.tar.gz" perm="ugo+rw"/>
+   </target>
+    
+    
+   <!-- =================================================================== -->
+   <!-- Build binary for Windows                                            -->
+   <!-- =================================================================== -->
+   <target name="buildBinForWindows">
+      <echo message=""/>
+      <echo message="******************************************"/>
+      <echo message="Creating ${dist.file.name}.zip binary arhive, please wait ..."/>
+      <echo message="******************************************"/>
+      <echo message=""/>
+
+      <zip destfile="${dist.community.dir}/${dist.file.name}.zip" update="true" >
+         <zipfileset dir="${output.dir}" />
+      </zip>
+
+      <ant target="distOther"/>
+      <antcall target="_dependencies"/>            
+
+   </target>
+
+
+   <!-- =================================================================== -->
+   <!-- Build source for Linux                                              -->
+   <!-- =================================================================== -->
+   <target name="buildSrcForLinux">
+      <echo message=""/>
+      <echo message="******************************************"/>
+      <echo message="Creating ${dist.file.name}.src.tar.gz source arhive, please wait ..."/>
+      <echo message="******************************************"/>
+      <echo message=""/>
+
+      <tar destfile="${dist.community.dir}/${dist.file.name}.src.tar" longfile="gnu">
+         <tarfileset dir="${basedir}" prefix="${dist.file.name}.src" mode="666">
+            <exclude name="distribution/**" />
+            <exclude name="output/**" />
+            <exclude name="bin/**" />
+            <exclude name="**/classes/**" />
+            <exclude name="build.properties" />
+            <exclude name="Makefile" />
+         </tarfileset>
+      </tar>
+
+      <gzip src="${dist.community.dir}/${dist.file.name}.src.tar" 
+         zipfile="${dist.community.dir}/${dist.file.name}.src.tar.gz"/>
+      <delete file="${dist.community.dir}/${dist.file.name}.src.tar" quiet="true"/>
+      <chmod file="${dist.community.dir}/${dist.file.name}.src.tar.gz" perm="ugo+rw"/>
+   </target>
+
+
+   <!-- =================================================================== -->
+   <!-- Build source for Windows                                            -->
+   <!-- =================================================================== -->
+   <target name="buildSrcForWindows">
+      <echo message=""/>
+      <echo message="******************************************"/>
+      <echo message="Creating ${dist.file.name}.src.zip source arhive, please wait ..."/>
+      <echo message="******************************************"/>
+      <echo message=""/>
+
+      <zip destfile="${dist.community.dir}/${dist.file.name}.src.zip" update="true" >
+         <zipfileset dir="${basedir}" prefix="${dist.file.name}.src"> 
+            <exclude name="distribution/**"/>
+            <exclude name="output/**"/>
+            <exclude name="bin/**"/>
+            <exclude name="**/classes/**"/>
+            <exclude name="doc/tmp/**"/>
+            <exclude name="build.properties"/>
+            <exclude name="Makefile"/>
+         </zipfileset>
+      </zip>
+   </target>
+
+   <target name="dependencies" depends="clean,dependency_twe,_dependency_tws" unless="${rebranding}"/>
+
+   <target name="dependency_tws" depends="buildAll,_dependency_tws" unless="${rebranding}"/>
+   
+   <target name="dependency_twe" depends="buildAll,_dependency_twe" unless="${rebranding}"/>
+   
+   <target name="_dependencies" depends="_dependency_tws,_dependency_twe" unless="${rebranding}"/>
+
+   <target name="_dependency_tws" unless="${rebranding}">
+      <mkdir dir="${dist.dependencies.dir}/tws" />
+      <copy todir="${dist.dependencies.dir}/tws" overwrite="true">
+         <fileset dir="${output.lib.dir}" includes="${jar.name}.jar" />
+      </copy>
+   </target>
+   
+   <target name="_dependency_twe" unless="${rebranding}">
+      <mkdir dir="${dist.dependencies.dir}/twe" />
+      <copy todir="${dist.dependencies.dir}/twe" overwrite="true">
+         <fileset dir="${output.lib.dir}" includes="${jar.name}.jar" />
+      </copy>
+   </target>
+
+
+   <target name="distOther">
+      <copy file="${output.doc.dir}/txm-doc-current.pdf" tofile="${output.doc.dir}/txm-doc-${version}-${release}.pdf"/>
+      <copy file="${output.doc.dir}/txm-doc-current.html" tofile="${output.doc.dir}/txm-doc-${version}-${release}.html"/>
+      <zip destfile="${dist.community.dir}/${app.name}-doc-${version}-${release}.zip" update="true">
+         <zipfileset dir="${output.doc.dir}" excludes="txm-doc-current.*"/>
+      </zip>
+      <copy todir="${dist.community.dir}">
+         <fileset dir="${output.doc.dir}" includes="txm-doc-current.pdf" />
+      </copy>      
+      <copy todir="${dist.doc.dir}">
+         <fileset dir="${output.doc.dir}" excludes="txm-doc-current.*"/>
+      </copy>
+      <delete quiet="true">
+         <fileset dir="${output.doc.dir}" includes="txm-doc-${version}-${release}.*" />
+      </delete>      
+      <copy todir="${dist.internal.dir}">
+         <fileset dir="${licenses.dir}" includes="txm-includes.xlsx" />
+         <mapper type="regexp" from="txm-includes.xlsx" to="txm-includes-${version}-${release}.xlsx" />
+      </copy>
+      <copy todir="${dist.internal.dir}">
+         <fileset dir="${build.dir}" includes="BuildID.txt" />
+      </copy>
+   </target>
+    
+   <!-- =================================================================== -->
+   <!-- Cleans everything                                                   -->
+   <!-- =================================================================== -->
+   <target name="clean" depends="init">
+      <ant antfile="build.xml" dir="doc" target="clean" inheritAll="true"/>
+      <delete dir="${classes.dir}" quiet="true"/>
+      <delete dir="${output.dir}" quiet="true"/>
+      <delete dir="${basedir}/distribution" />
+      <delete quiet="true">
+         <fileset dir="${basedir}/doc" includes="log.txt,txm-doc.xml~" defaultexcludes="false"/>
+      </delete>
+      <delete dir="${basedir}/doc/tmp" />
+   </target>
+
+   <!-- =================================================================== -->
+   <!-- Installation                                                        -->
+   <!-- =================================================================== -->
+   <target name="install" if="install.exist" depends="prepare">
+      <!-- copy everything from output directory to install.dir -->
+      <if>
+         <equals arg1="${install.dir}" arg2="" />
+         <then>
+            <echo message="Please, define installation directory" />
+         </then>
+         <else>
+            <copy todir="${install.dir}" overwrite="yes">
+               <fileset dir="${build.dir}"/>
+            </copy>
+            <echo message="Instalation of ${app.name}-${version}-${release} was successful!"/>
+         </else>
+      </if>
+
+   </target>
+
+   <!-- ==================================================================== -->
+   <!-- Help - default target                                                -->
+   <!-- ==================================================================== -->
+   <target name="help">
+      <echo>
+make                     - Displays Help screen
+make help                - Displays Help screen
+make buildAll            - Builds and configures TXM with javadoc and docbook documentation
+make buildNoDoc          - Builds and configures TXM without javadoc and docbook documentation
+make buildDoc            - Builds docbook documentation
+make dependencies        - Creates TWS and TWE dependencies within distributions folder
+make dependency_tws      - Creates TWS dependencies within distributions folder
+make dependency_twe      - Creates TWE dependencies within distributions folder
+make install             - Installs and configures TXM into directory defined by parameter install.dir in build.properties file. 
+                           You can set this parameter value by using command: configure -instdir PATH_TO_DIR.
+                           It should be called only after make buildAll target is executed!
+make clean               - Removes the output and distribution folder (in order to start a new compilation from scratch)
+make distributions       - Builds and configures TXM with all documentations and creates distribution package
+      </echo>
+   </target>
+
+</project>

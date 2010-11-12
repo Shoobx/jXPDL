@@ -1,0 +1,129 @@
+# Together Workflow Editor
+# Copyright (C) 2010 Together Teamsolutions Co., Ltd.
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or 
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful, 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see http://www.gnu.org/licenses
+#
+#######################################################################
+
+Together XPDL Model (TXM) is a library that provides capatibility to handle XPDL(2) model 
+based on XPDL schema. Using TXM, it is possible to read any file that conforms to XPDL 
+specification, or to produce the new one.
+
+TXM has validation mechanism, both schema-based validation, and logical validation based 
+on XPDL specification.
+
+Automatic transformation of XPDL1 to XPDL2 document is also the part of TXM implementation. 
+During the import of XPDL1 document, it will be automatically transformed into corresponding 
+XPDL2 document, deprecated elements from XPDL1 schema will be transformed to XPDL2 elements  
+(e.g. the deprecated Tool elements will be transformed to new TaskApplication elements and when 
+activity has more than one Tools defined, several new activities will be created in the model, 
+and connected with the transitions), the uniqueness of Ids of activities will be Package based, etc.
+
+TXM source code was taken out from Together Workflow Server project and a separate project is 
+made out of it. 
+The reason was to have the common XPDL model used by both Together Workflow Editor and by 
+Together Workflow Server projects.
+
+
+
+Build Guide
+***********
+
+Prerequisites
+-------------
+Windows:
+   - Java Development Kit (JDK) version 6 or later
+
+Fedora (Linux):
+   - bash
+   - tar
+   - make
+   - Java Development Kit (JDK) version 6 or later
+
+Preparing the build environment
+-------------------------------
+Execute the configure script from the root directory of the project source. 
+Specific JAVA version can be set for building (different from the one registered with your system) by executing:
+
+Windows: configure -jdkhome %JAVA_HOME%
+
+Fedora (Linux): ./configure -jdkhome %JAVA_HOME%
+
+(Where JAVA_HOME is the path to your JDK installation)
+
+Possible parameters for the configure script are:
+
+configure             - Creates build.properties file with default values
+                        for all possible parameters. It can work only if 
+                        there is a default JAVA registered with the system.
+configure -help       - Displays Help screen
+configure -version    - Sets the version number for the project.
+configure -release    - Sets the release number for the project.
+configure -jdkhome    - Sets the "JAVA HOME" location of Java to be used 
+                        to compile the project.
+configure -debug      - Flag that determines if the sources will be 
+                        compiled with debug option on or off. 
+                        Possible values [on/off]. 
+configure -instdir    - Sets the location of the installation dir used when
+                        executing make script with install target specified.
+configure -rebranding - Flag that determines if the project 
+                        will be "rebranded" with the context of branding folder. 
+                        Possible values [true/false].
+configure -language   - Language to be used for rebranding.
+
+Multiple parameters can be specified at ones.
+
+Example: configure -version 1.0 -release 1 -jdkhome C:/jdk1.6 -instdir C:/JXPDL
+
+The configure script will create/change the build.properties file based on the parameters provided. 
+This file can also be manually changed to adjust your environment/parameters for building the project from the sources.
+
+Compiling and building
+----------------------
+Execute the make script with the buildAll target from the root directory of the project source. 
+When the building process finishes, the project binaries will be in output/txm-[version]-[release] folder.
+
+Possible build targets for the make script are:
+
+make help           - Displays Help screen
+make buildAll       - Builds and configures TXM with javadoc and 
+                      docbook documentation
+make buildNoDoc     - Builds and configures TXM without javadoc and 
+                      docbook documentation
+make buildDoc       - Builds docbook documentation
+make dependencies   - Creates TWS and TWE dependencies within 
+                      distributions folder
+make dependency_tws - Creates TWS dependencies within distributions folder
+make dependency_twe - Creates TWE dependencies within distributions folder
+make install        - Installs and configures TXM into directory defined 
+                      by parameter install.dir in build.properties file. 
+                      This parameter can be set by using command: 
+                      configure -instdir PATH_TO_DIR.
+                      It should be called only after make buildAll target 
+                      is executed!
+make clean          - Removes the output and distribution folder (in order 
+                      to start a new compilation from scratch)
+make distributions  - Builds and configures TXM with all documentations 
+                      and creates distribution package
+
+Packaging distributions
+-----------------------
+Assuming that the environment is already configured as described previously, 
+to create the project distribution packages, execute:
+
+   make distributions
+
+When the building process finishes, the distribution folder will be created in the root 
+directory of the project source containing the appropriate OS specific binary distributions.
+
