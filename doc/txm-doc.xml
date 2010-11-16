@@ -52,9 +52,10 @@
 
       <para>In this document parts of the original XPDL 1.0 specification -
       <ulink
-      url="http://www.wfmc.org/standards/docs/TC-1025_10_xpdl_102502.pdf">WFMC-TC-1025</ulink>
-      are used. The Workflow Management Coalition and its members are the
-      owners of the copyright of this specification.</para>
+      url="http://www.wfmc.org/Download-document/WFMC-TC-1025-Oct-10-08-A-Final-XPDL-2.1-Specification.html">WfMC
+      XPDL 2.1 Specification</ulink> are used. The Workflow Management
+      Coalition and its members are the owners of the copyright of this
+      specification.</para>
     </legalnotice>
   </bookinfo>
 
@@ -64,22 +65,22 @@
     <title>Introduction</title>
 
     <para>Together XPDL Model (TXM) is a library that provides capatibility to
-    handle XPDL(2) model based on XPDL schema. Using TXM, it is possible to
+    handle XPDL 2.1 model based on XPDL schema. Using TXM, it is possible to
     read any file that conforms to XPDL specification, or to produce the new
     one.</para>
 
     <para>TXM has validation mechanism, both schema-based validation, and
     logical validation based on XPDL specification.</para>
 
-    <para>Automatic transformation of XPDL1 to XPDL2 document is also the part
-    of TXM implementation. During the import of XPDL1 document, it will be
-    automatically transformed into corresponding XPDL2 document, deprecated
-    elements from XPDL1 schema will be transformed to XPDL2 elements (e.g. the
-    deprecated Tool elements will be transformed to new TaskApplication
-    elements and when activity has more than one Tools defined, several new
-    activities will be created in the model, and connected with the
-    transitions), the uniqueness of Ids of activities will be Package based,
-    etc.</para>
+    <para>Automatic transformation of XPDL 1 to XPDL 2.1 document is also the
+    part of TXM implementation. During the import of XPDL 1 document, it will
+    be automatically transformed into corresponding XPDL 2.1 document,
+    deprecated elements from XPDL1 schema will be transformed to XPDL 2.1
+    elements (e.g. the deprecated Tool elements will be transformed to new
+    TaskApplication elements and when activity has more than one Tools
+    defined, several new activities will be created in the model, and
+    connected with the transitions), the uniqueness of Ids of activities will
+    be Package based, etc.</para>
 
     <para>TXM source code was taken out from <ulink
     url="http://www.together.at/prod/workflow/tws">Together Workflow

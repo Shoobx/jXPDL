@@ -16,16 +16,16 @@
 #
 #######################################################################
 
-Together XPDL Model (TXM) is a library that provides capatibility to handle XPDL(2) model 
+Together XPDL Model (TXM) is a library that provides capatibility to handle XPDL 2.1 model 
 based on XPDL schema. Using TXM, it is possible to read any file that conforms to XPDL 
 specification, or to produce the new one.
 
 TXM has validation mechanism, both schema-based validation, and logical validation based 
 on XPDL specification.
 
-Automatic transformation of XPDL1 to XPDL2 document is also the part of TXM implementation. 
-During the import of XPDL1 document, it will be automatically transformed into corresponding 
-XPDL2 document, deprecated elements from XPDL1 schema will be transformed to XPDL2 elements  
+Automatic transformation of XPDL 1 to XPDL 2.1 document is also the part of TXM implementation. 
+During the import of XPDL 1 document, it will be automatically transformed into corresponding 
+XPDL 2.1 document, deprecated elements from XPDL 1 schema will be transformed to XPDL 2.1 elements  
 (e.g. the deprecated Tool elements will be transformed to new TaskApplication elements and when 
 activity has more than one Tools defined, several new activities will be created in the model, 
 and connected with the transitions), the uniqueness of Ids of activities will be Package based, etc.
