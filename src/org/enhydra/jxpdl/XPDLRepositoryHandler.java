@@ -161,7 +161,10 @@ public class XPDLRepositoryHandler {
             Node attrib = attribs.item(i);
             try {
                // System.out.println("Getting attrib "+attrib.getNodeName());
-               fromXML(attrib, (XMLAttribute) cel.get(attrib.getNodeName()));
+               if (!attrib.getNodeName().startsWith("xmlns")
+                   && !attrib.getNodeName().startsWith("xsi:")) {
+                  fromXML(attrib, (XMLAttribute) cel.get(attrib.getNodeName()));
+               }
             } catch (NullPointerException npe) {
                System.out.println("NPE while processing attrib " + attrib.getNodeName());
                /*
