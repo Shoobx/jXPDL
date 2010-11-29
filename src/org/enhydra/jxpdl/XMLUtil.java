@@ -27,9 +27,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1230,44 +1232,10 @@ public class XMLUtil {
 
    // ******** END OF CREATING SCROLLPANE AND EDITOR COMPONENT(PEJGRAPH) **********
 
-   /** Gets the current date and time string in ISO-8601 format. */
+   /** Gets the current date and time string in yyyy-MM-dd HH:mm:ss format. */
    public static String getCurrentDateAndTime() {
-      String dateSeparator = "-";
-      String timeSeparator = ":";
-      Calendar cal = new GregorianCalendar();
-      String dateTime = "";
-      dateTime = dateTime + String.valueOf(cal.get(Calendar.YEAR)) + dateSeparator;
-      int mnth = cal.get(Calendar.MONTH) + 1;
-      if (mnth < 10) {
-         dateTime = dateTime + "0";
-      }
-      dateTime = dateTime + String.valueOf(mnth) + dateSeparator;
-      int dayOfMnth = cal.get(Calendar.DAY_OF_MONTH);
-      if (dayOfMnth < 10) {
-         dateTime = dateTime + "0";
-      }
-      dateTime = dateTime + String.valueOf(dayOfMnth) + " ";
-      int hr = cal.get(Calendar.HOUR_OF_DAY);
-      int ampm = cal.get(Calendar.AM_PM);
-      if (ampm == Calendar.PM && hr < 12) {
-         hr += 12;
-      }
-      if (hr < 10) {
-         dateTime = dateTime + "0";
-      }
-      dateTime = dateTime + String.valueOf(hr) + timeSeparator;
-      int min = cal.get(Calendar.MINUTE);
-      if (min < 10) {
-         dateTime = dateTime + "0";
-      }
-      dateTime = dateTime + String.valueOf(min) + timeSeparator;
-      int sec = cal.get(Calendar.SECOND);
-      if (sec < 10) {
-         dateTime = dateTime + "0";
-      }
-      dateTime = dateTime + String.valueOf(sec);
-
-      return dateTime;
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+      return sdf.format(new Date());
    }
 
    public static String replaceBackslashesWithSlashes(String repBS) {
@@ -1789,8 +1757,9 @@ public class XMLUtil {
       Package pkg = null;
       XMLInterface xmli = new XMLInterfaceForJDK13();
 
-      System.out.println("Handling file " + inputFile);
+      System.out.println("Converting XPDL model from file \"" + inputFile+"\".\n");
 
+      System.out.println("...reading file and creating XPDL model");
       pkg = readFromFile(xmli, inputFile, readExt);
       pkg.addListener(list);
       StandardPackageValidator pv = new StandardPackageValidator();
@@ -1816,6 +1785,7 @@ public class XMLUtil {
       } else {
          outF = inputFile + "-out";
       }
+      System.out.println("\nWritting converted XPDL model into file \""+outF+"\".");
       writeToFile(outF, pkg);
    }
 
@@ -1826,7 +1796,7 @@ public class XMLUtil {
       }
       String name = outputFile.substring(0, outputFile.lastIndexOf("."));
 
-      System.out.println("Creating XPDL \"" + outputFile + "\"\n");
+      System.out.println("Creating XPDL Model.\n");
 
       String id = name;
       if (!XMLUtil.isIdValid(id)) {
@@ -1838,6 +1808,10 @@ public class XMLUtil {
       Package pkg = new Package();
       pkg.setId(id);
       pkg.setName(outputFile);
+      pkg.getPackageHeader().setXPDLVersion("2.1");
+      pkg.getPackageHeader().setVendor("(c) Together Teamsolutions Co., Ltd.");
+      pkg.getPackageHeader().setCreated(XMLUtil.getCurrentDateAndTime());
+      
       pkg.getScript().setType("text/javascript");
 
       System.out.println("......creating Participant[Id=manager,Name=Manager,Type=ROLE]");
@@ -1994,7 +1968,7 @@ public class XMLUtil {
       pkg.getParticipants().add(p3);
 
       writeToFile(outputFile, pkg);
-      System.out.println("\nXPDL \"" + outputFile + "\" created.");
+      System.out.println("\nWritting XPDL model into file \"" + outputFile + "\".");
    }
 
    public static Package readFromFile(XMLInterface xmli, String inputFile, boolean readExt)
