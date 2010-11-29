@@ -201,9 +201,24 @@
 			<trycatch description="try-catch">
 				<try>
 					<java classname="org.apache.xalan.xslt.Process" classpathref="xalan-classpath" fork="true" dir="${tmp.dir}">
-						<arg line="-param html.stylesheet html.css -out ${docbook.name}.fo -in ${docbook.name}.xml -xsl ${util.dir}/docbook/xsl/fo/docbook.xsl" />
+						<arg line="-param html.stylesheet html.css 
+                             -param body.start.indent 0pt 
+                             -param ulink.footnotes 1 
+                             -out ${docbook.name}.fo 
+                             -in ${docbook.name}.xml 
+                             -xsl ${util.dir}/docbook/xsl/fo/docbook.xsl" />
+                             <!-- 
+                             -param page.margin.inner 0.5in 
+                             -param page.margin.outer 0.5in 
+                             -param page.margin.top 0.1in 
+                             -param region.before.extent 0.1in 
+                             -param body.margin.top 0.2in 
+                             -param region.after.extent 0.1in 
+                             -param page.margin.bottom 0.1in 
+                             -param body.margin.bottom 0.2in 
+                             -->
 					</java>
-				</try>
+            </try>
 				<catch>
 					<echo message="just retry ..." />
 					<waitfor maxwait="1" maxwaitunit="minute" checkevery="1000">

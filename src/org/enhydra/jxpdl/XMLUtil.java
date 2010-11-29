@@ -29,10 +29,8 @@ import java.io.OutputStream;
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -41,7 +39,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 import javax.tools.Tool;
 import javax.xml.parsers.DocumentBuilder;
@@ -1757,6 +1754,9 @@ public class XMLUtil {
       Package pkg = null;
       XMLInterface xmli = new XMLInterfaceForJDK13();
 
+      File f = new File(inputFile);
+      inputFile = f.getCanonicalPath();
+      
       System.out.println("Converting XPDL model from file \"" + inputFile+"\".\n");
 
       System.out.println("...reading file and creating XPDL model");
@@ -1778,7 +1778,7 @@ public class XMLUtil {
       } else {
          System.out.println("...XPDL is valid");
       }
-      int ind = inputFile.indexOf(".");
+      int ind = inputFile.lastIndexOf(".");
       String outF = null;
       if (ind >= 0) {
          outF = inputFile.substring(0, ind) + "-out" + inputFile.substring(ind);
@@ -1794,7 +1794,9 @@ public class XMLUtil {
       if (!outputFile.endsWith(".xpdl")) {
          outputFile += ".xpdl";
       }
-      String name = outputFile.substring(0, outputFile.lastIndexOf("."));
+      File f = new File(outputFile);
+      outputFile = f.getCanonicalPath();
+      String name = f.getName().substring(0, f.getName().lastIndexOf("."));
 
       System.out.println("Creating XPDL Model.\n");
 
@@ -1807,7 +1809,7 @@ public class XMLUtil {
                          + id + ",Name=" + name + ",Script-type=text/javascript]");
       Package pkg = new Package();
       pkg.setId(id);
-      pkg.setName(outputFile);
+      pkg.setName(name);
       pkg.getPackageHeader().setXPDLVersion("2.1");
       pkg.getPackageHeader().setVendor("(c) Together Teamsolutions Co., Ltd.");
       pkg.getPackageHeader().setCreated(XMLUtil.getCurrentDateAndTime());

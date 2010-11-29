@@ -32,6 +32,7 @@
       <property name="jar.name"         value="jxpdl"/>
       <property name="classes.dir"      location="${basedir}/classes" />
       <property name="lib.dir"          location="${basedir}/lib"/>
+      <property name="input.dir"          location="${basedir}/input"/>
       <property name="output.dir"       location="${basedir}/output"/>
       <property name="build.dir"        location="${output.dir}/${app.name}-${version}-${release}"/>
       <property name="output.lib.dir"   location="${build.dir}/lib"/>
@@ -85,6 +86,7 @@
    <target name="prepare" depends="init">
       <!-- create directory structure -->
       <mkdir dir="${output.lib.dir}"/>
+      <mkdir dir="${build.dir}/dist"/>
       <mkdir dir="${build.dir}/examples"/>
 
       <!--Update build timestamp-->
@@ -92,12 +94,19 @@
          <format property="build.timestamp" pattern="yyyyMMdd-HHmm" locale="en,UK" />
       </tstamp>
       <echo file="${build.dir}/BuildID.txt" message="${build.timestamp}" />
+      
+      <copy todir="${build.dir}">
+         <fileset dir="${input.dir}" includes="build.xml"/>
+      </copy>
 
-
-
+      <copy todir="${build.dir}/dist">
+         <fileset dir="${input.dir}/bin"/>
+      </copy>
+      
       <!-- copy everything from lib directory -->
       <copy todir="${output.lib.dir}">
          <fileset dir="${lib.dir}"/>
+         <fileset dir="${util.dir}/ant" includes="ant.jar,ant-launcher.jar,antcontrib.jar"/>
       </copy>
 
       <!-- copy everything from examples directory -->
@@ -113,7 +122,50 @@
          <mapper type="regexp" from="txm-includes.xlsx" to="txm-includes-${version}-${release}.xlsx" />
       </copy>
       
+      <!-- runs specific, windows or linux prepare statements via apropriate target -->
+      <antcall target ="${os.prepare.target}"/>
+
    </target>
+    
+    
+   <!-- =================================================================== -->
+   <!-- Prepare TXM module - Linux Part                                     -->
+   <!-- =================================================================== -->
+   <target name="prepareForLinux">
+      <!-- create Linux specific oyster root file -->
+      <copy todir="${build.dir}" includeEmptyDirs="false" overwrite="yes">
+         <fileset dir="${input.dir}">
+            <include name="configure.sh"/>
+         </fileset>
+      </copy>
+      <chmod perm="a=rwx">
+         <fileset dir="${build.dir}">
+            <include name="configure.sh"/>
+         </fileset>
+      </chmod>
+
+      <!-- changing examples comand files from Windows to Linux sintax -->
+      <fixcrlf srcdir="${build.dir}/dist" includes="*.ext" eol="lf"/>
+   </target>
+
+
+   <!-- =================================================================== -->
+   <!-- Prepare TXM module - Windows Part                                   -->
+   <!-- =================================================================== -->
+   <target name="prepareForWindows">
+
+      <!-- create Windows specific oyster root files -->
+      <copy todir="${build.dir}" includeEmptyDirs="false" overwrite="yes">
+         <fileset dir="${input.dir}">
+            <include name="configure.bat"/>
+         </fileset>
+      </copy>
+
+      <!-- changing examples comand files from Linux to Windows sintax -->
+      <fixcrlf srcdir="${build.dir}/dist" includes="*.ext" eol="crlf"/>
+
+   </target>
+
         
    <!-- =================================================================== -->
    <!-- Compile Generator module                                            -->
@@ -137,6 +189,24 @@
 
    </target>
 
+   <!-- ==================================================================== -->
+   <!-- Configure scripts                                                    -->
+   <!-- ==================================================================== -->
+   <target name="configure" depends="compile">
+      <echo message="Configuring TXM ..." />
+      <ant dir="${build.dir}" inheritAll="false" inheritRefs="false">
+         <property name="jdk.dir" value="${jdk.dir}" />
+      </ant>
+      <copy todir="${build.dir}" overwrite="yes">
+         <fileset dir="${input.dir}">
+            <include name="configure.properties"/>
+         </fileset>
+         <filterset>
+            <filter token="JAVA_DIR" value="${jdk.dir}" />
+         </filterset>
+      </copy>
+   </target>
+   
    <target name="_versionUp2date">
       <uptodate property="versionUp2date" targetfile="${basedir}/src/org/enhydra/jxpdl/resources/version.properties" >
          <srcfiles dir= "${basedir}/src" includes="**/*.java"/>
@@ -151,7 +221,7 @@
    </target>
    
    <!-- =================================================================== -->
-   <!-- Making oyster.jar and oyster_tests.jar                              -->
+   <!-- Making jxpdl.jar                                                    -->
    <!-- =================================================================== -->
    <target name="jar" depends="compile,_versionUp2date,updateVersion">
       <echo message=""/>
@@ -172,14 +242,14 @@
    <!-- =================================================================== -->
    <!-- Building all                                                        -->
    <!-- =================================================================== -->
-   <target name="buildAll" depends="jar, buildAllDoc">
+   <target name="buildAll" depends="jar, configure, buildAllDoc">
    </target>
 
 
    <!-- =================================================================== -->
    <!-- Building without documentation                                      -->
    <!-- =================================================================== -->
-   <target name="buildNoDoc" depends="jar">
+   <target name="buildNoDoc" depends="jar, configure">
    </target>
     
 
@@ -212,7 +282,8 @@
    <!-- =================================================================== -->
    <target name="distributions" depends="clean, prepare, initDist">
       <antcall target="${os.buildSrc.target}"/>
-      <antcall target="buildAll"/>
+      <antcall target="jar"/>
+      <antcall target="buildAllDoc"/>
       <antcall target="${os.buildBin.target}"/>
 
       <echo message="Distribution of ${app.name}-${version}-${release} with complete documentation has been built!"/>
@@ -363,10 +434,10 @@
    <!-- =================================================================== -->
    <target name="clean" depends="init">
       <ant antfile="build.xml" dir="doc" target="clean" inheritAll="true"/>
-      <delete dir="${classes.dir}" quiet="true"/>
-      <delete dir="${output.dir}" quiet="true"/>
+      <delete dir="${classes.dir}"/>
+      <delete dir="${output.dir}"/>
       <delete dir="${basedir}/distribution" />
-      <delete quiet="true">
+      <delete>
          <fileset dir="${basedir}/doc" includes="log.txt,txm-doc.xml~" defaultexcludes="false"/>
       </delete>
       <delete dir="${basedir}/doc/tmp" />

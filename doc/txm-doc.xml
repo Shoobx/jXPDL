@@ -27,10 +27,10 @@
       distribute and/or modify this document under the terms of the GNU Free
       Documentation License, Version 1.3 or any later version published by the
       Free Software Foundation; with the Invariant Sections being
-      <emphasis>"Introduction","Build Guide,"Installation Guide","Release
-      Notes"</emphasis>" no Front-Cover Texts, and no Back-Cover Texts. A copy
-      of the license is included in the section entitled "GNU Free
-      Documentation License".</holder>
+      <emphasis>"Introduction","Build Guide,"Installation
+      Guide","Examples","Release Notes"</emphasis>" no Front-Cover Texts, and
+      no Back-Cover Texts. A copy of the license is included in the section
+      entitled "GNU Free Documentation License".</holder>
     </copyright>
 
     <legalnotice>
@@ -101,8 +101,9 @@
       <para>The source code of the project can be obtained either via SVN
       (please read instructions how to check out sources at <ulink
       url="http://sourceforge.net/projects/jxpdl/develop">SourceForge</ulink>)
-      or by downloading the latest txm-x.y-z.src.zip/txm-x.y-z.src.tar.gz
-      package from <ulink
+      or by downloading the latest <emphasis
+      role="bold">txm-x.y-z.src.zip</emphasis>/<emphasis
+      role="bold">txm-x.y-z.src.tar.gz</emphasis> package from <ulink
       url="http://sourceforge.net/projects/jxpdl/files">SourceForge</ulink>.</para>
     </sect1>
 
@@ -147,9 +148,10 @@
     <sect1>
       <title>Preparing the build environment</title>
 
-      <para>Execute the configure script from the root directory of the
-      project source. Specific JAVA version can be set for building (different
-      from the one registered with your system) by executing:</para>
+      <para>Execute the <emphasis role="bold">configure</emphasis> script from
+      the root directory of the project source. Specific JAVA version can be
+      set for building (different from the one registered with your system) by
+      executing:</para>
 
       <para><itemizedlist>
           <listitem>
@@ -166,7 +168,8 @@
         </itemizedlist>(Where JAVA_HOME is the path to your JDK
       installation)</para>
 
-      <para>Possible parameters for the configure script are:</para>
+      <para>Possible parameters for the <emphasis
+      role="bold">configure</emphasis> script are:</para>
 
       <programlisting>configure             - Creates build.properties file with default values
                         for all possible parameters. It can work only if 
@@ -193,18 +196,19 @@ Example:
 
 configure -version 1.0 -release 1 -jdkhome C:/jdk1.6 -instdir C:/JXPDL</programlisting>
 
-      <para>The configure script will create/change the build.properties file
-      based on the parameters provided. This file can also be manually changed
-      to adjust your environment/parameters for building the project from the
-      sources.</para>
+      <para>The configure script will create/change the <emphasis
+      role="bold">build.properties</emphasis> file based on the parameters
+      provided. This file can also be manually changed to adjust your
+      environment/parameters for building the project from the sources.</para>
     </sect1>
 
     <sect1>
       <title>Compiling and building</title>
 
-      <para>Execute the make script with the buildAll target from the root
-      directory of the project source. When the building process finishes, the
-      project binaries will be in output/txm-[version]-[release]
+      <para>Execute the <emphasis role="bold">make</emphasis> script with the
+      <emphasis role="bold">buildAll</emphasis> target from the root directory
+      of the project source. When the building process finishes, the project
+      binaries will be in <emphasis role="bold">output/txm-x.y-z</emphasis>
       folder.</para>
 
       <para>Possible build targets for the make script are:</para>
@@ -270,17 +274,79 @@ make distributions  - Builds and configures TXM with all documentations
 
       <para>Unpack <emphasis role="bold">txm-x.y-z.zip</emphasis> or <emphasis
       role="bold">txm-x.y-z.tar.gz</emphasis> package on Windows/Linux. In
-      order to use TXM examples, or to prepare JDK environment for TXM usage,
-      configure script from the root folder has to be executed. If JAVA_HOME
-      environment variable exists, configure script can be executed without
-      parameters, otherwise it should be called with a parameter specifying
-      JAVA_HOME value, e.g:</para>
+      order to use TXM examples, <emphasis role="bold">configure</emphasis>
+      script from the root folder has to be executed. If JAVA_HOME environment
+      variable exists, <emphasis role="bold">configure</emphasis> script can
+      be executed without parameters, otherwise it should be called with a
+      parameter specifying JAVA_HOME value, e.g.:</para>
 
       <programlisting>configure -jdkhome c:\jdk1.6.0_20</programlisting>
 
-      <para>his will prepare different <emphasis
+      <para>This will prepare different <emphasis
       role="bold">.bat/.sh</emphasis> scripts in examples directory.</para>
     </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Examples</title>
+
+    <para>As mentioned in <xref linkend="introduction" />, TXM's main purpose
+    is to act as a common library for <ulink
+    url="http://www.together.at/prod/workflow/twe">Together Workflow
+    Editor</ulink> and by <ulink
+    url="http://www.together.at/prod/workflow/tws">Together Workflow
+    Server</ulink> projects.</para>
+
+    <para>Nevertheless, the TXM project has two samples which will be
+    described in this chapter.</para>
+
+    <section>
+      <title>XPDL 1.0 to XPDL 2.1 Conversion</title>
+
+      <para>In the %TXM_HOME%/examples folder there is a single XPDL 1.0 file
+      - <emphasis role="bold">leave_request_xpdl1.xpdl</emphasis>. By running
+      <emphasis role="bold">runConvert</emphasis> script from %TXM_HOME%/bin
+      folder, this XPDL 1.0 sample will be converted into XPDL 2.1 file
+      (within the same folder) with a name <emphasis
+      role="bold">leave_request_xpdl1-out.xpdl</emphasis>.</para>
+
+      <para>The following is console output with the execution log:</para>
+
+      <figure>
+        <title>XPDL 1.0 to XPDL 2.1 Conversion - Console Output</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata align="center" contentdepth="100%"
+                       fileref="images/runconvert.jpg" scalefit="1"
+                       width="100%" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </section>
+
+    <section>
+      <title>XPDL 2.1 Creation</title>
+
+      <para>When <emphasis role="bold">runCreate</emphasis> script from
+      %TXM_HOME%/bin folder is executed, new XPDL 2.1 <emphasis
+      role="bold">test.xpdl</emphasis> file is created in %TXM_HOME%/examples
+      folder.</para>
+
+      <para>The following is console output with the execution log:</para>
+
+      <figure>
+        <title>XPDL 2.1 Creation - Console Output</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata align="center" contentdepth="100%"
+                       fileref="images/runcreate.jpg" scalefit="1"
+                       width="100%" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </section>
   </chapter>
 
   <chapter>
