@@ -61,21 +61,21 @@
 
   <toc></toc>
 
-  <chapter>
+  <chapter id="introduction">
     <title>Introduction</title>
 
     <para>Together XPDL Model (TXM) is a library that provides capatibility to
     handle XPDL 2.1 model based on XPDL schema. Using TXM, it is possible to
-    read any file that conforms to XPDL specification, or to produce the new
+    read any file that conforms to XPDL specification, as well as to edit to produce the new
     one.</para>
 
     <para>TXM has validation mechanism, both schema-based validation, and
     logical validation based on XPDL specification.</para>
 
     <para>Automatic transformation of XPDL 1 to XPDL 2.1 document is also the
-    part of TXM implementation. During the import of XPDL 1 document, it will
+    part of TXM implementation. During the import of XPDL 1.0 document, it will
     be automatically transformed into corresponding XPDL 2.1 document,
-    deprecated elements from XPDL1 schema will be transformed to XPDL 2.1
+    deprecated elements from XPDL 1.0 schema will be transformed to XPDL 2.1
     elements (e.g. the deprecated Tool elements will be transformed to new
     TaskApplication elements and when activity has more than one Tools
     defined, several new activities will be created in the model, and
@@ -92,7 +92,7 @@
     Server</ulink> projects.</para>
   </chapter>
 
-  <chapter>
+  <chapter id="buildguide">
     <title>Build Guide</title>
 
     <sect1>
@@ -251,7 +251,7 @@ make distributions  - Builds and configures TXM with all documentations
     </sect1>
   </chapter>
 
-  <chapter>
+  <chapter id="installationguide">
     <title>Installation guide</title>
 
     <sect1>
@@ -287,7 +287,7 @@ make distributions  - Builds and configures TXM with all documentations
     </sect1>
   </chapter>
 
-  <chapter>
+  <chapter id="examples">
     <title>Examples</title>
 
     <para>As mentioned in <xref linkend="introduction" />, TXM's main purpose
@@ -349,7 +349,7 @@ make distributions  - Builds and configures TXM with all documentations
     </section>
   </chapter>
 
-  <chapter>
+  <chapter id="releasenotes">
     <title>Release Notes</title>
 
     <section>
