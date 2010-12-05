@@ -21,4 +21,4 @@
 @ECHO_EMPTY@
 @ECHO@ -***** XPDL 1.0 to XPDL 2.1 Conversion Test *****-
 @ECHO_EMPTY@
-"@JAVA_DIR@@SEPARATOR@bin@SEPARATOR@java" -Xmx128M -Djava.ext.dirs=..@SEPARATOR@lib org.enhydra.jxpdl.XMLUtil convert ..@SEPARATOR@examples@SEPARATOR@leave_request_xpdl1.xpdl
+"@JAVA_DIR@@SEPARATOR@bin@SEPARATOR@java" -Xmx128M -Djava.ext.dirs=..@SEPARATOR@lib org.enhydra.jxpdl.XMLUtil convert ..@SEPARATOR@examples@SEPARATOR@leave_request_xpdl1.xpdl @PARAM_SIGN@*

@@ -1662,6 +1662,8 @@ public class XMLUtil {
    }
 
    public static void main(String[] args) throws Throwable {
+      if (ShowLicense.showLicense(args))
+         return;
       if ("convert".equals(args[0])) {
          testConvert(args[1], true);
          return;

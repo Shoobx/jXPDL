@@ -21,4 +21,4 @@
 @ECHO_EMPTY@
 @ECHO@ -***** XPDL 2.1 Creation Test *****-
 @ECHO_EMPTY@
-"@JAVA_DIR@@SEPARATOR@bin@SEPARATOR@java" -Xmx128M -Djava.ext.dirs=..@SEPARATOR@lib org.enhydra.jxpdl.XMLUtil create ..@SEPARATOR@examples@SEPARATOR@test.xpdl
+"@JAVA_DIR@@SEPARATOR@bin@SEPARATOR@java" -Xmx128M -Djava.ext.dirs=..@SEPARATOR@lib org.enhydra.jxpdl.XMLUtil create ..@SEPARATOR@examples@SEPARATOR@test.xpdl @PARAM_SIGN@*
