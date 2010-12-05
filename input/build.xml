@@ -88,7 +88,7 @@
 
       <delete dir="${basedir}/tmp" quiet="yes" />
 
-      <chmod dir="${basedir}/examples" perm="a=rwx" includes="*.sh" />
+      <chmod dir="${basedir}/bin" perm="a=rwx" includes="*.sh" />
    </target>
     
 </project>
