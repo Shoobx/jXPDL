@@ -42,16 +42,19 @@ import org.enhydra.jxpdl.elements.Deadlines;
 import org.enhydra.jxpdl.elements.ExpressionType;
 import org.enhydra.jxpdl.elements.ExtendedAttribute;
 import org.enhydra.jxpdl.elements.ExtendedAttributes;
+import org.enhydra.jxpdl.elements.Join;
 import org.enhydra.jxpdl.elements.Namespace;
 import org.enhydra.jxpdl.elements.Namespaces;
 import org.enhydra.jxpdl.elements.NestedLanes;
 import org.enhydra.jxpdl.elements.Package;
 import org.enhydra.jxpdl.elements.Performer;
 import org.enhydra.jxpdl.elements.SchemaType;
+import org.enhydra.jxpdl.elements.Split;
 import org.enhydra.jxpdl.elements.TaskApplication;
 import org.enhydra.jxpdl.elements.Tool;
 import org.enhydra.jxpdl.elements.Tools;
 import org.enhydra.jxpdl.elements.Transition;
+import org.enhydra.jxpdl.elements.TransitionRestriction;
 import org.enhydra.jxpdl.elements.Transitions;
 import org.enhydra.jxpdl.elements.WebServiceFaultCatchs;
 import org.enhydra.jxpdl.elements.WorkflowProcess;
@@ -489,6 +492,12 @@ public class XPDLRepositoryHandler {
       List additionalActs = new ArrayList();
       for (int i = 0; i < acts.size(); i++) {
          Activity act = (Activity) acts.get(i);
+         additionalActs.addAll(migrateGateways(act));
+      }
+      acts.addAll(additionalActs);
+      additionalActs.clear();
+      for (int i = 0; i < acts.size(); i++) {
+         Activity act = (Activity) acts.get(i);
          if (act.getActivityTypes()
             .getImplementation()
             .getImplementationTypes()
@@ -539,38 +548,47 @@ public class XPDLRepositoryHandler {
          .getChoosen();
       if (ts.size() > 1) {
          Activity prevAct = act;
-         Set ots = XMLUtil.getOutgoingTransitions(act);
          for (int i = 1; i < ts.size(); i++) {
             Tool t = (Tool) ts.get(i);
-            Activities acs = (Activities) act.getParent();
-            Activity actN = (Activity) acs.generateNewElementWithXPDL1Support();
-            actN.makeAs(act);
-            act.getDeadlines().clear();
-            actN.setId(XMLUtil.generateSimilarOrIdenticalUniqueId(acs,
-                                                                  new HashSet(),
-                                                                  act.getId()));
-            acs.add(actN);
+            Activity actN = splitActivity(prevAct, false, true);
             additionalActs.add(actN);
-
-            Transitions tras = (Transitions) ((XMLComplexElement) acs.getParent()).get("Transitions");
-            Transition tra = (Transition) tras.generateNewElement();
-            tra.setId(XMLUtil.generateUniqueId(tras, new HashSet()));
-            tra.setFrom(prevAct.getId());
-            tra.setTo(actN.getId());
-            tras.add(tra);
-            if (i == ts.size() - 1) {
-               Iterator it = ots.iterator();
-               while (it.hasNext()) {
-                  Transition tr = (Transition) it.next();
-                  tr.setFrom(actN.getId());
-               }
-            }
-
             prevAct = actN;
-            handleTool(actN, t);
          }
       }
+      for (int i=0; i<additionalActs.size(); i++) {
+         handleTool((Activity)additionalActs.get(i),(Tool)ts.get(i+1));
+      }
       handleTool(act, (Tool) ts.get(0));
+      return additionalActs;
+
+   }
+
+   protected List migrateGateways(Activity act) {
+      List additionalActs = new ArrayList();
+      int actType = act.getActivityType();
+      Join j = XMLUtil.getJoin(act);
+      String jType = j != null ? j.getType() : XPDLConstants.JOIN_SPLIT_TYPE_NONE;
+      Split s = XMLUtil.getSplit(act);
+      String sType = s != null ? s.getType() : XPDLConstants.JOIN_SPLIT_TYPE_NONE;
+      if (actType == XPDLConstants.ACTIVITY_TYPE_ROUTE) {
+         if (!sType.equals(jType)
+             && !sType.equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE)
+             && !jType.equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE)) {
+            // split route activity into two activities
+            Activity actN = splitActivity(act, true, true);
+            additionalActs.add(actN);
+         }
+      } else {
+         if (jType.equals(XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL)) {
+            Activity actN = splitActivity(act, true, false);
+            additionalActs.add(actN);
+
+         }
+         if (sType.equals(XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE)) {
+            Activity actN = splitActivity(act, true, true);
+            additionalActs.add(actN);
+         }
+      }
       return additionalActs;
 
    }
@@ -737,4 +755,90 @@ public class XPDLRepositoryHandler {
       }
    }
 
+   protected Activity splitActivity(Activity act,
+                                    boolean createRouteActivity,
+                                    boolean createAfter) {
+      Activities acs = (Activities) act.getParent();
+      Activity actN = (Activity) acs.generateNewElementWithXPDL1Support();
+      actN.makeAs(act);
+      act.getDeadlines().clear();
+      actN.setId(XMLUtil.generateSimilarOrIdenticalUniqueId(acs,
+                                                            new HashSet(),
+                                                            act.getId()));
+      if (createRouteActivity) {
+         actN.getActivityTypes().setRoute();
+         actN.get("Performer").setValue("");
+      }
+      if (createAfter) {
+         Join j = XMLUtil.getJoin(actN);
+         Split s = XMLUtil.getSplit(act);         
+         if (j != null) {
+            j.setTypeNONE();
+            if (act.getActivityType() == XPDLConstants.ACTIVITY_TYPE_ROUTE) {
+               act.getActivityTypes()
+                  .getRoute()
+                  .getGatewayTypeAttribute()
+                  .setValue(XMLUtil.getJoin(act).getType());
+            }
+         }
+         if (s!=null) {
+            s.setTypeNONE();
+         }
+         if (actN.getActivityType() == XPDLConstants.ACTIVITY_TYPE_ROUTE) {
+            actN.getActivityTypes()
+               .getRoute()
+               .getGatewayTypeAttribute()
+               .setValue(XMLUtil.getSplit(actN).getType());
+         }
+      } else {
+         Split s = XMLUtil.getSplit(actN);
+         Join j = XMLUtil.getJoin(act);
+         if (s != null) {
+            s.setTypeNONE();
+            if (act.getActivityType() == XPDLConstants.ACTIVITY_TYPE_ROUTE) {
+               act.getActivityTypes()
+                  .getRoute()
+                  .getGatewayTypeAttribute()
+                  .setValue(XMLUtil.getSplit(act).getType());
+            }
+         }
+         if (j!=null) {
+            j.setTypeNONE();
+         }
+         if (actN.getActivityType() == XPDLConstants.ACTIVITY_TYPE_ROUTE) {
+            actN.getActivityTypes()
+               .getRoute()
+               .getGatewayTypeAttribute()
+               .setValue(XMLUtil.getJoin(actN).getType());
+         }
+      }
+      acs.add(actN);
+
+      Iterator it = null;
+      if (createAfter) {
+         it = XMLUtil.getOutgoingTransitions(act).iterator();
+      } else {
+         it = XMLUtil.getIncomingTransitions(act).iterator();
+      }
+      while (it.hasNext()) {
+         Transition t = (Transition) it.next();
+         if (createAfter) {
+            t.setFrom(actN.getId());
+         } else {
+            t.setTo(actN.getId());
+         }
+      }
+      Transitions tras = (Transitions) ((XMLComplexElement) acs.getParent()).get("Transitions");
+      Transition tra = (Transition) tras.generateNewElement();
+      tra.setId(XMLUtil.generateUniqueId(tras, new HashSet()));
+      if (createAfter) {
+         tra.setFrom(act.getId());
+         tra.setTo(actN.getId());
+      } else {
+         tra.setFrom(actN.getId());
+         tra.setTo(act.getId());
+      }
+      tras.add(tra);
+      return actN;
+   }
 }

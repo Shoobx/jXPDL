@@ -3140,7 +3140,7 @@ public class XMLUtil {
       if (ogt.size() > 1) {
 
          if (s.getType().equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE)) {
-            s.setTypeExclusive();
+            s.setTypeParallel();
             // lm.debug("--------------------- st set to xor");
             changed = true;
          }

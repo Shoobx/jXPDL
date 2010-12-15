@@ -1,25 +1,26 @@
 /**
-* Together XPDL Model
-* Copyright (C) 2010 Together Teamsolutions Co., Ltd. 
-* 
-* This program is free software: you can redistribute it and/or modify 
-* it under the terms of the GNU General Public License as published by 
-* the Free Software Foundation, either version 3 of the License, or 
-* (at your option) any later version. 
-*
-* This program is distributed in the hope that it will be useful, 
-* but WITHOUT ANY WARRANTY; without even the implied warranty of 
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
-* GNU General Public License for more details. 
-*
-* You should have received a copy of the GNU General Public License 
-* along with this program. If not, see http://www.gnu.org/licenses
-*/
+ * Together XPDL Model
+ * Copyright (C) 2010 Together Teamsolutions Co., Ltd. 
+ * 
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or 
+ * (at your option) any later version. 
+ *
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * GNU General Public License for more details. 
+ *
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see http://www.gnu.org/licenses
+ */
 
 package org.enhydra.jxpdl.elements;
 
 import org.enhydra.jxpdl.XMLAttribute;
 import org.enhydra.jxpdl.XMLComplexElement;
+import org.enhydra.jxpdl.XMLUtil;
 import org.enhydra.jxpdl.XPDLConstants;
 
 /**
@@ -37,18 +38,25 @@ public class Split extends XMLComplexElement {
       XMLAttribute attrType = new XMLAttribute(this, "Type", false, new String[] {
             XPDLConstants.JOIN_SPLIT_TYPE_NONE,
             XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE,
-//            XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE,
-//            XPDLConstants.JOIN_SPLIT_TYPE_COMPLEX,
+            XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE,
+            // XPDLConstants.JOIN_SPLIT_TYPE_COMPLEX,
             XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL
       }, 0) {
          // MIGRATION FROM XPDL1
          public void setValue(String v) {
+            String vNew = v;
             if ("AND".equals(v)) {
-               v = XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL;
+               vNew = XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL;
             } else if ("XOR".equals(v)) {
-               v = XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE;
+               vNew = XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE;
             }
-            super.setValue(v);
+            super.setValue(vNew);
+            if (!vNew.equals(v)) {
+               Activity act = XMLUtil.getActivity(this);
+               if (act.getActivityType() == XPDLConstants.ACTIVITY_TYPE_ROUTE) {
+                  act.getActivityTypes().getRoute().getGatewayTypeAttribute().setValue(vNew);
+               }
+            }
          }
       };
       TransitionRefs refTransitionRefs = new TransitionRefs(this); // min=0
@@ -77,13 +85,13 @@ public class Split extends XMLComplexElement {
       getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE);
    }
 
-//   public void setTypeComplex() {
-//      getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_COMPLEX);
-//   }
-//
-//   public void setTypeInclusive() {
-//      getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE);
-//   }
+   // public void setTypeComplex() {
+   // getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_COMPLEX);
+   // }
+   //
+   public void setTypeInclusive() {
+      getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE);
+   }
 
    public TransitionRefs getTransitionRefs() {
       return (TransitionRefs) get("TransitionRefs");
