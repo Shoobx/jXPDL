@@ -42,6 +42,7 @@ import org.enhydra.jxpdl.elements.Deadlines;
 import org.enhydra.jxpdl.elements.ExpressionType;
 import org.enhydra.jxpdl.elements.ExtendedAttribute;
 import org.enhydra.jxpdl.elements.ExtendedAttributes;
+import org.enhydra.jxpdl.elements.Implementation;
 import org.enhydra.jxpdl.elements.Join;
 import org.enhydra.jxpdl.elements.Namespace;
 import org.enhydra.jxpdl.elements.Namespaces;
@@ -498,7 +499,8 @@ public class XPDLRepositoryHandler {
       additionalActs.clear();
       for (int i = 0; i < acts.size(); i++) {
          Activity act = (Activity) acts.get(i);
-         if (act.getActivityTypes()
+         if (act.getActivityTypes().getChoosen() instanceof Implementation &&
+               act.getActivityTypes()
             .getImplementation()
             .getImplementationTypes()
             .getChoosen() instanceof Tools) {
@@ -839,6 +841,7 @@ public class XPDLRepositoryHandler {
          tra.setTo(act.getId());
       }
       tras.add(tra);
+      
       return actN;
    }
 }
