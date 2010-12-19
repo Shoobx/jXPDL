@@ -20,6 +20,7 @@ package org.enhydra.jxpdl.elements;
 
 import org.enhydra.jxpdl.XMLAttribute;
 import org.enhydra.jxpdl.XMLComplexElement;
+import org.enhydra.jxpdl.XMLUtil;
 import org.enhydra.jxpdl.XPDLConstants;
 
 /**
@@ -48,13 +49,25 @@ public class Route extends XMLComplexElement {
                                                       "GatewayType",
                                                       false,
                                                       new String[] {
-                                                            XPDLConstants.JOIN_SPLIT_TYPE_NONE,
+//                                                            XPDLConstants.JOIN_SPLIT_TYPE_NONE,
                                                             XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE,
                                                             XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE,
                                                             // XPDLConstants.JOIN_SPLIT_TYPE_COMPLEX,
                                                             XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL
                                                       },
-                                                      0);
+                                                      0) {
+         public void setValue (String v) {
+            super.setValue(v);
+            Split s = XMLUtil.getSplit(XMLUtil.getActivity(this));
+            if (s!=null) {
+               s.set("Type", v);
+            }
+            Join j = XMLUtil.getJoin(XMLUtil.getActivity(this));
+            if (j!=null) {
+               j.set("Type", v);
+            }            
+         }
+      };
       add(attrGatewayType);
    }
 

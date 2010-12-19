@@ -38,9 +38,9 @@ public class BlockActivity extends XMLComplexElement {
    }
 
    protected void fillStructure() {
-      XMLAttribute attrBlockId = new XMLAttribute(this, "ActivitySetId", true); // required
+      XMLAttribute attrActivitySetId = new XMLAttribute(this, "ActivitySetId", true); // required
 
-      add(attrBlockId);
+      add(attrActivitySetId);
    }
 
    public String getActivitySetId() {

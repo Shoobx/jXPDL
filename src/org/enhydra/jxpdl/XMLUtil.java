@@ -2215,7 +2215,6 @@ public class XMLUtil {
       return false;
    }
 
-   // Useful only if JaWE is set to work without start/end bubbles
    public static boolean isStartingActivity(Activity act) {
       Set trans = XMLUtil.getIncomingTransitions(act);
       if (trans.size() == 0 || (trans.size() == 1 && hasCircularTransitions(trans))) {
@@ -2224,7 +2223,6 @@ public class XMLUtil {
       return false;
    }
 
-   // Useful only if JaWE is set to work without start/end bubbles
    public static boolean isEndingActivity(Activity act) {
       Set trans = XMLUtil.getNonExceptionalOutgoingTransitions(act);
       if (trans.size() == 0 || (trans.size() == 1 && hasCircularTransitions(trans))) {
@@ -3140,7 +3138,11 @@ public class XMLUtil {
       if (ogt.size() > 1) {
 
          if (s.getType().equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE)) {
-            s.setTypeParallel();
+            if (act.getActivityType()!=XPDLConstants.ACTIVITY_TYPE_ROUTE) {
+               s.setTypeParallel();
+            } else {
+               s.set("Type", act.getActivityTypes().getRoute().getGatewayType());
+            }
             // lm.debug("--------------------- st set to xor");
             changed = true;
          }
@@ -3183,7 +3185,11 @@ public class XMLUtil {
          }
       } else {
          if (j.getType().equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE)) {
-            j.setTypeExclusive();
+            if (act.getActivityType()!=XPDLConstants.ACTIVITY_TYPE_ROUTE) {
+               j.setTypeExclusive();
+            } else {
+               j.set("Type", act.getActivityTypes().getRoute().getGatewayType());
+            }
             changed = true;
          }
       }
