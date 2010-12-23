@@ -57,6 +57,10 @@ import org.enhydra.jxpdl.elements.ActualParameter;
 import org.enhydra.jxpdl.elements.Application;
 import org.enhydra.jxpdl.elements.Applications;
 import org.enhydra.jxpdl.elements.ArrayType;
+import org.enhydra.jxpdl.elements.Artifact;
+import org.enhydra.jxpdl.elements.Artifacts;
+import org.enhydra.jxpdl.elements.Association;
+import org.enhydra.jxpdl.elements.Associations;
 import org.enhydra.jxpdl.elements.BasicType;
 import org.enhydra.jxpdl.elements.BlockActivity;
 import org.enhydra.jxpdl.elements.DataField;
@@ -594,6 +598,17 @@ public class XMLUtil {
       return (Activity) el;
    }
 
+   public static Artifact getArtifact(XMLElement el) {
+      if (el == null)
+         return null;
+      while (!(el instanceof Artifact)) {
+         el = el.getParent();
+         if (el == null)
+            break;
+      }
+      return (Artifact) el;
+   }
+
    public static Transition getTransition(XMLElement el) {
       if (el == null)
          return null;
@@ -603,6 +618,17 @@ public class XMLUtil {
             break;
       }
       return (Transition) el;
+   }
+
+   public static Association getAssociation(XMLElement el) {
+      if (el == null)
+         return null;
+      while (!(el instanceof Association)) {
+         el = el.getParent();
+         if (el == null)
+            break;
+      }
+      return (Association) el;
    }
 
    public static Participant getParticipant(XMLElement el) {
@@ -2080,6 +2106,10 @@ public class XMLUtil {
          prefix += "ase";
       } else if (cel instanceof Applications) {
          prefix += "app";
+      } else if (cel instanceof Artifacts) {
+         prefix += "art";
+      } else if (cel instanceof Associations) {
+         prefix += "ass";
       } else if (cel instanceof DataFields) {
          prefix += "df";
       } else if (cel instanceof FormalParameters) {

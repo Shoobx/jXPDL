@@ -24,20 +24,20 @@ import org.enhydra.jxpdl.XMLElement;
 /**
  * Represents corresponding element from XPDL schema.
  * 
- * @author Sasa Bojanic
  */
-public class ConnectorGraphicsInfos extends XMLCollection {
+public class Artifacts extends XMLCollection {
 
-	public ConnectorGraphicsInfos(Transition parent) {
-		super(parent, false);
-	}
-	
-   public ConnectorGraphicsInfos(Association parent) {
+   // min=0, max=unbounded
+   public Artifacts(Package parent) {
       super(parent, false);
    }
 
    public XMLElement generateNewElement() {
-		return new ConnectorGraphicsInfo(this);
-	}
+      return new Artifact(this);
+   }
+
+   public Artifact getArtifact(String Id) {
+      return (Artifact) super.getCollectionElement(Id);
+   }
 
 }

@@ -22,22 +22,21 @@ import org.enhydra.jxpdl.XMLCollection;
 import org.enhydra.jxpdl.XMLElement;
 
 /**
- * Represents corresponding element from XPDL schema.
- * 
- * @author Sasa Bojanic
+ *  Represents corresponding element from XPDL schema.
+ *
  */
-public class ConnectorGraphicsInfos extends XMLCollection {
+public class DODataFields extends XMLCollection {
 
-	public ConnectorGraphicsInfos(Transition parent) {
-		super(parent, false);
-	}
-	
-   public ConnectorGraphicsInfos(Association parent) {
-      super(parent, false);
+   public DODataFields (DataObject parent) {
+      super(parent, "DataFields", false);
    }
 
    public XMLElement generateNewElement() {
-		return new ConnectorGraphicsInfo(this);
-	}
+      return new DODataField(this);
+   }
+
+   public DODataField getDODataField (String Id) {
+      return (DODataField)super.getCollectionElement(Id);
+   }
 
 }

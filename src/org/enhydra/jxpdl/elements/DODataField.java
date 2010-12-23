@@ -18,26 +18,15 @@
 
 package org.enhydra.jxpdl.elements;
 
-import org.enhydra.jxpdl.XMLCollection;
-import org.enhydra.jxpdl.XMLElement;
+import org.enhydra.jxpdl.XMLCollectionElement;
 
 /**
- * Represents corresponding element from XPDL schema.
- * 
- * @author Sasa Bojanic
+ *  Represents corresponding element from XPDL schema.
  */
-public class ConnectorGraphicsInfos extends XMLCollection {
+public class DODataField extends XMLCollectionElement {
 
-	public ConnectorGraphicsInfos(Transition parent) {
-		super(parent, false);
-	}
-	
-   public ConnectorGraphicsInfos(Association parent) {
-      super(parent, false);
+   public DODataField (DODataFields dfs) {
+      super(dfs, "DataField", true);
    }
-
-   public XMLElement generateNewElement() {
-		return new ConnectorGraphicsInfo(this);
-	}
 
 }

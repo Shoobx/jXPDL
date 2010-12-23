@@ -78,6 +78,8 @@ public class Package extends XMLComplexElement {
       Applications refApplications = new Applications(this); // min=0
       DataFields refDataFields = new DataFields(this); // min=0
       Pools refPools = new Pools(this); // min=0
+      Associations refAssociations = new Associations(this); // min=0
+		Artifacts refArtifacts = new Artifacts(this); // min=0
       WorkflowProcesses refWorkflowProcesses = new WorkflowProcesses(this); // min=0
       ExtendedAttributes refExtendedAttributes = new ExtendedAttributes(this);
 
@@ -93,6 +95,8 @@ public class Package extends XMLComplexElement {
       add(refApplications);
       add(refDataFields);
       add(refPools);
+      add(refAssociations);
+      add(refArtifacts);
       add(refWorkflowProcesses);
       add(refExtendedAttributes);
    }
@@ -220,6 +224,14 @@ public class Package extends XMLComplexElement {
       return (TypeDeclarations) get("TypeDeclarations");
    }
 
+   public Associations getAssociations() {
+      return (Associations) get("Associations");
+   }
+
+   public Artifacts getArtifacts() {
+		return (Artifacts) get("Artifacts");
+	}
+	
    public WorkflowProcesses getWorkflowProcesses() {
       return (WorkflowProcesses) get("WorkflowProcesses");
    }

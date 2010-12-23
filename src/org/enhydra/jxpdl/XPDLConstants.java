@@ -131,4 +131,14 @@ public final class XPDLConstants  {
    public static final int ACTIVITY_TYPE_TASK_SEND = 13;
    public static final int ACTIVITY_TYPE_TASK_USER = 14;
    public static final int ACTIVITY_TYPE_TASK_APPLICATION = 2;
+   
+	public static final String ARTIFACT_TYPE_DATAOBJECT = "DataObject";
+	public static final String ARTIFACT_TYPE_GROUP = "Group";
+	public static final String ARTIFACT_TYPE_ANNOTATION = "Annotation";
+
+   public static final String ASSOCIATION_DIRECTION_NONE = "None";
+   public static final String ASSOCIATION_DIRECTION_TO = "To";
+   public static final String ASSOCIATION_DIRECTION_FROM = "From";
+   public static final String ASSOCIATION_DIRECTION_BOTH = "Both";
+	
 }
