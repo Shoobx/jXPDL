@@ -1048,6 +1048,115 @@ public class XMLUtil {
       return ((Activities) ((XMLCollectionElement) t.getParent().getParent()).get("Activities")).getActivity(t.getTo());
    }
 
+   public static Set getOutgoingAssociations(XMLCollectionElement actOrArt) {
+      Set ret = new HashSet();
+      Iterator it = XMLUtil.getPackage(actOrArt)
+         .getAssociations()
+         .toElements()
+         .iterator();
+      String actId = actOrArt.getId();
+      while (it.hasNext()) {
+         Association a = (Association) it.next();
+         if (a.getSource().equals(actId)) {
+            ret.add(a);
+         }
+      }
+      return ret;
+   }
+
+   public static Set getIncomingAssociations(XMLCollectionElement actOrArt) {
+      Set ret = new HashSet();
+      Iterator it = XMLUtil.getPackage(actOrArt)
+         .getAssociations()
+         .toElements()
+         .iterator();
+      String actId = actOrArt.getId();
+      while (it.hasNext()) {
+         Association a = (Association) it.next();
+         if (a.getTarget().equals(actId)) {
+            ret.add(a);
+         }
+      }
+      return ret;
+   }
+
+   public static XMLCollectionElement getAssociationSource(Association t) {
+      return getAssociationSourceOrTarget(t, true);
+   }
+
+   public static XMLCollectionElement getAssociationTarget(Association t) {
+      return getAssociationSourceOrTarget(t, false);
+   }
+
+   protected static XMLCollectionElement getAssociationSourceOrTarget(Association t,
+                                                                      boolean source) {
+      String st = "Source";
+      if (!source) {
+         st = "Target";
+      }
+      String stId = t.get(st).toValue();
+      XMLCollectionElement a = XMLUtil.getPackage(t).getArtifact(stId);
+      if (a == null) {
+         Iterator it = XMLUtil.getPackage(t)
+            .getWorkflowProcesses()
+            .toElements()
+            .iterator();
+         while (it.hasNext()) {
+            WorkflowProcess wp = (WorkflowProcess) it.next();
+            a = wp.getActivities().getActivity(stId);
+            if (a == null) {
+               Iterator it2 = wp.getActivitySets().toElements().iterator();
+               while (it2.hasNext()) {
+                  ActivitySet as = (ActivitySet) it2.next();
+                  a = as.getActivities().getActivity(stId);
+                  if (a != null) {
+                     break;
+                  }
+               }
+            }
+         }
+      }
+      return a;
+   }
+
+   public static List getAllArtifactsAndAssociationsForWorkflowProcessOrActivitySet(XMLCollectionElement wpOrAs) {
+      List ret = new ArrayList();
+
+      Iterator it = XMLUtil.getPoolForProcessOrActivitySet(wpOrAs)
+         .getLanes()
+         .toElements()
+         .iterator();
+      List laneIds = new ArrayList();
+      while (it.hasNext()) {
+         Lane l = (Lane) it.next();
+         laneIds.add(l.getId());
+      }
+      Package pkg = XMLUtil.getPackage(wpOrAs);
+      it = pkg.getArtifacts().toElements().iterator();
+      while (it.hasNext()) {
+         Artifact a = (Artifact) it.next();
+         if (a.getNodeGraphicsInfos().size() > 0) {
+            Iterator ngit = a.getNodeGraphicsInfos().toElements().iterator();
+            boolean processed = false;
+            while (ngit.hasNext()) {
+               NodeGraphicsInfo ngi = (NodeGraphicsInfo) ngit.next();
+               if (laneIds.contains(ngi.getLaneId())) {
+                  if (!processed) {
+                     ret.add(a);
+                     List arefs = getArtifactReferences(pkg, a.getId());
+                     for (int i = 0; i < arefs.size(); i++) {
+                        Association asoc = XMLUtil.getAssociation((XMLElement) arefs.get(i));
+                        ret.add(asoc);
+                     }
+                     processed = true;
+                  }
+               }
+            }
+         }
+      }
+      return ret;
+   }
+
    /**
     * Checks if Id is valid NMTOKEN string.
     */
@@ -1784,8 +1893,8 @@ public class XMLUtil {
 
       File f = new File(inputFile);
       inputFile = f.getCanonicalPath();
-      
-      System.out.println("Converting XPDL model from file \"" + inputFile+"\".\n");
+
+      System.out.println("Converting XPDL model from file \"" + inputFile + "\".\n");
 
       System.out.println("...reading file and creating XPDL model");
       pkg = readFromFile(xmli, inputFile, readExt);
@@ -1813,7 +1922,7 @@ public class XMLUtil {
       } else {
          outF = inputFile + "-out";
       }
-      System.out.println("\nWritting converted XPDL model into file \""+outF+"\".");
+      System.out.println("\nWritting converted XPDL model into file \"" + outF + "\".");
       writeToFile(outF, pkg);
    }
 
@@ -1841,7 +1950,7 @@ public class XMLUtil {
       pkg.getPackageHeader().setXPDLVersion("2.1");
       pkg.getPackageHeader().setVendor("(c) Together Teamsolutions Co., Ltd.");
       pkg.getPackageHeader().setCreated(XMLUtil.getCurrentDateAndTime());
-      
+
       pkg.getScript().setType("text/javascript");
 
       System.out.println("......creating Participant[Id=manager,Name=Manager,Type=ROLE]");
@@ -2155,10 +2264,14 @@ public class XMLUtil {
          return true;
       else if (el instanceof Activity)
          return XMLUtil.checkActivityId((Activity) el, newId);
+      else if (el instanceof Artifact)
+         return XMLUtil.checkArtifactId((Artifact) el, newId);
       else if (el instanceof Transition)
          return XMLUtil.checkTransitionId((Transition) el, newId);
       else if (el instanceof ActivitySet)
          return XMLUtil.checkActivitySetId((ActivitySet) el, newId);
+      else if (el instanceof Lane)
+         return XMLUtil.checkLaneId((Lane) el, newId);
       else if (parent instanceof XMLCollection) {
          List elsWithId = XMLUtil.getElementsForId((XMLCollection) parent, newId);
          if (elsWithId.size() == 0 || (elsWithId.size() == 1 && elsWithId.contains(el))) {
@@ -2171,11 +2284,22 @@ public class XMLUtil {
    }
 
    public static boolean checkActivityId(Activity newEl, String newId) {
+      return checkActivityOrArtifactId(newEl, newId);
+   }
+
+   public static boolean checkArtifactId(Artifact newEl, String newId) {
+      return checkActivityOrArtifactId(newEl, newId);
+   }
+
+   protected static boolean checkActivityOrArtifactId(XMLCollectionElement newEl,
+                                                      String newId) {
+      List elsWithId = new ArrayList();
+      elsWithId.addAll(XMLUtil.getElementsForId(XMLUtil.getPackage(newEl).getArtifacts(),
+                                                newId));
       Iterator it = XMLUtil.getPackage(newEl)
          .getWorkflowProcesses()
          .toElements()
          .iterator();
-      List elsWithId = new ArrayList();
       while (it.hasNext()) {
          WorkflowProcess proc = (WorkflowProcess) it.next();
          elsWithId.addAll(XMLUtil.getElementsForId(proc.getActivities(), newId));
@@ -2212,6 +2336,19 @@ public class XMLUtil {
       while (it.hasNext()) {
          WorkflowProcess wp = (WorkflowProcess) it.next();
          elsWithId.addAll(getElementsForId(wp.getActivitySets(), newId));
+      }
+      if (elsWithId.size() == 0 || (elsWithId.size() == 1 && elsWithId.contains(newEl))) {
+         return true;
+      }
+      return false;
+   }
+
+   public static boolean checkLaneId(Lane newEl, String newId) {
+      Iterator it = XMLUtil.getPackage(newEl).getPools().toElements().iterator();
+      List elsWithId = new ArrayList();
+      while (it.hasNext()) {
+         Pool p = (Pool) it.next();
+         elsWithId.addAll(getElementsForId(p.getLanes(), newId));
       }
       if (elsWithId.size() == 0 || (elsWithId.size() == 1 && elsWithId.contains(newEl))) {
          return true;
@@ -2458,6 +2595,97 @@ public class XMLUtil {
       return toRet;
    }
 
+   public static List getReferences(Artifact referenced) {
+      return getArtifactReferences(XMLUtil.getPackage(referenced), referenced.getId());
+   }
+
+   public static List getArtifactReferences(Package pkg, String referencedId) {
+      List references = new ArrayList();
+      if (referencedId.equals("")) {
+         return references;
+      }
+
+      Iterator it = pkg.getAssociations().toElements().iterator();
+      while (it.hasNext()) {
+         Association asoc = (Association) it.next();
+         if (asoc.getSource().equals(referencedId)) {
+            references.add(asoc.get("Source"));
+         } else if (asoc.getTarget().equals(referencedId)) {
+            references.add(asoc.get("Target"));
+         }
+      }
+
+      return references;
+   }
+
+   public static List getReferences(Package pkg, Association referenced) {
+      List references = new ArrayList();
+      if (referenced.getId().equals("")) {
+         return references;
+      }
+
+      references.addAll(tGetAssociationReferences(pkg, referenced));
+
+      Iterator it = pkg.getWorkflowProcesses().toElements().iterator();
+      while (it.hasNext()) {
+         WorkflowProcess wp = (WorkflowProcess) it.next();
+         references.addAll(getReferences(wp, referenced));
+      }
+
+      return references;
+   }
+
+   public static List getReferences(WorkflowProcess wp, Association referenced) {
+      List references = new ArrayList();
+      if (referenced.getId().equals("")) {
+         return references;
+      }
+      references.addAll(tGetAssociationReferences(wp, referenced));
+
+      Iterator it = wp.getActivitySets().toElements().iterator();
+      while (it.hasNext()) {
+         ActivitySet as = (ActivitySet) it.next();
+         references.addAll(tGetAssociationReferences(as, referenced));
+      }
+
+      return references;
+   }
+
+   public static List getReferences(ActivitySet as, Association referenced) {
+      return tGetAssociationReferences(as, referenced);
+   }
+
+   protected static List tGetAssociationReferences(XMLComplexElement pkgOrWpOrAs,
+                                                   Association referenced) {
+      List references = new ArrayList();
+      if (referenced.getId().equals("")) {
+         return references;
+      }
+
+      if (pkgOrWpOrAs instanceof Package) {
+         Iterator it = ((Package) pkgOrWpOrAs).getArtifacts().toElements().iterator();
+         while (it.hasNext()) {
+            Artifact art = (Artifact) it.next();
+            if (referenced.getSource().equals(art.getId())
+                || referenced.getTarget().equals(art.getId())) {
+               references.add(referenced);
+            }
+         }
+      } else {
+         Iterator it = ((Activities) pkgOrWpOrAs.get("Activities")).toElements()
+            .iterator();
+         while (it.hasNext()) {
+            Activity act = (Activity) it.next();
+            if (referenced.getSource().equals(act.getId())
+                || referenced.getTarget().equals(act.getId())) {
+               references.add(referenced);
+            }
+         }
+      }
+
+      return references;
+   }
+
    public static List getParticipantReferences(XMLComplexElement pkgOrWp,
                                                String referencedId) {
       if (referencedId.equals("")) {
@@ -2695,26 +2923,28 @@ public class XMLUtil {
          return references;
       }
 
-      Iterator pi = pkg.getPools().toElements().iterator();
-      while (pi.hasNext()) {
-         Pool p = (Pool) pi.next();
-         Iterator li = p.getLanes().toElements().iterator();
-         while (li.hasNext()) {
-            Lane l = (Lane) li.next();
-            Iterator nli = l.getNestedLanes().toElements().iterator();
-            while (nli.hasNext()) {
-               NestedLane nl = (NestedLane) nli.next();
-               if (nl.getLaneId().equals(referencedId)) {
-                  references.add(nl);
-               }
-            }
+      references.addAll(tGetLaneReferences(pkg, referencedId));
+
+      List plsWithLane = new ArrayList();
+      Iterator it = pkg.getPools().toElements().iterator();
+      while (it.hasNext()) {
+         Pool p = (Pool) it.next();
+         if (p.getLanes().getLane(referencedId) != null) {
+            plsWithLane.add(p);
          }
       }
-
-      Iterator it = pkg.getWorkflowProcesses().toElements().iterator();
+      it = plsWithLane.iterator();
       while (it.hasNext()) {
-         WorkflowProcess wp = (WorkflowProcess) it.next();
-         references.addAll(getLaneReferences(wp, referencedId));
+         Pool p = (Pool) it.next();
+         WorkflowProcess wp = getProcessForPool(p);
+         if (wp != null) {
+            references.addAll(tGetLaneReferences(wp, referencedId));
+         } else {
+            ActivitySet as = getActivitySet(p);
+            if (as != null) {
+               references.addAll(tGetLaneReferences(as, referencedId));
+            }
+         }
       }
 
       return references;
@@ -2741,23 +2971,54 @@ public class XMLUtil {
       return references;
    }
 
-   protected static List tGetLaneReferences(XMLCollectionElement wpOrAs,
-                                            String referencedId) {
+   public static List tGetLaneReferences(XMLComplexElement pkgOrWpOrAs,
+                                         String referencedId) {
       List references = new ArrayList();
       if (referencedId.equals("")) {
          return references;
       }
 
-      Iterator it = ((Activities) wpOrAs.get("Activities")).toElements().iterator();
-      while (it.hasNext()) {
-         Activity act = (Activity) it.next();
-         Iterator itn = act.getNodeGraphicsInfos().toElements().iterator();
-         while (itn.hasNext()) {
-            NodeGraphicsInfo ngi = (NodeGraphicsInfo) itn.next();
-            if (ngi.getToolId().equals("JaWE")) {
+      if (pkgOrWpOrAs instanceof Package) {
+         Iterator pi = ((Package) pkgOrWpOrAs).getPools().toElements().iterator();
+         while (pi.hasNext()) {
+            Pool p = (Pool) pi.next();
+            if (p.getLanes().getLane(referencedId) != null) {
+               Iterator li = p.getLanes().toElements().iterator();
+               while (li.hasNext()) {
+                  Lane l = (Lane) li.next();
+                  Iterator nli = l.getNestedLanes().toElements().iterator();
+                  while (nli.hasNext()) {
+                     NestedLane nl = (NestedLane) nli.next();
+                     if (nl.getLaneId().equals(referencedId)) {
+                        references.add(nl);
+                     }
+                  }
+               }
+               Iterator ait = ((Package) pkgOrWpOrAs).getArtifacts()
+                  .toElements()
+                  .iterator();
+               while (ait.hasNext()) {
+                  Artifact a = (Artifact) ait.next();
+                  Iterator ngit = a.getNodeGraphicsInfos().toElements().iterator();
+                  while (ngit.hasNext()) {
+                     NodeGraphicsInfo ngi = (NodeGraphicsInfo) ngit.next();
+                     if (referencedId.equals(ngi.getLaneId())) {
+                        references.add(ngi);
+                     }
+                  }
+               }
+            }
+         }
+      } else {
+         Iterator it = ((Activities) pkgOrWpOrAs.get("Activities")).toElements()
+            .iterator();
+         while (it.hasNext()) {
+            Activity act = (Activity) it.next();
+            Iterator itn = act.getNodeGraphicsInfos().toElements().iterator();
+            while (itn.hasNext()) {
+               NodeGraphicsInfo ngi = (NodeGraphicsInfo) itn.next();
                if (ngi.getLaneId().equals(referencedId)) {
                   references.add(ngi);
-                  break;
                }
             }
          }
@@ -3082,6 +3343,15 @@ public class XMLUtil {
       while (it.hasNext()) {
          refs.add(((Transition) it.next()).get("From"));
       }
+      Associations asocs = XMLUtil.getPackage(wpOrAs).getAssociations();
+      it = getAssociations(asocs, referencedId, true).iterator();
+      while (it.hasNext()) {
+         refs.add(((Association) it.next()).get("Target"));
+      }
+      it = getAssociations(asocs, referencedId, false).iterator();
+      while (it.hasNext()) {
+         refs.add(((Association) it.next()).get("Source"));
+      }
       return new ArrayList(refs);
    }
 
@@ -3093,7 +3363,7 @@ public class XMLUtil {
       if (from != null) {
          refs.add(from);
       }
-      if (to != null) {
+      if (to != null && to != from) {
          refs.add(to);
       }
       return new ArrayList(refs);
@@ -3168,7 +3438,7 @@ public class XMLUtil {
       if (ogt.size() > 1) {
 
          if (s.getType().equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE)) {
-            if (act.getActivityType()!=XPDLConstants.ACTIVITY_TYPE_ROUTE) {
+            if (act.getActivityType() != XPDLConstants.ACTIVITY_TYPE_ROUTE) {
                s.setTypeParallel();
             } else {
                s.set("Type", act.getActivityTypes().getRoute().getGatewayType());
@@ -3215,7 +3485,7 @@ public class XMLUtil {
          }
       } else {
          if (j.getType().equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE)) {
-            if (act.getActivityType()!=XPDLConstants.ACTIVITY_TYPE_ROUTE) {
+            if (act.getActivityType() != XPDLConstants.ACTIVITY_TYPE_ROUTE) {
                j.setTypeExclusive();
             } else {
                j.set("Type", act.getActivityTypes().getRoute().getGatewayType());
@@ -3239,12 +3509,21 @@ public class XMLUtil {
       return changed;
    }
 
-   public static void updateActivityReferences(List refsTrasToFrom,
+   public static void updateActivityReferences(List refsTrasAndAsocsToFromTargetSource,
                                                String oldActId,
                                                String newActId) {
-      Iterator it = refsTrasToFrom.iterator();
+      Iterator it = refsTrasAndAsocsToFromTargetSource.iterator();
       while (it.hasNext()) {
          ((XMLElement) it.next()).setValue(newActId);
+      }
+   }
+
+   public static void updateArtifactReferences(List refsAsocsTargetSource,
+                                               String oldArtId,
+                                               String newArtId) {
+      Iterator it = refsAsocsTargetSource.iterator();
+      while (it.hasNext()) {
+         ((XMLElement) it.next()).setValue(newArtId);
       }
    }
 
@@ -3374,6 +3653,50 @@ public class XMLUtil {
             }
          } else {
             if (t.getFrom().equals(actId)) {
+               l.add(t);
+            }
+         }
+      }
+      return l;
+   }
+
+   public static void removeAssociationsForActivityOrArtifact(XMLCollectionElement a) {
+      Set asocsToRemove = getAssociationsForActivityOrArtifact(a);
+      Associations asocs = XMLUtil.getPackage(a).getAssociations();
+      asocs.removeAll(new ArrayList(asocsToRemove));
+   }
+
+   public static void removeAssociationsForActivitiesOrArtifacts(List actsOrArts) {
+      if (actsOrArts.size() == 0)
+         return;
+      Set asocsToRemove = new HashSet();
+      Iterator it = actsOrArts.iterator();
+      while (it.hasNext()) {
+         XMLCollectionElement a = (XMLCollectionElement) it.next();
+         asocsToRemove.addAll(getAssociationsForActivityOrArtifact(a));
+      }
+      Associations asocs = XMLUtil.getPackage((XMLElement) actsOrArts.toArray()[0])
+         .getAssociations();
+      asocs.removeAll(new ArrayList(asocsToRemove));
+   }
+
+   protected static Set getAssociationsForActivityOrArtifact(XMLCollectionElement a) {
+      Set trasToRemove = XMLUtil.getIncomingAssociations(a);
+      trasToRemove.addAll(XMLUtil.getOutgoingAssociations(a));
+      return trasToRemove;
+   }
+
+   public static List getAssociations(Associations asocs, String aId, boolean isToA) {
+      List l = new ArrayList();
+      Iterator it = asocs.toElements().iterator();
+      while (it.hasNext()) {
+         Association t = (Association) it.next();
+         if (isToA) {
+            if (t.getTarget().equals(aId)) {
+               l.add(t);
+            }
+         } else {
+            if (t.getSource().equals(aId)) {
                l.add(t);
             }
          }
@@ -3514,18 +3837,7 @@ public class XMLUtil {
    }
 
    public static ActivitySet getActivitySetForPool(Pool pool) {
-      Iterator it = XMLUtil.getPackage(pool)
-         .getWorkflowProcesses()
-         .toElements()
-         .iterator();
-      while (it.hasNext()) {
-         WorkflowProcess wp = (WorkflowProcess) it.next();
-         ActivitySet as = wp.getActivitySet(pool.getProcess());
-         if (as != null) {
-            return as;
-         }
-      }
-      return null;
+      return XMLUtil.getPackage(pool).getActivitySet(pool.getProcess());
    }
 
    public static Pool getPoolForProcessOrActivitySet(XMLCollectionElement wpOrAs) {
@@ -3533,6 +3845,24 @@ public class XMLUtil {
          return getPoolForProcess((WorkflowProcess) wpOrAs);
       }
       return getPoolForActivitySet((ActivitySet) wpOrAs);
+   }
+
+   public static void removeArtifactAndAssociationsForProcessesOrActivitySets(List wpsOrAss) {
+      Iterator it = wpsOrAss.iterator();
+      while (it.hasNext()) {
+         XMLCollectionElement wpOrAs = (XMLCollectionElement) it.next();
+         removeArtifactAndAssociationsForProcessOrActivitySet(wpOrAs);
+      }
+   }
+
+   public static List removeArtifactAndAssociationsForProcessOrActivitySet(XMLCollectionElement wpOrAs) {
+      List artsAndAss = getAllArtifactsAndAssociationsForWorkflowProcessOrActivitySet(wpOrAs);
+      Iterator it = artsAndAss.iterator();
+      while (it.hasNext()) {
+         XMLElement el = (XMLElement) it.next();
+         ((XMLCollection) el.getParent()).remove(el);
+      }
+      return artsAndAss;
    }
 
    public static void updateTypeDeclarationReferences(List refDeclaredTypes,

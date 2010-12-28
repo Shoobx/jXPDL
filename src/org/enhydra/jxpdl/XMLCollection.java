@@ -157,6 +157,9 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
       if (isReadOnly) {
          throw new RuntimeException("Can't set the value of read only element!");
       }
+      if (el.getClass()!=generateNewElement().getClass()) {
+         throw new RuntimeException("Can't add element "+el.getClass().getName()+" into "+getClass().getName()+" collection!");         
+      }
       List changedSubElements=new ArrayList();
       changedSubElements.add(el);
 
@@ -179,6 +182,9 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
    public boolean add (int no,XMLElement el) {
       if (isReadOnly) {
          throw new RuntimeException("Can't set the value of read only element!");
+      }
+      if (el.getClass()!=generateNewElement().getClass()) {
+         throw new RuntimeException("Can't add element "+el.getClass().getName()+" into "+getClass().getName()+" collection!");         
       }
       if (no<0 || no>size()) throw new RuntimeException("Can't add element to position "+no+"!");
       List changedSubElements=new ArrayList();
@@ -207,10 +213,14 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
       if (isReadOnly) {
          throw new RuntimeException("Can't set the value of read only element!");
       }
+      Class gec = generateNewElement().getClass();
       if (els!=null && els.size()>0) {
          Iterator it=els.iterator();
          while (it.hasNext()) {
             XMLElement el=(XMLElement)it.next();
+            if (el.getClass()!=gec) {
+               throw new RuntimeException("Can't add element "+el.getClass().getName()+" into "+getClass().getName()+" collection!");         
+            }
             elements.add(el);
             el.setParent(this);
 //            el.originalElementHashCode=null;

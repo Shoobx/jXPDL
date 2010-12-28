@@ -148,8 +148,44 @@ public class Package extends XMLComplexElement {
       return toRet;
    }
 
+   public Artifact getArtifact(String Id) {
+      return getArtifacts().getArtifact(Id);
+   }
+
+   public Association getAssociation(String Id) {
+      return getAssociations().getAssociation(Id);
+   }
+
+   public Pool getPool(String Id) {
+      return getPools().getPool(Id);
+   }
+
    public WorkflowProcess getWorkflowProcess(String Id) {
       return getWorkflowProcesses().getWorkflowProcess(Id);
+   }
+
+   public ActivitySet getActivitySet(String Id) {
+      Iterator it = getWorkflowProcesses().toElements().iterator();
+      while (it.hasNext()) {
+         WorkflowProcess wp = (WorkflowProcess)it.next();
+         ActivitySet as = wp.getActivitySet(Id);
+         if (as!=null) {
+            return as;
+         }
+      }
+      return null;
+   }
+
+   public Activity getActivity(String Id) {
+      Iterator it = getWorkflowProcesses().toElements().iterator();
+      while (it.hasNext()) {
+         WorkflowProcess wp = (WorkflowProcess)it.next();
+         Activity act = wp.getActivity(Id);
+         if (act!=null) {
+            return act;
+         }
+      }
+      return null;
    }
 
    public Application getApplication(String Id) {
