@@ -51,6 +51,10 @@ import org.enhydra.jxpdl.elements.Application;
 import org.enhydra.jxpdl.elements.ApplicationTypes;
 import org.enhydra.jxpdl.elements.Applications;
 import org.enhydra.jxpdl.elements.ArrayType;
+import org.enhydra.jxpdl.elements.Artifact;
+import org.enhydra.jxpdl.elements.Artifacts;
+import org.enhydra.jxpdl.elements.Association;
+import org.enhydra.jxpdl.elements.Associations;
 import org.enhydra.jxpdl.elements.Author;
 import org.enhydra.jxpdl.elements.BasicType;
 import org.enhydra.jxpdl.elements.BlockActivity;
@@ -335,6 +339,12 @@ public class StandardPackageValidator implements XMLValidator {
          } else if (el.toName().equals("To")) {
             checkTransitionTo(el, existingErrors);
          }
+      } else if (parent instanceof Association) {
+         if (el.toName().equals("Source")) {
+            checkAssociationSource(el, existingErrors);
+         } else if (el.toName().equals("Target")) {
+            checkAssociationTarget(el, existingErrors);
+         }
       } else if (parent instanceof BlockActivity) {
          checkBlockId(el, existingErrors);
       }
@@ -521,6 +531,55 @@ public class StandardPackageValidator implements XMLValidator {
    public void validateElement(ArrayType el, List existingErrors, boolean fullCheck) {
       // TODO: see if need to be changed
       validateStandard(el, existingErrors, fullCheck);
+   }
+
+   public void validateElement(Artifact el, List existingErrors, boolean fullCheck) {
+      validateStandard(el, existingErrors, fullCheck);
+   }
+   
+   public void validateElement(Artifacts el, List existingErrors, boolean fullCheck) {
+      validateStandard(el, existingErrors, fullCheck);
+   }
+
+   public void validateElement(Association el, List existingErrors, boolean fullCheck) {
+      // TODO: see if need to be changed
+      validateStandard(el, existingErrors, fullCheck);
+   }
+
+   public void validateElement(Associations el, List existingErrors, boolean fullCheck) {
+      validateStandard(el, existingErrors, fullCheck);
+      if (fullCheck || existingErrors.size() == 0) {
+         Map actConns = new HashMap();
+         Set multipleConnections = new HashSet();
+         for (int i = 0; i < el.size(); i++) {
+            Association t = (Association) el.get(i);
+            String actConn = "[" + t.getSource() + "-" + t.getTarget() + "]";
+            if (actConns.containsKey(actConn)) {
+               multipleConnections.add(actConns.get(actConn));
+               multipleConnections.add(t);
+
+               if (!fullCheck) {
+                  break;
+               }
+
+            }
+            actConns.put(actConn, t);
+         }
+         if (multipleConnections.size() > 0) {
+            Iterator it = multipleConnections.iterator();
+            while (it.hasNext()) {
+               Association t = (Association) it.next();
+               String actConn = "[" + t.getSource() + "-" + t.getTarget() + "]";
+               XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+                                                                XMLValidationError.SUB_TYPE_LOGIC,
+                                                                XPDLValidationErrorIds.ERROR_MULTIPLE_CONNECTIONS,
+                                                                actConn,
+                                                                t);
+               existingErrors.add(verr);
+            }
+         }
+
+      }
    }
 
    public void validateElement(Author el, List existingErrors, boolean fullCheck) {
@@ -932,6 +991,9 @@ public class StandardPackageValidator implements XMLValidator {
       if (existingErrors.size() == 0 || fullCheck) {
          checkExternalPackages(el, existingErrors, fullCheck);
       }
+      if (existingErrors.size() == 0 || fullCheck) {
+         checkGraphConnectionsForArtifacts(el, existingErrors, fullCheck);
+      }
    }
 
    public void validateElement(PackageHeader el, List existingErrors, boolean fullCheck) {
@@ -1196,7 +1258,7 @@ public class StandardPackageValidator implements XMLValidator {
                String actConn = "[" + t.getFrom() + "-" + t.getTo() + "]";
                XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                                 XMLValidationError.SUB_TYPE_LOGIC,
-                                                                XPDLValidationErrorIds.ERROR_MULTIPLE_ACTIVITY_CONNECTIONS,
+                                                                XPDLValidationErrorIds.ERROR_MULTIPLE_CONNECTIONS,
                                                                 actConn,
                                                                 t);
                existingErrors.add(verr);
@@ -1580,9 +1642,33 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   protected void checkAssociationSource(XMLAttribute from, List existingErrors) {
+      if (XMLUtil.getAssociationSource(XMLUtil.getAssociation(from)) == null) {
+         XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+                                                          XMLValidationError.SUB_TYPE_LOGIC,
+                                                          XPDLValidationErrorIds.ERROR_NON_EXISTING_ACTIVITY_OR_ARTIFACT_REFERENCE,
+                                                          from.toValue(),
+                                                          from);
+         existingErrors.add(verr);
+      }
+   }
+
+   protected void checkAssociationTarget(XMLAttribute to, List existingErrors) {
+      if (XMLUtil.getAssociationTarget(XMLUtil.getAssociation(to)) == null) {
+         XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+                                                          XMLValidationError.SUB_TYPE_LOGIC,
+                                                          XPDLValidationErrorIds.ERROR_NON_EXISTING_ACTIVITY_OR_ARTIFACT_REFERENCE,
+                                                          to.toValue(),
+                                                          to);
+         existingErrors.add(verr);
+      }
+   }
+
    protected void checkDeclaredTypeId(XMLAttribute dtId, List existingErrors) {
       String tdId = dtId.toValue();
-      TypeDeclaration td = XMLUtil.getTypeDeclaration(xmlInterface,XMLUtil.getPackage(dtId),tdId);
+      TypeDeclaration td = XMLUtil.getTypeDeclaration(xmlInterface,
+                                                      XMLUtil.getPackage(dtId),
+                                                      tdId);
       if (td == null) {
          XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                           XMLValidationError.SUB_TYPE_LOGIC,
@@ -2144,6 +2230,49 @@ public class StandardPackageValidator implements XMLValidator {
    protected boolean checkActivityConnection(Activity act,
                                              List existingErrors,
                                              boolean fullCheck) {
+      return true;
+   }
+
+   protected boolean checkGraphConnectionsForArtifacts(Package pkg,
+                                                       List existingErrors,
+                                                       boolean fullCheck) {
+      if (pkg == null)
+         return false;
+
+      boolean isWellConnected = true;
+
+      Collection arts = pkg.getArtifacts().toElements();
+      if (arts == null || arts.size() == 0) {
+         return true;
+      }
+
+      Iterator it = arts.iterator();
+      while (it.hasNext()) {
+         Artifact art = (Artifact) it.next();
+         boolean wc = checkArtifactConnection(art, existingErrors, fullCheck);
+         if (!wc) {
+            isWellConnected = false;
+            if (!fullCheck) {
+               break;
+            }
+         }
+      }
+
+      return isWellConnected;
+   }
+
+   protected boolean checkArtifactConnection(Artifact art,
+                                             List existingErrors,
+                                             boolean fullCheck) {
+      if (XMLUtil.getOutgoingAssociations(art).size() == 0 && XMLUtil.getIncomingAssociations(art).size() == 0) {
+         XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+                                                          XMLValidationError.SUB_TYPE_CONNECTION,
+                                                          XPDLValidationErrorIds.ERROR_IMPROPERLY_CONNECTED_ARTIFACT_NO_ASSOCIATION,
+                                                          "",
+                                                          art);
+         existingErrors.add(verr);
+         return false;
+      }
       return true;
    }
 

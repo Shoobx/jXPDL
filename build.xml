@@ -172,6 +172,10 @@
    <!-- =================================================================== -->
    <target name="compile" depends="prepare">
       <mkdir dir="${classes.dir}"/>
+      <copy todir="${classes.dir}">
+         <fileset dir="${basedir}/src"
+                  includes="**/resources/*"/>
+      </copy>
       <javac target="${targetVM}" source="${targetVM}"
             srcdir="${basedir}/src" 
             destdir="${classes.dir}" 
