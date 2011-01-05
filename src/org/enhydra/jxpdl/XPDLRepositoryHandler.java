@@ -540,6 +540,7 @@ public class XPDLRepositoryHandler {
       }
       migrateActivitySetIds(pkg);
       migrateActivityIds(pkg);
+      XMLUtil.correctSplitsAndJoins(pkg);
    }
 
    protected List migrateToolAct(Activity act) {
@@ -571,7 +572,7 @@ public class XPDLRepositoryHandler {
       Join j = XMLUtil.getJoin(act);
       String jType = j != null ? j.getType() : XPDLConstants.JOIN_SPLIT_TYPE_NONE;
       Split s = XMLUtil.getSplit(act);
-      String sType = s != null ? s.getType() : XPDLConstants.JOIN_SPLIT_TYPE_NONE;
+      String sType = (s != null && XMLUtil.getNonExceptionalOutgoingTransitions(act).size()>1) ? s.getType() : XPDLConstants.JOIN_SPLIT_TYPE_NONE;
       if (actType == XPDLConstants.ACTIVITY_TYPE_ROUTE) {
          if (!sType.equals(jType)
              && !sType.equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE)
@@ -763,7 +764,7 @@ public class XPDLRepositoryHandler {
       Activities acs = (Activities) act.getParent();
       Activity actN = (Activity) acs.generateNewElementWithXPDL1Support();
       actN.makeAs(act);
-      act.getDeadlines().clear();
+      actN.getDeadlines().clear();
       actN.setId(XMLUtil.generateSimilarOrIdenticalUniqueId(acs,
                                                             new HashSet(),
                                                             act.getId()));
@@ -818,7 +819,7 @@ public class XPDLRepositoryHandler {
 
       Iterator it = null;
       if (createAfter) {
-         it = XMLUtil.getOutgoingTransitions(act).iterator();
+         it = XMLUtil.getNonExceptionalOutgoingTransitions(act).iterator();
       } else {
          it = XMLUtil.getIncomingTransitions(act).iterator();
       }
