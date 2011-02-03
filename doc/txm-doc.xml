@@ -50,7 +50,7 @@
       States and other countries. Together Teamlösungen EDV-Dienstleistungen
       GmbH. is independent of Sun Microsystems.</para>
 
-      <para>In this document parts of the original XPDL 1.0 specification -
+      <para>In this document parts of the original XPDL 2.1 specification -
       <ulink
       url="http://www.wfmc.org/Download-document/WFMC-TC-1025-Oct-10-08-A-Final-XPDL-2.1-Specification.html">WfMC
       XPDL 2.1 Specification</ulink> are used. The Workflow Management
@@ -66,15 +66,15 @@
 
     <para>Together XPDL Model (TXM) is a library that provides capatibility to
     handle XPDL 2.1 model based on XPDL schema. Using TXM, it is possible to
-    read any file that conforms to XPDL specification, as well as to edit to produce the new
-    one.</para>
+    read any file that conforms to XPDL specification, as well as to edit to
+    produce the new one.</para>
 
     <para>TXM has validation mechanism, both schema-based validation, and
     logical validation based on XPDL specification.</para>
 
     <para>Automatic transformation of XPDL 1 to XPDL 2.1 document is also the
-    part of TXM implementation. During the import of XPDL 1.0 document, it will
-    be automatically transformed into corresponding XPDL 2.1 document,
+    part of TXM implementation. During the import of XPDL 1.0 document, it
+    will be automatically transformed into corresponding XPDL 2.1 document,
     deprecated elements from XPDL 1.0 schema will be transformed to XPDL 2.1
     elements (e.g. the deprecated Tool elements will be transformed to new
     TaskApplication elements and when activity has more than one Tools

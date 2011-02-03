@@ -75,6 +75,22 @@ public class ConnectorGraphicsInfo extends XMLComplexElement {
       set("Style", style);
    }
 
+   public void setBorderColor(String bc) {
+      set("BorderColor", bc);
+   }
+
+   public String getBorderColor() {
+      return get("BorderColor").toValue();
+   }
+
+   public void setFillColor(String fc) {
+      set("FillColor", fc);
+   }
+
+   public String getFillColor() {
+      return get("FillColor").toValue();
+   }
+   
    public Coordinatess getCoordinatess() {
       return (Coordinatess) get("Coordinatess");
    }

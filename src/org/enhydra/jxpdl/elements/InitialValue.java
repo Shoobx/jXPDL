@@ -30,4 +30,8 @@ public class InitialValue extends XMLSimpleElement { // ExpressionType {
    public InitialValue(DataField parent) {
       super(parent, false);
    }
+
+   public InitialValue(FormalParameter parent) {
+      super(parent, false);
+   }
 }

@@ -21,13 +21,17 @@ package org.enhydra.jxpdl.elements;
 import org.enhydra.jxpdl.XMLSimpleElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  * 
  *  @author Sasa Bojanic
  */
 public class Length extends XMLSimpleElement {
 
    public Length (DataField parent) {
+      super(parent, false);
+   }
+
+   public Length (FormalParameter parent) {
       super(parent, false);
    }
 }

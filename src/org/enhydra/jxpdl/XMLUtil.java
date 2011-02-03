@@ -1097,24 +1097,7 @@ public class XMLUtil {
       String stId = t.get(st).toValue();
       XMLCollectionElement a = XMLUtil.getPackage(t).getArtifact(stId);
       if (a == null) {
-         Iterator it = XMLUtil.getPackage(t)
-            .getWorkflowProcesses()
-            .toElements()
-            .iterator();
-         while (it.hasNext()) {
-            WorkflowProcess wp = (WorkflowProcess) it.next();
-            a = wp.getActivities().getActivity(stId);
-            if (a == null) {
-               Iterator it2 = wp.getActivitySets().toElements().iterator();
-               while (it2.hasNext()) {
-                  ActivitySet as = (ActivitySet) it2.next();
-                  a = as.getActivities().getActivity(stId);
-                  if (a != null) {
-                     break;
-                  }
-               }
-            }
-         }
+         a = XMLUtil.getPackage(t).getActivity(stId);
       }
       return a;
    }
@@ -3093,21 +3076,7 @@ public class XMLUtil {
          return references;
       }
 
-      Iterator it = pkg.getPools().toElements().iterator();
-      while (it.hasNext()) {
-         Pool p = (Pool) it.next();
-         if (p.getProcess().equals(referenced.getId())) {
-            references.add(p);
-         }
-      }
-
-      it = pkg.getWorkflowProcesses().toElements().iterator();
-      while (it.hasNext()) {
-         WorkflowProcess wp = (WorkflowProcess) it.next();
-         references.addAll(getReferences(wp, referenced));
-      }
-
-      return references;
+      return getWorkflowProcessReferences(pkg, referenced.getId());
    }
 
    public static List getWorkflowProcessReferences(Package pkg, String referencedId) {
@@ -3286,9 +3255,17 @@ public class XMLUtil {
          return references;
       }
 
+      Iterator it = XMLUtil.getPackage(wp).getPools().toElements().iterator();
+      while (it.hasNext()) {
+         Pool p = (Pool) it.next();
+         if (p.getProcess().equals(referencedId)) {
+            references.add(p);
+         }
+      }
+
       references.addAll(tGetActivitySetReferences(wp, referencedId));
 
-      Iterator it = wp.getActivitySets().toElements().iterator();
+      it = wp.getActivitySets().toElements().iterator();
       while (it.hasNext()) {
          ActivitySet as = (ActivitySet) it.next();
          references.addAll(tGetActivitySetReferences(as, referencedId));
@@ -3298,11 +3275,20 @@ public class XMLUtil {
    }
 
    public static List getReferences(ActivitySet as, ActivitySet referenced) {
-      return tGetActivitySetReferences(as, referenced.getId());
+      return getReferences(as, referenced.getId());
    }
 
    public static List getReferences(ActivitySet as, String referencedId) {
-      return tGetActivitySetReferences(as, referencedId);
+      List references = new ArrayList();
+      Iterator it = XMLUtil.getPackage(as).getPools().toElements().iterator();
+      while (it.hasNext()) {
+         Pool p = (Pool) it.next();
+         if (p.getProcess().equals(referencedId)) {
+            references.add(p);
+         }
+      }
+      references.addAll(tGetActivitySetReferences(as, referencedId));
+      return references;
    }
 
    protected static List tGetActivitySetReferences(XMLCollectionElement wpOrAs,
@@ -3914,8 +3900,13 @@ public class XMLUtil {
    public static void updateActivitySetReferences(List refBlocks, String newAsId) {
       Iterator it = refBlocks.iterator();
       while (it.hasNext()) {
-         BlockActivity ba = (BlockActivity) it.next();
-         ba.setActivitySetId(newAsId);
+         Object o = it.next();
+         if (o instanceof BlockActivity) {
+            BlockActivity ba = (BlockActivity) o;
+            ba.setActivitySetId(newAsId);
+         } else {
+            ((Pool)o).setProcess(newAsId);
+         }
       }
    }
 
