@@ -3730,7 +3730,7 @@ public class XMLUtil {
       Iterator it = wps.iterator();
       while (it.hasNext()) {
          WorkflowProcess wp = (WorkflowProcess) it.next();
-         if (getPoolForProcess(wp) == null) {
+         if (getPoolForProcessOrActivitySet(wp) == null) {
             createPoolForProcess(wp);
          }
       }
@@ -3756,20 +3756,9 @@ public class XMLUtil {
    }
 
    public static Pool removePoolForProcess(WorkflowProcess wp) {
-      Pool p = getPoolForProcess(wp);
+      Pool p = getPoolForProcessOrActivitySet(wp);
       ((Pools) p.getParent()).remove(p);
       return p;
-   }
-
-   public static Pool getPoolForProcess(WorkflowProcess wp) {
-      Iterator it = XMLUtil.getPackage(wp).getPools().toElements().iterator();
-      while (it.hasNext()) {
-         Pool p = (Pool) it.next();
-         if (p.getProcess().equals(wp.getId())) {
-            return p;
-         }
-      }
-      return null;
    }
 
    public static WorkflowProcess getProcessForPool(Pool pool) {
@@ -3780,7 +3769,7 @@ public class XMLUtil {
       Iterator it = ass.iterator();
       while (it.hasNext()) {
          ActivitySet as = (ActivitySet) it.next();
-         if (getPoolForActivitySet(as) == null) {
+         if (getPoolForProcessOrActivitySet(as) == null) {
             createPoolForActivitySet(as);
          }
       }
@@ -3806,20 +3795,9 @@ public class XMLUtil {
    }
 
    public static Pool removePoolForActivitySet(ActivitySet as) {
-      Pool p = getPoolForActivitySet(as);
+      Pool p = getPoolForProcessOrActivitySet(as);
       ((Pools) p.getParent()).remove(p);
       return p;
-   }
-
-   public static Pool getPoolForActivitySet(ActivitySet as) {
-      Iterator it = XMLUtil.getPackage(as).getPools().toElements().iterator();
-      while (it.hasNext()) {
-         Pool p = (Pool) it.next();
-         if (p.getProcess().equals(as.getId())) {
-            return p;
-         }
-      }
-      return null;
    }
 
    public static ActivitySet getActivitySetForPool(Pool pool) {
@@ -3827,10 +3805,31 @@ public class XMLUtil {
    }
 
    public static Pool getPoolForProcessOrActivitySet(XMLCollectionElement wpOrAs) {
-      if (wpOrAs instanceof WorkflowProcess) {
-         return getPoolForProcess((WorkflowProcess) wpOrAs);
+      Iterator it = XMLUtil.getPackage(wpOrAs).getPools().toElements().iterator();
+      List pools = new ArrayList();
+      while (it.hasNext()) {
+         Pool p = (Pool) it.next();
+         if (p.getProcess().equals(wpOrAs.getId())) {
+            pools.add(p);
+         }
       }
-      return getPoolForActivitySet((ActivitySet) wpOrAs);
+      if (pools.size()==1) {
+         return (Pool)pools.get(0);
+      } else if (pools.size()>1) {
+         Pool toRet = null;
+         for (int i=0; i<pools.size(); i++) {
+            Pool p = (Pool)pools.get(i);
+            if (p.getLanes().size()>0) {
+               toRet = p;
+               break;
+            }
+         }
+         if (toRet==null) {
+            toRet = (Pool)pools.get(0);
+         }
+         return toRet;
+      }
+      return null;
    }
 
    public static void removeArtifactAndAssociationsForProcessesOrActivitySets(List wpsOrAss) {

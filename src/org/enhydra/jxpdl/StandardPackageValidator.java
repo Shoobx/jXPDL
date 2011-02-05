@@ -44,99 +44,45 @@ import org.enhydra.jxpdl.elements.Activities;
 import org.enhydra.jxpdl.elements.Activity;
 import org.enhydra.jxpdl.elements.ActivitySet;
 import org.enhydra.jxpdl.elements.ActivitySets;
-import org.enhydra.jxpdl.elements.ActivityTypes;
 import org.enhydra.jxpdl.elements.ActualParameter;
 import org.enhydra.jxpdl.elements.ActualParameters;
 import org.enhydra.jxpdl.elements.Application;
-import org.enhydra.jxpdl.elements.ApplicationTypes;
-import org.enhydra.jxpdl.elements.Applications;
-import org.enhydra.jxpdl.elements.ArrayType;
 import org.enhydra.jxpdl.elements.Artifact;
-import org.enhydra.jxpdl.elements.Artifacts;
 import org.enhydra.jxpdl.elements.Association;
 import org.enhydra.jxpdl.elements.Associations;
-import org.enhydra.jxpdl.elements.Author;
 import org.enhydra.jxpdl.elements.BasicType;
 import org.enhydra.jxpdl.elements.BlockActivity;
-import org.enhydra.jxpdl.elements.Codepage;
 import org.enhydra.jxpdl.elements.Condition;
-import org.enhydra.jxpdl.elements.ConformanceClass;
-import org.enhydra.jxpdl.elements.Cost;
-import org.enhydra.jxpdl.elements.CostUnit;
-import org.enhydra.jxpdl.elements.Countrykey;
-import org.enhydra.jxpdl.elements.Created;
 import org.enhydra.jxpdl.elements.DataField;
-import org.enhydra.jxpdl.elements.DataFields;
 import org.enhydra.jxpdl.elements.DataType;
 import org.enhydra.jxpdl.elements.DataTypes;
 import org.enhydra.jxpdl.elements.Deadline;
 import org.enhydra.jxpdl.elements.DeadlineDuration;
 import org.enhydra.jxpdl.elements.Deadlines;
 import org.enhydra.jxpdl.elements.DeclaredType;
-import org.enhydra.jxpdl.elements.Description;
-import org.enhydra.jxpdl.elements.Documentation;
-import org.enhydra.jxpdl.elements.Duration;
 import org.enhydra.jxpdl.elements.EnumerationType;
 import org.enhydra.jxpdl.elements.EnumerationValue;
 import org.enhydra.jxpdl.elements.ExceptionName;
-import org.enhydra.jxpdl.elements.ExtendedAttribute;
-import org.enhydra.jxpdl.elements.ExtendedAttributes;
 import org.enhydra.jxpdl.elements.ExternalPackage;
-import org.enhydra.jxpdl.elements.ExternalPackages;
-import org.enhydra.jxpdl.elements.ExternalReference;
 import org.enhydra.jxpdl.elements.FormalParameter;
 import org.enhydra.jxpdl.elements.FormalParameters;
-import org.enhydra.jxpdl.elements.Icon;
-import org.enhydra.jxpdl.elements.Implementation;
-import org.enhydra.jxpdl.elements.ImplementationTypes;
-import org.enhydra.jxpdl.elements.InitialValue;
 import org.enhydra.jxpdl.elements.Join;
-import org.enhydra.jxpdl.elements.Length;
-import org.enhydra.jxpdl.elements.Limit;
-import org.enhydra.jxpdl.elements.ListType;
-import org.enhydra.jxpdl.elements.Member;
-import org.enhydra.jxpdl.elements.Namespace;
-import org.enhydra.jxpdl.elements.Namespaces;
-import org.enhydra.jxpdl.elements.No;
 import org.enhydra.jxpdl.elements.Package;
-import org.enhydra.jxpdl.elements.PackageHeader;
 import org.enhydra.jxpdl.elements.Participant;
-import org.enhydra.jxpdl.elements.ParticipantType;
-import org.enhydra.jxpdl.elements.Participants;
 import org.enhydra.jxpdl.elements.Performer;
 import org.enhydra.jxpdl.elements.Priority;
-import org.enhydra.jxpdl.elements.PriorityUnit;
-import org.enhydra.jxpdl.elements.ProcessHeader;
-import org.enhydra.jxpdl.elements.RecordType;
-import org.enhydra.jxpdl.elements.RedefinableHeader;
 import org.enhydra.jxpdl.elements.Responsible;
-import org.enhydra.jxpdl.elements.Responsibles;
-import org.enhydra.jxpdl.elements.Route;
-import org.enhydra.jxpdl.elements.SchemaType;
-import org.enhydra.jxpdl.elements.Script;
-import org.enhydra.jxpdl.elements.SimulationInformation;
 import org.enhydra.jxpdl.elements.Split;
 import org.enhydra.jxpdl.elements.SubFlow;
 import org.enhydra.jxpdl.elements.TaskApplication;
-import org.enhydra.jxpdl.elements.TimeEstimation;
 import org.enhydra.jxpdl.elements.Tool;
 import org.enhydra.jxpdl.elements.Transition;
 import org.enhydra.jxpdl.elements.TransitionRef;
 import org.enhydra.jxpdl.elements.TransitionRefs;
-import org.enhydra.jxpdl.elements.TransitionRestriction;
-import org.enhydra.jxpdl.elements.TransitionRestrictions;
 import org.enhydra.jxpdl.elements.Transitions;
 import org.enhydra.jxpdl.elements.TypeDeclaration;
-import org.enhydra.jxpdl.elements.TypeDeclarations;
-import org.enhydra.jxpdl.elements.UnionType;
-import org.enhydra.jxpdl.elements.ValidFrom;
-import org.enhydra.jxpdl.elements.ValidTo;
-import org.enhydra.jxpdl.elements.Vendor;
-import org.enhydra.jxpdl.elements.Version;
-import org.enhydra.jxpdl.elements.WaitingTime;
 import org.enhydra.jxpdl.elements.WorkflowProcess;
 import org.enhydra.jxpdl.elements.WorkflowProcesses;
-import org.enhydra.jxpdl.elements.WorkingTime;
 import org.enhydra.jxpdl.elements.XPDLVersion;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
@@ -401,10 +347,6 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
-   public void validateElement(Activities el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
    public void validateElement(Activity el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
 
@@ -434,6 +376,88 @@ public class StandardPackageValidator implements XMLValidator {
 
       Set outTrans = XMLUtil.getOutgoingTransitions(el);
       Set inTrans = XMLUtil.getIncomingTransitions(el);
+
+      if (el.getActivityType() == XPDLConstants.ACTIVITY_TYPE_EVENT_START
+          || el.getActivityType() == XPDLConstants.ACTIVITY_TYPE_EVENT_END) {
+         if (el.getActivityType() == XPDLConstants.ACTIVITY_TYPE_EVENT_START) {
+            if (inTrans.size() > 0) {
+               XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+                                                                XMLValidationError.SUB_TYPE_CONNECTION,
+                                                                XPDLValidationErrorIds.ERROR_CONNECTION_TO_START_EVENT_NOT_ALLOWED,
+                                                                "",
+                                                                el);
+               existingErrors.add(verr);
+               isValid = false;
+               if (!(isValid || fullCheck)) {
+                  return;
+               }
+            }
+            if (outTrans.size() == 0) {
+               XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+                                                                XMLValidationError.SUB_TYPE_CONNECTION,
+                                                                XPDLValidationErrorIds.ERROR_START_EVENT_NOT_CONNECTED,
+                                                                "",
+                                                                el);
+               existingErrors.add(verr);
+               isValid = false;
+               if (!(isValid || fullCheck)) {
+                  return;
+               }
+            }
+         }
+         if (el.getActivityType() == XPDLConstants.ACTIVITY_TYPE_EVENT_END) {
+            if (outTrans.size() > 0) {
+               XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+                                                                XMLValidationError.SUB_TYPE_CONNECTION,
+                                                                XPDLValidationErrorIds.ERROR_CONNECTION_FROM_END_EVENT_NOT_ALLOWED,
+                                                                "",
+                                                                el);
+               existingErrors.add(verr);
+               isValid = false;
+               if (!(isValid || fullCheck)) {
+                  return;
+               }
+            }
+            if (inTrans.size() == 0) {
+               XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+                                                                XMLValidationError.SUB_TYPE_CONNECTION,
+                                                                XPDLValidationErrorIds.ERROR_END_EVENT_NOT_CONNECTED,
+                                                                "",
+                                                                el);
+               existingErrors.add(verr);
+               isValid = false;
+               if (!(isValid || fullCheck)) {
+                  return;
+               }
+            }
+         }
+      } else {
+         if (inTrans.size() == 0) {
+            XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+                                                             XMLValidationError.SUB_TYPE_CONNECTION,
+                                                             XPDLValidationErrorIds.WARNING_CONNECTION_FROM_START_EVENT_IS_MISSING,
+                                                             "",
+                                                             el);
+            existingErrors.add(verr);
+            isValid = false;
+            if (!(isValid || fullCheck)) {
+               return;
+            }
+         }
+         if (outTrans.size() == 0) {
+            XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+                                                             XMLValidationError.SUB_TYPE_CONNECTION,
+                                                             XPDLValidationErrorIds.WARNING_CONNECTION_TO_END_EVENT_IS_MISSING,
+                                                             "",
+                                                             el);
+            existingErrors.add(verr);
+            isValid = false;
+            if (!(isValid || fullCheck)) {
+               return;
+            }
+         }
+
+      }
 
       // Split type and no. of outgoing transitions
       Split split = XMLUtil.getSplit(el);
@@ -499,53 +523,6 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
-   public void validateElement(ActivitySets el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ActivityTypes el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ActualParameter el, List existingErrors, boolean fullCheck) {
-      // TODO: figure out how to check it
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ActualParameters el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Application el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Applications el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ApplicationTypes el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ArrayType el, List existingErrors, boolean fullCheck) {
-      // TODO: see if need to be changed
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Artifact el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-   
-   public void validateElement(Artifacts el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Association el, List existingErrors, boolean fullCheck) {
-      // TODO: see if need to be changed
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
    public void validateElement(Associations el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
       if (fullCheck || existingErrors.size() == 0) {
@@ -580,22 +557,6 @@ public class StandardPackageValidator implements XMLValidator {
          }
 
       }
-   }
-
-   public void validateElement(Author el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(BasicType el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(BlockActivity el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Codepage el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
    }
 
    public void validateElement(Condition el, List existingErrors, boolean fullCheck) {
@@ -693,26 +654,6 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
-   public void validateElement(ConformanceClass el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Cost el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(CostUnit el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Countrykey el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Created el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
    public void validateElement(DataField el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
       boolean validateVariableUsage = properties.getProperty(StandardPackageValidator.VALIDATE_UNUSED_VARIABLES,
@@ -731,22 +672,6 @@ public class StandardPackageValidator implements XMLValidator {
             existingErrors.add(verr);
          }
       }
-   }
-
-   public void validateElement(DataFields el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(DataType el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(DataTypes el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Deadline el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
    }
 
    public void validateElement(DeadlineDuration el, List existingErrors, boolean fullCheck) {
@@ -803,30 +728,6 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
-   public void validateElement(DeclaredType el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Description el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Documentation el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Duration el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(EnumerationType el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(EnumerationValue el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
    public void validateElement(ExceptionName el, List existingErrors, boolean fullCheck) {
       Activity act = XMLUtil.getActivity(el);
       Set ets = XMLUtil.getExceptionalOutgoingTransitions(act);
@@ -855,32 +756,6 @@ public class StandardPackageValidator implements XMLValidator {
                                                           el);
          existingErrors.add(verr);
       }
-   }
-
-   public void validateElement(ExtendedAttribute el,
-                               List existingErrors,
-                               boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ExtendedAttributes el,
-                               List existingErrors,
-                               boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ExternalPackage el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ExternalPackages el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ExternalReference el,
-                               List existingErrors,
-                               boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
    }
 
    public void validateElement(FormalParameter el, List existingErrors, boolean fullCheck) {
@@ -927,60 +802,6 @@ public class StandardPackageValidator implements XMLValidator {
       return ret;
    }
 
-   public void validateElement(FormalParameters el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Icon el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Implementation el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ImplementationTypes el,
-                               List existingErrors,
-                               boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(InitialValue el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Join el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Length el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Limit el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ListType el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Member el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Namespace el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Namespaces el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(No el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
    public void validateElement(org.enhydra.jxpdl.elements.Package el,
                                List existingErrors,
                                boolean fullCheck) {
@@ -994,22 +815,6 @@ public class StandardPackageValidator implements XMLValidator {
       if (existingErrors.size() == 0 || fullCheck) {
          checkGraphConnectionsForArtifacts(el, existingErrors, fullCheck);
       }
-   }
-
-   public void validateElement(PackageHeader el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Participant el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Participants el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ParticipantType el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
    }
 
    public void validateElement(Performer el, List existingErrors, boolean fullCheck) {
@@ -1079,24 +884,6 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
-   public void validateElement(PriorityUnit el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ProcessHeader el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(RecordType el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(RedefinableHeader el,
-                               List existingErrors,
-                               boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
    public void validateElement(Responsible el, List existingErrors, boolean fullCheck) {
       XMLComplexElement pkgOrWp = XMLUtil.getWorkflowProcess(el);
       if (pkgOrWp == null) {
@@ -1119,32 +906,6 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
-   public void validateElement(Responsibles el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Route el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(SchemaType el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Script el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(SimulationInformation el,
-                               List existingErrors,
-                               boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Split el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
    public void validateElement(SubFlow el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
       if (existingErrors.size() == 0 || fullCheck) {
@@ -1162,10 +923,6 @@ public class StandardPackageValidator implements XMLValidator {
                                    fullCheck);
          }
       }
-   }
-
-   public void validateElement(TimeEstimation el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
    }
 
    public void validateElement(TaskApplication el, List existingErrors, boolean fullCheck) {
@@ -1191,14 +948,6 @@ public class StandardPackageValidator implements XMLValidator {
 
    }
 
-   public void validateElement(Transition el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(TransitionRef el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
    public void validateElement(TransitionRefs el, List existingErrors, boolean fullCheck) {
       Set outTrans = XMLUtil.getOutgoingTransitions(XMLUtil.getActivity(el));
       Split split = (Split) XMLUtil.getParentElement(Split.class, el);
@@ -1217,18 +966,6 @@ public class StandardPackageValidator implements XMLValidator {
       if (!(fullCheck || isValid)) {
          return;
       }
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(TransitionRestriction el,
-                               List existingErrors,
-                               boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(TransitionRestrictions el,
-                               List existingErrors,
-                               boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
    }
 
@@ -1268,38 +1005,6 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
-   public void validateElement(TypeDeclaration el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(TypeDeclarations el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(UnionType el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ValidFrom el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(ValidTo el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Vendor el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(Version el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(WaitingTime el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
    public void validateElement(WorkflowProcess el, List existingErrors, boolean fullCheck) {
       boolean isValid = true;
       if (el.getActivities().toElements().size() == 0) {
@@ -1320,16 +1025,6 @@ public class StandardPackageValidator implements XMLValidator {
       if (isValid || fullCheck) {
          checkGraphConformanceForWpOrAs(el, existingErrors, fullCheck);
       }
-   }
-
-   public void validateElement(WorkflowProcesses el,
-                               List existingErrors,
-                               boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
-   }
-
-   public void validateElement(WorkingTime el, List existingErrors, boolean fullCheck) {
-      validateStandard(el, existingErrors, fullCheck);
    }
 
    public void validateElement(XPDLVersion el, List existingErrors, boolean fullCheck) {
@@ -2264,7 +1959,8 @@ public class StandardPackageValidator implements XMLValidator {
    protected boolean checkArtifactConnection(Artifact art,
                                              List existingErrors,
                                              boolean fullCheck) {
-      if (XMLUtil.getOutgoingAssociations(art).size() == 0 && XMLUtil.getIncomingAssociations(art).size() == 0) {
+      if (XMLUtil.getOutgoingAssociations(art).size() == 0
+          && XMLUtil.getIncomingAssociations(art).size() == 0) {
          XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                           XMLValidationError.SUB_TYPE_CONNECTION,
                                                           XPDLValidationErrorIds.ERROR_IMPROPERLY_CONNECTED_ARTIFACT_NO_ASSOCIATION,
