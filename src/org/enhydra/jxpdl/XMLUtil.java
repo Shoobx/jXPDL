@@ -1871,7 +1871,6 @@ public class XMLUtil {
          }
       };
 
-      Package pkg = null;
       XMLInterface xmli = new XMLInterfaceForJDK13();
 
       File f = new File(inputFile);
@@ -1880,7 +1879,7 @@ public class XMLUtil {
       System.out.println("Converting XPDL model from file \"" + inputFile + "\".\n");
 
       System.out.println("...reading file and creating XPDL model");
-      pkg = readFromFile(xmli, inputFile, readExt);
+      Package pkg = readFromFile(xmli, inputFile, readExt);
       pkg.addListener(list);
       StandardPackageValidator pv = new StandardPackageValidator();
       pv.init(new Properties(), xmli);
@@ -1990,6 +1989,23 @@ public class XMLUtil {
       p.getLanes().add(l2);
       p.getLanes().add(l3);
 
+      System.out.println("......creating Artifact [Id=comment, Name=Second activity comment, Type=Annotation, TextAnnotation=This is a comment for 2nd activity]");
+      Artifact art = (Artifact) pkg.getArtifacts().generateNewElement();
+      art.setId("comment");
+      art.setName("Second activity comment");
+      art.setArtifactTypeAnnotation();
+      art.setTextAnnotation("This is a comment for 2nd activity");
+      NodeGraphicsInfo ngia = (NodeGraphicsInfo) art.getNodeGraphicsInfos()
+         .generateNewElement();
+      System.out.println(".........creating NodeGraphicsInfo[LaneId=lane2,Coordinates=50,50]");
+      ngia.setLaneId("lane2");
+      ngia.setWidth(95);
+      ngia.setHeight(40);
+      ngia.getCoordinates().setXCoordinate("50");
+      ngia.getCoordinates().setYCoordinate("60");
+      art.getNodeGraphicsInfos().add(ngia);
+      pkg.getArtifacts().add(art);
+
       System.out.println("......creating WorkflowProcess [Id="
                          + id + ",Name=" + name + "]");
       WorkflowProcess wp = (WorkflowProcess) pkg.getWorkflowProcesses()
@@ -2004,36 +2020,53 @@ public class XMLUtil {
       df.getDataType().getDataTypes().getBasicType().setTypeBOOLEAN();
       wp.getDataFields().add(df);
 
-      System.out.println(".........creating Activity[Id=act1,Name=First,Type=NO,Split-type=Exclusive]");
+      System.out.println(".........creating Activity[Id=act1,Name=First,Type=NO]");
       Activity act1 = (Activity) wp.getActivities().generateNewElement();
       act1.setId("act1");
       act1.setName("First");
       act1.getActivityTypes().setImplementation();
       act1.getActivityTypes().getImplementation().getImplementationTypes().setNo();
-      System.out.println("............creating TransitionRestriction");
-      TransitionRestriction tre = (TransitionRestriction) act1.getTransitionRestrictions()
-         .generateNewElement();
-      System.out.println("...............creating TransitionRef[Id=tra1]");
-      TransitionRef tref1 = (TransitionRef) tre.getSplit()
-         .getTransitionRefs()
-         .generateNewElement();
-      tref1.setId("tra1");
-      System.out.println("...............creating TransitionRef[Id=tra2]");
-      TransitionRef tref2 = (TransitionRef) tre.getSplit()
-         .getTransitionRefs()
-         .generateNewElement();
-      tref2.setId("tra2");
-      tre.getSplit().getTransitionRefs().add(tref1);
-      tre.getSplit().getTransitionRefs().add(tref2);
-      tre.getSplit().setTypeExclusive();
-      act1.getTransitionRestrictions().add(tre);
-      System.out.println("............creating NodeGraphicsInfo[LaneId=lane1,Coordinates=150,50]");
+      System.out.println("............creating NodeGraphicsInfo[LaneId=lane1,Coordinates=50,50]");
       NodeGraphicsInfo ngi1 = (NodeGraphicsInfo) act1.getNodeGraphicsInfos()
          .generateNewElement();
       ngi1.setLaneId("lane1");
-      ngi1.getCoordinates().setXCoordinate("150");
+      ngi1.setWidth(90);
+      ngi1.setHeight(60);
+      ngi1.getCoordinates().setXCoordinate("50");
       ngi1.getCoordinates().setYCoordinate("50");
       act1.getNodeGraphicsInfos().add(ngi1);
+
+      System.out.println(".........creating Activity[Id=actd,Name=Decision,Type=Route,Split-type=Exclusive]");
+      Activity actd = (Activity) wp.getActivities().generateNewElement();
+      actd.setId("actd");
+      actd.setName("Decision");
+      actd.getActivityTypes().setRoute();
+      System.out.println("............creating TransitionRestriction");
+      TransitionRestriction tre = (TransitionRestriction) act1.getTransitionRestrictions()
+         .generateNewElement();
+      System.out.println("...............creating TransitionRef[Id=tra2]");
+      TransitionRef tref1 = (TransitionRef) tre.getSplit()
+         .getTransitionRefs()
+         .generateNewElement();
+      tref1.setId("tra2");
+      System.out.println("...............creating TransitionRef[Id=tra3]");
+      TransitionRef tref2 = (TransitionRef) tre.getSplit()
+         .getTransitionRefs()
+         .generateNewElement();
+      tref2.setId("tra3");
+      tre.getSplit().getTransitionRefs().add(tref1);
+      tre.getSplit().getTransitionRefs().add(tref2);
+      tre.getSplit().setTypeExclusive();
+      actd.getTransitionRestrictions().add(tre);
+      System.out.println("............creating NodeGraphicsInfo[LaneId=lane1,Coordinates=200,60]");
+      NodeGraphicsInfo ngid = (NodeGraphicsInfo) actd.getNodeGraphicsInfos()
+         .generateNewElement();
+      ngid.setLaneId("lane1");
+      ngid.setWidth(40);
+      ngid.setHeight(40);
+      ngid.getCoordinates().setXCoordinate("200");
+      ngid.getCoordinates().setYCoordinate("60");
+      actd.getNodeGraphicsInfos().add(ngid);
 
       System.out.println(".........creating Activity[Id=act2,Name=Second,Type=NO]");
       Activity act2 = (Activity) wp.getActivities().generateNewElement();
@@ -2045,6 +2078,8 @@ public class XMLUtil {
       NodeGraphicsInfo ngi2 = (NodeGraphicsInfo) act2.getNodeGraphicsInfos()
          .generateNewElement();
       ngi2.setLaneId("lane2");
+      ngi2.setWidth(90);
+      ngi2.setHeight(60);
       ngi2.getCoordinates().setXCoordinate("350");
       ngi2.getCoordinates().setYCoordinate("50");
       act2.getNodeGraphicsInfos().add(ngi2);
@@ -2059,29 +2094,48 @@ public class XMLUtil {
       NodeGraphicsInfo ngi3 = (NodeGraphicsInfo) act3.getNodeGraphicsInfos()
          .generateNewElement();
       ngi3.setLaneId("lane3");
+      ngi3.setWidth(90);
+      ngi3.setHeight(60);
       ngi3.getCoordinates().setXCoordinate("350");
       ngi3.getCoordinates().setYCoordinate("50");
       act3.getNodeGraphicsInfos().add(ngi3);
 
-      System.out.println(".........creating Transition[Id=tra1,From=act1,To=act2,Type=CONDITION,Condition=decision]");
+      System.out.println(".........creating Transition[Id=tra1,From=act1,To=actd,Type=]");
       Transition tra1 = (Transition) wp.getTransitions().generateNewElement();
       tra1.setId("tra1");
       tra1.setFrom("act1");
-      tra1.setTo("act2");
-      tra1.getCondition().setTypeCONDITION();
-      tra1.getCondition().setValue("decision");
-      System.out.println(".........creating Transition[Id=tra1,From=act1,To=act3,Type=OTHERWISE]");
+      tra1.setTo("actd");
+      tra1.getCondition().setTypeNONE();
+      System.out.println(".........creating Transition[Id=tra2,From=actd,To=act2,Type=CONDITION,Condition=decision]");
       Transition tra2 = (Transition) wp.getTransitions().generateNewElement();
       tra2.setId("tra2");
-      tra2.setFrom("act1");
-      tra2.setTo("act3");
-      tra2.getCondition().setTypeOTHERWISE();
+      tra2.setFrom("actd");
+      tra2.setTo("act2");
+      tra2.getCondition().setTypeCONDITION();
+      tra2.getCondition().setValue("decision");
+      System.out.println(".........creating Transition[Id=tra3,From=actd,To=act3,Type=OTHERWISE]");
+      Transition tra3 = (Transition) wp.getTransitions().generateNewElement();
+      tra3.setId("tra3");
+      tra3.setFrom("actd");
+      tra3.setTo("act3");
+      tra3.getCondition().setTypeOTHERWISE();
 
       wp.getActivities().add(act1);
+      wp.getActivities().add(actd);
       wp.getActivities().add(act2);
       wp.getActivities().add(act3);
       wp.getTransitions().add(tra1);
       wp.getTransitions().add(tra2);
+      wp.getTransitions().add(tra3);
+
+      System.out.println("......creating Association [Id=c2a, Name=Connection1, Source=comment, Target=act2, Direction=None]");
+      Association asoc = (Association) pkg.getAssociations().generateNewElement();
+      asoc.setId("c2a");
+      asoc.setName("Connection1");
+      asoc.setSource("comment");
+      asoc.setTarget("act2");
+      asoc.setAssociationDirectionNONE();
+      pkg.getAssociations().add(asoc);
 
       pkg.getWorkflowProcesses().add(wp);
       pkg.getPools().add(p);
@@ -3813,19 +3867,19 @@ public class XMLUtil {
             pools.add(p);
          }
       }
-      if (pools.size()==1) {
-         return (Pool)pools.get(0);
-      } else if (pools.size()>1) {
+      if (pools.size() == 1) {
+         return (Pool) pools.get(0);
+      } else if (pools.size() > 1) {
          Pool toRet = null;
-         for (int i=0; i<pools.size(); i++) {
-            Pool p = (Pool)pools.get(i);
-            if (p.getLanes().size()>0) {
+         for (int i = 0; i < pools.size(); i++) {
+            Pool p = (Pool) pools.get(i);
+            if (p.getLanes().size() > 0) {
                toRet = p;
                break;
             }
          }
-         if (toRet==null) {
-            toRet = (Pool)pools.get(0);
+         if (toRet == null) {
+            toRet = (Pool) pools.get(0);
          }
          return toRet;
       }
@@ -3904,7 +3958,7 @@ public class XMLUtil {
             BlockActivity ba = (BlockActivity) o;
             ba.setActivitySetId(newAsId);
          } else {
-            ((Pool)o).setProcess(newAsId);
+            ((Pool) o).setProcess(newAsId);
          }
       }
    }

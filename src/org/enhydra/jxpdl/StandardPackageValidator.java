@@ -433,7 +433,7 @@ public class StandardPackageValidator implements XMLValidator {
          }
       } else {
          if (inTrans.size() == 0) {
-            XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+            XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_WARNING,
                                                              XMLValidationError.SUB_TYPE_CONNECTION,
                                                              XPDLValidationErrorIds.WARNING_CONNECTION_FROM_START_EVENT_IS_MISSING,
                                                              "",
@@ -445,7 +445,7 @@ public class StandardPackageValidator implements XMLValidator {
             }
          }
          if (outTrans.size() == 0) {
-            XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+            XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_WARNING,
                                                              XMLValidationError.SUB_TYPE_CONNECTION,
                                                              XPDLValidationErrorIds.WARNING_CONNECTION_TO_END_EVENT_IS_MISSING,
                                                              "",

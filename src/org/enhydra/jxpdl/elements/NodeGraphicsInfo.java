@@ -96,7 +96,10 @@ public class NodeGraphicsInfo extends XMLComplexElement {
    public int getHeight() {
       String h = get("Height").toValue();
       if (!"".equals(h)) {
-         return (int) Double.parseDouble(h);
+         try {
+            return (int) Double.parseDouble(h);
+         } catch (Exception ex) {            
+         }
       }
       return 0;
    }
@@ -108,7 +111,10 @@ public class NodeGraphicsInfo extends XMLComplexElement {
    public int getWidth() {
       String w = get("Width").toValue();
       if (!"".equals(w)) {
-         return (int) Double.parseDouble(w);
+         try {
+            return (int) Double.parseDouble(w);
+         } catch (Exception ex) {            
+         }
       }
       return 0;
    }
