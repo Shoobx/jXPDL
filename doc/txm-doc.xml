@@ -65,7 +65,7 @@
   <chapter id="introduction">
     <title>Introduction</title>
 
-    <para>Together XPDL Model (TXM) is a library that provides capatibility to
+    <para>Together XPDL Model (TXM) is a library that provides capability to
     handle XPDL 2.1 model based on XPDL schema. Using TXM, it is possible to
     read any file that conforms to XPDL specification, as well as to edit to
     produce the new one.</para>
@@ -580,7 +580,7 @@ make distributions  - Builds and configures TXM with all documentations
         parameters, deadline conditions, etc.) according to the language
         syntax.</para>
 
-        <para condition="demo-emptytext">To programatically create a new
+        <para condition="demo-emptytext">To programmatically create a new
         Package in TXM and set the Id and Name, you simply write something
         like:</para>
 
@@ -911,7 +911,7 @@ pars.add(par);</programlisting>
           <title>Applications</title>
 
           <para>It is a collection of all the Application objects in the
-          model. Application represents the description of the real "programm"
+          model. Application represents the description of the real "program"
           that will be executed by the engine in the runtime.</para>
 
           <para>To define new application in the model, do something like
@@ -1095,7 +1095,7 @@ asocs.add(asoc);</programlisting>
           provides the concept of Artifacts that can be linked to the existing
           Activity object through Associations. Thus, Artifacts do <emphasis
           role="bold">not</emphasis> affect the basic sequence flow, nor do
-          they affect mappings to execution languages.Artifacts are used to
+          they affect mappings to execution languages. Artifacts are used to
           show additional information about a Process that is not directly
           related to its sequence flow.</para>
 
@@ -1193,7 +1193,7 @@ pkg.getPools.add(p);
       <title>Extended Attributes</title>
 
       <para>XPDL contains most of the entities, which are likely to be
-      required in the process definition modelling. Sometimes, there is a need
+      required in the process definition modeling. Sometimes, there is a need
       for some additional information (user or vendor specific). Extended
       Attributes are the primary method to support such extensions. These are
       attributes defined by the user or vendor, where necessary, to express
@@ -1527,7 +1527,7 @@ pkg.getPools.add(p);
         Participants, Applications, DataFields, FormalParameters, Activities,
         Transitions, ActivitySets, etc.</para>
 
-        <para>To programatically create the parts of the process, the
+        <para>To programmatically create the parts of the process, the
         procedure is the similar like given in the samples for the
         package.</para>
       </sect2>
