@@ -40,7 +40,7 @@ public class ActivityTypes extends XMLComplexChoice {
       choices.add(new Implementation(this)); 
       choices.add(new BlockActivity(this));
       choices.add(new Event(this));
-      choosen=(XMLElement)choices.get(0);      
+      choosen=(XMLElement)choices.get(1);      
    }
    
    public Route getRoute () {

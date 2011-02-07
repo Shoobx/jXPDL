@@ -29,11 +29,11 @@ import org.enhydra.jxpdl.XMLComplexElement;
 public class Coordinates extends XMLComplexElement {
 
 	public Coordinates(NodeGraphicsInfo parent) {
-		super(parent, true);
+		super(parent, false);
 	}
 
 	public Coordinates(Coordinatess parent) {
-		super(parent, true);
+		super(parent, false);
 	}
 
 	protected void fillStructure() {

@@ -38,7 +38,7 @@ public class Join extends XMLComplexElement {
       XMLAttribute attrType = new XMLAttribute(this, "Type", false, new String[] {
             XPDLConstants.JOIN_SPLIT_TYPE_NONE,
             XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE,
-            XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE,
+//            XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE,
             // XPDLConstants.JOIN_SPLIT_TYPE_COMPLEX,
             XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL
       }, 0) {
@@ -83,9 +83,9 @@ public class Join extends XMLComplexElement {
    // getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_COMPLEX);
    // }
    //
-   public void setTypeInclusive() {
-      getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE);
-   }
+//   public void setTypeInclusive() {
+//      getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE);
+//   }
 
    public void setTypeExclusive() {
       getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE);

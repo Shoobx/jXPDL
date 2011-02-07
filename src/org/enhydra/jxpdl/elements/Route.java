@@ -51,7 +51,7 @@ public class Route extends XMLComplexElement {
                                                       new String[] {
 //                                                            XPDLConstants.JOIN_SPLIT_TYPE_NONE,
                                                             XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE,
-                                                            XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE,
+//                                                            XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE,
                                                             // XPDLConstants.JOIN_SPLIT_TYPE_COMPLEX,
                                                             XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL
                                                       },
@@ -87,8 +87,8 @@ public class Route extends XMLComplexElement {
       getGatewayTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE);
    }
 
-   public void setGatewayTypeInclusive() {
-      getGatewayTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE);
-   }
+//   public void setGatewayTypeInclusive() {
+//      getGatewayTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE);
+//   }
 
 }
