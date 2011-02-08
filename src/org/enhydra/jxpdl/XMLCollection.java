@@ -121,8 +121,12 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
          oldEl.makeAs(newEl);
       }
 
-      removeAll(objectsToRemove);
-      addAll(objectsToAdd);
+      for (int i=0; i<objectsToRemove.size(); i++) {
+         remove((XMLElement)objectsToRemove.get(i));
+      }
+      for (int i=0; i<objectsToAdd.size(); i++) {
+         add((XMLElement)objectsToAdd.get(i));
+      }
 
       oldElsMap.clear();
       it=toElements().iterator();

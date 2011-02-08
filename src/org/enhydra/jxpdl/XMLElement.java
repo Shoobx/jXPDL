@@ -342,6 +342,7 @@ public abstract class XMLElement implements Serializable, Cloneable {
       info.setNewValue(newVal);
       info.setChangedSubElements(changedSubElements);
       info.setAction(action);
+      System.out.println("INFO="+info);
       return info;
    }
       

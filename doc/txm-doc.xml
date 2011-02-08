@@ -2050,6 +2050,7 @@ act1.setId("act1");
 act1.setName("First");
 act1.getActivityTypes().setImplementation();
 act1.getActivityTypes().getImplementation().getImplementationTypes().setNo();
+act1.setFirstPerformer("manager");
 NodeGraphicsInfo ngi1 = (NodeGraphicsInfo) act1.getNodeGraphicsInfos()
    .generateNewElement();
 ngi1.setLaneId("lane1");
@@ -2091,6 +2092,7 @@ act2.setId("act2");
 act2.setName("Second");
 act2.getActivityTypes().setImplementation();
 act2.getActivityTypes().getImplementation().getImplementationTypes().setNo();
+act2.setFirstPerformer("programmer");
 NodeGraphicsInfo ngi2 = (NodeGraphicsInfo) act2.getNodeGraphicsInfos()
    .generateNewElement();
 ngi2.setLaneId("lane2");
@@ -2105,6 +2107,7 @@ act3.setId("act3");
 act3.setName("Third");
 act3.getActivityTypes().setImplementation();
 act3.getActivityTypes().getImplementation().getImplementationTypes().setNo();
+act3.setFirstPerformer("secretary");
 NodeGraphicsInfo ngi3 = (NodeGraphicsInfo) act3.getNodeGraphicsInfos()
    .generateNewElement();
 ngi3.setLaneId("lane3");

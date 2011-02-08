@@ -2026,6 +2026,7 @@ public class XMLUtil {
       act1.setName("First");
       act1.getActivityTypes().setImplementation();
       act1.getActivityTypes().getImplementation().getImplementationTypes().setNo();
+      act1.setFirstPerformer("manager");
       System.out.println("............creating NodeGraphicsInfo[LaneId=lane1,Coordinates=50,50]");
       NodeGraphicsInfo ngi1 = (NodeGraphicsInfo) act1.getNodeGraphicsInfos()
          .generateNewElement();
@@ -2074,6 +2075,7 @@ public class XMLUtil {
       act2.setName("Second");
       act2.getActivityTypes().setImplementation();
       act2.getActivityTypes().getImplementation().getImplementationTypes().setNo();
+      act2.setFirstPerformer("programmer");
       System.out.println("............creating NodeGraphicsInfo[LaneId=lane2,Coordinates=350,50]");
       NodeGraphicsInfo ngi2 = (NodeGraphicsInfo) act2.getNodeGraphicsInfos()
          .generateNewElement();
@@ -2090,6 +2092,7 @@ public class XMLUtil {
       act3.setName("Third");
       act3.getActivityTypes().setImplementation();
       act3.getActivityTypes().getImplementation().getImplementationTypes().setNo();
+      act3.setFirstPerformer("secretary");
       System.out.println("............creating NodeGraphicsInfo[LaneId=lane3,Coordinates=350,50]");
       NodeGraphicsInfo ngi3 = (NodeGraphicsInfo) act3.getNodeGraphicsInfos()
          .generateNewElement();
@@ -2962,15 +2965,7 @@ public class XMLUtil {
 
       references.addAll(tGetLaneReferences(pkg, referencedId));
 
-      List plsWithLane = new ArrayList();
       Iterator it = pkg.getPools().toElements().iterator();
-      while (it.hasNext()) {
-         Pool p = (Pool) it.next();
-         if (p.getLanes().getLane(referencedId) != null) {
-            plsWithLane.add(p);
-         }
-      }
-      it = plsWithLane.iterator();
       while (it.hasNext()) {
          Pool p = (Pool) it.next();
          WorkflowProcess wp = getProcessForPool(p);
@@ -3019,16 +3014,14 @@ public class XMLUtil {
          Iterator pi = ((Package) pkgOrWpOrAs).getPools().toElements().iterator();
          while (pi.hasNext()) {
             Pool p = (Pool) pi.next();
-            if (p.getLanes().getLane(referencedId) != null) {
-               Iterator li = p.getLanes().toElements().iterator();
-               while (li.hasNext()) {
-                  Lane l = (Lane) li.next();
-                  Iterator nli = l.getNestedLanes().toElements().iterator();
-                  while (nli.hasNext()) {
-                     NestedLane nl = (NestedLane) nli.next();
-                     if (nl.getLaneId().equals(referencedId)) {
-                        references.add(nl);
-                     }
+            Iterator li = p.getLanes().toElements().iterator();
+            while (li.hasNext()) {
+               Lane l = (Lane) li.next();
+               Iterator nli = l.getNestedLanes().toElements().iterator();
+               while (nli.hasNext()) {
+                  NestedLane nl = (NestedLane) nli.next();
+                  if (nl.getLaneId().equals(referencedId)) {
+                     references.add(nl);
                   }
                }
                Iterator ait = ((Package) pkgOrWpOrAs).getArtifacts()
@@ -3642,8 +3635,8 @@ public class XMLUtil {
             if (to != act && to != null) {
                correctSplitAndJoin(to);
             }
+            trs.remove(t);
          }
-         trs.removeAll(new ArrayList(trasToRemove));
       }
 
    }
@@ -3660,7 +3653,10 @@ public class XMLUtil {
       }
       if (trasToRemove.size() > 0) {
          Transitions trs = (Transitions) ((XMLCollectionElement) trasToRemove.toArray()[0]).getParent();
-         trs.removeAll(new ArrayList(trasToRemove));
+         it = trasToRemove.iterator();
+         while (it.hasNext()) {
+            trs.remove((Transition)it.next());
+         }         
          Iterator itt = trasToRemove.iterator();
          while (itt.hasNext()) {
             Transition t = (Transition) itt.next();
@@ -3703,7 +3699,10 @@ public class XMLUtil {
    public static void removeAssociationsForActivityOrArtifact(XMLCollectionElement a) {
       Set asocsToRemove = getAssociationsForActivityOrArtifact(a);
       Associations asocs = XMLUtil.getPackage(a).getAssociations();
-      asocs.removeAll(new ArrayList(asocsToRemove));
+      Iterator it = asocsToRemove.iterator();
+      while (it.hasNext()) {
+         asocs.remove((Association)it.next());
+      }
    }
 
    public static void removeAssociationsForActivitiesOrArtifacts(List actsOrArts) {
@@ -3717,7 +3716,10 @@ public class XMLUtil {
       }
       Associations asocs = XMLUtil.getPackage((XMLElement) actsOrArts.toArray()[0])
          .getAssociations();
-      asocs.removeAll(new ArrayList(asocsToRemove));
+      it = asocsToRemove.iterator();
+      while (it.hasNext()) {
+         asocs.remove((Association)it.next());
+      }
    }
 
    protected static Set getAssociationsForActivityOrArtifact(XMLCollectionElement a) {

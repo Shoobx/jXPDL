@@ -105,6 +105,7 @@ public class XMLElementChangeInfo {
             ret+=", parent=null";
          }
       }
+      ret+=", OldV="+oldValue+", NewV="+newValue;
       return ret;      
    }
 }
