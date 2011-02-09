@@ -113,6 +113,12 @@ public class DataTypes extends XMLComplexChoice {
       }
    }
    
+   public void removeXPDL1Support () {
+      this.xpdl1support = false;
+      if (choices==null) return;
+      super.removeXPDL1Support();
+   }
+
    public void setReadOnly (boolean ro) {
       this.isReadOnly=ro;
       if (choices==null) return;

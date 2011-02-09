@@ -285,6 +285,11 @@ public class Package extends XMLComplexElement {
       namespaces.setNotifyMainListeners(notify);
    }
 
+   public void removeXPDL1Support () {
+      super.removeXPDL1Support();
+      namespaces.removeXPDL1Support();
+   }
+
    public void setReadOnly(boolean ro) {
       super.setReadOnly(ro);
       namespaces.setReadOnly(ro);

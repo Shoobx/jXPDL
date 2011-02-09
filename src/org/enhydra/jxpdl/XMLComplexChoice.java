@@ -43,6 +43,13 @@ public abstract class XMLComplexChoice extends XMLElement {
 //      throw new RuntimeException("Can't set value for this type of element!");
    }
 
+   public void removeXPDL1Support () {
+      super.removeXPDL1Support();
+      for (int i = 0; i < choices.size(); i++) {
+         ((XMLElement) choices.get(i)).removeXPDL1Support();
+      }
+   }
+   
    public void makeAs (XMLElement el) {
       super.makeAs(el);
       
@@ -75,6 +82,7 @@ public abstract class XMLComplexChoice extends XMLElement {
       }
    }
 
+   
    public void setNotifyListeners (boolean notify) {
       super.setNotifyListeners(notify);
       for (int i = 0; i < choices.size(); i++) {

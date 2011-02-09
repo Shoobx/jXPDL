@@ -57,7 +57,16 @@ public abstract class XMLBaseForCollectionAndComplex extends XMLElement {
       throw new RuntimeException("Can't set value for this type of element!");
    }
          
-   /**
+    public void removeXPDL1Support () {
+       super.removeXPDL1Support();
+       Iterator it=elements.iterator();
+       while (it.hasNext()) {
+          XMLElement el=(XMLElement)it.next();
+          el.removeXPDL1Support();
+       }
+    }
+
+    /**
     * Sets this element, and all contained elements to be read only or not.
     */
     public void setReadOnly (boolean ro) {

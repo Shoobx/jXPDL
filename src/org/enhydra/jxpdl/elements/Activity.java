@@ -79,7 +79,7 @@ public class Activity extends XMLCollectionElement {
       Performer refPerformer = new Performer(this);// min=0
       Priority refPriority = new Priority(this); // min=0
       // we use Deadlines instead of Deadline
-      Deadlines refDeadlines = new Deadlines(this,xpdl1support); // min=0
+      Deadlines refDeadlines = new Deadlines(this, xpdl1support); // min=0
       SimulationInformation refSimulationInformation = new SimulationInformation(this); // min=0
       Icon refIcon = new Icon(this); // min=0
       Documentation refDocumentation = new Documentation(this); // min=0
@@ -470,11 +470,13 @@ public class Activity extends XMLCollectionElement {
 
    protected void removePerformer() {
       XMLElement perf = get("Performer");
-      elements.remove(perf);
-      elementMap.remove("Performer");
+      if (perf != null) {
+         elements.remove(perf);
+         elementMap.remove("Performer");
+      }
    }
 
-   public void removeXPDL1Support () {
+   public void removeXPDL1Support() {
       super.removeXPDL1Support();
       removePerformer();
       removeStartFinishModes();

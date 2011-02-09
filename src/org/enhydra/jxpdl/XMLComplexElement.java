@@ -60,6 +60,7 @@ public abstract class XMLComplexElement extends XMLBaseForCollectionAndComplex {
       while (it1.hasNext() && it2.hasNext()) {
          XMLElement e1 = (XMLElement) it1.next();
          XMLElement e2 = (XMLElement) it2.next();
+         System.out.println("THISE="+e1+", THATE="+e2);
          e1.makeAs(e2);
       }
 

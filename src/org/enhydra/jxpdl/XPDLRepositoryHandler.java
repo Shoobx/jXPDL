@@ -541,6 +541,7 @@ public class XPDLRepositoryHandler {
       migrateActivitySetIds(pkg);
       migrateActivityIds(pkg);
       XMLUtil.correctSplitsAndJoins(pkg);
+      pkg.removeXPDL1Support();
    }
 
    protected List migrateToolAct(Activity act) {

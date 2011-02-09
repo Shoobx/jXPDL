@@ -44,4 +44,8 @@ public class NestedLane extends XMLComplexElement {
    public void setLaneId(String laneId) {
       set("LaneId", laneId);
    }
+   
+   public String toString () {
+      return getLaneId();
+   }
 }
