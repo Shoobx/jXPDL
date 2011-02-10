@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.enhydra.jxpdl.elements.Activities;
 import org.enhydra.jxpdl.elements.Activity;
@@ -170,7 +169,8 @@ public class XPDLRepositoryHandler {
                   fromXML(attrib, (XMLAttribute) cel.get(attrib.getNodeName()));
                }
             } catch (NullPointerException npe) {
-//               System.out.println("NPE while processing attrib " + attrib.getNodeName());
+               // System.out.println("NPE while processing attrib " +
+               // attrib.getNodeName());
                /*
                 * System.err.println("Processing attributes for "+ cel.toName() +" element
                 * having problems with " + attrib.getNodeName()+" attribute\n" +
@@ -499,11 +499,11 @@ public class XPDLRepositoryHandler {
       additionalActs.clear();
       for (int i = 0; i < acts.size(); i++) {
          Activity act = (Activity) acts.get(i);
-         if (act.getActivityTypes().getChoosen() instanceof Implementation &&
-               act.getActivityTypes()
-            .getImplementation()
-            .getImplementationTypes()
-            .getChoosen() instanceof Tools) {
+         if (act.getActivityTypes().getChoosen() instanceof Implementation
+             && act.getActivityTypes()
+                .getImplementation()
+                .getImplementationTypes()
+                .getChoosen() instanceof Tools) {
             additionalActs.addAll(migrateToolAct(act));
          }
       }
@@ -559,8 +559,8 @@ public class XPDLRepositoryHandler {
             prevAct = actN;
          }
       }
-      for (int i=0; i<additionalActs.size(); i++) {
-         handleTool((Activity)additionalActs.get(i),(Tool)ts.get(i+1));
+      for (int i = 0; i < additionalActs.size(); i++) {
+         handleTool((Activity) additionalActs.get(i), (Tool) ts.get(i + 1));
       }
       handleTool(act, (Tool) ts.get(0));
       return additionalActs;
@@ -573,7 +573,8 @@ public class XPDLRepositoryHandler {
       Join j = XMLUtil.getJoin(act);
       String jType = j != null ? j.getType() : XPDLConstants.JOIN_SPLIT_TYPE_NONE;
       Split s = XMLUtil.getSplit(act);
-      String sType = (s != null && XMLUtil.getNonExceptionalOutgoingTransitions(act).size()>1) ? s.getType() : XPDLConstants.JOIN_SPLIT_TYPE_NONE;
+      String sType = (s != null && XMLUtil.getNonExceptionalOutgoingTransitions(act)
+         .size() > 1) ? s.getType() : XPDLConstants.JOIN_SPLIT_TYPE_NONE;
       if (actType == XPDLConstants.ACTIVITY_TYPE_ROUTE) {
          if (!sType.equals(jType)
              && !sType.equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE)
@@ -763,19 +764,37 @@ public class XPDLRepositoryHandler {
                                     boolean createRouteActivity,
                                     boolean createAfter) {
       Activities acs = (Activities) act.getParent();
-      Activity actN = (Activity) acs.generateNewElementWithXPDL1Support();
-      actN.makeAs(act);
-      actN.getDeadlines().clear();
+      Activity actN = null;
+      if (createRouteActivity) {
+         actN = (Activity) acs.generateNewElementWithXPDL1Support();
+         actN.getActivityTypes().setRoute();
+         for (int i=0; i<act.getTransitionRestrictions().size(); i++) {
+            TransitionRestriction tr = (TransitionRestriction) act.getTransitionRestrictions()
+               .get(i);
+            TransitionRestriction trr = (TransitionRestriction) actN.getTransitionRestrictions()
+               .generateNewElementWithXPDL1Support();
+            trr.makeAs(tr);
+            actN.getTransitionRestrictions().add(trr);
+         }
+         for (int i=0; i<act.getExtendedAttributes().size(); i++) {
+            ExtendedAttribute ea = (ExtendedAttribute) act.getExtendedAttributes()
+               .get(i);
+            ExtendedAttribute ear = (ExtendedAttribute) actN.getExtendedAttributes()
+               .generateNewElementWithXPDL1Support();
+            ear.makeAs(ea);
+            actN.getExtendedAttributes().add(ear);
+         }
+      } else {
+         actN = (Activity) acs.generateNewElementWithXPDL1Support();
+         actN.makeAs(act);
+         actN.getDeadlines().clear();
+      }
       actN.setId(XMLUtil.generateSimilarOrIdenticalUniqueId(acs,
                                                             new HashSet(),
                                                             act.getId()));
-      if (createRouteActivity) {
-         actN.getActivityTypes().setRoute();
-         actN.get("Performer").setValue("");
-      }
       if (createAfter) {
          Join j = XMLUtil.getJoin(actN);
-         Split s = XMLUtil.getSplit(act);         
+         Split s = XMLUtil.getSplit(act);
          if (j != null) {
             j.setTypeNONE();
             if (act.getActivityType() == XPDLConstants.ACTIVITY_TYPE_ROUTE) {
@@ -785,7 +804,7 @@ public class XPDLRepositoryHandler {
                   .setValue(XMLUtil.getJoin(act).getType());
             }
          }
-         if (s!=null) {
+         if (s != null) {
             s.setTypeNONE();
          }
          if (actN.getActivityType() == XPDLConstants.ACTIVITY_TYPE_ROUTE) {
@@ -806,7 +825,7 @@ public class XPDLRepositoryHandler {
                   .setValue(XMLUtil.getSplit(act).getType());
             }
          }
-         if (j!=null) {
+         if (j != null) {
             j.setTypeNONE();
          }
          if (actN.getActivityType() == XPDLConstants.ACTIVITY_TYPE_ROUTE) {
@@ -843,7 +862,7 @@ public class XPDLRepositoryHandler {
          tra.setTo(act.getId());
       }
       tras.add(tra);
-      
+
       return actN;
    }
 }
