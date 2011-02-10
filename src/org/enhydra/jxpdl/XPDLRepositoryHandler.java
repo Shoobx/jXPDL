@@ -170,7 +170,7 @@ public class XPDLRepositoryHandler {
                   fromXML(attrib, (XMLAttribute) cel.get(attrib.getNodeName()));
                }
             } catch (NullPointerException npe) {
-               System.out.println("NPE while processing attrib " + attrib.getNodeName());
+//               System.out.println("NPE while processing attrib " + attrib.getNodeName());
                /*
                 * System.err.println("Processing attributes for "+ cel.toName() +" element
                 * having problems with " + attrib.getNodeName()+" attribute\n" +
