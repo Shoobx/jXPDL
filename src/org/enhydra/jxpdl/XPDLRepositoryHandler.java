@@ -551,10 +551,14 @@ public class XPDLRepositoryHandler {
          .getImplementationTypes()
          .getChoosen();
       if (ts.size() > 1) {
+         boolean createAfter = true;
+         if (act.getFinishMode().equals(XPDLConstants.ACTIVITY_MODE_MANUAL)) {
+            createAfter = false;
+         }
          Activity prevAct = act;
          for (int i = 1; i < ts.size(); i++) {
             Tool t = (Tool) ts.get(i);
-            Activity actN = splitActivity(prevAct, false, true);
+            Activity actN = splitActivity(prevAct, false, createAfter);
             additionalActs.add(actN);
             prevAct = actN;
          }
@@ -768,7 +772,7 @@ public class XPDLRepositoryHandler {
       if (createRouteActivity) {
          actN = (Activity) acs.generateNewElementWithXPDL1Support();
          actN.getActivityTypes().setRoute();
-         for (int i=0; i<act.getTransitionRestrictions().size(); i++) {
+         for (int i = 0; i < act.getTransitionRestrictions().size(); i++) {
             TransitionRestriction tr = (TransitionRestriction) act.getTransitionRestrictions()
                .get(i);
             TransitionRestriction trr = (TransitionRestriction) actN.getTransitionRestrictions()
@@ -776,9 +780,8 @@ public class XPDLRepositoryHandler {
             trr.makeAs(tr);
             actN.getTransitionRestrictions().add(trr);
          }
-         for (int i=0; i<act.getExtendedAttributes().size(); i++) {
-            ExtendedAttribute ea = (ExtendedAttribute) act.getExtendedAttributes()
-               .get(i);
+         for (int i = 0; i < act.getExtendedAttributes().size(); i++) {
+            ExtendedAttribute ea = (ExtendedAttribute) act.getExtendedAttributes().get(i);
             ExtendedAttribute ear = (ExtendedAttribute) actN.getExtendedAttributes()
                .generateNewElementWithXPDL1Support();
             ear.makeAs(ea);
@@ -788,6 +791,8 @@ public class XPDLRepositoryHandler {
          actN = (Activity) acs.generateNewElementWithXPDL1Support();
          actN.makeAs(act);
          actN.getDeadlines().clear();
+         actN.setStartModeNONE();
+         actN.setFinishModeNONE();         
       }
       actN.setId(XMLUtil.generateSimilarOrIdenticalUniqueId(acs,
                                                             new HashSet(),
