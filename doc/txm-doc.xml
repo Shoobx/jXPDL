@@ -343,7 +343,7 @@ make distributions  - Builds and configures TXM with all documentations
       <mediaobject condition="demo-details">
         <imageobject>
           <imagedata contentdepth="100%"
-                     fileref="Images/package_meta_model.jpg" scalefit="1"
+                     fileref="images/package_meta_model.jpg" scalefit="1"
                      width="100%" />
         </imageobject>
       </mediaobject>
@@ -1219,7 +1219,7 @@ pkg.getPools.add(p);
       <mediaobject condition="demo-details">
         <imageobject>
           <imagedata contentdepth="100%"
-                     fileref="Images/process_meta_model.jpg" scalefit="1"
+                     fileref="images/process_meta_model.jpg" scalefit="1"
                      width="100%" />
         </imageobject>
       </mediaobject>
@@ -1808,7 +1808,7 @@ pkg.getPools.add(p);
           <mediaobject>
             <imageobject>
               <imagedata contentdepth="100%"
-                         fileref="Images/process_activity_structures.jpg"
+                         fileref="images/process_activity_structures.jpg"
                          scalefit="1" width="100%" />
             </imageobject>
           </mediaobject>
