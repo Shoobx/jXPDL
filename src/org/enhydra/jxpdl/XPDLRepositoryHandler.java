@@ -782,17 +782,20 @@ public class XPDLRepositoryHandler {
          }
          for (int i = 0; i < act.getExtendedAttributes().size(); i++) {
             ExtendedAttribute ea = (ExtendedAttribute) act.getExtendedAttributes().get(i);
-            ExtendedAttribute ear = (ExtendedAttribute) actN.getExtendedAttributes()
-               .generateNewElementWithXPDL1Support();
-            ear.makeAs(ea);
-            actN.getExtendedAttributes().add(ear);
+            if (ea.getName().equals("JaWE_GRAPH_OFFSET")
+                || ea.getName().equals("JaWE_GRAPH_PARTICIPANT_ID")) {
+               ExtendedAttribute ear = (ExtendedAttribute) actN.getExtendedAttributes()
+                  .generateNewElementWithXPDL1Support();
+               ear.makeAs(ea);
+               actN.getExtendedAttributes().add(ear);
+            }
          }
       } else {
          actN = (Activity) acs.generateNewElementWithXPDL1Support();
          actN.makeAs(act);
          actN.getDeadlines().clear();
          actN.setStartModeNONE();
-         actN.setFinishModeNONE();         
+         actN.setFinishModeNONE();
       }
       actN.setId(XMLUtil.generateSimilarOrIdenticalUniqueId(acs,
                                                             new HashSet(),

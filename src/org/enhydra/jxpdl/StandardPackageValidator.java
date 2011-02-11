@@ -660,10 +660,7 @@ public class StandardPackageValidator implements XMLValidator {
                                                              "false")
          .equals("true");
       if (validateVariableUsage && (fullCheck || existingErrors.size() == 0)) {
-         if (getNoOfReferences(el.getParent().getParent().getClass(),
-                               (XMLComplexElement) el.getParent().getParent(),
-                               DataField.class,
-                               el) == 0) {
+         if (getNoOfReferences((XMLComplexElement) el.getParent().getParent(), el) == 0) {
             XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_WARNING,
                                                              XMLValidationError.SUB_TYPE_LOGIC,
                                                              XPDLValidationErrorIds.WARNING_UNUSED_VARIABLE,
@@ -766,8 +763,7 @@ public class StandardPackageValidator implements XMLValidator {
       if (validateVariableUsage
           && el.getParent().getParent() instanceof WorkflowProcess
           && (fullCheck || existingErrors.size() == 0)) {
-         if (getNoOfReferences(WorkflowProcess.class, (WorkflowProcess) el.getParent()
-            .getParent(), FormalParameter.class, el) == 0) {
+         if (getNoOfReferences((WorkflowProcess) el.getParent().getParent(), el) == 0) {
             XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_WARNING,
                                                              XMLValidationError.SUB_TYPE_LOGIC,
                                                              XPDLValidationErrorIds.WARNING_UNUSED_VARIABLE,
@@ -779,27 +775,8 @@ public class StandardPackageValidator implements XMLValidator {
    }
 
    // We use reflection here since this class will also be used by Shark engine
-   protected int getNoOfReferences(Class parentCls,
-                                   XMLComplexElement parent,
-                                   Class elCls,
-                                   XMLElement el) {
-      int ret = -1;
-      try {
-         Class clsJM = Class.forName("org.enhydra.jawe.JaWEManager");
-         Method mth = clsJM.getMethod("getInstance", null);
-         Object jm = mth.invoke(null, null);
-         mth = clsJM.getMethod("getXPDLUtils", null);
-         Object xpdlu = mth.invoke(jm, null);
-         mth = xpdlu.getClass().getMethod("getReferences", new Class[] {
-               parentCls, elCls
-         });
-         List l = (List) mth.invoke(xpdlu, new Object[] {
-               parent, el
-         });
-         ret = l.size();
-      } catch (Exception ex) {
-      }
-      return ret;
+   protected int getNoOfReferences(XMLComplexElement parent, XMLComplexElement el) {
+      return XMLUtil.getReferences(parent, el, null).size();
    }
 
    public void validateElement(org.enhydra.jxpdl.elements.Package el,
@@ -1114,7 +1091,8 @@ public class StandardPackageValidator implements XMLValidator {
          Iterator it2 = errorMessages.iterator();
          while (it2.hasNext()) {
             String msg = (String) it2.next();
-            if (!msg.contains("SubFlowIdRef.Package")) {
+            if (!(msg.contains("SubFlowIdRef.Package")
+                  || msg.contains("of attribute 'Id' on element 'SubFlow' is not valid with respect to its type, 'IdRef'") || (msg.contains("'http") && msg.contains("is not a valid value for 'NMTOKEN'")))) {
                XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                                 XMLValidationError.SUB_TYPE_SCHEMA,
                                                                 "",
