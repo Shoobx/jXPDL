@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.enhydra.jxpdl.elements.Activities;
 import org.enhydra.jxpdl.elements.Activity;
@@ -551,16 +552,29 @@ public class XPDLRepositoryHandler {
          .getImplementationTypes()
          .getChoosen();
       if (ts.size() > 1) {
-         boolean createAfter = true;
-         if (act.getFinishMode().equals(XPDLConstants.ACTIVITY_MODE_MANUAL)) {
-            createAfter = false;
+         String fm = act.getFinishMode();
+         Set outTras = XMLUtil.getNonExceptionalOutgoingTransitions(act);
+         Transition circular = null;
+         Iterator it = outTras.iterator();
+         while (it.hasNext()) {
+            Transition t = (Transition) it.next();
+            if (t.getFrom().equals(t.getTo())) {
+               circular = t;
+               break;
+            }
          }
+         act.setFinishModeNONE();
          Activity prevAct = act;
          for (int i = 1; i < ts.size(); i++) {
-            Tool t = (Tool) ts.get(i);
-            Activity actN = splitActivity(prevAct, false, createAfter);
+            Activity actN = splitActivity(prevAct, false, true);
             additionalActs.add(actN);
             prevAct = actN;
+         }
+         if (!fm.equals("")) {
+            prevAct.set("FinishMode", fm);
+         }
+         if (circular!=null) {
+            circular.setFrom(prevAct.getId());
          }
       }
       for (int i = 0; i < additionalActs.size(); i++) {
@@ -577,8 +591,11 @@ public class XPDLRepositoryHandler {
       Join j = XMLUtil.getJoin(act);
       String jType = j != null ? j.getType() : XPDLConstants.JOIN_SPLIT_TYPE_NONE;
       Split s = XMLUtil.getSplit(act);
-      String sType = (s != null && XMLUtil.getNonExceptionalOutgoingTransitions(act)
-         .size() > 1) ? s.getType() : XPDLConstants.JOIN_SPLIT_TYPE_NONE;
+
+      Set outTras = XMLUtil.getNonExceptionalOutgoingTransitions(act);
+      String sType = (s != null && outTras.size() > 1) ? s.getType()
+                                                      : XPDLConstants.JOIN_SPLIT_TYPE_NONE;
+
       if (actType == XPDLConstants.ACTIVITY_TYPE_ROUTE) {
          if (!sType.equals(jType)
              && !sType.equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE)
@@ -588,14 +605,35 @@ public class XPDLRepositoryHandler {
             additionalActs.add(actN);
          }
       } else {
+         Transition circular = null;
+         Iterator it = outTras.iterator();
+         while (it.hasNext()) {
+            Transition t = (Transition) it.next();
+            if (t.getFrom().equals(t.getTo())) {
+               circular = t;
+               break;
+            }
+         }
+         String cf = null;
+         String ct = null;
          if (jType.equals(XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL)) {
             Activity actN = splitActivity(act, true, false);
             additionalActs.add(actN);
+            ct = actN.getId();
 
          }
          if (sType.equals(XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE)) {
             Activity actN = splitActivity(act, true, true);
             additionalActs.add(actN);
+            cf = actN.getId();
+         }
+         if (circular!=null) {
+            if (cf!=null) {
+               circular.setFrom(cf);
+            }
+            if (ct!=null) {
+               circular.setTo(ct);
+            }
          }
       }
       return additionalActs;
