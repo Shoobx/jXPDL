@@ -853,10 +853,12 @@ public class XPDLRepositoryHandler {
       }
       while (it.hasNext()) {
          Transition t = (Transition) it.next();
-         if (createAfter) {
-            t.setFrom(actN.getId());
-         } else {
-            t.setTo(actN.getId());
+         if (!t.getFrom().equals(t.getTo())) {
+            if (createAfter) {
+               t.setFrom(actN.getId());
+            } else {
+               t.setTo(actN.getId());
+            }
          }
       }
       Transitions tras = (Transitions) ((XMLComplexElement) acs.getParent()).get("Transitions");

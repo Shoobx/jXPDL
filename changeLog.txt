@@ -1,3 +1,9 @@
+2011-02-15 Sasa Bojanic <sasaboy@together.at>
+   # Fix for migrating from XPDL 1: when activity has a circular transition, and has to be
+     splitted into several activities (e.g. multiple tools activity, or activity with 
+     improper split/join types), circular transition does not "move" from this activity
+     to newly created ones
+
 ###### TXM 1.1-0 RELEASED ######
 
 2010-11-12 Sasa Bojanic <sasaboy@together.at>
