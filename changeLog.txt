@@ -1,7 +1,12 @@
+2011-02-18 Sasa Bojanic <sasaboy@together.at>
+   # Ant libraries upgraded to version 1.8.2 (removed ant-nodeps.jar)
+   # Xerces library upgraded to version 2.11.0
+   # Commons IO library upgraded to version 2.0.1
+
 2011-02-15 Sasa Bojanic <sasaboy@together.at>
    # Fix for migrating from XPDL 1: proper handling of circular transition for the activity
      in the case activity has to be splitted into several activities (e.g. multiple tools activity, 
-     or activity with improper split/join types which are splitted by adding additional Route activities),      
+     or activity with improper split/join types which are splitted by adding additional Route activities)
    # Fix for migrating from XPDL1: proper handling of Tool activity that has many tools and different 
      Start/Finish modes
      
