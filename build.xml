@@ -269,10 +269,10 @@
 
    <target name="initDist">
       <mkdir dir="${dist.community.dir}" />
-      <mkdir dir="${dist.debug.dir}" />
       <if>
          <equals arg1="${os}" arg2="windows" />
          <then>
+            <mkdir dir="${dist.debug.dir}" />
             <mkdir dir="${dist.internal.dir}" />
             <mkdir dir="${dist.doc.dir}" />
          </then>
