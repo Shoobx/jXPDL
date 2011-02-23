@@ -1,6 +1,6 @@
 2011-02-23 Sasa Bojanic <sasaboy@together.at>
-   # The build.debug property removed from build.properties file, new build targets introduced
-     to build output with DEBUG information in the classes (buildNoDocDebug and buildAllDebug)
+   # The build.debug property removed from build.properties file, new build target "debug" introduced 
+     to build TXM JAR file with DEBUG information in the classes
    # The project distribution now also contains debug folder with TXM JAR file that includes DEBUG information     
    
 2011-02-18 Sasa Bojanic <sasaboy@together.at>
