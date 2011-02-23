@@ -17,10 +17,6 @@
 -->
 <project name="TXM" default="help" basedir=".">
 
-   <!-- =================================================================== -->
-   <!-- Initiate TXM building                                               -->
-   <!-- =================================================================== -->
-   <target name="init">
 
       <replace file="build.properties" token="\" value="/"/>
       <property file="build.properties"/>
@@ -48,6 +44,7 @@
 
       <!-- Set the directories -->
       <property name="dist.community.dir" location="${dist.dir}/community" />
+      <property name="dist.debug.dir" location="${dist.dir}/debug" />
       <property name="dist.dependencies.dir" location="${dist.dir}/dependencies" />
       <property name="dist.internal.dir" location="${dist.dir}/internal" />
       <property name="dist.doc.dir" location="${dist.dir}/documentation" />
@@ -78,12 +75,11 @@
             <equals arg1="${install.dir}X" arg2="X"/>
          </not>
       </condition>
-   </target>
 
    <!-- =================================================================== -->
    <!-- Prepare TXM module                                                  -->
    <!-- =================================================================== -->
-   <target name="prepare" depends="init">
+   <target name="prepare">
       <!-- create directory structure -->
       <mkdir dir="${output.lib.dir}"/>
       <mkdir dir="${build.dir}/dist"/>
@@ -176,6 +172,7 @@
          <fileset dir="${basedir}/src"
                   includes="**/resources/*"/>
       </copy>
+      <echo message="BD=${build.debug}"/>
       <javac target="${targetVM}" source="${targetVM}"
             srcdir="${basedir}/src" 
             destdir="${classes.dir}" 
@@ -223,6 +220,10 @@
          <entry key="count" type="int" operation="+" default="1" pattern="00000" />
       </propertyfile>
    </target>
+
+   <target name="setDebug">
+      <property name="build.debug" value="on" />
+   </target>
    
    <!-- =================================================================== -->
    <!-- Making jxpdl.jar                                                    -->
@@ -241,37 +242,39 @@
          </manifest>
       </jar>
    </target>
-
+   
+   <target name="jarDebug" depends="setDebug, jar"/>
         
    <!-- =================================================================== -->
    <!-- Building all                                                        -->
    <!-- =================================================================== -->
-   <target name="buildAll" depends="jar, configure, buildAllDoc">
-   </target>
+   <target name="buildAll" depends="jar, configure, buildAllDoc"/>
 
+   <target name="buildAllDebug" depends="setDebug, buildAll"/>
 
    <!-- =================================================================== -->
    <!-- Building without documentation                                      -->
    <!-- =================================================================== -->
-   <target name="buildNoDoc" depends="jar, configure">
-   </target>
+   <target name="buildNoDoc" depends="jar, configure"/>
     
+   <target name="buildNoDocDebug" depends="setDebug, buildNoDoc"/>
 
    <!-- Builds Documentation                                                 -->
    <!-- ==================================================================== -->
-   <target name="buildAllDoc" depends="init">
+   <target name="buildAllDoc">
       <ant dir="${doc.dir}" />
    </target>
 
    <!-- ==================================================================== -->
    <!-- Builds DocBook Documentation                                         -->
    <!-- ==================================================================== -->
-   <target name="buildDoc" depends="init">
+   <target name="buildDoc">
       <ant dir="${doc.dir}" target="buildDocBook" />
    </target>
 
    <target name="initDist">
       <mkdir dir="${dist.community.dir}" />
+      <mkdir dir="${dist.debug.dir}" />
       <if>
          <equals arg1="${os}" arg2="windows" />
          <then>
@@ -290,6 +293,11 @@
       <antcall target="buildAllDoc"/>
       <antcall target="${os.buildBin.target}"/>
 
+      <antcall target="cleanClasses"/>
+      <antcall target="jarDebug"/>
+      <antcall target="${os.buildBin.target}">
+         <param name="dist.communityordebug.dir" value="${dist.debug.dir}" />
+      </antcall>
       <echo message="Distribution of ${app.name}-${version}-${release} with complete documentation has been built!"/>
    </target>
 
@@ -298,20 +306,21 @@
    <!-- Build binary for Linux                                              -->
    <!-- =================================================================== -->
    <target name="buildBinForLinux">
+      <property name="dist.communityordebug.dir" value="${dist.community.dir}" />
       <echo message=""/>
       <echo message="******************************************"/>
       <echo message="Creating ${dist.file.name}.tar.gz binary arhive, please wait ..."/>
       <echo message="******************************************"/>
       <echo message=""/>
 
-      <tar destfile="${dist.community.dir}/${dist.file.name}.tar" longfile="gnu">
+      <tar destfile="${dist.communityordebug.dir}/${dist.file.name}.tar" longfile="gnu">
          <tarfileset dir="${output.dir}" mode="666">
          </tarfileset>
       </tar>
-      <gzip src="${dist.community.dir}/${dist.file.name}.tar"
-            zipfile="${dist.community.dir}/${dist.file.name}.tar.gz"/>
-      <delete file="${dist.community.dir}/${dist.file.name}.tar" quiet="true"/>
-      <chmod file="${dist.community.dir}/${dist.file.name}.tar.gz" perm="ugo+rw"/>
+      <gzip src="${dist.communityordebug.dir}/${dist.file.name}.tar"
+            zipfile="${dist.communityordebug.dir}/${dist.file.name}.tar.gz"/>
+      <delete file="${dist.communityordebug.dir}/${dist.file.name}.tar" quiet="true"/>
+      <chmod file="${dist.communityordebug.dir}/${dist.file.name}.tar.gz" perm="ugo+rw"/>
    </target>
     
     
@@ -319,13 +328,14 @@
    <!-- Build binary for Windows                                            -->
    <!-- =================================================================== -->
    <target name="buildBinForWindows">
+      <property name="dist.communityordebug.dir" value="${dist.community.dir}" />
       <echo message=""/>
       <echo message="******************************************"/>
       <echo message="Creating ${dist.file.name}.zip binary arhive, please wait ..."/>
       <echo message="******************************************"/>
       <echo message=""/>
 
-      <zip destfile="${dist.community.dir}/${dist.file.name}.zip" update="true" >
+      <zip destfile="${dist.communityordebug.dir}/${dist.file.name}.zip" update="true" >
          <zipfileset dir="${output.dir}" />
       </zip>
 
@@ -436,7 +446,7 @@
    <!-- =================================================================== -->
    <!-- Cleans everything                                                   -->
    <!-- =================================================================== -->
-   <target name="clean" depends="init">
+   <target name="clean">
       <ant antfile="build.xml" dir="doc" target="clean" inheritAll="true"/>
       <delete dir="${classes.dir}"/>
       <delete dir="${output.dir}"/>
@@ -447,6 +457,10 @@
       <delete dir="${basedir}/doc/tmp" />
    </target>
 
+   <target name="cleanClasses">
+      <delete dir="${classes.dir}"/>
+   </target>
+   
    <!-- =================================================================== -->
    <!-- Installation                                                        -->
    <!-- =================================================================== -->
@@ -475,7 +489,11 @@
 make                     - Displays Help screen
 make help                - Displays Help screen
 make buildAll            - Builds and configures TXM with javadoc and docbook documentation
+make buildAllDebug       - Builds and configures TXM with javadoc and docbook documentation. 
+                           The compiled classes have debug information.
 make buildNoDoc          - Builds and configures TXM without javadoc and docbook documentation
+make buildNoDocDebug     - Builds and configures TXM without javadoc and docbook documentation.
+                           The compiled classes have debug information.
 make buildDoc            - Builds docbook documentation
 make dependencies        - Creates TWS and TWE dependencies within distributions folder
 make dependency_tws      - Creates TWS dependencies within distributions folder

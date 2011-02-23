@@ -1,3 +1,9 @@
+2011-02-23 Sasa Bojanic <sasaboy@together.at>
+   # The build.debug property removed from build.properties file, new build targets introduced
+     to build output with DEBUG information in the classes (buildNoDocDebug and buildAllDebug)
+   # The project distribution now also contains debug binary output
+     
+   
 2011-02-18 Sasa Bojanic <sasaboy@together.at>
    # Ant libraries upgraded to version 1.8.2 (removed ant-nodeps.jar)
    # Xerces library upgraded to version 2.11.0
@@ -10,7 +16,7 @@
    # Fix for migrating from XPDL1: proper handling of Tool activity that has many tools and different 
      Start/Finish modes
      
-###### TXM 1.1-0 RELEASED ######
+###### TXM 1.0-1 RELEASED ######
 
 2010-11-12 Sasa Bojanic <sasaboy@together.at>
    # XPDL model taken out from TWS project, adjusted, implemented XPDL2 support with automatic

@@ -180,9 +180,6 @@ configure -version    - Sets the version number for the project.
 configure -release    - Sets the release number for the project.
 configure -jdkhome    - Sets the "JAVA HOME" location of Java to be used 
                         to compile the project.
-configure -debug      - Flag that determines if the sources will be 
-                        compiled with debug option on or off. 
-                        Possible values [on/off]. 
 configure -instdir    - Sets the location of the installation dir used when
                         executing make script with install target specified.
 configure -rebranding - Flag that determines if the project 
@@ -214,26 +211,32 @@ configure -version 1.0 -release 1 -jdkhome C:/jdk1.6 -instdir C:/JXPDL</programl
 
       <para>Possible build targets for the make script are:</para>
 
-      <para><programlisting>make help           - Displays Help screen
-make buildAll       - Builds and configures TXM with javadoc and 
-                      docbook documentation
-make buildNoDoc     - Builds and configures TXM without javadoc and 
-                      docbook documentation
-make buildDoc       - Builds docbook documentation
-make dependencies   - Creates TWS and TWE dependencies within 
-                      distributions folder
-make dependency_tws - Creates TWS dependencies within distributions folder
-make dependency_twe - Creates TWE dependencies within distributions folder
-make install        - Installs and configures TXM into directory defined 
-                      by parameter install.dir in build.properties file. 
-                      This parameter can be set by using command: 
-                      configure -instdir PATH_TO_DIR.
-                      It should be called only after make buildAll target 
-                      is executed!
-make clean          - Removes the output and distribution folder (in order 
-                      to start a new compilation from scratch)
-make distributions  - Builds and configures TXM with all documentations 
-                      and creates distribution package
+      <para><programlisting>make help            - Displays Help screen
+make buildAll        - Builds and configures TXM with javadoc and 
+                       docbook documentation
+make buildAllDebug   - Builds and configures TXM with javadoc and 
+                       docbook documentation. The compiled classes have
+                       debug information.
+make buildNoDoc      - Builds and configures TXM without javadoc and 
+                       docbook documentation
+make buildNoDocDebug - Builds and configures TXM without javadoc and 
+                       docbook documentation. The compiled classes have
+                       debug information.
+make buildDoc        - Builds docbook documentation
+make dependencies    - Creates TWS and TWE dependencies within 
+                       distributions folder
+make dependency_tws  - Creates TWS dependencies within distributions folder
+make dependency_twe  - Creates TWE dependencies within distributions folder
+make install         - Installs and configures TXM into directory defined 
+                       by parameter install.dir in build.properties file. 
+                       This parameter can be set by using command: 
+                       configure -instdir PATH_TO_DIR.
+                       It should be called only after make buildAll target 
+                       is executed!
+make clean           - Removes the output and distribution folder (in order 
+                       to start a new compilation from scratch)
+make distributions   - Builds and configures TXM with all documentations 
+                       and creates distribution package
 </programlisting></para>
     </sect1>
 
@@ -2229,13 +2232,19 @@ pkg.getParticipants().add(p3);
 
       <itemizedlist>
         <listitem>
-          <para>Ant libraries upgraded to version 1.8.2</para>
+          <para>Ant libraries upgraded to version 1.8.2 (removed ant-nodeps.jar)</para>
         </listitem>
         <listitem>
           <para>Xerces library upgraded to version 2.11.0</para>
         </listitem>
         <listitem>
           <para>Commons IO library upgraded to version 2.0.1</para>
+        </listitem>
+        <listitem>
+          <para>The build.debug property removed from build.properties file, new build targets introduced to build output with DEBUG information in the classes (buildNoDocDebug and buildAllDebug)</para>
+        </listitem>
+        <listitem>
+          <para>The project distribution now also contains debug binary output</para>
         </listitem>
         <listitem>
           <para>Fix for migrating from XPDL 1: proper handling of circular transition for the activity
