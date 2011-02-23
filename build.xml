@@ -166,13 +166,12 @@
    <!-- =================================================================== -->
    <!-- Compile Generator module                                            -->
    <!-- =================================================================== -->
-   <target name="compile" depends="prepare">
+   <target name="compile" depends="updateVersion">
       <mkdir dir="${classes.dir}"/>
       <copy todir="${classes.dir}">
          <fileset dir="${basedir}/src"
                   includes="**/resources/*"/>
       </copy>
-      <echo message="BD=${build.debug}"/>
       <javac target="${targetVM}" source="${targetVM}"
             srcdir="${basedir}/src" 
             destdir="${classes.dir}" 
@@ -193,7 +192,7 @@
    <!-- ==================================================================== -->
    <!-- Configure scripts                                                    -->
    <!-- ==================================================================== -->
-   <target name="configure" depends="compile">
+   <target name="configure" depends="prepare,compile">
       <echo message="Configuring TXM ..." />
       <ant dir="${build.dir}" inheritAll="false" inheritRefs="false">
          <property name="jdk.dir" value="${jdk.dir}" />
@@ -214,7 +213,7 @@
       </uptodate>
    </target>
 
-   <target name="updateVersion" unless="versionUp2date">
+   <target name="updateVersion" depends="_versionUp2date" unless="versionUp2date">
       <propertyfile file="${basedir}/src/org/enhydra/jxpdl/resources/version.properties">
          <entry key="udate" type="date" value="now" pattern="yyyy/MM/dd HH:mm:ss" />
          <entry key="count" type="int" operation="+" default="1" pattern="00000" />
@@ -228,7 +227,7 @@
    <!-- =================================================================== -->
    <!-- Making jxpdl.jar                                                    -->
    <!-- =================================================================== -->
-   <target name="jar" depends="compile,_versionUp2date,updateVersion">
+   <target name="jar" depends="compile">
       <echo message=""/>
       <echo message="******************************************"/>
       <echo message="Building TXM jar libraries ..."/>
@@ -243,22 +242,18 @@
       </jar>
    </target>
    
-   <target name="jarDebug" depends="setDebug, jar"/>
+   <target name="debug" depends="cleanClasses, setDebug, jar"/>
         
    <!-- =================================================================== -->
    <!-- Building all                                                        -->
    <!-- =================================================================== -->
    <target name="buildAll" depends="jar, configure, buildAllDoc"/>
 
-   <target name="buildAllDebug" depends="setDebug, buildAll"/>
-
    <!-- =================================================================== -->
    <!-- Building without documentation                                      -->
    <!-- =================================================================== -->
    <target name="buildNoDoc" depends="jar, configure"/>
     
-   <target name="buildNoDocDebug" depends="setDebug, buildNoDoc"/>
-
    <!-- Builds Documentation                                                 -->
    <!-- ==================================================================== -->
    <target name="buildAllDoc">
@@ -293,11 +288,6 @@
       <antcall target="buildAllDoc"/>
       <antcall target="${os.buildBin.target}"/>
 
-      <antcall target="cleanClasses"/>
-      <antcall target="jarDebug"/>
-      <antcall target="${os.buildBin.target}">
-         <param name="dist.communityordebug.dir" value="${dist.debug.dir}" />
-      </antcall>
       <echo message="Distribution of ${app.name}-${version}-${release} with complete documentation has been built!"/>
    </target>
 
@@ -306,21 +296,20 @@
    <!-- Build binary for Linux                                              -->
    <!-- =================================================================== -->
    <target name="buildBinForLinux">
-      <property name="dist.communityordebug.dir" value="${dist.community.dir}" />
       <echo message=""/>
       <echo message="******************************************"/>
       <echo message="Creating ${dist.file.name}.tar.gz binary arhive, please wait ..."/>
       <echo message="******************************************"/>
       <echo message=""/>
 
-      <tar destfile="${dist.communityordebug.dir}/${dist.file.name}.tar" longfile="gnu">
+      <tar destfile="${dist.community.dir}/${dist.file.name}.tar" longfile="gnu">
          <tarfileset dir="${output.dir}" mode="666">
          </tarfileset>
       </tar>
-      <gzip src="${dist.communityordebug.dir}/${dist.file.name}.tar"
-            zipfile="${dist.communityordebug.dir}/${dist.file.name}.tar.gz"/>
-      <delete file="${dist.communityordebug.dir}/${dist.file.name}.tar" quiet="true"/>
-      <chmod file="${dist.communityordebug.dir}/${dist.file.name}.tar.gz" perm="ugo+rw"/>
+      <gzip src="${dist.community.dir}/${dist.file.name}.tar"
+            zipfile="${dist.community.dir}/${dist.file.name}.tar.gz"/>
+      <delete file="${dist.community.dir}/${dist.file.name}.tar" quiet="true"/>
+      <chmod file="${dist.community.dir}/${dist.file.name}.tar.gz" perm="ugo+rw"/>
    </target>
     
     
@@ -328,20 +317,23 @@
    <!-- Build binary for Windows                                            -->
    <!-- =================================================================== -->
    <target name="buildBinForWindows">
-      <property name="dist.communityordebug.dir" value="${dist.community.dir}" />
       <echo message=""/>
       <echo message="******************************************"/>
       <echo message="Creating ${dist.file.name}.zip binary arhive, please wait ..."/>
       <echo message="******************************************"/>
       <echo message=""/>
 
-      <zip destfile="${dist.communityordebug.dir}/${dist.file.name}.zip" update="true" >
+      <zip destfile="${dist.community.dir}/${dist.file.name}.zip" update="true" >
          <zipfileset dir="${output.dir}" />
       </zip>
 
       <ant target="distOther"/>
       <antcall target="_dependencies"/>            
 
+      <antcall target="debug"/>
+      <zip destfile="${dist.debug.dir}/${dist.file.name}.debug.zip" update="true" >
+         <zipfileset dir="${output.dir}" includes="**/lib/${jar.name}.jar" />
+      </zip>
    </target>
 
 
@@ -489,12 +481,9 @@
 make                     - Displays Help screen
 make help                - Displays Help screen
 make buildAll            - Builds and configures TXM with javadoc and docbook documentation
-make buildAllDebug       - Builds and configures TXM with javadoc and docbook documentation. 
-                           The compiled classes have debug information.
 make buildNoDoc          - Builds and configures TXM without javadoc and docbook documentation
-make buildNoDocDebug     - Builds and configures TXM without javadoc and docbook documentation.
-                           The compiled classes have debug information.
 make buildDoc            - Builds docbook documentation
+make debug               - Builds TXM JAR file with included debug information
 make dependencies        - Creates TWS and TWE dependencies within distributions folder
 make dependency_tws      - Creates TWS dependencies within distributions folder
 make dependency_twe      - Creates TWE dependencies within distributions folder

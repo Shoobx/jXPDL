@@ -161,16 +161,13 @@ help: FORCE
 buildAll: FORCE
 	@\$(JAVA) -cp \$(CLASSPATH) org.apache.tools.ant.Main \$@
 
-buildAllDebug: FORCE
-	@\$(JAVA) -cp \$(CLASSPATH) org.apache.tools.ant.Main \$@
-
 buildNoDoc: FORCE
 	@\$(JAVA) -cp \$(CLASSPATH) org.apache.tools.ant.Main \$@
 
-buildNoDocDebug: FORCE
+buildDoc: FORCE
 	@\$(JAVA) -cp \$(CLASSPATH) org.apache.tools.ant.Main \$@
 
-buildDoc: FORCE
+debug: FORCE
 	@\$(JAVA) -cp \$(CLASSPATH) org.apache.tools.ant.Main \$@
 
 dependencies: FORCE
