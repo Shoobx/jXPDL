@@ -242,8 +242,10 @@
       </jar>
    </target>
    
-   <target name="debug" depends="cleanClasses, setDebug, jar"/>
-        
+   <target name="_debug" depends="cleanClasses, setDebug, jar"/>
+
+   <target name="debug" depends="clean, _debug"/>
+   
    <!-- =================================================================== -->
    <!-- Building all                                                        -->
    <!-- =================================================================== -->
@@ -327,13 +329,8 @@
          <zipfileset dir="${output.dir}" />
       </zip>
 
-      <ant target="distOther"/>
       <antcall target="_dependencies"/>            
-
-      <antcall target="debug"/>
-      <zip destfile="${dist.debug.dir}/${dist.file.name}.debug.zip" update="true" >
-         <zipfileset dir="${output.dir}" includes="**/lib/${jar.name}.jar" />
-      </zip>
+      <ant target="distOther"/>
    </target>
 
 
@@ -433,6 +430,10 @@
       <copy todir="${dist.internal.dir}">
          <fileset dir="${build.dir}" includes="BuildID.txt" />
       </copy>
+      <antcall target="_debug"/>
+      <zip destfile="${dist.debug.dir}/${dist.file.name}.debug.zip" update="true" >
+         <zipfileset dir="${output.dir}" includes="**/lib/${jar.name}.jar" />
+      </zip>
    </target>
     
    <!-- =================================================================== -->
