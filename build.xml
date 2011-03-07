@@ -305,7 +305,7 @@
       <echo message=""/>
 
       <tar destfile="${dist.community.dir}/${dist.file.name}.tar" longfile="gnu">
-         <tarfileset dir="${output.dir}" mode="666">
+         <tarfileset dir="${output.dir}" mode="666" excludes="**/doc/api/**" >
          </tarfileset>
       </tar>
       <gzip src="${dist.community.dir}/${dist.file.name}.tar"
@@ -326,7 +326,7 @@
       <echo message=""/>
 
       <zip destfile="${dist.community.dir}/${dist.file.name}.zip" update="true" >
-         <zipfileset dir="${output.dir}" />
+         <zipfileset dir="${output.dir}" excludes="**/doc/api/**" />
       </zip>
 
       <antcall target="_dependencies"/>            
