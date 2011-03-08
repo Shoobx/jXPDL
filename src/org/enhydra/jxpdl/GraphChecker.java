@@ -16,21 +16,12 @@
 * along with this program. If not, see http://www.gnu.org/licenses
 */
 
-/**
- * GraphChecker.java
- *
- * Authors:
- *
- * Bojanic Sasa      sasaboy@neobee.net
- * Djojic Predrag    predrag@prozone.co.yu
- */
-
 package org.enhydra.jxpdl;
 
 import java.util.Vector;
 
 /**
- * You can use this class to check if the graph is cyclic, or to
+ * This class can be used to check if the graph is cyclic, or to
  * find index of corresponding join node for the given split node index.
  * When constructing class, you have to pass it the incidence matrix, which
  * has to be the two-dimensional array of booleans , where the rows and
@@ -38,6 +29,8 @@ import java.util.Vector;
  * if there is a connection between these nodes. If there is connection
  * from node <b>i</b> to the node <b>j</b> it is represented by putting
  * <b>true</true> into j'th column of the i'th row.
+ *
+ * @author Predrag Djojic
  */
 public class GraphChecker {
    private boolean[][] mat;

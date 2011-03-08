@@ -25,10 +25,23 @@ package org.enhydra.jxpdl;
  */
 public abstract class XMLSimpleElement extends XMLElement {
 
+   /**
+    * Creates a new instance of element: sets <code>name</code> to name of concrete class
+    * implementation of this abstract class, and <code>parent</code> and
+    * <code>isRequired</code> properties to the specified ones.
+    * <p>
+    * It also sets the value of this element to an empty String.
+    */
    public XMLSimpleElement (XMLElement parent, boolean isRequired) {
       super(parent, isRequired);
    }
 
+   /**
+    * Creates a new instance of element: sets <code>name</code>, <code>parent</code>
+    * <code>isRequired</code> properties to specified ones.
+    * <p>
+    * It also sets the value of this element to an empty String.
+    */
    public XMLSimpleElement (XMLElement parent, String name, boolean isRequired) {
       super(parent, name, isRequired);
    }

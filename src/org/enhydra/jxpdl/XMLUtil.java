@@ -1,4 +1,4 @@
-/**
+/**   
  * Together XPDL Model
  * Copyright (C) 2010 Together Teamsolutions Co., Ltd. 
  * 
@@ -116,21 +116,26 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 /**
- * Class with utilities to read/write XPDLs from/to XML.
+ * Class that provides various utilities to handle XPDL model.
  * 
  * @author Sasa Bojanic
  * @author Danijel Predarski
  */
 public class XMLUtil {
 
+   /** Constant defining default XML Name Space */
    public final static String XMLNS = "http://www.wfmc.org/2008/XPDL2.1";
 
+   /** Constant defining XPDL XML Name Space */
    public final static String XMLNS_XPDL = "http://www.wfmc.org/2008/XPDL2.1";
 
+   /** Constant defining XSI XML Name Space */
    public final static String XMLNS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
 
+   /** Constant defining the XDI Schema Location */
    public final static String XSI_SCHEMA_LOCATION = "http://www.wfmc.org/2008/XPDL2.1 http://www.wfmc.org/standards/docs/bpmnxpdl_31.xsd";
 
+   /** A map of basic data types. */
    public static Map basicTypesMap = new HashMap();
    static {
       basicTypesMap.put("BOOLEAN", "java.lang.Boolean");
@@ -141,7 +146,7 @@ public class XMLUtil {
    }
 
    /**
-    * Determines the number of string toFind within string toSearch.
+    * Returns the number of occurrences of string 'toFind' within string 'toSearch'.
     */
    public static int howManyStringsWithinString(String toSearch, String toFind) {
       try {
@@ -159,6 +164,7 @@ public class XMLUtil {
       }
    }
 
+   /** Returns canonical path based on provided relative path and base directory. */
    public static String getCanonicalPath(String relpath,
                                          String basedir,
                                          boolean canBeDirectory) {
@@ -187,6 +193,7 @@ public class XMLUtil {
       }
    }
 
+   /** Returns canonical path based on provided path. */
    public static String getCanonicalPath(String path, boolean canBeDirectory) {
       File f = new File(path);
       if (!f.isAbsolute()) {
@@ -200,6 +207,7 @@ public class XMLUtil {
       return getCanonicalPath(f);
    }
 
+   /** Returns canonical path for the provided File. */
    private static String getCanonicalPath(File f) {
       try {
          return f.getCanonicalPath();
@@ -208,6 +216,7 @@ public class XMLUtil {
       }
    }
 
+   /** Returns namespace prefix for the given node. */
    public static String getNameSpacePrefix(Node node) {
       String nameSpacePrefix = node.getPrefix();
       if (nameSpacePrefix != null) {
@@ -218,6 +227,7 @@ public class XMLUtil {
       return nameSpacePrefix;
    }
 
+   /** Returns parent's child node with the given childName. */
    public static Node getChildByName(Node parent, String childName) {
       NodeList children = parent.getChildNodes();
       for (int i = 0; i < children.getLength(); ++i) {
@@ -229,6 +239,7 @@ public class XMLUtil {
       return null;
    }
 
+   /** Returns the value of the 'Id' attribute of the given node. */
    public static String getId(Node node) {
       try {
          NamedNodeMap nnm = node.getAttributes();
@@ -245,6 +256,10 @@ public class XMLUtil {
       }
    }
 
+   /**
+    * Returns the value of the 'Id' attribute of the main document node of XML document
+    * contained within a given xml file.
+    */
    public static synchronized String getIdFromFile(String xmlFile) {
       try {
          // Create parser
@@ -274,6 +289,7 @@ public class XMLUtil {
       }
    }
 
+   /** Returns the string content of the given node. */
    public static String getContent(Node node, boolean omitXMLDeclaration) {
       try {
          ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -301,6 +317,7 @@ public class XMLUtil {
       }
    }
 
+   /** Returns the string content of the child nodes of the given node. */
    public static String getChildNodesContent(Node node) {
       String txt = "";
       if (node != null) {
@@ -346,6 +363,10 @@ public class XMLUtil {
       return txt;
    }
 
+   /**
+    * Returns the 'short' class name (the name without package information) for the given
+    * class name.
+    */
    public static String getShortClassName(String fullClassName) {
       int lastDot = fullClassName.lastIndexOf(".");
       if (lastDot >= 0) {
@@ -354,6 +375,7 @@ public class XMLUtil {
       return fullClassName;
    }
 
+   /** Returns the Id of the external package given by relative path to the main package. */
    public static String getExternalPackageId(String extPkgHref) {
       // System.out.println("EPID1="+extPkgHref);
       int indBSL = extPkgHref.lastIndexOf("\\");
@@ -373,6 +395,10 @@ public class XMLUtil {
       return extPkgHref;
    }
 
+   /**
+    * Returns the Node representing the content of toParse string (if isFile flag is
+    * false) or content of the file referenced by 'toParse' path.
+    */
    public static Node parseSchemaNode(String toParse, boolean isFile) {
       Document document = null;
 
@@ -414,6 +440,9 @@ public class XMLUtil {
       return null;
    }
 
+   /**
+    * Returns string representation of XML chunk representing ExtendedAttributes element.
+    */
    public static String stringifyExtendedAttributes(ExtendedAttributes extAttribs)
       throws Exception {
       try {
@@ -436,6 +465,9 @@ public class XMLUtil {
       }
    }
 
+   /**
+    * Returns ExtendedAttributes element created by parsing given string representation.
+    */
    public static ExtendedAttributes destringyfyExtendedAttributes(String extAttribs)
       throws Exception {
       ExtendedAttributes extAttr = null;
@@ -468,6 +500,9 @@ public class XMLUtil {
       return extAttr;
    }
 
+   /**
+    * Returns Node representing the content of extended attribute.
+    */
    public static Node parseExtendedAttributeContent(String toParse) {
       Document document = null;
 
@@ -499,6 +534,10 @@ public class XMLUtil {
       return null;
    }
 
+   /**
+    * Returns the value of extended attribute with a given name by searching name/value
+    * pars given in the matrix.
+    */
    public static String getExtendedAttributeValue(String[][] extendedAttributes,
                                                   String extAttrName) {
       if (extendedAttributes != null) {
@@ -511,6 +550,10 @@ public class XMLUtil {
       return null;
    }
 
+   /**
+    * Returns the Java type of the DataTypes element for the given DataField or
+    * FormalParameter element.
+    */
    public static String getJavaType(XMLInterface xmli, XMLCollectionElement dfOrFP) {
       DataTypes dtypes = null;
       if (dfOrFP instanceof DataField) {
@@ -521,6 +564,9 @@ public class XMLUtil {
       return getChoosenType(xmli, dtypes, XMLUtil.getPackage(dfOrFP));
    }
 
+   /**
+    * Returns the name of the chosen type of 'types' DataTypes element.
+    */
    public static String getChoosenType(XMLInterface xmli, DataTypes types, Package pkg) {
       XMLElement choosenType = types.getChoosen();
       if (choosenType instanceof BasicType) {
@@ -543,6 +589,10 @@ public class XMLUtil {
 
    }
 
+   /**
+    * Returns the parent Package element for the given element or null if there is no such
+    * parent.
+    */
    public static Package getPackage(XMLElement el) {
       if (el == null)
          return null;
@@ -554,6 +604,10 @@ public class XMLUtil {
       return (Package) el;
    }
 
+   /**
+    * Returns the parent WorkflowProcess element for the given element or null if there is
+    * no such parent.
+    */
    public static WorkflowProcess getWorkflowProcess(XMLElement el) {
       if (el == null)
          return null;
@@ -565,6 +619,10 @@ public class XMLUtil {
       return (WorkflowProcess) el;
    }
 
+   /**
+    * Returns the parent Pool element for the given element or null if there is no such
+    * parent.
+    */
    public static Pool getPool(XMLElement el) {
       if (el == null)
          return null;
@@ -576,6 +634,10 @@ public class XMLUtil {
       return (Pool) el;
    }
 
+   /**
+    * Returns the parent ActivitySet element for the given element or null if there is no
+    * such parent.
+    */
    public static ActivitySet getActivitySet(XMLElement el) {
       if (el == null)
          return null;
@@ -587,6 +649,10 @@ public class XMLUtil {
       return (ActivitySet) el;
    }
 
+   /**
+    * Returns the parent Activity element for the given element or null if there is no
+    * such parent.
+    */
    public static Activity getActivity(XMLElement el) {
       if (el == null)
          return null;
@@ -598,6 +664,10 @@ public class XMLUtil {
       return (Activity) el;
    }
 
+   /**
+    * Returns the parent Artifact element for the given element or null if there is no
+    * such parent.
+    */
    public static Artifact getArtifact(XMLElement el) {
       if (el == null)
          return null;
@@ -609,6 +679,10 @@ public class XMLUtil {
       return (Artifact) el;
    }
 
+   /**
+    * Returns the parent Transition element for the given element or null if there is no
+    * such parent.
+    */
    public static Transition getTransition(XMLElement el) {
       if (el == null)
          return null;
@@ -620,6 +694,10 @@ public class XMLUtil {
       return (Transition) el;
    }
 
+   /**
+    * Returns the parent Association element for the given element or null if there is no
+    * such parent.
+    */
    public static Association getAssociation(XMLElement el) {
       if (el == null)
          return null;
@@ -631,6 +709,10 @@ public class XMLUtil {
       return (Association) el;
    }
 
+   /**
+    * Returns the parent Participant element for the given element or null if there is no
+    * such parent.
+    */
    public static Participant getParticipant(XMLElement el) {
       if (el == null)
          return null;
@@ -642,6 +724,10 @@ public class XMLUtil {
       return (Participant) el;
    }
 
+   /**
+    * Returns the parent Lane element for the given element or null if there is no such
+    * parent.
+    */
    public static Lane getLane(XMLElement el) {
       if (el == null)
          return null;
@@ -653,6 +739,10 @@ public class XMLUtil {
       return (Lane) el;
    }
 
+   /**
+    * Returns the parent element of given 'type' for the given element or null if there is
+    * no such parent.
+    */
    public static XMLElement getParentElement(Class type, XMLElement el) {
       if (el == null || type == null)
          return null;
@@ -664,6 +754,10 @@ public class XMLUtil {
       return el;
    }
 
+   /**
+    * Returns the parent element of given 'assignableFrom' type for the given element or
+    * null if there is no such parent.
+    */
    public static XMLElement getParentElementByAssignableType(Class assignableFrom,
                                                              XMLElement el) {
       if (el == null || assignableFrom == null)
@@ -676,6 +770,7 @@ public class XMLUtil {
       return el;
    }
 
+   /** Returns true if given element is a child of a given parent. */
    public static boolean isParentsChild(XMLElement parent, XMLElement el) {
       if (el == null || parent == null)
          return false;
@@ -690,6 +785,7 @@ public class XMLUtil {
       return (el != null);
    }
 
+   /** Returns true if given parent element is a parent of a given child element. */
    public static boolean isChildsParent(XMLElement parent, XMLElement mayBeChild) {
       if (mayBeChild == null || parent == null)
          return false;
@@ -704,6 +800,7 @@ public class XMLUtil {
       return (el != null);
    }
 
+   /** Returns all the parents in the hierarchy for the given element. */
    public static Set getAllParents(XMLElement el) {
       Set parents = new HashSet();
 
@@ -715,6 +812,10 @@ public class XMLUtil {
       return parents;
    }
 
+   /**
+    * Returns WorkflowProcess element which Id is given one. The search starts at a
+    * 'toBegin' package and then if not found continues to the external packages.
+    */
    public static WorkflowProcess findWorkflowProcess(XMLInterface xmlInterface,
                                                      Package toBegin,
                                                      String wpId) {
@@ -735,28 +836,37 @@ public class XMLUtil {
       return wp;
    }
 
+   /**
+    * Returns Participant element which Id is given one. The search starts at a 'toBegin'
+    * workflow process and then if not found continues to the package and then external
+    * packages.
+    */
    public static Participant findParticipant(XMLInterface xmlInterface,
                                              WorkflowProcess toBegin,
-                                             String perf) {
-      Participant p = toBegin.getParticipant(perf);
+                                             String pId) {
+      Participant p = toBegin.getParticipant(pId);
       if (p == null) {
          Package pkg = XMLUtil.getPackage(toBegin);
-         p = XMLUtil.findParticipant(xmlInterface, pkg, perf);
+         p = XMLUtil.findParticipant(xmlInterface, pkg, pId);
       }
       return p;
    }
 
+   /**
+    * Returns Participant element which Id is given one. The search starts at a 'toBegin'
+    * package and then if not found continues to the external packages.
+    */
    public static Participant findParticipant(XMLInterface xmlInterface,
                                              Package toBegin,
-                                             String perf) {
-      Participant p = toBegin.getParticipant(perf);
+                                             String pId) {
+      Participant p = toBegin.getParticipant(pId);
       if (p == null) {
          List l = XMLUtil.getAllExternalPackageIds(xmlInterface, toBegin, new HashSet());
          Iterator ita = l.iterator();
          while (ita.hasNext()) {
             Package pk = xmlInterface.getPackageById((String) ita.next());
             if (pk != null) {
-               p = pk.getParticipant(perf);
+               p = pk.getParticipant(pId);
                if (p != null) {
                   break;
                }
@@ -766,6 +876,11 @@ public class XMLUtil {
       return p;
    }
 
+   /**
+    * Returns Application element which Id is given one. The search starts at a 'toBegin'
+    * workflow process and then if not found continues to the package and then external
+    * packages.
+    */
    public static Application findApplication(XMLInterface xmlInterface,
                                              WorkflowProcess toBegin,
                                              String id) {
@@ -777,6 +892,10 @@ public class XMLUtil {
       return a;
    }
 
+   /**
+    * Returns Application element which Id is given one. The search starts at a 'toBegin'
+    * package and then if not found continues to the external packages.
+    */
    public static Application getApplication(XMLInterface xmlInterface,
                                             Package toBegin,
                                             String id) {
@@ -797,6 +916,10 @@ public class XMLUtil {
       return a;
    }
 
+   /**
+    * Returns TypeDeclaration element which Id is given one. The search starts at a
+    * 'toBegin' package and then if not found continues to the external packages.
+    */
    public static TypeDeclaration getTypeDeclaration(XMLInterface xmlInterface,
                                                     Package toBegin,
                                                     String id) {
@@ -817,6 +940,9 @@ public class XMLUtil {
       return td;
    }
 
+   /**
+    * Returns true if given string can represent a script expression.
+    */
    public static boolean canBeExpression(String expr,
                                          Map allVars,
                                          boolean evaluateToString) {
@@ -854,6 +980,7 @@ public class XMLUtil {
       return canBeExpression;
    }
 
+   /** Returns the list of positions (Integers) of string 'dfOrFpId' within the string 'expr'. */
    public static List getUsingPositions(String expr, String dfOrFpId, Map allVars) {
       List positions = new ArrayList();
       if (expr.trim().equals("") || dfOrFpId.trim().equals(""))
@@ -934,6 +1061,7 @@ public class XMLUtil {
       return positions;
    }
 
+   /** Returns Join element of the given activity, or null if there is no Join. */
    public static Join getJoin(Activity act) {
       Join j = null;
       TransitionRestrictions trs = act.getTransitionRestrictions();
@@ -943,6 +1071,7 @@ public class XMLUtil {
       return j;
    }
 
+   /** Returns Split element of the given activity, or null if there is no Join. */
    public static Split getSplit(Activity act) {
       Split s = null;
       TransitionRestrictions trs = act.getTransitionRestrictions();
@@ -952,12 +1081,14 @@ public class XMLUtil {
       return s;
    }
 
+   /** Returns set of given activity's outgoing transitions. */
    public static Set getOutgoingTransitions(Activity act) {
       return XMLUtil.getOutgoingTransitions(act,
                                             ((Transitions) ((XMLCollectionElement) act.getParent()
                                                .getParent()).get("Transitions")));
    }
 
+   /** Returns set of given activity's outgoing transitions within collection 'tras'. */
    public static Set getOutgoingTransitions(Activity act, Transitions tras) {
       Set s = new HashSet();
       Iterator it = tras.toElements().iterator();
@@ -970,12 +1101,14 @@ public class XMLUtil {
       return s;
    }
 
+   /** Returns set of given activity's exceptional outgoing transitions. */
    public static Set getExceptionalOutgoingTransitions(Activity act) {
       Transitions tras = (Transitions) ((XMLCollectionElement) act.getParent()
          .getParent()).get("Transitions");
       return XMLUtil.getExceptionalOutgoingTransitions(act, tras);
    }
 
+   /** Returns set of given activity's exceptional outgoing transitions within collection 'tras'. */
    public static Set getExceptionalOutgoingTransitions(Activity act, Transitions tras) {
       Set s = new HashSet();
       Iterator it = tras.toElements().iterator();
@@ -990,12 +1123,14 @@ public class XMLUtil {
       return s;
    }
 
+   /** Returns set of given activity's non-exceptional outgoing transitions. */
    public static Set getNonExceptionalOutgoingTransitions(Activity act) {
       Transitions tras = (Transitions) ((XMLCollectionElement) act.getParent()
          .getParent()).get("Transitions");
       return XMLUtil.getNonExceptionalOutgoingTransitions(act, tras);
    }
 
+   /** Returns set of given activity's non-exceptional outgoing transitions within collection 'tras'. */
    public static Set getNonExceptionalOutgoingTransitions(Activity act, Transitions tras) {
       Set s = new HashSet();
       Iterator it = tras.toElements().iterator();
@@ -1010,12 +1145,14 @@ public class XMLUtil {
       return s;
    }
 
+   /** Returns set of given activity's incoming transitions. */
    public static Set getIncomingTransitions(Activity act) {
       return XMLUtil.getIncomingTransitions(act,
                                             ((Transitions) ((XMLCollectionElement) act.getParent()
                                                .getParent()).get("Transitions")));
    }
 
+   /** Returns set of given activity's incoming transitions within collection 'tras'. */
    public static Set getIncomingTransitions(Activity act, Transitions tras) {
       Set s = new HashSet();
       Iterator it = tras.toElements().iterator();
@@ -1028,6 +1165,7 @@ public class XMLUtil {
       return s;
    }
 
+   /** Returns true if given transition is exceptional. */
    public static boolean isExceptionalTransition(Transition tra) {
       boolean isExcTra = false;
       if (tra != null) {
@@ -1040,10 +1178,12 @@ public class XMLUtil {
       return isExcTra;
    }
 
+   /** Returns Activity referenced by 'From' attribute of the given transition.. */
    public static Activity getFromActivity(Transition t) {
       return ((Activities) ((XMLCollectionElement) t.getParent().getParent()).get("Activities")).getActivity(t.getFrom());
    }
 
+   /** Returns Activity referenced by 'To' attribute of the given transition.. */
    public static Activity getToActivity(Transition t) {
       return ((Activities) ((XMLCollectionElement) t.getParent().getParent()).get("Activities")).getActivity(t.getTo());
    }
@@ -1897,11 +2037,11 @@ public class XMLUtil {
       } else {
          System.out.println("...XPDL is valid");
       }
-      
-      WorkflowProcess wp = (WorkflowProcess)pkg.getWorkflowProcesses().get(0);
+
+      WorkflowProcess wp = (WorkflowProcess) pkg.getWorkflowProcesses().get(0);
       List sas = wp.getStartingActivities();
-      for (int i=0; i<sas.size(); i++) {
-         System.out.println("SA"+i+"="+((Activity)sas.get(i)).getId());
+      for (int i = 0; i < sas.size(); i++) {
+         System.out.println("SA" + i + "=" + ((Activity) sas.get(i)).getId());
       }
       int ind = inputFile.lastIndexOf(".");
       String outF = null;
@@ -3661,8 +3801,8 @@ public class XMLUtil {
          Transitions trs = (Transitions) ((XMLCollectionElement) trasToRemove.toArray()[0]).getParent();
          it = trasToRemove.iterator();
          while (it.hasNext()) {
-            trs.remove((Transition)it.next());
-         }         
+            trs.remove((Transition) it.next());
+         }
          Iterator itt = trasToRemove.iterator();
          while (itt.hasNext()) {
             Transition t = (Transition) itt.next();
@@ -3707,7 +3847,7 @@ public class XMLUtil {
       Associations asocs = XMLUtil.getPackage(a).getAssociations();
       Iterator it = asocsToRemove.iterator();
       while (it.hasNext()) {
-         asocs.remove((Association)it.next());
+         asocs.remove((Association) it.next());
       }
    }
 
@@ -3724,7 +3864,7 @@ public class XMLUtil {
          .getAssociations();
       it = asocsToRemove.iterator();
       while (it.hasNext()) {
-         asocs.remove((Association)it.next());
+         asocs.remove((Association) it.next());
       }
    }
 

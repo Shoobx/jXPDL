@@ -1,20 +1,20 @@
 /**
-* Together XPDL Model
-* Copyright (C) 2010 Together Teamsolutions Co., Ltd. 
-* 
-* This program is free software: you can redistribute it and/or modify 
-* it under the terms of the GNU General Public License as published by 
-* the Free Software Foundation, either version 3 of the License, or 
-* (at your option) any later version. 
-*
-* This program is distributed in the hope that it will be useful, 
-* but WITHOUT ANY WARRANTY; without even the implied warranty of 
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
-* GNU General Public License for more details. 
-*
-* You should have received a copy of the GNU General Public License 
-* along with this program. If not, see http://www.gnu.org/licenses
-*/
+ * Together XPDL Model
+ * Copyright (C) 2010 Together Teamsolutions Co., Ltd. 
+ * 
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or 
+ * (at your option) any later version. 
+ *
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * GNU General Public License for more details. 
+ *
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see http://www.gnu.org/licenses
+ */
 
 package org.enhydra.jxpdl.elements;
 
@@ -79,7 +79,7 @@ public class Package extends XMLComplexElement {
       DataFields refDataFields = new DataFields(this); // min=0
       Pools refPools = new Pools(this); // min=0
       Associations refAssociations = new Associations(this); // min=0
-		Artifacts refArtifacts = new Artifacts(this); // min=0
+      Artifacts refArtifacts = new Artifacts(this); // min=0
       WorkflowProcesses refWorkflowProcesses = new WorkflowProcesses(this); // min=0
       ExtendedAttributes refExtendedAttributes = new ExtendedAttributes(this);
 
@@ -138,8 +138,11 @@ public class Package extends XMLComplexElement {
       Iterator it = getExternalPackages().toElements().iterator();
       while (it.hasNext()) {
          ExternalPackage ep = (ExternalPackage) it.next();
-         String href = ep.getHref();
-         String epId = getExternalPackageId(href);
+         String epId = ep.getId();
+         if (epId.equals("")) {
+            String href = ep.getHref();
+            epId = getExternalPackageId(href);
+         }
          if (epId != null && epId.equals(id)) {
             toRet = ep;
             break;
@@ -167,9 +170,9 @@ public class Package extends XMLComplexElement {
    public ActivitySet getActivitySet(String Id) {
       Iterator it = getWorkflowProcesses().toElements().iterator();
       while (it.hasNext()) {
-         WorkflowProcess wp = (WorkflowProcess)it.next();
+         WorkflowProcess wp = (WorkflowProcess) it.next();
          ActivitySet as = wp.getActivitySet(Id);
-         if (as!=null) {
+         if (as != null) {
             return as;
          }
       }
@@ -179,9 +182,9 @@ public class Package extends XMLComplexElement {
    public Activity getActivity(String Id) {
       Iterator it = getWorkflowProcesses().toElements().iterator();
       while (it.hasNext()) {
-         WorkflowProcess wp = (WorkflowProcess)it.next();
+         WorkflowProcess wp = (WorkflowProcess) it.next();
          Activity act = wp.getActivity(Id);
-         if (act!=null) {
+         if (act != null) {
             return act;
          }
       }
@@ -265,9 +268,9 @@ public class Package extends XMLComplexElement {
    }
 
    public Artifacts getArtifacts() {
-		return (Artifacts) get("Artifacts");
-	}
-	
+      return (Artifacts) get("Artifacts");
+   }
+
    public WorkflowProcesses getWorkflowProcesses() {
       return (WorkflowProcesses) get("WorkflowProcesses");
    }
@@ -285,7 +288,7 @@ public class Package extends XMLComplexElement {
       namespaces.setNotifyMainListeners(notify);
    }
 
-   public void removeXPDL1Support () {
+   public void removeXPDL1Support() {
       super.removeXPDL1Support();
       namespaces.removeXPDL1Support();
    }

@@ -302,8 +302,9 @@ public class XMLInterfaceImpl implements XMLInterface {
          // href element is similar to their Ids
          Iterator eps = pkg.getExternalPackages().toElements().iterator();
          while (eps.hasNext()) {
-            String pathToExtPackage = ((ExternalPackage) eps.next()).getHref();
-            String extPkgId = null;
+            ExternalPackage ep = (ExternalPackage) eps.next();
+            String pathToExtPackage = ep.getHref();
+            String extPkgId = ep.getId();
             if (handleExternalPackages) {
                // setting working dir to be the one of the current package
                String ptep = XMLUtil.getCanonicalPath(pathToExtPackage,
@@ -313,7 +314,9 @@ public class XMLInterfaceImpl implements XMLInterface {
                Package extPkg = openPackageRecursively(ptep, handleExternalPackages);
                extPkgId = extPkg.getId();
             } else {
-               extPkgId = XMLUtil.getExternalPackageId(pathToExtPackage);
+               if (extPkgId==null) {
+                  extPkgId = XMLUtil.getExternalPackageId(pathToExtPackage);
+               }
             }
             pkg.addExternalPackageMapping(pathToExtPackage, extPkgId);
          }
@@ -370,12 +373,13 @@ public class XMLInterfaceImpl implements XMLInterface {
          idToPackages.put(pkgId, l);
          Iterator eps = pkg.getExternalPackages().toElements().iterator();
          while (eps.hasNext()) {
-            String pathToExtPackage = ((ExternalPackage) eps.next()).getHref();
-            String extPkgId = pkg.getExternalPackageId(pathToExtPackage);
+            ExternalPackage ep = (ExternalPackage)eps.next();
+            String pathToExtPackage = ep.getHref();
+            String extPkgId = ep.getId();
             if (extPkgId == null) {
                extPkgId = XMLUtil.getExternalPackageId(pathToExtPackage);
-               pkg.addExternalPackageMapping(pathToExtPackage, extPkgId);
             }
+            pkg.addExternalPackageMapping(pathToExtPackage, extPkgId);
          }
       }
       return pkg;

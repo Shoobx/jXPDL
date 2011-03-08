@@ -30,16 +30,31 @@ import org.enhydra.jxpdl.utilities.SequencedHashMap;
  */
 public abstract class XMLComplexElement extends XMLBaseForCollectionAndComplex {
 
+   /**
+    * Creates a new instance of element: sets <code>name</code> to name of concrete class
+    * implementation of this abstract class, and <code>parent</code> and
+    * <code>isRequired</code> properties to the specified ones.
+    */
    public XMLComplexElement(XMLElement parent, boolean isRequired) {
       super(parent, isRequired);
       fillStructure();
    }
 
+   /**
+    * Creates a new instance of element: sets <code>name</code> to name of concrete class
+    * implementation of this abstract class, and <code>parent</code>,
+    * <code>isRequired</code> and <code>xpdl1support</code> properties to the specified
+    * ones.
+    */
    public XMLComplexElement(XMLElement parent, boolean isRequired, boolean xpdl1support) {
       super(parent, isRequired, xpdl1support);
       fillStructure();
    }
 
+   /**
+    * Creates a new instance of element: sets <code>name</code>, <code>parent</code>
+    * <code>isRequired</code> properties to specified ones.
+    */
    public XMLComplexElement(XMLElement parent, String name, boolean isRequired) {
       super(parent, name, isRequired);
       fillStructure();

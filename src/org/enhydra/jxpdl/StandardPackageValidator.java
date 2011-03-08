@@ -88,57 +88,133 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 /**
- * Represents coresponding element from XPDL schema.
+ * Standard implementation of XMLValidator interface for validating XPDL model.
  * 
  * @author Sasa Bojanic
  */
 public class StandardPackageValidator implements XMLValidator {
 
+   /**
+    * Constant for the property setting name that defines if sub-flow references will be
+    * validated.
+    */
    public static final String VALIDATE_SUBFLOW_REFERENCES = "ValidateSubFlowReferences";
 
+   /**
+    * Constant for the property setting name that defines if performer expressions will be
+    * validated.
+    */
    public static final String VALIDATE_PERFORMER_EXPRESSIONS = "ValidatePerformerExpressions";
 
+   /**
+    * Constant for the property setting name that defines if actual parameter expressions
+    * will be validated.
+    */
    public static final String VALIDATE_ACTUAL_PARAMETER_EXPRESSIONS = "ValidateActualParameterExpressions";
 
+   /**
+    * Constant for the property setting name that defines if deadline expressions will be
+    * validated.
+    */
    public static final String VALIDATE_DEADLINE_EXPRESSIONS = "ValidateDeadlineExpressions";
 
+   /**
+    * Constant for the property setting name that defines if transition condition
+    * expressions will be validated.
+    */
    public static final String VALIDATE_CONDITION_EXPRESSIONS = "ValidateConditionExpressions";
 
+   /**
+    * Constant for the property setting name that defines if unused variables will be
+    * validated.
+    */
    public static final String VALIDATE_UNUSED_VARIABLES = "ValidateUnusedVariables";
 
+   /**
+    * Constant for the property setting name that defines if (transition) condition will
+    * be validated by type.
+    */
    public static final String VALIDATE_CONDITION_BY_TYPE = "ValidateConditionByType";
 
+   /**
+    * Constant for the property setting name that defines if existing schema validation
+    * errors will be taken into account during schema validation.
+    */
    public static final String GET_EXISTING_SCHEMA_VALIDATION_ERRORS = "GetExistingSchemaValidationErrors";
 
+   /**
+    * Constant for the property setting name that defines if external packages will also
+    * be validated.
+    */
    public static final String CHECK_EXTERNAL_PACKAGES = "CheckExternalPackages";
 
+   /**
+    * Constant for the property setting name that defines if validation allows undefined
+    * start in the process graph.
+    */
    public static final String ALLOW_UNDEFINED_START = "AllowUndefinedStart";
 
+   /**
+    * Constant for the property setting name that defines if validation allows undefined
+    * end in the process graph.
+    */
    public static final String ALLOW_UNDEFINED_END = "AllowUndefinedEnd";
 
+   /**
+    * Constant for the property setting name that defines the Encoding.
+    */
    public static final String ENCODING = "Encoding";
 
+   /**
+    * Constant for the property setting name that defines the Locale.
+    */
    public static final String LOCALE = "Locale";
 
+   /**
+    * Constant that defines a current XPDL version.
+    */
    protected static final String CURRENT_XPDL_VERSION = "2.1";
 
+   /**
+    * Properties for the validator.
+    */
    protected Properties properties;
 
+   /**
+    * Instance of XMLInterface for handling XPDL main Package model objects.
+    */
    protected XMLInterface xmlInterface;
 
+   /**
+    * Map of external package's validation errors.
+    */
    protected Map epsValidationErrors = new HashMap();
 
+   /**
+    * Map of schema validation errors.
+    */
    protected Map schemaValidationErrors = new HashMap();
 
+   /** Settings for the validator. */
    protected Properties settings;
 
+   /**
+    * Default constructor. When used, init() method should be called afterwards to
+    * initialize validation settings.
+    */
    public StandardPackageValidator() {
    }
 
+   /**
+    * Constructor with validation settings.
+    */
    public StandardPackageValidator(Properties settings) {
       this.settings = settings;
    }
 
+   /**
+    * Performs initialization of the validator.
+    */
    public void init(XMLInterface pXmlInterface,
                     Package pPkg,
                     boolean pGetExistingSchemaValidationErrors,
@@ -154,21 +230,28 @@ public class StandardPackageValidator implements XMLValidator {
       init(tempProperties, pXmlInterface);
    }
 
+   /**
+    * Clears the cache of external package and schema validation errors for the given
+    * Package.
+    */
    public void clearCache(Package pkg) {
       epsValidationErrors.remove(pkg);
       schemaValidationErrors.remove(pkg);
    }
 
+   /** Clears the whole external package and schema validation errors cache. */
    public void clearCache() {
       epsValidationErrors.clear();
       schemaValidationErrors.clear();
       xmlInterface = null;
    }
 
+   /** Returns external package validation errors map. */
    public Map getExtPkgValidationErrors() {
       return epsValidationErrors;
    }
 
+   /** Initializes validator settings. */
    public void init(Properties props) {
       this.properties = props;
       if (props == null) {
@@ -176,11 +259,16 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Initializes validator settings. */
    public void init(Properties pProps, XMLInterface pXmlInterface) {
       init(pProps);
       this.xmlInterface = pXmlInterface;
    }
 
+   /**
+    * Validates any XMLElement by calling the existing method for that particular element
+    * type if it exists.
+    */
    public void validateElement(XMLElement el, List existingErrors, boolean fullCheck) {
       if (!fullCheck && existingErrors.size() > 0) {
          return;
@@ -230,6 +318,7 @@ public class StandardPackageValidator implements XMLValidator {
       validateStandard(el, existingErrors, fullCheck);
    }
 
+   /** Validates XMLAttribute elements. */
    public void validateElement(XMLAttribute el, List existingErrors, boolean fullCheck) {
       XMLElement parent = el.getParent();
 
@@ -297,15 +386,18 @@ public class StandardPackageValidator implements XMLValidator {
 
    }
 
+   /** Validates XMLComplexChoice elements. */
    public void validateElement(XMLComplexChoice el, List existingErrors, boolean fullCheck) {
       validateElement(el.getChoosen(), existingErrors, fullCheck);
    }
 
+   /** Validates XMLEmptyChoiceElement elements. */
    public void validateElement(XMLEmptyChoiceElement el,
                                List existingErrors,
                                boolean fullCheck) {
    }
 
+   /** Validates XMLCollection elements. */
    public void validateElement(XMLCollection el, List existingErrors, boolean fullCheck) {
       for (Iterator it = el.toElements().iterator(); it.hasNext();) {
          XMLElement cel = (XMLElement) it.next();
@@ -313,12 +405,14 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates XMLCollectionElement elements. */
    public void validateElement(XMLCollectionElement el,
                                List existingErrors,
                                boolean fullCheck) {
       validateElement((XMLComplexElement) el, existingErrors, fullCheck);
    }
 
+   /** Validates XMLComplexElement elements. */
    public void validateElement(XMLComplexElement el,
                                List existingErrors,
                                boolean fullCheck) {
@@ -328,9 +422,14 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates XMLSimpleElement elements. */
    public void validateElement(XMLSimpleElement el, List existingErrors, boolean fullCheck) {
    }
 
+   /**
+    * Performs standard validation by calling appropriate method for the particular
+    * element depending on its type.
+    */
    protected void validateStandard(XMLElement el, List existingErrors, boolean fullCheck) {
       if (el instanceof XMLAttribute) {
          validateElement((XMLAttribute) el, existingErrors, fullCheck);
@@ -347,6 +446,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates Activity element. */
    public void validateElement(Activity el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
 
@@ -499,6 +599,7 @@ public class StandardPackageValidator implements XMLValidator {
 
    }
 
+   /** Validates ActivitySet element. */
    public void validateElement(ActivitySet el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
       boolean isValid = true;
@@ -523,6 +624,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates Associations element. */
    public void validateElement(Associations el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
       if (fullCheck || existingErrors.size() == 0) {
@@ -559,6 +661,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates Condition element. */
    public void validateElement(Condition el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
       String condType = el.getType();
@@ -654,6 +757,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates DataField element. */
    public void validateElement(DataField el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
       boolean validateVariableUsage = properties.getProperty(StandardPackageValidator.VALIDATE_UNUSED_VARIABLES,
@@ -671,6 +775,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates DeadlineDuration element. */
    public void validateElement(DeadlineDuration el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
       String condExpr = el.toValue();
@@ -701,6 +806,7 @@ public class StandardPackageValidator implements XMLValidator {
 
    }
 
+   /** Validates the collection of Deadline elements for the Activity. */
    public void validateElement(Deadlines el, List existingErrors, boolean fullCheck) {
       Iterator dls = el.toElements().iterator();
       int syncCount = 0;
@@ -725,6 +831,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates ExceptionName element. */
    public void validateElement(ExceptionName el, List existingErrors, boolean fullCheck) {
       Activity act = XMLUtil.getActivity(el);
       Set ets = XMLUtil.getExceptionalOutgoingTransitions(act);
@@ -755,6 +862,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates FormalParameter element. */
    public void validateElement(FormalParameter el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
       boolean validateVariableUsage = properties.getProperty(StandardPackageValidator.VALIDATE_UNUSED_VARIABLES,
@@ -774,11 +882,15 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
-   // We use reflection here since this class will also be used by Shark engine
+   /**
+    * Returns the number of references for the given element 'el' which parent Package or
+    * WorkflowProcess element is 'parent'.
+    */
    protected int getNoOfReferences(XMLComplexElement parent, XMLComplexElement el) {
       return XMLUtil.getReferences(parent, el, null).size();
    }
 
+   /** Validates Package element. */
    public void validateElement(org.enhydra.jxpdl.elements.Package el,
                                List existingErrors,
                                boolean fullCheck) {
@@ -794,6 +906,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates Performer element. */
    public void validateElement(Performer el, List existingErrors, boolean fullCheck) {
       // check performer
       String performer = el.toValue();
@@ -842,6 +955,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates Priority element. */
    public void validateElement(Priority el, List existingErrors, boolean fullCheck) {
       boolean notInt = false;
       try {
@@ -861,6 +975,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates Responsible element. */
    public void validateElement(Responsible el, List existingErrors, boolean fullCheck) {
       XMLComplexElement pkgOrWp = XMLUtil.getWorkflowProcess(el);
       if (pkgOrWp == null) {
@@ -883,6 +998,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates SubFlow element. */
    public void validateElement(SubFlow el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
       if (existingErrors.size() == 0 || fullCheck) {
@@ -902,6 +1018,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates TaskApplication element. */
    public void validateElement(TaskApplication el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
       if (existingErrors.size() == 0 || fullCheck) {
@@ -925,6 +1042,7 @@ public class StandardPackageValidator implements XMLValidator {
 
    }
 
+   /** Validates TransitionRefs element. */
    public void validateElement(TransitionRefs el, List existingErrors, boolean fullCheck) {
       Set outTrans = XMLUtil.getOutgoingTransitions(XMLUtil.getActivity(el));
       Split split = (Split) XMLUtil.getParentElement(Split.class, el);
@@ -946,6 +1064,7 @@ public class StandardPackageValidator implements XMLValidator {
       validateStandard(el, existingErrors, fullCheck);
    }
 
+   /** Validates Transitions element. */
    public void validateElement(Transitions el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
       if (fullCheck || existingErrors.size() == 0) {
@@ -982,6 +1101,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates WorkflowProcess element. */
    public void validateElement(WorkflowProcess el, List existingErrors, boolean fullCheck) {
       boolean isValid = true;
       if (el.getActivities().toElements().size() == 0) {
@@ -1004,6 +1124,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Validates XPDLVersion element. */
    public void validateElement(XPDLVersion el, List existingErrors, boolean fullCheck) {
       if (!el.toValue().equals(CURRENT_XPDL_VERSION)) {
          XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_WARNING,
@@ -1016,6 +1137,7 @@ public class StandardPackageValidator implements XMLValidator {
    }
 
    // ********************* validation against XPDL schema *********************
+   /** Performs schema validation of XPDL model. */
    protected void validateAgainstXPDLSchema(Package pkg,
                                             List existingErrors,
                                             boolean fullCheck) {
@@ -1109,6 +1231,7 @@ public class StandardPackageValidator implements XMLValidator {
    // ********************* Logic checking
    // **************************************
 
+   /** Performs validation of external packages for the given Package object. */
    protected void checkExternalPackages(Package pkg,
                                         List existingErrors,
                                         boolean fullCheck) {
@@ -1128,6 +1251,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Re-checks the validation of external packages for the given Package object. */
    public List reCheckExternalPackage(Package p) {
       List epErrors = (List) epsValidationErrors.get(p);
       if (epErrors != null) {
@@ -1159,6 +1283,10 @@ public class StandardPackageValidator implements XMLValidator {
       return l;
    }
 
+   /**
+    * Returns true if there is an Application definition within this or external packages
+    * with the Id given by the 'tlId' XMLAttribute.
+    */
    protected boolean checkToolId(XMLAttribute tlId, List existingErrors, boolean fullCheck) {
       XMLValidationError verr = null;
 
@@ -1177,6 +1305,10 @@ public class StandardPackageValidator implements XMLValidator {
       return (verr != null);
    }
 
+   /**
+    * Returns true if there is an WorkflowProcess definition within this or external
+    * packages with the Id given by the 'sbflwId' XMLAttribute.
+    */
    protected boolean checkSubFlowId(XMLAttribute sbflwId,
                                     List existingErrors,
                                     boolean fullCheck) {
@@ -1214,6 +1346,7 @@ public class StandardPackageValidator implements XMLValidator {
       return (verr == null);
    }
 
+   /** Checks if there are transitions with the Id given by the 'trfId' XMLAttribute. */
    protected void checkTransitionRefId(XMLAttribute trfId,
                                        List existingErrors,
                                        boolean fullCheck) {
@@ -1229,6 +1362,10 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /**
+    * Returns true if there is Transition element with given Id within the set of given
+    * transitions.
+    */
    protected boolean containsTransitionWithId(Set trans, String id) {
       Iterator it = trans.iterator();
       while (it.hasNext()) {
@@ -1240,10 +1377,20 @@ public class StandardPackageValidator implements XMLValidator {
       return false;
    }
 
+   /**
+    * Returns true if remote sub-flow Id is correct. This implementation always returns
+    * false. This method is meant to be overridden when implementing particular workflow
+    * engine validator.
+    */
    protected boolean isRemoteSubflowIdOK(String subflowId) {
       return false;
    }
 
+   /**
+    * Checks if there are multiple 'otherwise' or 'default exception' transitions for the
+    * given activity. If this is the case, new error is added to the list since this is
+    * not allowed by XPDL spec.
+    */
    protected void checkMultipleOtherwiseOrDefaultExceptionTransitions(Activity act,
                                                                       Set outTrans,
                                                                       List existingErrors,
@@ -1293,6 +1440,10 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /**
+    * Checks if activity referenced by the Transition's from attribute exists in the
+    * model.
+    */
    protected void checkTransitionFrom(XMLAttribute from, List existingErrors) {
       if (XMLUtil.getFromActivity(XMLUtil.getTransition(from)) == null) {
          XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
@@ -1304,6 +1455,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Checks if activity referenced by the Transition's to attribute exists in the model. */
    protected void checkTransitionTo(XMLAttribute to, List existingErrors) {
       if (XMLUtil.getToActivity(XMLUtil.getTransition(to)) == null) {
          XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
@@ -1315,28 +1467,40 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
-   protected void checkAssociationSource(XMLAttribute from, List existingErrors) {
-      if (XMLUtil.getAssociationSource(XMLUtil.getAssociation(from)) == null) {
+   /**
+    * Checks if artifact or activity referenced by the Associations's source attribute
+    * exists in the model.
+    */
+   protected void checkAssociationSource(XMLAttribute source, List existingErrors) {
+      if (XMLUtil.getAssociationSource(XMLUtil.getAssociation(source)) == null) {
          XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                           XMLValidationError.SUB_TYPE_LOGIC,
                                                           XPDLValidationErrorIds.ERROR_NON_EXISTING_ACTIVITY_OR_ARTIFACT_REFERENCE,
-                                                          from.toValue(),
-                                                          from);
+                                                          source.toValue(),
+                                                          source);
          existingErrors.add(verr);
       }
    }
 
-   protected void checkAssociationTarget(XMLAttribute to, List existingErrors) {
-      if (XMLUtil.getAssociationTarget(XMLUtil.getAssociation(to)) == null) {
+   /**
+    * Checks if artifact or activity referenced by the Associations's target attribute
+    * exists in the model.
+    */
+   protected void checkAssociationTarget(XMLAttribute target, List existingErrors) {
+      if (XMLUtil.getAssociationTarget(XMLUtil.getAssociation(target)) == null) {
          XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                           XMLValidationError.SUB_TYPE_LOGIC,
                                                           XPDLValidationErrorIds.ERROR_NON_EXISTING_ACTIVITY_OR_ARTIFACT_REFERENCE,
-                                                          to.toValue(),
-                                                          to);
+                                                          target.toValue(),
+                                                          target);
          existingErrors.add(verr);
       }
    }
 
+   /**
+    * Checks if there is a TypeDeclaration definition within this or external packages
+    * with the Id given by the 'dtId' XMLAttribute.
+    */
    protected void checkDeclaredTypeId(XMLAttribute dtId, List existingErrors) {
       String tdId = dtId.toValue();
       TypeDeclaration td = XMLUtil.getTypeDeclaration(xmlInterface,
@@ -1352,6 +1516,10 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /**
+    * Checks if there is an ActivitySet definition within the WorkflowProcess with the Id
+    * given by the 'bId' XMLAttribute.
+    */
    protected void checkBlockId(XMLAttribute bId, List existingErrors) {
       String blockId = bId.toValue();
       // check if the activity set exists
@@ -1366,6 +1534,7 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /** Returns true if given string is null or it is an empty string. */
    public static boolean isEmpty(String str) {
       if (str == null || str.trim().length() == 0) {
          return true;
@@ -1374,10 +1543,18 @@ public class StandardPackageValidator implements XMLValidator {
       return false;
    }
 
+   /**
+    * Returns true if the Id is valid according to XML restrictions for xsd:NMTOKEN type
+    * attributes.
+    */
    protected boolean isIdValid(String id) {
       return XMLUtil.isIdValid(id);
    }
 
+   /**
+    * Returns true if the Id of the given XMLCollectionElement is unique according to XPDL
+    * spec rules.
+    */
    protected boolean isIdUnique(XMLCollectionElement newEl) {
 
       XMLElement parent = newEl.getParent();
@@ -1396,6 +1573,9 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /**
+    * Returns true if the Id of the given Activity is unique according to XPDL spec rules.
+    */
    protected boolean checkActivityId(Activity newEl) {
       int idCnt = 0;
       Iterator it = XMLUtil.getPackage(newEl)
@@ -1418,6 +1598,10 @@ public class StandardPackageValidator implements XMLValidator {
       return idCnt <= 1;
    }
 
+   /**
+    * Returns true if the Id of the given Transition is unique according to XPDL spec
+    * rules.
+    */
    protected boolean checkTransitionId(Transition newEl) {
       int idCnt = 0;
       WorkflowProcess proc = XMLUtil.getWorkflowProcess(newEl);
@@ -1434,6 +1618,10 @@ public class StandardPackageValidator implements XMLValidator {
       return idCnt <= 1;
    }
 
+   /**
+    * Returns true if the Id of the given ActivitySet is unique according to XPDL spec
+    * rules.
+    */
    protected boolean checkActivitySetId(ActivitySet newEl) {
       int idCnt = 0;
       WorkflowProcesses wps = XMLUtil.getPackage(newEl).getWorkflowProcesses();
@@ -1755,6 +1943,7 @@ public class StandardPackageValidator implements XMLValidator {
       return isGraphConformant;
    }
 
+   /** Returns incidence matrix for the given activities in the graph. */
    protected boolean[][] createIncidenceMatrix(Activities activities) {
       int size = activities.size();
       boolean[][] incidenceMatrix = new boolean[size][size];
@@ -1795,10 +1984,18 @@ public class StandardPackageValidator implements XMLValidator {
       return no;
    }
 
+   /**
+    * Returns true if AND (Parallel) split of the activity is correct corresponding to
+    * XPDL spec rules.
+    */
    protected boolean checkANDSplit(Activity act) {
       return !hasAnyPostcondition(act);
    }
 
+   /**
+    * Returns true if XOR (Exclusive) split of the activity is correct corresponding to
+    * XPDL spec rules.
+    */
    protected boolean checkXORSplit(Activity act) {
       // if activity has any postcondition, it must have an otherwise transition
       if (hasAnyPostcondition(act)) {
@@ -1816,6 +2013,10 @@ public class StandardPackageValidator implements XMLValidator {
       return true;
    }
 
+   /**
+    * Returns true if given activity has at least one outgoing transition with condition
+    * expression defined.
+    */
    protected boolean hasAnyPostcondition(Activity act) {
       Set outL = XMLUtil.getOutgoingTransitions(act);
       Iterator it = outL.iterator();
@@ -1830,6 +2031,10 @@ public class StandardPackageValidator implements XMLValidator {
    // ************************** GRAPH CONNECTIONS CHECKING
    // ****************************
 
+   /**
+    * Returns true if graph connections for the given WorkflowProcess or ActivitySet
+    * element are correct.
+    */
    protected boolean checkGraphConnectionsForWpOrAs(XMLCollectionElement wpOrAs,
                                                     List existingErrors,
                                                     boolean fullCheck) {
@@ -1906,6 +2111,9 @@ public class StandardPackageValidator implements XMLValidator {
       return true;
    }
 
+   /**
+    * Returns true if graph connections for the artifact elements are correct.
+    */
    protected boolean checkGraphConnectionsForArtifacts(Package pkg,
                                                        List existingErrors,
                                                        boolean fullCheck) {
@@ -1934,6 +2142,9 @@ public class StandardPackageValidator implements XMLValidator {
       return isWellConnected;
    }
 
+   /**
+    * Returns true if given artifact is properly connected.
+    */
    protected boolean checkArtifactConnection(Artifact art,
                                              List existingErrors,
                                              boolean fullCheck) {
@@ -1950,6 +2161,9 @@ public class StandardPackageValidator implements XMLValidator {
       return true;
    }
 
+   /**
+    * Checks if Formal and Actual parameters are matching.
+    */
    protected void checkParameterMatching(FormalParameters fps,
                                          ActualParameters aps,
                                          List existingErrors,
@@ -2124,6 +2338,9 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /**
+    * Utility method that prepares message string.
+    */
    public String prepareMessageString(String msg) {
       if (msg != null) {
          msg = msg + "; ";
@@ -2133,6 +2350,10 @@ public class StandardPackageValidator implements XMLValidator {
       return msg;
    }
 
+   /**
+    * Returns true if the given list with XMLValidationElement elements contains at least
+    * one XMLValidationElement which type is ERROR.
+    */
    public boolean hasErrors(List l) {
       for (int i = 0; i < l.size(); i++) {
          XMLValidationError verr = (XMLValidationError) l.get(i);
@@ -2143,6 +2364,9 @@ public class StandardPackageValidator implements XMLValidator {
       return false;
    }
 
+   /**
+    * Returns true if the given 'expr' string can be a valid expression.
+    */
    public boolean canBeExpression(String expr, Map allVars, boolean evaluateToString) {
       String exprToParse = new String(expr);
 
@@ -2187,34 +2411,17 @@ public class StandardPackageValidator implements XMLValidator {
       return new StandardPackageValidator();
    }
 
-   public static void main(String[] args) {
-      try {
-         XMLInterfaceImpl xmlI = new XMLInterfaceImpl();
-         Package pkg = xmlI.parseDocument(args[0], true);
-         StandardPackageValidator validator = new StandardPackageValidator();
-         validator.init(new Properties(), xmlI);
-
-         List verrors = new ArrayList();
-         validator.validateElement(pkg, verrors, false);
-         if (verrors.size() > 0) {
-            System.out.println(args[0] + " is a valid XPDL package");
-         } else {
-            System.out.println(args[0] + " is not a valid XPDL package");
-         }
-      } catch (Exception ex) {
-         ex.printStackTrace();
-         System.exit(1);
-      }
-   }
-
+   /** Returns the map of variables that can be used within actual parameter or condition expressions. */
    protected Map getActualParameterOrConditionChoices(XMLElement el) {
       return XMLUtil.getPossibleVariables(XMLUtil.getWorkflowProcess(el));
    }
 
+   /** Returns the map of variables that can be used within deadline condition expressions. */
    protected Map getDeadlineConditionChoices(XMLElement el) {
       return XMLUtil.getPossibleVariables(XMLUtil.getWorkflowProcess(el));
    }
 
+   /** Returns the map of variables that can be used within performer expressions. */
    protected Map getPerformerChoices(XMLElement el) {
       return XMLUtil.getPossibleVariables(XMLUtil.getWorkflowProcess(el));
    }

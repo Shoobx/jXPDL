@@ -23,18 +23,28 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+/**
+ * Utility class that prints TXM GNU Disclaimer or TXM License text into the console
+ * output.
+ */
 public class ShowLicense {
 
+   /**
+    * Prints TXM GNU Disclaimer or TXM license text into the console output. If one of the
+    * provided String arguments is equal to '-showlicense', the class prints TXM license
+    * (the license text file has to be in the classpath), otherwise it prints TXM GNU
+    * Disclaimer.
+    */
    public static boolean showLicense(String[] args) {
-      String gnuDisclaimer ="\n";
-      gnuDisclaimer +="\n";
-      gnuDisclaimer += "Together XPDL Model"; 
-      gnuDisclaimer +="\nCopyright (C) 2010 Together Teamsolutions Co., Ltd.";
-      gnuDisclaimer +="\n";
-      gnuDisclaimer +="\nThis program comes with ABSOLUTELY NO WARRANTY; for details use the -showlicense option."; 
-      gnuDisclaimer +="\nThis is free software, and you are welcome to redistribute it under certain conditions; use the -showlicense option for details.";
-      gnuDisclaimer +="\n";
-      gnuDisclaimer +="\n";
+      String gnuDisclaimer = "\n";
+      gnuDisclaimer += "\n";
+      gnuDisclaimer += "Together XPDL Model";
+      gnuDisclaimer += "\nCopyright (C) 2010 Together Teamsolutions Co., Ltd.";
+      gnuDisclaimer += "\n";
+      gnuDisclaimer += "\nThis program comes with ABSOLUTELY NO WARRANTY; for details use the -showlicense option.";
+      gnuDisclaimer += "\nThis is free software, and you are welcome to redistribute it under certain conditions; use the -showlicense option for details.";
+      gnuDisclaimer += "\n";
+      gnuDisclaimer += "\n";
       try {
          for (int i = 0; i < args.length; i++) {
             if ("-showlicense".equals(args[i])) {

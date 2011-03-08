@@ -1,20 +1,20 @@
 /**
-* Together XPDL Model
-* Copyright (C) 2010 Together Teamsolutions Co., Ltd. 
-* 
-* This program is free software: you can redistribute it and/or modify 
-* it under the terms of the GNU General Public License as published by 
-* the Free Software Foundation, either version 3 of the License, or 
-* (at your option) any later version. 
-*
-* This program is distributed in the hope that it will be useful, 
-* but WITHOUT ANY WARRANTY; without even the implied warranty of 
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
-* GNU General Public License for more details. 
-*
-* You should have received a copy of the GNU General Public License 
-* along with this program. If not, see http://www.gnu.org/licenses
-*/
+ * Together XPDL Model
+ * Copyright (C) 2010 Together Teamsolutions Co., Ltd. 
+ * 
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or 
+ * (at your option) any later version. 
+ *
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * GNU General Public License for more details. 
+ *
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see http://www.gnu.org/licenses
+ */
 
 package org.enhydra.jxpdl;
 
@@ -22,188 +22,206 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- *  Class that represents choice of complex elements from XML schema.
- *
- *  @author Sasa Bojanic
+ * Class that represents choice of complex elements from XML schema.
+ * 
+ * @author Sasa Bojanic
  */
 public abstract class XMLComplexChoice extends XMLElement {
 
+   /** The list of choices for this element */
    protected ArrayList choices;
 
+   /** The choosen element */
    protected XMLElement choosen;
 
-   protected transient boolean cachesInitialized=false;
+   /** Flag that indicates whether the caches are initialized. */
+   protected transient boolean cachesInitialized = false;
 
+   /**
+    * Creates a new instance of element: sets <code>name</code>, <code>parent</code>
+    * <code>isRequired</code> properties to specified ones.
+    */
    public XMLComplexChoice(XMLComplexElement parent, String name, boolean isRequired) {
       super(parent, name, isRequired);
       fillChoices();
    }
 
    public void setValue(String v) {
-//      throw new RuntimeException("Can't set value for this type of element!");
+      // throw new RuntimeException("Can't set value for this type of element!");
    }
 
-   public void removeXPDL1Support () {
+   /** Removes XPDL 1.0 support for this element and its choices elements. */
+   public void removeXPDL1Support() {
       super.removeXPDL1Support();
       for (int i = 0; i < choices.size(); i++) {
          ((XMLElement) choices.get(i)).removeXPDL1Support();
       }
    }
-   
-   public void makeAs (XMLElement el) {
+
+   public void makeAs(XMLElement el) {
       super.makeAs(el);
-      
-      XMLComplexChoice cce=(XMLComplexChoice)el;
-      int chsnind=cce.choices.indexOf(cce.getChoosen());
-      XMLElement newChsn=(XMLElement)choices.get(chsnind);
+
+      XMLComplexChoice cce = (XMLComplexChoice) el;
+      int chsnind = cce.choices.indexOf(cce.getChoosen());
+      XMLElement newChsn = (XMLElement) choices.get(chsnind);
       newChsn.makeAs(cce.getChoosen());
       this.setChoosen(newChsn);
-//      Iterator it1=this.choices.iterator();
-//      Iterator it2=cce.choices.iterator();
-//      int chsnind=cce.choices.indexOf(cce.getChoosen());
-//
-//      while (it1.hasNext() && it2.hasNext()) {
-//         XMLElement e1=(XMLElement)it1.next();
-//         XMLElement e2=(XMLElement)it2.next();
-//         e1.makeAs(e2);
-//      }
-//      this.setChoosen((XMLElement)choices.get(chsnind));
-      
+      // Iterator it1=this.choices.iterator();
+      // Iterator it2=cce.choices.iterator();
+      // int chsnind=cce.choices.indexOf(cce.getChoosen());
+      //
+      // while (it1.hasNext() && it2.hasNext()) {
+      // XMLElement e1=(XMLElement)it1.next();
+      // XMLElement e2=(XMLElement)it2.next();
+      // e1.makeAs(e2);
+      // }
+      // this.setChoosen((XMLElement)choices.get(chsnind));
+
    }
-   
+
    /**
-    * Overrides super-method to set this element and all of its
-    * choice elements read only value to the one specified.
+    * Overrides super-method to set this element and all of its choice elements read only
+    * value to the one specified.
     */
-   public void setReadOnly (boolean ro) {
+   public void setReadOnly(boolean ro) {
       super.setReadOnly(ro);
       for (int i = 0; i < choices.size(); i++) {
          ((XMLElement) choices.get(i)).setReadOnly(ro);
       }
    }
 
-   
-   public void setNotifyListeners (boolean notify) {
+   public void setNotifyListeners(boolean notify) {
       super.setNotifyListeners(notify);
       for (int i = 0; i < choices.size(); i++) {
          ((XMLElement) choices.get(i)).setNotifyListeners(notify);
       }
    }
 
-   public void setNotifyMainListeners (boolean notify) {
+   public void setNotifyMainListeners(boolean notify) {
       super.setNotifyMainListeners(notify);
       for (int i = 0; i < choices.size(); i++) {
          ((XMLElement) choices.get(i)).setNotifyMainListeners(notify);
       }
    }
-   
-   /** 
-    * Initializes caches in read-only mode. If mode is not read-only,
-    * throws RuntimeException.
-    * @param xmli TODO
+
+   /**
+    * Initializes caches in read-only mode. If mode is not read-only, throws
+    * RuntimeException.
     */
-   public void initCaches (XMLInterface xmli) {
+   public void initCaches(XMLInterface xmli) {
       if (!isReadOnly) {
          throw new RuntimeException("Caches can be initialized only in read-only mode!");
       }
       clearCaches();
-      Iterator it=choices.iterator();
+      Iterator it = choices.iterator();
       while (it.hasNext()) {
-         XMLElement el=(XMLElement)it.next();
+         XMLElement el = (XMLElement) it.next();
          if (el instanceof XMLBaseForCollectionAndComplex) {
-            ((XMLBaseForCollectionAndComplex)el).initCaches(xmli);
+            ((XMLBaseForCollectionAndComplex) el).initCaches(xmli);
          } else if (el instanceof XMLComplexChoice) {
-            ((XMLComplexChoice)el).initCaches(xmli);
-         }
-      }               
-      cachesInitialized=true;
-   }
-
-   public void clearCaches () {
-      Iterator it=choices.iterator();
-      while (it.hasNext()) {
-         XMLElement el=(XMLElement)it.next();
-         if (el instanceof XMLBaseForCollectionAndComplex) {
-            ((XMLBaseForCollectionAndComplex)el).clearCaches();
-         } else if (el instanceof XMLComplexChoice) {
-            ((XMLComplexChoice)el).clearCaches();
+            ((XMLComplexChoice) el).initCaches(xmli);
          }
       }
-      cachesInitialized=false;
+      cachesInitialized = true;
    }
-   
+
+   public void clearCaches() {
+      Iterator it = choices.iterator();
+      while (it.hasNext()) {
+         XMLElement el = (XMLElement) it.next();
+         if (el instanceof XMLBaseForCollectionAndComplex) {
+            ((XMLBaseForCollectionAndComplex) el).clearCaches();
+         } else if (el instanceof XMLComplexChoice) {
+            ((XMLComplexChoice) el).clearCaches();
+         }
+      }
+      cachesInitialized = false;
+   }
+
+   /** Returns true if there is no chosen element. */
    public boolean isEmpty() {
       return (choosen instanceof XMLEmptyChoiceElement);
    }
 
    /**
     * The possible choices - instances of XMLElement class.
-    *
+    * 
     * @return the possible choices for this element.
     */
    public ArrayList getChoices() {
       return choices;
    }
 
+   /** Returns the chosen XMLElement. */
    public XMLElement getChoosen() {
       return choosen;
    }
 
+   /** Sets the chosen XMLElement. */
    public void setChoosen(XMLElement ch) {
       if (isReadOnly) {
          throw new RuntimeException("Can't set the value of read only element!");
       }
       if (!choices.contains(ch)) {
-         throw new RuntimeException("Incorrect value! The possible values are: " + choices);
+         throw new RuntimeException("Incorrect value! The possible values are: "
+                                    + choices);
       }
-      boolean notify=false;
-      XMLElement oldChoosen=choosen;
+      boolean notify = false;
+      XMLElement oldChoosen = choosen;
       if (this.choosen == null || !this.choosen.equals(ch)) {
-         notify=true;
+         notify = true;
       }
-      
+
       this.choosen = ch;
-      
+
       if (notify && (notifyMainListeners || notifyListeners)) {
-         XMLElementChangeInfo info=createInfo(oldChoosen, choosen, null, XMLElementChangeInfo.UPDATED);
-         if (notifyListeners) {            
+         XMLElementChangeInfo info = createInfo(oldChoosen,
+                                                choosen,
+                                                null,
+                                                XMLElementChangeInfo.UPDATED);
+         if (notifyListeners) {
             notifyListeners(info);
          }
          if (notifyMainListeners) {
             notifyMainListeners(info);
          }
-      }            
+      }
    }
 
-   protected abstract void fillChoices ();
+   /**
+    * Fills the list of possible choices. The classes that extend this class should
+    * provide proper implementation of this method.
+    */
+   protected abstract void fillChoices();
 
    public Object clone() {
       XMLComplexChoice d = (XMLComplexChoice) super.clone();
 
       d.choices = new ArrayList();
       d.choosen = null;
-      d.cachesInitialized=false;
-      Iterator it=choices.iterator();
+      d.cachesInitialized = false;
+      Iterator it = choices.iterator();
       while (it.hasNext()) {
-         XMLElement c=(XMLElement)it.next();
+         XMLElement c = (XMLElement) it.next();
          XMLElement cloned = (XMLElement) c.clone();
          d.choices.add(cloned);
          cloned.setParent(d);
-         if (d.choosen==null && this.choosen!=null && this.choosen.equals(c)) {
+         if (d.choosen == null && this.choosen != null && this.choosen.equals(c)) {
             d.choosen = cloned;
          }
       }
       return d;
    }
 
-   public boolean equals (Object e) {
-      boolean equals=super.equals(e);
+   public boolean equals(Object e) {
+      boolean equals = super.equals(e);
       if (equals) {
-         XMLComplexChoice el=(XMLComplexChoice)e;
-         equals=(this.choices.equals(el.choices));         
-//         System.out.println("    XMLComplexChoice choices equal - "+equals);
-         equals=equals && !((choices==null && el.choices!=null) || (choices!=null && el.choices==null));         
-//       System.out.println("    XMLComplexChoice choosen equal - "+equals);
+         XMLComplexChoice el = (XMLComplexChoice) e;
+         equals = (this.choices.equals(el.choices));
+         // System.out.println("    XMLComplexChoice choices equal - "+equals);
+         equals = equals
+                  && !((choices == null && el.choices != null) || (choices != null && el.choices == null));
+         // System.out.println("    XMLComplexChoice choosen equal - "+equals);
       }
       return equals;
    }

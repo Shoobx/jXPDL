@@ -1,20 +1,20 @@
 /**
-* Together XPDL Model
-* Copyright (C) 2010 Together Teamsolutions Co., Ltd. 
-* 
-* This program is free software: you can redistribute it and/or modify 
-* it under the terms of the GNU General Public License as published by 
-* the Free Software Foundation, either version 3 of the License, or 
-* (at your option) any later version. 
-*
-* This program is distributed in the hope that it will be useful, 
-* but WITHOUT ANY WARRANTY; without even the implied warranty of 
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
-* GNU General Public License for more details. 
-*
-* You should have received a copy of the GNU General Public License 
-* along with this program. If not, see http://www.gnu.org/licenses
-*/
+ * Together XPDL Model
+ * Copyright (C) 2010 Together Teamsolutions Co., Ltd. 
+ * 
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or 
+ * (at your option) any later version. 
+ *
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * GNU General Public License for more details. 
+ *
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see http://www.gnu.org/licenses
+ */
 
 package org.enhydra.jxpdl;
 
@@ -22,14 +22,20 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- *  Interface for validating XML model.
- *
- *  @author Sasa Bojanic
+ * Interface for validating XML model.
+ * 
+ * @author Sasa Bojanic
  */
 public interface XMLValidator {
 
-   void init (Properties pProps);
+   /** Initializes validator with given properties. */
+   void init(Properties pProps);
 
-   void validateElement (XMLElement el, List existingErrors, boolean fullCheck);
+   /**
+    * Validates given XMLElement. If there is a validation error, it is added to the
+    * existingErrors list. If flag fullCheck is false, the validation stops when the first
+    * error is found.
+    */
+   void validateElement(XMLElement el, List existingErrors, boolean fullCheck);
 
 }

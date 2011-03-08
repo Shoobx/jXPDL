@@ -19,13 +19,16 @@
 package org.enhydra.jxpdl;
 
 /**
- * This interface should be implemented by the class tend to be
+ * This interface should be implemented by the class tend to be a
  * listener for XPDL model changes.
  *
  * @author Sasa Bojanic
  */
 public interface XMLElementChangeListener {
 
+   /**
+    * Notifies the listener about the XML element changes.
+    */
    void xmlElementChanged (XMLElementChangeInfo info);
    
 }

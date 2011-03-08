@@ -34,10 +34,25 @@ public class XMLAttribute extends XMLElement {
 
    protected int defaultChoiceIndex;
    
+   /**
+    * Creates a new instance of element: sets <code>name</code>, <code>parent</code>
+    * <code>isRequired</code> properties to specified ones.
+    * <p>
+    * It also sets the value of this element to an empty String.
+    */
    public XMLAttribute(XMLElement parent, String name, boolean isRequired) {
       super(parent, name, isRequired);
    }
 
+   /**
+    * Creates a new instance of element: sets <code>name</code>, <code>parent</code>
+    * <code>isRequired</code> properties to specified ones, assignes the possible
+    * choices for the value of this element and sets the one at <code>choosenIndex</code>
+    * position withing the provided <code>choices</code> 
+    * 
+    * <p>
+    * It also sets the value of this element to an empty String.
+    */
    public XMLAttribute(XMLElement parent, String name, boolean isRequired, String[] choices, int choosenIndex) {
       super(parent, name, isRequired);
       this.choices = new ArrayList(Arrays.asList(choices));
@@ -63,10 +78,16 @@ public class XMLAttribute extends XMLElement {
       return choices;
    }
 
+   /**
+    * Returns default choice for this element.
+    */
    public String getDefaultChoice () {
       return (String)choices.get(defaultChoiceIndex);
    }
    
+   /**
+    * Returns the index of the default choice for this element.
+    */
    public int getDefaultChoiceIndex () {
       return defaultChoiceIndex;
    }
