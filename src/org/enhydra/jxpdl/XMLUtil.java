@@ -1802,7 +1802,7 @@ public class XMLUtil {
       Package first = null;
       String firstIF = null;
       Package pkg = null;
-      XMLInterface xmli = new XMLInterfaceForJDK13();
+      XMLInterface xmli = new XMLInterfaceImpl();
       for (int i = 1; i < args.length; i++) {
          String inputFile = args[i];
          if (i == 1)
@@ -1871,7 +1871,7 @@ public class XMLUtil {
          }
       };
 
-      XMLInterface xmli = new XMLInterfaceForJDK13();
+      XMLInterface xmli = new XMLInterfaceImpl();
 
       File f = new File(inputFile);
       inputFile = f.getCanonicalPath();
@@ -1896,6 +1896,12 @@ public class XMLUtil {
          }
       } else {
          System.out.println("...XPDL is valid");
+      }
+      
+      WorkflowProcess wp = (WorkflowProcess)pkg.getWorkflowProcesses().get(0);
+      List sas = wp.getStartingActivities();
+      for (int i=0; i<sas.size(); i++) {
+         System.out.println("SA"+i+"="+((Activity)sas.get(i)).getId());
       }
       int ind = inputFile.lastIndexOf(".");
       String outF = null;

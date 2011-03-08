@@ -2189,7 +2189,7 @@ public class StandardPackageValidator implements XMLValidator {
 
    public static void main(String[] args) {
       try {
-         XMLInterfaceForJDK13 xmlI = new XMLInterfaceForJDK13();
+         XMLInterfaceImpl xmlI = new XMLInterfaceImpl();
          Package pkg = xmlI.parseDocument(args[0], true);
          StandardPackageValidator validator = new StandardPackageValidator();
          validator.init(new Properties(), xmlI);
