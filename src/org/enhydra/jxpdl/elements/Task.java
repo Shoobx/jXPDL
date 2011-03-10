@@ -27,6 +27,9 @@ import org.enhydra.jxpdl.XMLComplexElement;
  */
 public class Task extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given ImplementationTypes as a parent.
+    */
    public Task(ImplementationTypes parent) {
       super(parent, true);
    }
@@ -37,6 +40,7 @@ public class Task extends XMLComplexElement {
       add(refType);
    }
 
+   /** Returns the TaskTypes sub-element of this object. */
    public TaskTypes getTaskTypes() {
       return (TaskTypes) get("Type");
    }

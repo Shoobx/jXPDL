@@ -28,14 +28,20 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class ConnectorGraphicsInfos extends XMLCollection {
 
+   /** Constructs a new object with the given Transition as a parent. */
 	public ConnectorGraphicsInfos(Transition parent) {
 		super(parent, false);
 	}
 	
+   /** Constructs a new object with the given Association as a parent. */
    public ConnectorGraphicsInfos(Association parent) {
       super(parent, false);
    }
 
+   /**
+    * Generates new ConnectorGraphicsInfo object. This object is not member of the collection yet,
+    * it has to be explicitly added to the collection.
+    */
    public XMLElement generateNewElement() {
 		return new ConnectorGraphicsInfo(this);
 	}

@@ -28,6 +28,9 @@ import org.enhydra.jxpdl.XMLComplexElement;
  */
 public class Role extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given Roles as a parent.
+    */
    public Role(Roles parent) {
       super(parent, true);
    }
@@ -41,18 +44,22 @@ public class Role extends XMLComplexElement {
       add(attrName);
    }
 
+   /** Returns the Name attribute value of this object. */
    public String getName() {
       return get("Name").toValue();
    }
 
+   /** Sets the Name attribute value of this object. */
    public void setName(String name) {
       set("Name", name);
    }
 
+   /** Returns the portType attribute value of this object. */
    public String getPortType() {
       return get("portType").toValue();
    }
 
+   /** Sets the portType attribute value of this object. */
    public void setPortType(String portType) {
       set("portType", portType);
    }

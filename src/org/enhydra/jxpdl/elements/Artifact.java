@@ -27,6 +27,7 @@ import org.enhydra.jxpdl.XPDLConstants;
  */
 public class Artifact extends XMLCollectionElement {
 
+   /** Constructs a new object with the given Artifacts as a parent. */
    public Artifact(Artifacts parent) {
       super(parent, true);
    }
@@ -63,26 +64,32 @@ public class Artifact extends XMLCollectionElement {
 
    }
 
+   /** Returns the Name attribute value of this object. */
    public String getName() {
       return get("Name").toValue();
    }
 
+   /** Sets the Name attribute value of this object. */
    public void setName(String name) {
       set("Name", name);
    }
 
+   /** Returns the TextAnnotation attribute of this object. */
    public XMLAttribute getTextAnnotationAttribute() {
       return (XMLAttribute) get("TextAnnotation");
    }
 
+   /** Returns the TextAnnotation attribute value of this object. */
    public String getTextAnnotation() {
       return getTextAnnotationAttribute().toValue();
    }
 
+   /** Sets the TextAnnotation attribute value of this object. */
    public void setTextAnnotation(String text) {
       set("TextAnnotation", text);
    }
 
+   /** Sets the ArtifactType attribute value of this object to DataObject. */
    public void setArtifactTypeDataObject() {
       getArtifactTypeAttribute().setValue(XPDLConstants.ARTIFACT_TYPE_DATAOBJECT);
    }
@@ -91,6 +98,7 @@ public class Artifact extends XMLCollectionElement {
    // getArtifactTypeAttribute().setValue(XPDLConstants.ARTIFACT_TYPE_GROUP);
    // }
 
+   /** Sets the ArtifactType attribute value of this object to Annotation. */
    public void setArtifactTypeAnnotation() {
       getArtifactTypeAttribute().setValue(XPDLConstants.ARTIFACT_TYPE_ANNOTATION);
    }
@@ -99,18 +107,22 @@ public class Artifact extends XMLCollectionElement {
    // return (Group) get("Group");
    // }
 
+   /** Returns the DataObject sub-element of this object. */
    public DataObject getDataObject() {
       return (DataObject) get("DataObject");
    }
 
+   /** Returns the NodeGraphicsInfos sub-element of this object. */
    public NodeGraphicsInfos getNodeGraphicsInfos() {
       return (NodeGraphicsInfos) get("NodeGraphicsInfos");
    }
 
+   /** Returns the ArtifactType attribute of this object. */
    public XMLAttribute getArtifactTypeAttribute() {
       return (XMLAttribute) get("ArtifactType");
    }
 
+   /** Returns the ArtifactType attribute value of this object. */
    public String getArtifactType() {
       return getArtifactTypeAttribute().toValue();
    }

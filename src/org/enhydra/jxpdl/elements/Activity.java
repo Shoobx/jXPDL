@@ -35,18 +35,28 @@ import org.enhydra.jxpdl.XPDLConstants;
  */
 public class Activity extends XMLCollectionElement {
 
+   /** The "cached" list of this activity's outgoing transitions. */
    protected transient ArrayList outgoingTransitions;
 
+   /** The "cached" list of this activity's incoming transitions. */
    protected transient ArrayList incomingTransitions;
 
+   /** The "cached" list of this activity's exceptional outgoing transitions. */
    protected transient ArrayList exceptionalOutgoingTransitions;
 
+   /** The "cached" list of this activity's non-exceptional outgoing transitions. */
    protected transient ArrayList nonExceptionalOutgoingTransitions;
 
+   /** The "cached" list of this activity's exceptional incoming transitions. */
    protected transient ArrayList exceptionalIncomingTransitions;
 
+   /** The "cached" list of this activity's non-exceptional incoming transitions. */
    protected transient ArrayList nonExceptionalIncomingTransitions;
 
+   /**
+    * Constructs a new object with the given Activities as a parent. It can be specified
+    * if object will have XPDL 1 support or not.
+    */
    public Activity(Activities acts, boolean xpdl1support) {
       super(acts, true, xpdl1support);
    }
@@ -160,6 +170,7 @@ public class Activity extends XMLCollectionElement {
       super.clearCaches();
    }
 
+   /** Clears the "cached" lists of various transitions for this activity. */
    protected void clearInternalCaches() {
       outgoingTransitions = new ArrayList();
       incomingTransitions = new ArrayList();
@@ -169,6 +180,7 @@ public class Activity extends XMLCollectionElement {
       nonExceptionalIncomingTransitions = new ArrayList();
    }
 
+   /** Puts the given Transition into the right "cache" list. */
    protected void putTransitionInTheRightList(Transition t, boolean outg) {
       Condition condition = t.getCondition();
       String condType = condition.getType();
@@ -188,6 +200,11 @@ public class Activity extends XMLCollectionElement {
       }
    }
 
+   /**
+    * Returns the list of Transition elements which are outgoing for this activity. It can
+    * be used if this element's mode is read-only mode, otherwise it throws
+    * RuntimeException.
+    */
    public ArrayList getOutgoingTransitions() {
       if (!isReadOnly) {
          throw new RuntimeException("This method can be used only in read-only mode!");
@@ -195,6 +212,11 @@ public class Activity extends XMLCollectionElement {
       return outgoingTransitions;
    }
 
+   /**
+    * Returns the list of Transition elements which are incoming for this activity. It can
+    * be used if this element's mode is read-only mode, otherwise it throws
+    * RuntimeException.
+    */
    public ArrayList getIncomingTransitions() {
       if (!isReadOnly) {
          throw new RuntimeException("This method can be used only in read-only mode!");
@@ -202,6 +224,11 @@ public class Activity extends XMLCollectionElement {
       return incomingTransitions;
    }
 
+   /**
+    * Returns the list of Transition elements which are non-exceptional and outgoing for
+    * this activity. It can be used if this element's mode is read-only mode, otherwise it
+    * throws RuntimeException.
+    */
    public ArrayList getNonExceptionalOutgoingTransitions() {
       if (!isReadOnly) {
          throw new RuntimeException("This method can be used only in read-only mode!");
@@ -209,6 +236,11 @@ public class Activity extends XMLCollectionElement {
       return nonExceptionalOutgoingTransitions;
    }
 
+   /**
+    * Returns the list of Transition elements which are exceptional and outgoing for this
+    * activity. It can be used if this element's mode is read-only mode, otherwise it
+    * throws RuntimeException.
+    */
    public ArrayList getExceptionalOutgoingTransitions() {
       if (!isReadOnly) {
          throw new RuntimeException("This method can be used only in read-only mode!");
@@ -216,6 +248,11 @@ public class Activity extends XMLCollectionElement {
       return exceptionalOutgoingTransitions;
    }
 
+   /**
+    * Returns the list of Transition elements which are non-exceptional and incoming for
+    * this activity. It can be used if this element's mode is read-only mode, otherwise it
+    * throws RuntimeException.
+    */
    public ArrayList getNonExceptionalIncomingTransitions() {
       if (!isReadOnly) {
          throw new RuntimeException("This method can be used only in read-only mode!");
@@ -223,6 +260,11 @@ public class Activity extends XMLCollectionElement {
       return nonExceptionalIncomingTransitions;
    }
 
+   /**
+    * Returns the list of Transition elements which are exceptional and outgoing for this
+    * activity. It can be used if this element's mode is read-only mode, otherwise it
+    * throws RuntimeException.
+    */
    public ArrayList getExceptionalIncomingTransitions() {
       if (!isReadOnly) {
          throw new RuntimeException("This method can be used only in read-only mode!");
@@ -230,22 +272,42 @@ public class Activity extends XMLCollectionElement {
       return exceptionalIncomingTransitions;
    }
 
+   /**
+    * Returns true if this Activity's Split type is Parallel, or if there is no Split at
+    * all.
+    */
    public boolean isAndTypeSplit() {
       return XMLUtil.isANDTypeSplitOrJoin(this, 0);
    }
 
+   /**
+    * Returns true if this Activity's Join type is Parallel, or if there is no Join at
+    * all.
+    */
    public boolean isAndTypeJoin() {
       return XMLUtil.isANDTypeSplitOrJoin(this, 1);
    }
 
+   /**
+    * Returns the number representing the start mode of the activity (1-Manual,
+    * 0-Automatic or no mode defined).
+    */
    public int getActivityStartMode() {
       return XMLUtil.getStartMode(this);
    }
 
+   /**
+    * Returns the number representing the finish mode of the activity (1-Manual,
+    * 0-Automatic or no mode defined).
+    */
    public int getActivityFinishMode() {
       return XMLUtil.getFinishMode(this);
    }
 
+   /**
+    * Returns the number representing the activity type (see XPDLConstants class for
+    * different activity type constants).
+    */
    public int getActivityType() {
       XMLElement ch = getActivityTypes().getChoosen();
       if (ch instanceof Route) {
@@ -291,6 +353,10 @@ public class Activity extends XMLCollectionElement {
 
    }
 
+   /**
+    * Returns true if this is sub-flow activity type and its execution is Synchronous. If
+    * it is not a sub-flow activity, RuntimeException is thrown.
+    */
    public boolean isSubflowSynchronous() {
       if (getActivityType() != XPDLConstants.ACTIVITY_TYPE_SUBFLOW) {
          throw new RuntimeException("The activity type is not SubFlow!");
@@ -298,94 +364,117 @@ public class Activity extends XMLCollectionElement {
       return XMLUtil.isSubflowSynchronous(this);
    }
 
+   /** Returns the Name attribute value of this object. */
    public String getName() {
       return get("Name").toValue();
    }
 
+   /** Sets the Name attribute value of this object. */
    public void setName(String name) {
       set("Name", name);
    }
 
+   /** Returns the StartMode attribute value of this object. */
    public String getStartMode() {
       return get("StartMode").toValue();
    }
 
+   /** Sets the StartMode attribute value of this object to an empty string. */
    public void setStartModeNONE() {
       get("StartMode").setValue(XPDLConstants.ACTIVITY_MODE_NONE);
    }
 
+   /** Sets the StartMode attribute value of this object to Automatic. */
    public void setStartModeAUTOMATIC() {
       get("StartMode").setValue(XPDLConstants.ACTIVITY_MODE_AUTOMATIC);
    }
 
+   /** Sets the StartMode attribute value of this object to Manual. */
    public void setStartModeMANUAL() {
       get("StartMode").setValue(XPDLConstants.ACTIVITY_MODE_MANUAL);
    }
 
+   /** Returns the FinishMode attribute value of this object. */
    public String getFinishMode() {
       return get("FinishMode").toValue();
    }
 
+   /** Sets the FinishMode attribute value of this object to an empty string. */
    public void setFinishModeNONE() {
       get("FinishMode").setValue(XPDLConstants.ACTIVITY_MODE_NONE);
    }
 
+   /** Sets the FinishMode attribute value of this object to Automatic. */
    public void setFinishModeAUTOMATIC() {
       get("FinishMode").setValue(XPDLConstants.ACTIVITY_MODE_AUTOMATIC);
    }
 
+   /** Sets the FinishMode attribute value of this object to Manual. */
    public void setFinishModeMANUAL() {
       get("FinishMode").setValue(XPDLConstants.ACTIVITY_MODE_MANUAL);
    }
 
+   /** Returns the Deadlines sub-element of this object. */
    public Deadlines getDeadlines() {
       return (Deadlines) get("Deadlines");
    }
 
+   /** Returns the Description attribute value of this object. */
    public String getDescription() {
       return get("Description").toValue();
    }
 
+   /** Sets the Description attribute value of this object. */
    public void setDescription(String description) {
       set("Description", description);
    }
 
+   /** Returns the Documentation attribute value of this object. */
    public String getDocumentation() {
       return get("Documentation").toValue();
    }
 
+   /** Sets the Documentation attribute value of this object. */
    public void setDocumentation(String documentation) {
       set("Documentation", documentation);
    }
 
+   /** Returns the ExtendedAttributes sub-element of this object. */
    public ExtendedAttributes getExtendedAttributes() {
       return (ExtendedAttributes) get("ExtendedAttributes");
    }
 
+   /** Returns the NodeGraphicsInfos sub-element of this object. */
    public NodeGraphicsInfos getNodeGraphicsInfos() {
       return (NodeGraphicsInfos) get("NodeGraphicsInfos");
    }
 
+   /** Returns the Icon attribute value of this object. */
    public String getIcon() {
       return get("Icon").toValue();
    }
 
+   /** Sets the Icon attribute value of this object. */
    public void setIcon(String icon) {
       set("Icon", icon);
    }
 
+   /** Returns the Limit attribute value of this object. */
    public String getLimit() {
       return get("Limit").toValue();
    }
 
+   /** Sets the Limit attribute value of this object. */
    public void setLimit(String limit) {
       set("Limit", limit);
    }
 
+   /** Returns the Performers sub-element of this object. */
    public Performers getPerformers() {
       return (Performers) get("Performers");
    }
 
+   /** Returns the value of the first Performer object from the Performers collection. */
    public String getFirstPerformer() {
       Iterator it = getPerformers().toElements().iterator();
       while (it.hasNext()) {
@@ -395,6 +484,7 @@ public class Activity extends XMLCollectionElement {
       return "";
    }
 
+   /** Returns the first Performer object from the Performers collection. */
    public Performer getFirstPerformerObj() {
       Iterator it = getPerformers().toElements().iterator();
       while (it.hasNext()) {
@@ -404,12 +494,14 @@ public class Activity extends XMLCollectionElement {
       return null;
    }
 
+   /** Creates the first Performer object and puts it into the Performers collection. */
    public Performer createFirstPerformerObj() {
       Performer perf = (Performer) getPerformers().generateNewElement();
       getPerformers().add(perf);
       return perf;
    }
 
+   /** Sets the value of the first Performer object from the Performers collection. */
    public void setFirstPerformer(String performer) {
       // if ("".equals(performer)) {
       // getPerformers().clear();
@@ -422,27 +514,35 @@ public class Activity extends XMLCollectionElement {
       // }
    }
 
+   /** Returns the Priority attribute value of this object. */
    public String getPriority() {
       return get("Priority").toValue();
    }
 
+   /** Sets the Priority attribute value of this object. */
    public void setPriority(String priority) {
       set("Priority", priority);
    }
 
+   /** Returns the SimulationInformation sub-element of this object. */
    public SimulationInformation getSimulationInformation() {
       return (SimulationInformation) get("SimulationInformation");
    }
 
+   /** Returns the TransitionRestriction sub-element of this object. */
    public TransitionRestrictions getTransitionRestrictions() {
       return (TransitionRestrictions) get("TransitionRestrictions");
    }
 
+   /** Returns the ActivityTypes sub-element of this object. */
    public ActivityTypes getActivityTypes() {
       return (ActivityTypes) get("Type");
    }
 
-   // MIGRATION FROM XPDL1
+   /**
+    * Removes StartMode and FinishMode elements from this element's structure due to
+    * migration to XPDL 2 where these elements are now attributes of the Activity.
+    */
    protected void removeStartFinishModes() {
       XMLElement sm = null;
       XMLElement fm = null;
@@ -468,6 +568,10 @@ public class Activity extends XMLCollectionElement {
       }
    }
 
+   /**
+    * Removes Performer element from this element's structure due to migration to XPDL 2
+    * where this element is deprecated..
+    */
    protected void removePerformer() {
       XMLElement perf = get("Performer");
       if (perf != null) {

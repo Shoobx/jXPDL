@@ -24,12 +24,16 @@ import org.enhydra.jxpdl.XMLElement;
 import org.enhydra.jxpdl.XPDLConstants;
 
 /**
- * Represents coresponding element from XPDL schema.
+ * Represents corresponding element from XPDL schema.
  * 
  * @author Sasa Bojanic
  */
 public class Deadline extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given Deadlines as a parent. It can be specified if
+    * object will have XPDL 1 support or not.
+    */
    public Deadline(Deadlines parent, boolean xpdl1support) {
       super(parent, true, xpdl1support);
    }
@@ -60,38 +64,48 @@ public class Deadline extends XMLComplexElement {
       add(refExceptionName);
    }
 
+   
+   /** Returns the Execution attribute of this object. */
    public XMLAttribute getExecutionAttribute() {
       return (XMLAttribute) get("Execution");
    }
 
+   /** Returns the Execution attribute value of this object. */
    public String getExecution() {
       return getExecutionAttribute().toValue();
    }
 
+   /** Sets the Execution attribute value of this object to an empty string. */
    public void setExecutionNONE() {
       getExecutionAttribute().setValue(XPDLConstants.EXECUTION_NONE);
    }
 
+   /** Sets the Execution attribute value of this object to asynchronous. */
    public void setExecutionASYNCHR() {
       getExecutionAttribute().setValue(XPDLConstants.EXECUTION_ASYNCHR);
    }
 
+   /** Sets the Execution attribute value of this object to synchronous. */
    public void setExecutionSYNCHR() {
       getExecutionAttribute().setValue(XPDLConstants.EXECUTION_SYNCHR);
    }
 
+   /** Returns the DeadlineDuration attribute value of this object. */
    public String getDeadlineDuration() {
       return get("DeadlineDuration").toValue();
    }
 
+   /** Sets the DeadlineDuration attribute value of this object. */
    public void setDeadlineDuration(String deadlineDuration) {
       set("DeadlineDuration", deadlineDuration);
    }
 
+   /** Returns the ExceptionName attribute value of this object. */
    public String getExceptionName() {
       return get("ExceptionName").toValue();
    }
 
+   /** Sets the ExceptionName attribute value of this object. */
    public void setExceptionName(String exceptionName) {
       set("ExceptionName", exceptionName);
    }

@@ -29,6 +29,9 @@ import org.enhydra.jxpdl.XPDLConstants;
  */
 public class SubFlow extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the ImplementationTypes as a parent.
+    */
    public SubFlow(ImplementationTypes parent) {
       super(parent, true);
    }
@@ -53,34 +56,42 @@ public class SubFlow extends XMLComplexElement {
 //      add(refPassingTypes);
    }
 
+   /** Returns the Id attribute value of this object. */
    public String getId() {
       return get("Id").toValue();
    }
 
+   /** Sets the Id attribute value of this object. */
    public void setId(String id) {
       set("Id", id);
    }
 
+   /** Returns the Execution attribute of this object. */
    public XMLAttribute getExecutionAttribute() {
       return (XMLAttribute) get("Execution");
    }
 
+   /** Returns the Execution attribute value of this object. */
    public String getExecution() {
       return getExecutionAttribute().toValue();
    }
 
+   /** Sets the Execution attribute value of this object to an empty string. */
    public void setExecutionNONE() {
       getExecutionAttribute().setValue(XPDLConstants.EXECUTION_NONE);
    }
 
+   /** Sets the Execution attribute value of this object to asynchronous. */
    public void setExecutionASYNCHR() {
       getExecutionAttribute().setValue(XPDLConstants.EXECUTION_ASYNCHR);
    }
 
+   /** Sets the Execution attribute value of this object to synchronous. */
    public void setExecutionSYNCHR() {
       getExecutionAttribute().setValue(XPDLConstants.EXECUTION_SYNCHR);
    }
 
+   /** Returns the ActualParameters sub-element of this object. */
    public ActualParameters getActualParameters() {
       return (ActualParameters)get("ActualParameters");
    }

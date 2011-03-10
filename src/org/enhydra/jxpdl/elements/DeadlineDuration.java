@@ -26,6 +26,9 @@ package org.enhydra.jxpdl.elements;
  */
 public class DeadlineDuration extends ExpressionType {
 
+   /**
+    * Constructs a new object with the given Deadline as a parent.
+    */
    public DeadlineDuration (Deadline parent) {
       super(parent, true);
    }

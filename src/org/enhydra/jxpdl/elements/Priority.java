@@ -22,12 +22,15 @@ import org.enhydra.jxpdl.XMLComplexElement;
 import org.enhydra.jxpdl.XMLSimpleElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  * 
  *  @author Sasa Bojanic
  */
 public class Priority extends XMLSimpleElement {
 
+   /**
+    * Constructs a new object with the given XMLComplexElement as a parent.
+    */
    public Priority (XMLComplexElement parent) {
       super(parent, false);
    }

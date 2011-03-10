@@ -29,6 +29,9 @@ import org.enhydra.jxpdl.XPDLConstants;
  */
 public class Partner extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the WebServiceOperationTypes as a parent.
+    */
    public Partner(WebServiceOperationTypes parent) {
       super(parent, true);
    }

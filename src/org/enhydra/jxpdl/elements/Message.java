@@ -27,10 +27,16 @@ import org.enhydra.jxpdl.XMLComplexElement;
  */
 public class Message extends MessageType {
 
+   /**
+    * Constructs a new object with the given element as a parent.
+    */
    public Message(XMLComplexElement parent) {
       super(parent, false);
    }
    
+   /**
+    * Constructs a new object with the given element as a parent, and with specified name.
+    */
    public Message(XMLComplexElement parent, String name) {
       super(parent, name, false);
    }

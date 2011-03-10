@@ -21,12 +21,15 @@ package org.enhydra.jxpdl.elements;
 import org.enhydra.jxpdl.XMLSimpleElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  * 
  *  @author Sasa Bojanic
  */
 public class Codepage extends XMLSimpleElement {
 
+   /**
+    * Constructs a new object with the given RedefinableHeader as a parent.
+    */
    public Codepage (RedefinableHeader parent) {
       super(parent, false);
    }

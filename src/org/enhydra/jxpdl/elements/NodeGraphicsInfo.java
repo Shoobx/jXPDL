@@ -29,6 +29,9 @@ import org.enhydra.jxpdl.XPDLConstants;
  */
 public class NodeGraphicsInfo extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given NodeGraphicsInfos as a parent.
+    */
    public NodeGraphicsInfo(NodeGraphicsInfos parent) {
       super(parent, true);
    }
@@ -65,34 +68,43 @@ public class NodeGraphicsInfo extends XMLComplexElement {
       add(refCoordinates);
    }
 
+   /** Returns the ToolId attribute value of this object. */
    public String getToolId() {
       return get("ToolId").toValue();
    }
 
+   /** Sets the ToolId attribute value of this object. */
    public void setToolId(String toolId) {
       set("ToolId", toolId);
    }
 
+
+   /** Returns the IsVisible attribute of this object. */
    public XMLAttribute getIsVisibleAttribute() {
       return (XMLAttribute) get("IsVisible");
    }
 
+   /** Returns true if IsVisible attribute value is equal to 'true'. */
    public boolean isVisible() {
       return Boolean.parseBoolean(getIsVisibleAttribute().toValue());
    }
 
+   /** Sets IsVisible attribute value to "true" or "false". */
    public void setIsVisible(boolean isVisible) {
       getIsVisibleAttribute().setValue(String.valueOf(isVisible));
    }
 
+   /** Returns the LaneId attribute value of this object. */
    public String getLaneId() {
       return get("LaneId").toValue();
    }
 
+   /** Sets the LaneId attribute value of this object. */
    public void setLaneId(String laneId) {
       set("LaneId", laneId);
    }
 
+   /** Returns the Height attribute value of this object converted to integer, if empty or can't be converted returns zero. */
    public int getHeight() {
       String h = get("Height").toValue();
       if (!"".equals(h)) {
@@ -104,10 +116,12 @@ public class NodeGraphicsInfo extends XMLComplexElement {
       return 0;
    }
 
+   /** Sets the Height attribute value of this object. */
    public void setHeight(int height) {
       set("Height", String.valueOf(height));
    }
 
+   /** Returns the Width attribute value of this object converted to integer, if empty or can't be converted returns zero. */
    public int getWidth() {
       String w = get("Width").toValue();
       if (!"".equals(w)) {
@@ -119,34 +133,42 @@ public class NodeGraphicsInfo extends XMLComplexElement {
       return 0;
    }
 
+   /** Sets the Width attribute value of this object. */
    public void setWidth(int width) {
       set("Width", String.valueOf(width));
    }
 
+   /** Returns the BorderColor attribute value of this object. */
    public String getBorderColor() {
       return get("BorderColor").toValue();
    }
 
-   public void setBorderColor(String borderColor) {
-      set("BorderColor", borderColor);
+   /** Sets the BorderColor attribute value of this object. */
+   public void setBorderColor(String bc) {
+      set("BorderColor", bc);
    }
 
+   /** Returns the FillColor attribute value of this object. */
    public String getFillColor() {
       return get("FillColor").toValue();
    }
 
-   public void setFillColor(String fillColor) {
-      set("FillColor", fillColor);
+   /** Sets the FillColor attribute value of this object. */
+   public void setFillColor(String fc) {
+      set("FillColor", fc);
    }
 
+   /** Returns the Shape attribute value of this object. */
    public String getShape() {
       return get("Shape").toValue();
    }
 
+   /** Sets the Shape attribute value of this object. */
    public void setShape(String shape) {
       set("Shape", shape);
    }
 
+   /** Returns the Coordinatess sub-element of this object. */
    public Coordinates getCoordinates() {
       return (Coordinates) get("Coordinates");
    }

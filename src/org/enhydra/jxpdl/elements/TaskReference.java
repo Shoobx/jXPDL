@@ -28,6 +28,9 @@ import org.enhydra.jxpdl.XMLComplexElement;
  */
 public class TaskReference extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given TaskTypes as a parent.
+    */
    public TaskReference(TaskTypes parent) {
       super(parent, true);
    }
@@ -38,10 +41,12 @@ public class TaskReference extends XMLComplexElement {
       add(attrTaskRef);
    }
 
+   /** Returns the TaskRef attribute value of this object. */
    public String getTaskRef() {
       return get("TaskRef").toValue();
    }
 
+   /** Sets the TaskRef attribute value of this object. */
    public void setTaskRef(String refId) {
       set("TaskRef", refId);
    }

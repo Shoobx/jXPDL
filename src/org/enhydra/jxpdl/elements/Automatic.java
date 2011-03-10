@@ -21,16 +21,20 @@ package org.enhydra.jxpdl.elements;
 import org.enhydra.jxpdl.XMLComplexElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  * 
  *  @author Sasa Bojanic
  */
 public class Automatic extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given StartFinishModes as a parent.
+    */
    public Automatic (StartFinishModes parent) {
       super(parent, true);
    }
-   
+
+   /** Always returns false. */
    public boolean isEmpty() {
       return false;
    }

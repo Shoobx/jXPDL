@@ -23,17 +23,21 @@ import org.enhydra.jxpdl.XMLComplexElement;
 import org.enhydra.jxpdl.XMLElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  *
  *  @author Sasa Bojanic
  */
 public class WebServiceFaultCatchs extends XMLCollection {
 
-   // min=0, max=unbounded
+   /** Constructs a new object with the given element as a parent. */
    public WebServiceFaultCatchs (XMLComplexElement ce) {
       super(ce, false);
    }
 
+   /**
+    * Generates new WebServiceFaultCache object. This object is not member of the collection yet, it
+    * has to be explicitly added to the collection.
+    */
    public XMLElement generateNewElement() {
       return new WebServiceFaultCatch(this);
    }

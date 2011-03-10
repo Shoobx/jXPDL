@@ -30,6 +30,9 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class TaskTypes extends XMLComplexChoice {
 
+   /**
+    * Constructs a new object with the given Task as a parent.
+    */
 	public TaskTypes(Task parent) {
 		super(parent, "Type", false);
 	}
@@ -47,11 +50,12 @@ public class TaskTypes extends XMLComplexChoice {
 		choosen = (XMLElement) choices.get(0);
 	}
 
-
+   /** Returns TaskApplication choice element. */
 	public TaskApplication getTaskApplication() {
 		return (TaskApplication) choices.get(0);
 	}
 
+   /** Sets TaskApplication choice element as the chosen one. */
 	public void setTaskApplication() {
 		setChoosen((TaskApplication) choices.get(0));
 	}
@@ -88,12 +92,14 @@ public class TaskTypes extends XMLComplexChoice {
 //		setChoosen((TaskReference) choices.get(4));
 //	}
 //	
+//   /** Returns TaskScript choice element. */
 //	public TaskScript getTaskScript() {
-//		return (TaskScript) choices.get(5);
+//		return (TaskScript) choices.get(1);
 //	}
-//
+
+//   /** Sets TaskScript choice element as the chosen one. */
 //	public void setTaskScript() {
-//		setChoosen((TaskScript) choices.get(5));
+//		setChoosen((TaskScript) choices.get(1));
 //	}
 //	
 //	public TaskSend getTaskSend() {

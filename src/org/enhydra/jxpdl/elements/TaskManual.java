@@ -27,6 +27,9 @@ import org.enhydra.jxpdl.XMLComplexElement;
  */
 public class TaskManual extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given TaskTypes as a parent.
+    */
    public TaskManual(TaskTypes parent) {
       super(parent, true);
    }
@@ -36,6 +39,7 @@ public class TaskManual extends XMLComplexElement {
       add(refPerformers);
    }
 
+   /** Returns the Performers sub-element of this object. */
    public Performers getPerformers() {
       return (Performers)get("Performers");
    }

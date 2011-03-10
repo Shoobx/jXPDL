@@ -28,6 +28,9 @@ import org.enhydra.jxpdl.XMLComplexElement;
  */
 public class TaskApplication extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given TaskTypes as a parent.
+    */
    public TaskApplication(TaskTypes parent) {
       super(parent, true);
    }
@@ -49,6 +52,7 @@ public class TaskApplication extends XMLComplexElement {
       add(refDescription);
    }
 
+   /** Returns the ActualParameters sub-element of this object. */
    public ActualParameters getActualParameters () {
       return (ActualParameters)get("ActualParameters");
    }
@@ -56,34 +60,42 @@ public class TaskApplication extends XMLComplexElement {
 //      return (PassingTypes) get("Choice");
 //   }
 
+   /** Returns the Id attribute value of this object. */
    public String getId() {
       return get("Id").toValue();
    }
 
+   /** Sets the Id attribute value of this object. */
    public void setId(String id) {
       set("Id", id);
    }
 
+   /** Returns the Name attribute value of this object. */
    public String getName() {
       return get("Name").toValue();
    }
 
+   /** Sets the Name attribute value of this object. */
    public void setName(String name) {
       set("Name", name);
    }
 
+   /** Returns the PackageRef attribute value of this object. */
    public String getPackageRef() {
       return get("PackageRef").toValue();
    }
 
+   /** Sets the PackageRef attribute value of this object. */
    public void setPackageRef(String packageRef) {
       set("PackageRef", packageRef);
    }
 
+   /** Returns the Description attribute value of this object. */
    public String getDescription() {
       return get("Description").toValue();
    }
 
+   /** Sets the Description attribute value of this object. */
    public void setDescription(String description) {
       set("Description", description);
    }

@@ -29,10 +29,16 @@ import org.enhydra.jxpdl.XPDLConstants;
  */
 public class EndPoint extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given SubFlow as a parent.
+    */
    public EndPoint(SubFlow parent) {
       super(parent, false);
    }
 
+   /**
+    * Constructs a new object with the given Service as a parent.
+    */
    public EndPoint(Service parent) {
       super(parent, true);
    }

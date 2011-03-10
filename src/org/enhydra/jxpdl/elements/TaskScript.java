@@ -27,6 +27,9 @@ import org.enhydra.jxpdl.XMLComplexElement;
  */
 public class TaskScript extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given TaskTypes as a parent.
+    */
 	public TaskScript(TaskTypes parent) {
 		super(parent, true);
 	}
@@ -37,6 +40,7 @@ public class TaskScript extends XMLComplexElement {
 		add(refScript);
 	}
 
+   /** Returns the TSScript attribute of this object. */
 	public TSScript getScript () {
 	   return (TSScript)get("Script");
 	}

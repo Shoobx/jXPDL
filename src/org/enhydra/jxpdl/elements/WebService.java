@@ -28,6 +28,9 @@ import org.enhydra.jxpdl.XMLComplexElement;
  */
 public class WebService extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given ApplicationTypes as a parent.
+    */
    public WebService(ApplicationTypes parent) {
       super(parent, true);
    }

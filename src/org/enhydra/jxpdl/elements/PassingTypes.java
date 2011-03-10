@@ -30,14 +30,23 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class PassingTypes extends XMLComplexChoice {
 
+   /**
+    * Constructs a new object with the given TaskApplication as a parent.
+    */
    public PassingTypes(TaskApplication parent) {
       super(parent, "Choice", true);
    }
 
+   /**
+    * Constructs a new object with the given SubFlow as a parent.
+    */
    public PassingTypes(SubFlow parent) {
       super(parent, "Choice", true);
    }
 
+   /**
+    * Constructs a new object with the given MessageType as a parent.
+    */
    public PassingTypes(MessageType parent) {
       super(parent, "Choice", true);
    }
@@ -49,18 +58,22 @@ public class PassingTypes extends XMLComplexChoice {
       choosen = (XMLElement) choices.get(0);
    }
 
+   /** Returns ActualParameters choice element. */
    public ActualParameters getActualParameters() {
       return (ActualParameters) choices.get(0);
    }
 
+   /** Sets ActualParameters choice element as the chosen one. */
    public void setActualParameters() {
       setChoosen((ActualParameters) choices.get(0));
    }
 
+   /** Returns DataMappings choice element. */
    public DataMappings getDataMappings() {
       return (DataMappings) choices.get(1);
    }
 
+   /** Sets DataMappings choice element as the chosen one. */
    public void setDataMappings() {
       setChoosen((DataMappings) choices.get(1));
    }

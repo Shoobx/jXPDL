@@ -25,6 +25,9 @@ import org.enhydra.jxpdl.XMLElement;
 
 public class WebServiceOperationTypes extends XMLComplexChoice {
 
+   /**
+    * Constructs a new object with the given WebServiceOperation as a parent.
+    */
    public WebServiceOperationTypes(WebServiceOperation parent) {
       super(parent, "Choice", false);
    }
@@ -36,18 +39,22 @@ public class WebServiceOperationTypes extends XMLComplexChoice {
       choosen = (XMLElement) choices.get(0);
    }
 
+   /** Returns Partner choice element. */
    public Partner getPartner() {
       return (Partner) choices.get(0);
    }
 
+   /** Sets Partner choice element as the chosen one. */
    public void setPartner() {
       setChoosen((Partner) choices.get(0));
    }
 
+   /** Returns Service choice element. */
    public Service getService() {
       return (Service) choices.get(1);
    }
 
+   /** Sets Service choice element as the chosen one. */
    public void setService() {
       setChoosen((Service) choices.get(1));
    }

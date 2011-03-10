@@ -30,6 +30,9 @@ import org.enhydra.jxpdl.XPDLConstants;
  */
 public class Join extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given TransitionRestriction as a parent.
+    */
    public Join(TransitionRestriction parent) {
       super(parent, false);
    }
@@ -63,20 +66,29 @@ public class Join extends XMLComplexElement {
       add(attrType);
    }
 
+   /** Returns the Type attribute of this object. */
    public XMLAttribute getTypeAttribute() {
       return (XMLAttribute) get("Type");
    }
 
+   /** Returns the Type attribute value of this object. */
    public String getType() {
       return getTypeAttribute().toValue();
    }
 
+   /** Sets the Type attribute value of this object to an empty string. */
    public void setTypeNONE() {
       getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_NONE);
    }
 
+   /** Sets the Type attribute value of this object to Parallel. */
    public void setTypeParallel() {
       getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL);
+   }
+
+   /** Sets the Type attribute value of this object to Exclusive. */
+   public void setTypeExclusive() {
+      getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE);
    }
 
    // public void setTypeComplex() {
@@ -87,7 +99,4 @@ public class Join extends XMLComplexElement {
 //      getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE);
 //   }
 
-   public void setTypeExclusive() {
-      getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE);
-   }
 }

@@ -21,12 +21,15 @@ package org.enhydra.jxpdl.elements;
 import org.enhydra.jxpdl.XMLSimpleElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  * 
  *  @author Sasa Bojanic
  */
 public class CostUnit extends XMLSimpleElement {
 
+   /**
+    * Constructs a new object with the given PackageHeader as a parent.
+    */
    public CostUnit (PackageHeader parent) {
       super(parent, false);
    }

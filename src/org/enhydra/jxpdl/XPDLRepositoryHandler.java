@@ -16,9 +16,6 @@
  * along with this program. If not, see http://www.gnu.org/licenses
  */
 
-/**
- * Miroslav Popov, Apr 6, 2006 miroslav.popov@gmail.com
- */
 package org.enhydra.jxpdl;
 
 import java.util.ArrayList;
@@ -67,14 +64,21 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * @author Miroslav Popov
+ * Provides methods to read XPDL representation from w3c XML Element into the Java Object
+ * Model provided with this project, and to write Java Object Model into w3c Document.
  */
 public class XPDLRepositoryHandler {
 
+   /** Constant that specifies if the operations will be logged into the console. */
    protected static boolean logging = false;
 
+   /**
+    * Specifies the xpdl prefix, if empty no prefixes will be used when Java Object model
+    * is transformed into w3c Document.
+    */
    protected String xpdlPrefix = "";
 
+   /** Enables/disables xpdl prefix to be written for resulting w3c Document. */
    public void setXPDLPrefixEnabled(boolean enable) {
       if (enable) {
          this.xpdlPrefix = "xpdl:";
@@ -83,10 +87,12 @@ public class XPDLRepositoryHandler {
       }
    }
 
+   /** Returns true if XPDL prefix is to be used. */
    public boolean isXPDLPrefixEnabled() {
       return "xpdl:".equals(this.xpdlPrefix);
    }
 
+   /** Transforms XPDL w3c element into the Java Object model. */
    public void fromXML(Element node, Package pkg) {
       // long t1,t2;
       // t1=System.currentTimeMillis();
@@ -110,6 +116,10 @@ public class XPDLRepositoryHandler {
       migrateToXPDL2(pkg);
    }
 
+   /**
+    * Transforms XPDL w3c Node into appropriate representation (the instance of class
+    * extending XMLCollection) of the Java Object model.
+    */
    public void fromXML(Node node, XMLCollection cel) {
       if (node == null || !node.hasChildNodes())
          return;
@@ -145,6 +155,10 @@ public class XPDLRepositoryHandler {
       // is"+size());
    }
 
+   /**
+    * Transforms XPDL w3c Node into appropriate representation (the instance of class
+    * extending XMLComplexElement) of the Java Object model.
+    */
    public void fromXML(Node node, XMLComplexElement cel) {
       if (node == null || (!node.hasChildNodes() && !node.hasAttributes()))
          return;
@@ -240,6 +254,10 @@ public class XPDLRepositoryHandler {
       }
    }
 
+   /**
+    * Transforms XPDL w3c Node into appropriate representation (the instance of class
+    * extending XMLComplexChoice) of the Java Object model.
+    */
    public void fromXML(Node node, XMLComplexChoice el) {
       String nameSpacePrefix = XMLUtil.getNameSpacePrefix(node);
       List ch = el.getChoices();
@@ -274,14 +292,26 @@ public class XPDLRepositoryHandler {
       }
    }
 
+   /**
+    * Transforms XPDL w3c Node into appropriate representation (the instance of class
+    * extending XMLSimpleElement) of the Java Object model.
+    */
    public void fromXML(Node node, XMLSimpleElement el) {
       fromXMLBasic(node, el);
    }
 
+   /**
+    * Transforms XPDL w3c Node into appropriate representation (the instance of class
+    * XMLAttribute) of the Java Object model.
+    */
    public void fromXML(Node node, XMLAttribute el) {
       fromXMLBasic(node, el);
    }
 
+   /**
+    * Transforms XPDL w3c Node into appropriate representation (the instance of class
+    * extending XMLElement) of the Java Object model.
+    */
    public void fromXMLBasic(Node node, XMLElement el) {
       if (node != null) {
          if (logging)
@@ -307,6 +337,9 @@ public class XPDLRepositoryHandler {
       }
    }
 
+   /**
+    * Transforms XPDL Java Object model into w3c Document element.
+    */
    public void toXML(Document parent, Package pkg) {
       Node node = parent.createElement(xpdlPrefix + pkg.toName());
       ((Element) node).setAttribute("xmlns", XMLUtil.XMLNS);
@@ -324,6 +357,10 @@ public class XPDLRepositoryHandler {
       parent.appendChild(node);
    }
 
+   /**
+    * Transforms XPDL Java Object model (the instance of class extending XMLCollection)
+    * into w3c Document element.
+    */
    public void toXML(Node parent, XMLCollection cel) {
       if (!cel.isEmpty() || cel.isRequired()) {
          if (parent != null) {
@@ -358,6 +395,10 @@ public class XPDLRepositoryHandler {
       }
    }
 
+   /**
+    * Transforms XPDL Java Object model (the instance of class extending
+    * XMLComplexElement) into w3c Document element.
+    */
    public void toXML(Node parent, XMLComplexElement cel) {
       if (cel.isEmpty() && !cel.isRequired())
          return;
@@ -427,6 +468,10 @@ public class XPDLRepositoryHandler {
       }
    }
 
+   /**
+    * Transforms XPDL Java Object model (the instance of class extending XMLComplexChoice)
+    * into w3c Document element.
+    */
    public void toXML(Node parent, XMLComplexChoice el) {
       XMLElement choosen = el.getChoosen();
       if (logging)
@@ -446,6 +491,10 @@ public class XPDLRepositoryHandler {
       }
    }
 
+   /**
+    * Transforms XPDL Java Object model (the instance of class extending XMLSimpleElement)
+    * into w3c Document element.
+    */
    public void toXML(Node parent, XMLSimpleElement el) {
       if (!el.isEmpty() || el.isRequired()) {
          if (parent != null) {
@@ -463,6 +512,10 @@ public class XPDLRepositoryHandler {
       }
    }
 
+   /**
+    * Transforms XPDL Java Object model (the instance of XMLAttribute class) into w3c
+    * Document element.
+    */
    public void toXML(Node parent, XMLAttribute el) {
       if (!el.isEmpty() || el.isRequired()) {
          if (parent != null) {
@@ -478,7 +531,7 @@ public class XPDLRepositoryHandler {
       }
    }
 
-   // MIGRATION FROM XPDL1
+   /** Migrates Java XPDL Model to XPDL 2 version. */
    public void migrateToXPDL2(Package pkg) {
       List acts = new ArrayList();
       List wps = pkg.getWorkflowProcesses().toElements();
@@ -545,6 +598,7 @@ public class XPDLRepositoryHandler {
       pkg.removeXPDL1Support();
    }
 
+   /** Migrates Tool activity from XPDL 1 Model into XPDL 2 model. */
    protected List migrateToolAct(Activity act) {
       List additionalActs = new ArrayList();
       Tools ts = (Tools) act.getActivityTypes()
@@ -573,7 +627,7 @@ public class XPDLRepositoryHandler {
          if (!fm.equals("")) {
             prevAct.set("FinishMode", fm);
          }
-         if (circular!=null) {
+         if (circular != null) {
             circular.setFrom(prevAct.getId());
          }
       }
@@ -585,6 +639,11 @@ public class XPDLRepositoryHandler {
 
    }
 
+   /**
+    * Migrates Route activity, and activities with inappropriate Split/Join types into
+    * from XPDL 1 Model into Route (with appropriate gateway attribute) activity from XPDL
+    * 2 model.
+    */
    protected List migrateGateways(Activity act) {
       List additionalActs = new ArrayList();
       int actType = act.getActivityType();
@@ -627,11 +686,11 @@ public class XPDLRepositoryHandler {
             additionalActs.add(actN);
             cf = actN.getId();
          }
-         if (circular!=null) {
-            if (cf!=null) {
+         if (circular != null) {
+            if (cf != null) {
                circular.setFrom(cf);
             }
-            if (ct!=null) {
+            if (ct != null) {
                circular.setTo(ct);
             }
          }
@@ -640,6 +699,7 @@ public class XPDLRepositoryHandler {
 
    }
 
+   /** Handles Tool element of the from XPDL 1 Model into XPDL 2 model. */
    protected void handleTool(Activity act, Tool t) {
       act.getActivityTypes().getImplementation().getImplementationTypes().setTask();
       act.getActivityTypes()
@@ -666,6 +726,10 @@ public class XPDLRepositoryHandler {
       }
    }
 
+   /**
+    * Migrates the Ids of ActivitySet elements from XPDL 1 Model into XPDL 2 model (have
+    * to be unique within the whole Package).
+    */
    protected void migrateActivitySetIds(Package pkg) {
       List ass = new ArrayList();
       Iterator wps = pkg.getWorkflowProcesses().toElements().iterator();
@@ -730,6 +794,10 @@ public class XPDLRepositoryHandler {
       }
    }
 
+   /**
+    * Migrates the Ids of Activity elements from XPDL 1 Model into XPDL 2 model (have to
+    * be unique within the whole Package).
+    */
    protected void migrateActivityIds(Package pkg) {
       List acts = new ArrayList();
       Iterator wps = pkg.getWorkflowProcesses().toElements().iterator();
@@ -802,6 +870,11 @@ public class XPDLRepositoryHandler {
       }
    }
 
+   /**
+    * Splits activity with inappropriate Split/Join combination from XPDL 1 Model into 2
+    * activities from XPDL 2 model (the new activity is Route activity with appropriate
+    * Gateway attribute).
+    */
    protected Activity splitActivity(Activity act,
                                     boolean createRouteActivity,
                                     boolean createAfter) {

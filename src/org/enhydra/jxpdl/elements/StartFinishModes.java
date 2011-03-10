@@ -31,11 +31,17 @@ import org.enhydra.jxpdl.XMLEmptyChoiceElement;
  */
 public class StartFinishModes extends XMLComplexChoice {
 
+   /**
+    * Constructs a new object with the given StartMode as a parent.
+    */
    public StartFinishModes(StartMode parent) {
       super(parent, "Mode", false);
       fillChoices();
    }
 
+   /**
+    * Constructs a new object with the given FinishMode as a parent.
+    */
    public StartFinishModes(FinishMode parent) {
       super(parent, "Mode", false);
       fillChoices();
@@ -49,26 +55,32 @@ public class StartFinishModes extends XMLComplexChoice {
       choosen = (XMLElement) choices.get(0);
    }
 
+   /** Returns XMLEmptyChoiceElement choice element. */
    public XMLEmptyChoiceElement getEmptyChoiceElement() {
       return (XMLEmptyChoiceElement) choices.get(0);
    }
 
+   /** Sets XMLEmptyChoiceElement choice element as the chosen one. */
    public void setEmptyChoiceElement() {
       setChoosen((XMLEmptyChoiceElement) choices.get(0));
    }
 
+   /** Returns Automatic choice element. */
    public Automatic getAutomatic() {
       return (Automatic) choices.get(1);
    }
 
+   /** Sets Automatic choice element as the chosen one. */
    public void setAutomatic() {
       setChoosen((Automatic) choices.get(1));
    }
 
+   /** Returns Manual choice element. */
    public Manual getManual() {
       return (Manual) choices.get(2);
    }
 
+   /** Sets Manual choice element as the chosen one. */
    public void setManual() {
       setChoosen((Manual) choices.get(2));
    }

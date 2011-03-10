@@ -28,10 +28,15 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Coordinatess extends XMLCollection {
 
+   /** Constructs a new object with the given ConnectorGraphicsInfo as a parent. */
 	public Coordinatess(ConnectorGraphicsInfo parent) {
 		super(parent, false);
 	}
 
+   /**
+    * Generates new Coordinate object. This object is not member of the collection yet,
+    * it has to be explicitly added to the collection.
+    */
 	public XMLElement generateNewElement() {
 		return new Coordinates(this);
 	}

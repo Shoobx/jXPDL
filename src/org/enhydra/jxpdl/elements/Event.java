@@ -27,6 +27,9 @@ import org.enhydra.jxpdl.XMLComplexElement;
  */
 public class Event extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given ActivityTypes as a parent.
+    */
    public Event(ActivityTypes parent) {
       super(parent, true);
    }
@@ -37,6 +40,7 @@ public class Event extends XMLComplexElement {
       add(refType);
    }
 
+   /** Returns the EventTypes sub-element of this object. */
    public EventTypes getEventTypes() {
       return (EventTypes) get("Event");
    }

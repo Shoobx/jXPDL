@@ -27,15 +27,23 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Artifacts extends XMLCollection {
 
-   // min=0, max=unbounded
+   /** Constructs a new object with the given Package as a parent. */
    public Artifacts(Package parent) {
       super(parent, false);
    }
 
+   /**
+    * Generates new Artifact object. This object is not member of the collection yet,
+    * it has to be explicitly added to the collection.
+    */
    public XMLElement generateNewElement() {
       return new Artifact(this);
    }
 
+   /**
+    * Returns the Artifact object (the member of this Artifacts collection) with
+    * specified Id.
+    */
    public Artifact getArtifact(String Id) {
       return (Artifact) super.getCollectionElement(Id);
    }

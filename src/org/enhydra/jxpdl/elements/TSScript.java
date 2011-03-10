@@ -26,6 +26,9 @@ package org.enhydra.jxpdl.elements;
  */
 public class TSScript extends ExpressionType {
 
+   /**
+    * Constructs a new object with the given TaskScript as a parent.
+    */
 	public TSScript(TaskScript parent) {
 		super(parent, "Script", true);
 	}

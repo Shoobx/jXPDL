@@ -21,16 +21,22 @@ package org.enhydra.jxpdl.elements;
 import org.enhydra.jxpdl.XMLCollectionElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  * 
  *  @author Sasa Bojanic
  */
 public class TransitionRef extends XMLCollectionElement {
 
+   /**
+    * Constructs a new object with the given TransitionRefs as a parent.
+    */
    public TransitionRef (TransitionRefs parent) {
       super (parent, true);
    }
 
+   /**
+    * Constructs a new object with the given WebServiceFaultCatchTypes as a parent.
+    */
    public TransitionRef (WebServiceFaultCatchTypes parent) {
       super (null, true);
       setParent(parent);

@@ -29,6 +29,9 @@ import org.enhydra.jxpdl.XPDLConstants;
  */
 public class DataMapping extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given DataMappings as a parent.
+    */
    public DataMapping(DataMappings parent) {
       super(parent, true);
    }

@@ -22,17 +22,21 @@ import org.enhydra.jxpdl.XMLCollection;
 import org.enhydra.jxpdl.XMLElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  *
  *  @author Sasa Bojanic
  */
 public class TransitionRestrictions extends XMLCollection {
 
-   // min=0, max=unbounded
+   /** Constructs a new object with the given Activity as a parent. */
    public TransitionRestrictions (Activity act) {
       super(act, false);
    }
 
+   /**
+    * Generates new TransitionRestriction object. This object is not member of the collection yet, it
+    * has to be explicitly added to the collection.
+    */
    public XMLElement generateNewElement() {
       return new TransitionRestriction(this);
    }

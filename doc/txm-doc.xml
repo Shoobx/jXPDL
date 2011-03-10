@@ -2245,6 +2245,9 @@ pkg.getParticipants().add(p3);
           <para>The name of the class XMLInterfaceForJDK13 changed into XMLInterfaceImpl</para>          
         </listitem>
         <listitem>
+          <para>Added missing Java API Docu</para>          
+        </listitem>   
+        <listitem>
           <para>Fix for migrating from XPDL 1: proper handling of circular transition for the activity
      in the case activity has to be splitted into several activities (e.g. multiple tools activity, 
      or activity with improper split/join types which are splitted by adding additional Route activities)</para>

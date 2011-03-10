@@ -29,6 +29,9 @@ import org.enhydra.jxpdl.XPDLConstants;
  */
 public class Pool extends XMLCollectionElement {
 
+   /**
+    * Constructs a new object with the given Pools as a parent.
+    */
    public Pool(Pools parent) {
       super(parent, true);
    }
@@ -71,58 +74,72 @@ public class Pool extends XMLCollectionElement {
       add(refNodeGraphicsInfos);
    }
 
+   /** Returns the Name attribute value of this object. */
    public String getName() {
       return get("Name").toValue();
    }
 
+   /** Sets the Name attribute value of this object. */
    public void setName(String name) {
       set("Name", name);
    }
 
+   /** Returns the Orientation attribute value of this object. */
    public String getOrientation() {
       return get("Orientation").toValue();
    }
 
+   /** Sets the Orientation attribute value of this object. */
    public void setOrientation(String orientation) {
       set("Orientation", orientation);
    }
 
+   /** Returns the Process attribute value of this object. */
    public String getProcess() {
       return get("Process").toValue();
    }
 
+   /** Sets the Process attribute value of this object. */
    public void setProcess(String process) {
       set("Process", process);
    }
 
+   /** Returns the Participant attribute value of this object. */
    public String getParticipant() {
       return get("Participant").toValue();
    }
 
+   /** Sets the Participant attribute value of this object. */
    public void setParticipant(String participant) {
       set("Participant", participant);
    }
 
+   /** Returns true if BoundaryVisible attribute value of this object is 'true'. */
    public boolean getBoundaryVisible() {
       return Boolean.parseBoolean(get("BoundaryVisible").toValue());
    }
 
+   /** Sets BoundaryVisible attribute value of this object to 'true' or 'false'. */
    public void setBoundaryVisible(boolean visible) {
       set("BoundaryVisible", String.valueOf(visible));
    }
 
+   /** Returns true if MainPool attribute value of this object is 'true'. */
    public boolean getMainPool() {
       return Boolean.parseBoolean(get("MainPool").toValue());
    }
 
+   /** Sets MainPool attribute value of this object to 'true' or 'false'. */
    public void setMainPool(boolean isMain) {
       set("MainPool", String.valueOf(isMain));
    }
 
+   /** Returns the Lanes sub-element of this object. */
    public Lanes getLanes() {
       return (Lanes) get("Lanes");
    }
 
+   /** Returns the NodeGraphicsInfos sub-element of this object. */
    public NodeGraphicsInfos getNodeGraphicsInfos() {
       return (NodeGraphicsInfos) get("NodeGraphicsInfos");
    }

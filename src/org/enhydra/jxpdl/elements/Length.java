@@ -27,10 +27,16 @@ import org.enhydra.jxpdl.XMLSimpleElement;
  */
 public class Length extends XMLSimpleElement {
 
+   /**
+    * Constructs a new object with the given DataField as a parent.
+    */
    public Length (DataField parent) {
       super(parent, false);
    }
 
+   /**
+    * Constructs a new object with the given FormalParameter as a parent.
+    */
    public Length (FormalParameter parent) {
       super(parent, false);
    }

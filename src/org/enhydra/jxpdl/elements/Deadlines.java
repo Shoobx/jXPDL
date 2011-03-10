@@ -28,15 +28,26 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Deadlines extends XMLCollection {
 
-   // min=0, max=unbounded
+   /**
+    * Constructs a new object with the given Activity as a parent. It can be specified if
+    * object will have XPDL 1 support or not.
+    */
    public Deadlines(Activity parent, boolean xpdl1support) {
       super(parent, false, xpdl1support);
    }
 
+   /**
+    * Generates new Deadline object. This object is not member of the collection yet, it
+    * has to be explicitly added to the collection.
+    */
    public XMLElement generateNewElement() {
       return new Deadline(this, false);
    }
 
+   /**
+    * Generates new Deadline object with XPDL 1 support. This object is not member of the
+    * collection yet, it has to be explicitly added to the collection.
+    */
    public XMLElement generateNewElementWithXPDL1Support() {
       return new Deadline(this, true);
    }

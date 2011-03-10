@@ -27,14 +27,18 @@ import org.enhydra.jxpdl.XMLElementChangeInfo;
 import org.enhydra.jxpdl.XMLInterface;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  *
  *  @author Sasa Bojanic
  */
 public class DataTypes extends XMLComplexChoice {
 
+   /** Flag that determines if DataTypes structure is initialized. */
    private boolean isInitialized=false;
    
+   /**
+    * Constructs a new object with the given element as a parent.
+    */
    public DataTypes (XMLComplexElement parent) {
       super(parent,"DataTypes", true);
       isInitialized=true;
@@ -68,6 +72,7 @@ public class DataTypes extends XMLComplexChoice {
       isInitialized=false;
    }
    
+   /** Clears the choices other than the chosen one. */
    protected void clearOtherChoices () {
       //    "kill" other types
       if (!(choosen instanceof BasicType)) {
@@ -221,90 +226,108 @@ public class DataTypes extends XMLComplexChoice {
       }
    }
    
+   /** Returns BasicType choice element. */
    public BasicType getBasicType () {
       return (BasicType)getChoices().get(0);
    }
 
+   /** Sets BasicType choice element as the chosen one. */
    public void setBasicType () {
 //      choosen=(BasicType)getChoices().get(0);
 //      clearOtherChoices();
       setChoosen((BasicType)getChoices().get(0));
    }
    
+   /** Returns DeclaredType choice element. */
    public DeclaredType getDeclaredType () {
       return (DeclaredType)getChoices().get(1);
    }
 
+   /** Sets DeclaredType choice element as the chosen one. */
    public void setDeclaredType () {
 //      choosen=(DeclaredType)getChoices().get(1);
 //      clearOtherChoices();
       setChoosen((DeclaredType)getChoices().get(1));
    }
 
+   /** Returns SchemaType choice element. */
    public SchemaType getSchemaType () {
       return (SchemaType)getChoices().get(2);
    }
 
+   /** Sets SchemaType choice element as the chosen one. */
    public void setSchemaType () {
 //      choosen=(SchemaType)getChoices().get(2);
 //      clearOtherChoices();
       setChoosen((SchemaType)getChoices().get(2));
    }
 
+   /** Returns ExternalReference choice element. */
    public ExternalReference getExternalReference () {
       return (ExternalReference)getChoices().get(3);
    }
 
+   /** Sets ExternalReference choice element as the chosen one. */
    public void setExternalReference () {
 //      choosen=(ExternalReference)getChoices().get(3);
 //      clearOtherChoices();
       setChoosen((ExternalReference)getChoices().get(3));
    }
    
+   /** Returns RecordType choice element. */
    public RecordType getRecordType () {
       return (RecordType)getChoices().get(4);
    }
 
+   /** Sets RecordType choice element as the chosen one. */
    public void setRecordType () {
 //      choosen=(RecordType)getChoices().get(4);
 //      clearOtherChoices();
       setChoosen((RecordType)getChoices().get(4));
    }
 
+   /** Returns UnionType choice element. */
    public UnionType getUnionType () {
       return (UnionType)getChoices().get(5);
    }
 
+   /** Sets UnionType choice element as the chosen one. */
    public void setUnionType () {
 //      choosen=(UnionType)getChoices().get(5);
 //      clearOtherChoices();
       setChoosen((UnionType)getChoices().get(5));
    }
 
+   /** Returns EnumerationType choice element. */
    public EnumerationType getEnumerationType () {
       return (EnumerationType)getChoices().get(6);
    }
 
+   /** Sets EnumerationType choice element as the chosen one. */
    public void setEnumerationType () {
 //      choosen=(EnumerationType)getChoices().get(6);
 //      clearOtherChoices();
       setChoosen((EnumerationType)getChoices().get(6));
    }
    
+   /** Returns ArrayType choice element. */
    public ArrayType getArrayType () {
       return (ArrayType)getChoices().get(7);
    }
 
+   /** Sets ArrayType choice element as the chosen one. */
    public void setArrayType () {
 //      choosen=(ArrayType)getChoices().get(7);
 //      clearOtherChoices();
       setChoosen((ArrayType)getChoices().get(7));
    }
 
+   /** Returns ListType choice element. */
    public ListType getListType () {
       return (ListType)getChoices().get(8);
    }
 
+   /** Sets ListType choice element as the chosen one. */
    public void setListType () {
 //      choosen=(ListType)getChoices().get(8);
 //      clearOtherChoices();

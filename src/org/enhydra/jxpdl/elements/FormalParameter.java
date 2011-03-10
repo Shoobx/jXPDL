@@ -28,7 +28,10 @@ import org.enhydra.jxpdl.XPDLConstants;
  * @author Sasa Bojanic
  */
 public class FormalParameter extends XMLCollectionElement {
-
+   
+   /**
+    * Constructs a new object with the given FormalParameters as a parent.
+    */
    public FormalParameter(FormalParameters fps) {
       super(fps, true);
    }
@@ -60,70 +63,82 @@ public class FormalParameter extends XMLCollectionElement {
       add(refLength);
    }
 
+   /** Returns the IsArray attribute of this object. */
    public XMLAttribute getIsArrayAttribute() {
       return (XMLAttribute) get("IsArray");
    }
 
+   /** Returns true if IsArray attribute value is equal to "true". */
    public boolean getIsArray() {
       return new Boolean(get("IsArray").toValue()).booleanValue();
    }
 
+   /** Sets IsArray attribute value to "true" or "false". */
    public void setIsArray(boolean isArray) {
       set("IsArray", String.valueOf(isArray));
    }
 
+   /** Returns the Name attribute value of this object. */
    public String getName() {
       return get("Name").toValue();
    }
 
+   /** Sets the Name attribute value of this object. */
    public void setName(String name) {
       set("Name", name);
    }
 
+   /** Returns the DataType sub-element of this object. */
    public DataType getDataType() {
       return (DataType) get("DataType");
    }
 
+   /** Returns the Description attribute value of this object. */
    public String getDescription() {
       return get("Description").toValue();
    }
 
+   /** Sets the Description attribute value of this object. */
    public void setDescription(String description) {
       set("Description", description);
    }
 
+   /** Returns the InitialValue attribute value of this object. */
    public String getInitialValue() {
       return get("InitialValue").toValue();
    }
 
+   /** Sets the InitialValue attribute value of this object. */
    public void setInitialValue(String initialValue) {
       set("InitialValue", initialValue);
    }
 
+   /** Returns the Length attribute value of this object. */
    public String getLength() {
       return get("Length").toValue();
    }
 
-   public void setLength(String length) {
-      set("Length", length);
-   }
-
+   /** Returns the Mode attribute of this object. */
    public XMLAttribute getModeAttribute() {
       return (XMLAttribute) get("Mode");
    }
 
+   /** Returns the Mode attribute value of this object. */
    public String getMode() {
       return getModeAttribute().toValue();
    }
 
+   /** Sets the Mode attribute value of this object to IN. */
    public void setModeIN() {
       getModeAttribute().setValue(XPDLConstants.FORMAL_PARAMETER_MODE_IN);
    }
 
+   /** Sets the Mode attribute value of this object to OUT. */
    public void setModeOUT() {
       getModeAttribute().setValue(XPDLConstants.FORMAL_PARAMETER_MODE_OUT);
    }
 
+   /** Sets the Mode attribute value of this object to INOUT. */
    public void setModeINOUT() {
       getModeAttribute().setValue(XPDLConstants.FORMAL_PARAMETER_MODE_INOUT);
    }

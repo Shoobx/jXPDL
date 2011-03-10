@@ -22,24 +22,34 @@ import org.enhydra.jxpdl.XMLCollection;
 import org.enhydra.jxpdl.XMLElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  *
  *  @author Sasa Bojanic
  */
 public class Transitions extends XMLCollection {
 
+   /** Constructs a new object with the given WorkflowProcess as a parent. */
    public Transitions (WorkflowProcess parent) {
       super(parent, false);
    }
 
+   /** Constructs a new object with the given ActivitySet as a parent. */
    public Transitions (ActivitySet parent) {
       super(parent, false);
    }
 
+   /**
+    * Generates new Transition object. This object is not member of the collection yet, it
+    * has to be explicitly added to the collection.
+    */
    public XMLElement generateNewElement() {
       return new Transition(this);
    }
 
+   /**
+    * Returns the Transition object (the member of this Transitions collection) with
+    * specified Id.
+    */
    public Transition getTransition (String Id) {
       return (Transition)super.getCollectionElement(Id);
    }

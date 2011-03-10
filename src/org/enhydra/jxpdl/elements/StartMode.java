@@ -21,12 +21,15 @@ package org.enhydra.jxpdl.elements;
 import org.enhydra.jxpdl.XMLComplexElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  * 
  *  @author Sasa Bojanic
  */
 public class StartMode extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given Activity as a parent.
+    */
    public StartMode (Activity parent) {
       super(parent, false);
    }
@@ -38,6 +41,7 @@ public class StartMode extends XMLComplexElement {
       add(refMode);
    }
 
+   /** Returns the StartFinishModes sub-element of this object. */
    public StartFinishModes getStartFinishModes() {
       return (StartFinishModes)get("Mode");
    }

@@ -29,6 +29,9 @@ import org.enhydra.jxpdl.XPDLConstants;
  */
 public class TaskReceive extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given TaskTypes as a parent.
+    */
    public TaskReceive(TaskTypes parent) {
       super(parent, true);
    }

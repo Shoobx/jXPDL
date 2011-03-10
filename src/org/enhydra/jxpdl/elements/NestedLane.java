@@ -28,6 +28,9 @@ import org.enhydra.jxpdl.XMLComplexElement;
  */
 public class NestedLane extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given NestedLanes as a parent.
+    */
    public NestedLane(NestedLanes parent) {
       super(parent, true);
    }
@@ -37,10 +40,12 @@ public class NestedLane extends XMLComplexElement {
       add(attrLaneId);
    }
 
+   /** Returns the LaneId attribute value of this object. */
    public String getLaneId() {
       return get("LaneId").toValue();
    }
 
+   /** Sets the LaneId attribute value of this object. */
    public void setLaneId(String laneId) {
       set("LaneId", laneId);
    }

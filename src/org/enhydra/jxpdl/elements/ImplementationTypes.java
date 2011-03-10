@@ -31,6 +31,9 @@ import org.enhydra.jxpdl.XMLUtil;
  */
 public class ImplementationTypes extends XMLComplexChoice {
 
+   /**
+    * Constructs a new object with the given Implementation as a parent.
+    */
    public ImplementationTypes(Implementation parent) {
       super(parent, "Type", true);
    }
@@ -48,26 +51,32 @@ public class ImplementationTypes extends XMLComplexChoice {
       choosen = (XMLElement) choices.get(0);
    }
 
+   /** Returns No choice element. */
    public No getNo() {
       return (No) choices.get(0);
    }
 
+   /** Sets No choice element as the chosen one. */
    public void setNo() {
       setChoosen((No) choices.get(0));
    }
 
+   /** Returns Task choice element. */
    public Task getTask() {
       return (Task) choices.get(1);
    }
 
+   /** Sets Task choice element as the chosen one. */
    public void setTask() {
       setChoosen((Task) choices.get(1));
    }
 
+   /** Returns SubFlow choice element. */
    public SubFlow getSubFlow() {
       return (SubFlow) choices.get(2);
    }
 
+   /** Sets SubFlow choice element as the chosen one. */
    public void setSubFlow() {
       setChoosen((SubFlow) choices.get(2));
    }

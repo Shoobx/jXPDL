@@ -24,12 +24,15 @@ import org.enhydra.jxpdl.XMLUtil;
 import org.enhydra.jxpdl.XPDLConstants;
 
 /**
- * Represents coresponding element from XPDL schema.
+ * Represents corresponding element from XPDL schema.
  * 
  * @author Sasa Bojanic
  */
 public class Route extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given ActivityTypes as a parent.
+    */
    public Route(ActivityTypes parent) {
       super(parent, true);
    }
@@ -49,46 +52,50 @@ public class Route extends XMLComplexElement {
                                                       "GatewayType",
                                                       false,
                                                       new String[] {
-//                                                            XPDLConstants.JOIN_SPLIT_TYPE_NONE,
+                                                            // XPDLConstants.JOIN_SPLIT_TYPE_NONE,
                                                             XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE,
-//                                                            XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE,
+                                                            // XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE,
                                                             // XPDLConstants.JOIN_SPLIT_TYPE_COMPLEX,
                                                             XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL
                                                       },
                                                       0) {
-         public void setValue (String v) {
+         public void setValue(String v) {
             super.setValue(v);
             Split s = XMLUtil.getSplit(XMLUtil.getActivity(this));
-            if (s!=null) {
+            if (s != null) {
                s.set("Type", v);
             }
             Join j = XMLUtil.getJoin(XMLUtil.getActivity(this));
-            if (j!=null) {
+            if (j != null) {
                j.set("Type", v);
-            }            
+            }
          }
       };
       add(attrGatewayType);
    }
 
+   /** Returns the GatewayType attribute of this object. */
    public XMLAttribute getGatewayTypeAttribute() {
       return (XMLAttribute) get("GatewayType");
    }
 
+   /** Returns the GatewayType attribute value of this object. */
    public String getGatewayType() {
       return getGatewayTypeAttribute().toValue();
    }
 
+   /** Sets the GatewayType attribute value of this object to Parallel. */
    public void setGatewayTypeParallel() {
       getGatewayTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL);
    }
 
+   /** Sets the GatewayType attribute value of this object to Exclusive. */
    public void setGatewayTypeExclusive() {
       getGatewayTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE);
    }
 
-//   public void setGatewayTypeInclusive() {
-//      getGatewayTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE);
-//   }
+   // public void setGatewayTypeInclusive() {
+   // getGatewayTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE);
+   // }
 
 }

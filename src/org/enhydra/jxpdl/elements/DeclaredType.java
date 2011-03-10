@@ -1,20 +1,20 @@
 /**
-* Together XPDL Model
-* Copyright (C) 2010 Together Teamsolutions Co., Ltd. 
-* 
-* This program is free software: you can redistribute it and/or modify 
-* it under the terms of the GNU General Public License as published by 
-* the Free Software Foundation, either version 3 of the License, or 
-* (at your option) any later version. 
-*
-* This program is distributed in the hope that it will be useful, 
-* but WITHOUT ANY WARRANTY; without even the implied warranty of 
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
-* GNU General Public License for more details. 
-*
-* You should have received a copy of the GNU General Public License 
-* along with this program. If not, see http://www.gnu.org/licenses
-*/
+ * Together XPDL Model
+ * Copyright (C) 2010 Together Teamsolutions Co., Ltd. 
+ * 
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or 
+ * (at your option) any later version. 
+ *
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * GNU General Public License for more details. 
+ *
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see http://www.gnu.org/licenses
+ */
 
 package org.enhydra.jxpdl.elements;
 
@@ -22,26 +22,32 @@ import org.enhydra.jxpdl.XMLAttribute;
 import org.enhydra.jxpdl.XMLComplexElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
- *
- *  @author Sasa Bojanic
+ * Represents corresponding element from XPDL schema.
+ * 
+ * @author Sasa Bojanic
  */
 public class DeclaredType extends XMLComplexElement {
 
-   public DeclaredType (DataTypes parent) {
+   /**
+    * Constructs a new object with the given DataTypes as a parent.
+    */
+   public DeclaredType(DataTypes parent) {
       super(parent, true);
    }
 
-   protected void fillStructure () {
-      XMLAttribute attrId=new XMLAttribute(this,"Id", true); // required
+   protected void fillStructure() {
+      XMLAttribute attrId = new XMLAttribute(this, "Id", true); // required
 
       add(attrId);
    }
 
+   /** Returns the Id attribute value of this object. */
    public String getId() {
       return get("Id").toValue();
    }
+
+   /** Sets the Id attribute value of this object. */
    public void setId(String id) {
-      set("Id",id);
+      set("Id", id);
    }
 }

@@ -25,6 +25,9 @@ import org.enhydra.jxpdl.XMLCollectionElement;
  */
 public class DODataField extends XMLCollectionElement {
 
+   /**
+    * Constructs a new object with the given DODataFields as a parent.
+    */
    public DODataField (DODataFields dfs) {
       super(dfs, "DataField", true);
    }

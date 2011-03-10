@@ -29,6 +29,9 @@ import org.enhydra.jxpdl.XPDLConstants;
  */
 public class EndEvent extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given EventTypes as a parent.
+    */
    public EndEvent(EventTypes parent) {
       super(parent, false);
    }

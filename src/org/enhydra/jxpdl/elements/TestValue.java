@@ -26,6 +26,9 @@ package org.enhydra.jxpdl.elements;
  */
 public class TestValue extends ExpressionType {
 
+   /**
+    * Constructs a new object with the given DataMapping as a parent.
+    */
 	public TestValue(DataMapping parent) {
 		super(parent, false);
 	}

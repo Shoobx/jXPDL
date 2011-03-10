@@ -22,12 +22,15 @@ import org.enhydra.jxpdl.XMLAttribute;
 import org.enhydra.jxpdl.XMLComplexElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  * 
  *  @author Sasa Bojanic
  */
 public class EnumerationValue extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given EnumerationType as a parent.
+    */
    public EnumerationValue (EnumerationType parent) {
       super(parent,true);
    }
@@ -37,11 +40,14 @@ public class EnumerationValue extends XMLComplexElement {
       add(attrName);
    }
 
+   /** Returns the Name attribute value of this object. */
    public String getName() {
       return get("Name").toValue();
    }
+
+   /** Sets the Name attribute value of this object. */
    public void setName(String name) {
-      set("Name",name);
+      set("Name", name);
    }
    
 }

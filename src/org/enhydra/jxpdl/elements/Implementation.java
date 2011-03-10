@@ -21,12 +21,15 @@ package org.enhydra.jxpdl.elements;
 import org.enhydra.jxpdl.XMLComplexElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  * 
  *  @author Sasa Bojanic
  */
 public class Implementation extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given ActivityTypes as a parent.
+    */
    public Implementation (ActivityTypes parent) {
       super(parent, true);
    }
@@ -37,6 +40,7 @@ public class Implementation extends XMLComplexElement {
       add(refType);      
    }
 
+   /** Returns the ImplementationTypes sub-element of this object. */
    public ImplementationTypes getImplementationTypes() {
       return (ImplementationTypes)get("Type");
    }

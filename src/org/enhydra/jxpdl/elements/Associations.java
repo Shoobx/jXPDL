@@ -27,15 +27,23 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Associations extends XMLCollection {
 
-   // min=0, max=unbounded
+   /** Constructs a new object with the given Package as a parent. */
    public Associations(Package parent) {
       super(parent, false);
    }
 
+   /**
+    * Generates new Association object. This object is not member of the collection yet,
+    * it has to be explicitly added to the collection.
+    */
    public XMLElement generateNewElement() {
       return new Association(this);
    }
 
+   /**
+    * Returns the Association object (the member of this Associations collection) with
+    * specified Id.
+    */
    public Association getAssociation(String Id) {
       return (Association) super.getCollectionElement(Id);
    }

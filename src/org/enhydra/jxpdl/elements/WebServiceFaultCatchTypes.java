@@ -30,6 +30,9 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class WebServiceFaultCatchTypes extends XMLComplexChoice {
 
+   /**
+    * Constructs a new object with the given WebServiceDefaultCatch as a parent.
+    */
    public WebServiceFaultCatchTypes(WebServiceFaultCatch parent) {
       super(parent, "Choice", true);
    }
@@ -41,18 +44,22 @@ public class WebServiceFaultCatchTypes extends XMLComplexChoice {
       choosen = (XMLElement) choices.get(0);
    }
 
+   /** Returns BlockActivity choice element. */
    public BlockActivity getBlockActivity() {
       return (BlockActivity) choices.get(0);
    }
 
+   /** Sets BlockActivity choice element as the chosen one. */
    public void setBlockActivity() {
       setChoosen((BlockActivity) choices.get(0));
    }
 
+   /** Returns TransitionRef choice element. */
    public TransitionRef getTransitionRef() {
       return (TransitionRef) choices.get(1);
    }
 
+   /** Sets TransitionRef choice element as the chosen one. */
    public void setTransitionRef() {
       setChoosen((TransitionRef) choices.get(1));
    }

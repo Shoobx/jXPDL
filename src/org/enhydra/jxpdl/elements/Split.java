@@ -30,6 +30,9 @@ import org.enhydra.jxpdl.XPDLConstants;
  */
 public class Split extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given TransitionRestrictions as a parent.
+    */
    public Split(TransitionRestriction parent) {
       super(parent, false);
    }
@@ -65,22 +68,27 @@ public class Split extends XMLComplexElement {
       add(refTransitionRefs);
    }
 
+   /** Returns the Type attribute of this object. */
    public XMLAttribute getTypeAttribute() {
       return (XMLAttribute) get("Type");
    }
 
+   /** Returns the Type attribute value of this object. */
    public String getType() {
       return getTypeAttribute().toValue();
    }
 
+   /** Sets the Type attribute value of this object to an empty string. */
    public void setTypeNONE() {
       getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_NONE);
    }
 
+   /** Sets the Type attribute value of this object to Parallel. */
    public void setTypeParallel() {
       getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL);
    }
 
+   /** Sets the Type attribute value of this object to Exclusive. */
    public void setTypeExclusive() {
       getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE);
    }
@@ -93,6 +101,7 @@ public class Split extends XMLComplexElement {
 //      getTypeAttribute().setValue(XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE);
 //   }
 
+   /** Returns the TransitionRefs sub-element of this object. */
    public TransitionRefs getTransitionRefs() {
       return (TransitionRefs) get("TransitionRefs");
    }

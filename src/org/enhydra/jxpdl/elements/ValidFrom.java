@@ -21,12 +21,15 @@ package org.enhydra.jxpdl.elements;
 import org.enhydra.jxpdl.XMLSimpleElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  * 
  *  @author Sasa Bojanic
  */
 public class ValidFrom extends XMLSimpleElement {
 
+   /**
+    * Constructs a new object with the given ProcessHeader as a parent.
+    */
    public ValidFrom (ProcessHeader parent) {
       super(parent, false);
    }

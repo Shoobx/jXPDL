@@ -23,12 +23,15 @@ import org.enhydra.jxpdl.XMLElement;
 import org.enhydra.jxpdl.XMLElementChangeInfo;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  *
  *  @author Sasa Bojanic
  */
 public class SchemaType extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given DataTypes as a parent.
+    */
    public SchemaType (DataTypes parent) {
       super(parent, true);
    }

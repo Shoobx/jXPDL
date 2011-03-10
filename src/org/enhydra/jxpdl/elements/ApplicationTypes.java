@@ -30,6 +30,9 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class ApplicationTypes extends XMLComplexChoice {
 
+   /**
+    * Constructs a new object with the given Application as a parent.
+    */
    public ApplicationTypes (Application parent) {
       super(parent,"Choice", true);
    }
@@ -41,18 +44,22 @@ public class ApplicationTypes extends XMLComplexChoice {
       choosen=(XMLElement)choices.get(0);      
    }
    
+   /** Returns the FormalParameters choice of this element. */
    public FormalParameters getFormalParameters () {
       return (FormalParameters)choices.get(0);
    }
 
+   /** Sets FormalParameters choice element as the chosen one. */
    public void setFormalParameters () {
       setChoosen((FormalParameters)choices.get(0));
    }
    
+   /** Returns the ExternalReference choice of this element. */
    public ExternalReference getExternalReference () {
       return (ExternalReference)choices.get(1);
    }
 
+   /** Sets ExternalReference choice element as the chosen one. */
    public void setExternalReference () {
       setChoosen((ExternalReference)choices.get(1));
    }

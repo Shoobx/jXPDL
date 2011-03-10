@@ -28,6 +28,10 @@ import org.enhydra.jxpdl.XMLComplexElement;
  */
 public class WebServiceOperation extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the given element as a parent, and flag that determines
+    * if object in this context is required by XPDL schema.
+    */
    public WebServiceOperation(XMLComplexElement parent,boolean isRequired) {
       super(parent, isRequired);
    }

@@ -21,16 +21,22 @@ package org.enhydra.jxpdl.elements;
 import org.enhydra.jxpdl.XMLSimpleElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  * 
  *  @author Sasa Bojanic
  */
 public class Created extends XMLSimpleElement {
 
+   /**
+    * Constructs a new object with the given PackageHeader as a parent.
+    */
    public Created (PackageHeader parent) {
       super(parent, true);
    }
 
+   /**
+    * Constructs a new object with the given ProcessHeader as a parent.
+    */
    public Created (ProcessHeader parent) {
       super(parent, false);
    }

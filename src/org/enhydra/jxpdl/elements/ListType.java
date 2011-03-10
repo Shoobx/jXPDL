@@ -21,12 +21,15 @@ package org.enhydra.jxpdl.elements;
 import org.enhydra.jxpdl.XMLComplexElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  * 
  *  @author Sasa Bojanic
  */
 public class ListType extends XMLComplexElement {
 
+   /**
+    * Constructs a new object with the DataTypes as a parent.
+    */
    public ListType (DataTypes parent) {
       super(parent,true);
    }
@@ -36,6 +39,7 @@ public class ListType extends XMLComplexElement {
       add(refType);
    }
 
+   /** Returns the DataTypes sub-element of this object. */
    public DataTypes getDataTypes() {
       return (DataTypes)get("DataTypes");
    }      

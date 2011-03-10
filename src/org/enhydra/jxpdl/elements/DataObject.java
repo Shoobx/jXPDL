@@ -27,7 +27,10 @@ import org.enhydra.jxpdl.XMLComplexElement;
  */
 public class DataObject extends XMLComplexElement {
 
-   public DataObject(Artifact parent) {
+   /**
+    * Constructs a new object with the given Artifact as a parent.
+    */
+  public DataObject(Artifact parent) {
       super(parent, false);
    }
 
@@ -42,30 +45,37 @@ public class DataObject extends XMLComplexElement {
       add(refDODataFields);
    }
 
+   /** Returns the Id attribute value of this object. */
    public final String getId() {
       return get("Id").toValue();
    }
 
+   /** Sets the Id attribute value of this object. */
    public void setId(String id) {
       set("Id", id);
    }
    
+   /** Returns the Name attribute value of this object. */
    public final String getName() {
       return get("Name").toValue();
    }
 
+   /** Sets the Name attribute value of this object. */
    public void setName(String name) {
       set("Name", name);
    }
    
+   /** Returns the State attribute value of this object. */
    public final String getState() {
       return get("State").toValue();
    }
 
+   /** Sets the State attribute value of this object. */
    public void setState(String state) {
       set("State", state);
    }
 
+   /** Returns the DODataFields sub-element of this object. */
    public DODataFields getDODataFields () {
       return (DODataFields)get("DataFields");
    }

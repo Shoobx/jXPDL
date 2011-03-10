@@ -21,12 +21,15 @@ package org.enhydra.jxpdl.elements;
 import org.enhydra.jxpdl.XMLComplexElement;
 
 /**
- *  Represents coresponding element from XPDL schema.
+ *  Represents corresponding element from XPDL schema.
  * 
  *  @author Sasa Bojanic
  */
 public class No extends XMLComplexElement {
    
+   /**
+    * Constructs a new object with the given ImplementationTypes as a parent.
+    */
    public No (ImplementationTypes parent) {
       super(parent, true);
    }

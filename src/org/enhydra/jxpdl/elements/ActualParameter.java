@@ -20,13 +20,15 @@ package org.enhydra.jxpdl.elements;
 
 import org.enhydra.jxpdl.XMLSimpleElement;
 
+
 /**
  * Represents corresponding element from XPDL schema.
  * 
  * @author Sasa Bojanic
  */
-public class ActualParameter extends XMLSimpleElement { // ExpressionType {
+public class ActualParameter extends XMLSimpleElement { //ExpressionType
 
+   /** Constructs a new object with the given ActualParameters as a parent. */
    public ActualParameter(ActualParameters parent) {
       super(parent, true);
    }

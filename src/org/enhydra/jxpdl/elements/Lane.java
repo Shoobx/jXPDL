@@ -28,6 +28,9 @@ import org.enhydra.jxpdl.XMLCollectionElement;
  */
 public class Lane extends XMLCollectionElement {
 
+   /**
+    * Constructs a new object with the given Lanes as a parent.
+    */
    public Lane(Lanes parent) {
       super(parent, true);
    }
@@ -45,22 +48,27 @@ public class Lane extends XMLCollectionElement {
       add(refNestedLanes);
    }
 
+   /** Returns the Name attribute value of this object. */
    public String getName() {
       return get("Name").toValue();
    }
 
+   /** Sets the Name attribute value of this object. */
    public void setName(String name) {
       set("Name", name);
    }
 
+   /** Returns the NodeGraphicsInfos sub-element of this object. */
    public NodeGraphicsInfos getNodeGraphicsInfos() {
       return (NodeGraphicsInfos) get("NodeGraphicsInfos");
    }
 
+   /** Returns the Performers sub-element of this object. */
    public Performers getPerformers() {
       return (Performers) get("Performers");
    }
 
+   /** Returns the NestedLanes sub-element of this object. */
    public NestedLanes getNestedLanes() {
       return (NestedLanes) get("NestedLanes");
    }

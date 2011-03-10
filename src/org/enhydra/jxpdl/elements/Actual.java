@@ -26,6 +26,9 @@ package org.enhydra.jxpdl.elements;
  */
 public class Actual extends ExpressionType {
 
+   /**
+    * Constructs a new object with the given DataMapping as a parent.
+    */
 	public Actual(DataMapping parent) {
 		super(parent, true);
 	}

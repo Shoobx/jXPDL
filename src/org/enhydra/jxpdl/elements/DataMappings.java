@@ -28,10 +28,15 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class DataMappings extends XMLCollection {
 
+   /** Constructs a new object with the given PassingTypes as a parent. */
 	public DataMappings(PassingTypes parent) {
 		super(parent, false);
 	}
 
+   /**
+    * Returns the DataMapping object (the member of this DataMappings collection) with
+    * specified Id.
+    */
 	public XMLElement generateNewElement() {
 		return new DataMapping(this);
 	}
