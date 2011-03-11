@@ -118,6 +118,11 @@ public class FormalParameter extends XMLCollectionElement {
       return get("Length").toValue();
    }
 
+   /** Sets the Length attribute value of this object. */
+   public void setLength(String length) {
+      set("Length", length);
+   }
+
    /** Returns the Mode attribute of this object. */
    public XMLAttribute getModeAttribute() {
       return (XMLAttribute) get("Mode");
