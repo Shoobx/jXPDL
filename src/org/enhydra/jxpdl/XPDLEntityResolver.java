@@ -57,7 +57,11 @@ public class XPDLEntityResolver implements EntityResolver {
       return null;
    }
 
-   /** Returns the XPDL schema determined by given resource location. */
+   /** Returns the XPDL schema determined by given resource location.
+    * 
+    * @param xpdlSchema The resource location of XPDL Schema. 
+    * @return the XPDL schema determined by given resource location.
+    */
    public static InputSource getSchemaInputSource(String xpdlSchema) {
       InputStream is = null;
       try {

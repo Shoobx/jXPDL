@@ -28,13 +28,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class PartnerLinkTypes extends XMLCollection {
 
-   /** Constructs a new object with the given Package as a parent. */
+   /** Constructs a new object with the given {@link Package} as a parent. */
    public PartnerLinkTypes(Package parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new PartnerLinkType object. This object is not member of the collection
+    * Generates new {@link PartnerLinkType} object. This object is not member of the collection
     * yet, it has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -42,7 +42,7 @@ public class PartnerLinkTypes extends XMLCollection {
    }
 
    /**
-    * Returns the PartnerLinkType object (the member of this PartnerLinkTypes collection)
+    * Returns the {@link PartnerLinkType} object (the member of this PartnerLinkTypes collection)
     * with specified Id.
     */
    public PartnerLinkType getPartnerLinkType(String Id) {

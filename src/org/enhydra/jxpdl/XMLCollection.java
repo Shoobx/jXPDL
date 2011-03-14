@@ -35,6 +35,9 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
     * Creates a new instance of element: sets <code>name</code> to name of concrete class
     * implementation of this abstract class, and <code>parent</code> and
     * <code>isRequired</code> properties to the specified ones.
+    * 
+    * @param parent Parent element
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLCollection(XMLComplexElement parent, boolean isRequired) {
       super(parent, isRequired);
@@ -45,6 +48,10 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
     * implementation of this abstract class, and <code>parent</code>,
     * <code>isRequired</code> and <code>xpdl1support</code> properties to the specified
     * ones.
+    * 
+    * @param parent Parent element.
+    * @param isRequired true if this attribute is required by XPDL schema.
+    * @param xpdl1support true if element structure should support XPDL 1 schema.
     */
    public XMLCollection(XMLComplexElement parent, boolean isRequired, boolean xpdl1support) {
       super(parent, isRequired, xpdl1support);
@@ -53,6 +60,10 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
    /**
     * Creates a new instance of element: sets <code>name</code>, <code>parent</code>
     * <code>isRequired</code> properties to specified ones.
+    * 
+    * @param parent Parent element
+    * @param name Name of this attribute.
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLCollection(XMLComplexElement parent, String name, boolean isRequired) {
       super(parent, name, isRequired);
@@ -62,6 +73,9 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
     * Creates a new instance of element: sets <code>name</code> to name of concrete class
     * implementation of this abstract class, and <code>parent</code> and
     * <code>isRequired</code> properties to the specified ones.
+    * 
+    * @param parent Parent element.
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLCollection(XMLComplexChoice parent, boolean isRequired) {
       super(parent, isRequired);
@@ -70,6 +84,10 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
    /**
     * Creates a new instance of element: sets <code>name</code>, <code>parent</code>
     * <code>isRequired</code> properties to specified ones.
+    * 
+    * @param parent Parent element
+    * @param name Name of this attribute.
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLCollection(XMLComplexChoice parent, String name, boolean isRequired) {
       super(parent, name, isRequired);
@@ -79,6 +97,9 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
     * Creates a new instance of element: sets <code>name</code> to name of concrete class
     * implementation of this abstract class, and <code>parent</code> and
     * <code>isRequired</code> properties to the specified ones.
+    * 
+    * @param parent Parent element
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLCollection(XMLCollection parent, boolean isRequired) {
       super(parent, isRequired);
@@ -87,6 +108,10 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
    /**
     * Creates a new instance of element: sets <code>name</code>, <code>parent</code>
     * <code>isRequired</code> properties to specified ones.
+    * 
+    * @param parent Parent element
+    * @param name Name of this attribute.
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLCollection(XMLCollection parent, String name, boolean isRequired) {
       super(parent, name, isRequired);
@@ -190,7 +215,11 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
       elementMap.clear();
    }
 
-   /** Adds new element. NOTE: Method signature changed to public. */
+   /**
+    * Adds new element. NOTE: Method signature changed to public.
+    * 
+    * @param el Element to add.
+    */
    public void add(XMLElement el) {
       if (isReadOnly) {
          throw new RuntimeException("Can't set the value of read only element!");
@@ -223,6 +252,9 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
 
    /**
     * Adds new element to a certain position. NOTE: Method signature changed to public.
+    * 
+    * @param no The position of element to add.
+    * @param el Element to add.
     */
    public boolean add(int no, XMLElement el) {
       if (isReadOnly) {
@@ -262,6 +294,9 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
 
    /**
     * Adds given elements to the collection.
+    * 
+    * @param els The list of elements to add.
+    * @return true if elements are added to collection.
     */
    public boolean addAll(List els) {
       if (isReadOnly) {
@@ -301,8 +336,10 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
    }
 
    /**
-    * Removes given element from the collection. Returns the elements' position within
-    * collection.
+    * Removes given element from the collection.
+    * 
+    * @param el Element to remove
+    * @return The elements' position within collection before removal.
     */
    public int remove(XMLElement el) {
       if (isReadOnly) {
@@ -317,6 +354,9 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
 
    /**
     * Removes element at given position from the collection.
+    * 
+    * @param no The position of element to remove.
+    * @return The element that has been removed.
     */
    public XMLElement remove(int no) {
       if (isReadOnly) {
@@ -330,6 +370,9 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
 
    /**
     * Removes element at given position from the collection.
+    * 
+    * @param no The position of element to remove.
+    * @return The element that has been removed.
     */
    protected XMLElement removeElement(int no) {
       XMLElement el = (XMLElement) elements.remove(no);
@@ -379,6 +422,9 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
 
    /**
     * Removes given elements from the collection.
+    * 
+    * @param els The list of elements to remove from collection.
+    * @return true if elements are removed.
     */
    public boolean removeAll(List els) {
       if (isReadOnly) {
@@ -442,6 +488,10 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
 
    /**
     * Repositions given element to new position.
+    * 
+    * @param el Element to reposition.
+    * @param newPos New position of the element.
+    * @return true if element is repositioned.
     */
    public boolean reposition(XMLElement el, int newPos) {
       if (isReadOnly) {
@@ -478,7 +528,9 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
    }
 
    /**
-    * Returns <tt>true</tt> if there are no elements within collection.
+    * Checks if there are no elements within collection.
+    * 
+    * @return true if there are no elements within collection.
     */
    public boolean isEmpty() {
       return size() == 0;
@@ -487,6 +539,9 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
    /**
     * Returns the element specified by Id attribute. Use only if this is collection of
     * XMLCollectionElements.
+    * 
+    * @param id The Id of XMLCollectionElement from this XMLCollection.
+    * @return XMLCollection element that is removed.
     */
    public XMLCollectionElement getCollectionElement(String id) {
       if (isReadOnly && cachesInitialized) {
@@ -504,7 +559,10 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
    }
 
    /**
-    * Returns true if element with given Id exists in collection.
+    * Checks if element with given Id exists in collection.
+    * 
+    * @param id The Id of element.
+    * @return true if element with given Id exists in collection
     */
    public boolean containsElement(String id) {
       return getCollectionElement(id) != null;
@@ -512,6 +570,9 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
 
    /**
     * Returns the index of element within the elements' list.
+    * 
+    * @param el The element to check.
+    * @return The index of element within the elements' list.
     */
    public int indexOf(XMLElement el) {
       return XMLUtil.indexOfXMLElementWithinList(elements, el);
@@ -549,12 +610,16 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
    /**
     * Generates the new element for concrete type of collection. Derived classes has to
     * implement this method to create it's collection element.
+    * 
+    * @return Newly created element.
     */
    public abstract XMLElement generateNewElement();
 
    /**
     * Generates the new element with XPDL 1.0 support for concrete type of collection.
     * Derived classes has to implement this method to create it's collection element.
+    * 
+    * @return Newly created element.
     */
    public XMLElement generateNewElementWithXPDL1Support() {
       return generateNewElement();
@@ -562,6 +627,9 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
 
    /**
     * Corrects repositioning and sends the change information to the listeners.
+    * 
+    * @param oldEls The ordered map of elements with their old positions (keys-original element's hash code as retrieved by calling the method getOriginalElementHashCode(), values->XMLElement instances).
+    * @param newEls The ordered map of elements with their new positions (keys-original element's hash code as retrieved by calling the method getOriginalElementHashCode(), values->XMLElement instances)
     */
    protected void checkRepositioning(SequencedHashMap oldEls, SequencedHashMap newEls) {
       // System.err.println("CHECKREPFOR "+this);

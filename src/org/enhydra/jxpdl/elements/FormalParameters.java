@@ -28,18 +28,18 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class FormalParameters extends XMLCollection {
 
-   /** Constructs a new object with the given ApplicationTypes as a parent. */
+   /** Constructs a new object with the given {@link ApplicationTypes} as a parent. */
    public FormalParameters(ApplicationTypes parent) {
       super(parent, false);
    }
 
-   /** Constructs a new object with the given WorkflowProcess as a parent. */
+   /** Constructs a new object with the given {@link WorkflowProcess} as a parent. */
    public FormalParameters(WorkflowProcess parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new Activity object. This object is not member of the collection yet, it
+    * Generates new {@link FormalParameter} object. This object is not member of the collection yet, it
     * has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -47,7 +47,7 @@ public class FormalParameters extends XMLCollection {
    }
 
    /**
-    * Returns the FormalParameter object (the member of this FormalParameter collection)
+    * Returns the {@link FormalParameter} object (the member of this FormalParameter collection)
     * with specified Id.
     */
    public FormalParameter getFormalParameter(String Id) {

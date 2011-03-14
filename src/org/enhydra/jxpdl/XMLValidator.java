@@ -28,13 +28,21 @@ import java.util.Properties;
  */
 public interface XMLValidator {
 
-   /** Initializes validator with given properties. */
+   /**
+    * Initializes validator with given properties.
+    * 
+    * @param pProps Validator settings.
+    */
    void init(Properties pProps);
 
    /**
     * Validates given XMLElement. If there is a validation error, it is added to the
     * existingErrors list. If flag fullCheck is false, the validation stops when the first
     * error is found.
+    * 
+    * @param el Element derived from {@link XMLElement}.
+    * @param existingErrors The list of {@link XMLValidationError} elements.
+    * @param fullCheck if false, validation stops when the first error is found.
     */
    void validateElement(XMLElement el, List existingErrors, boolean fullCheck);
 

@@ -28,28 +28,28 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Performers extends XMLCollection {
 
-   /** Constructs a new object with the given Activity as a parent. */
+   /** Constructs a new object with the given {@link Activity} as a parent. */
    public Performers(Activity parent) {
       super(parent, false);
    }
 
-   /** Constructs a new object with the given Lane as a parent. */
+   /** Constructs a new object with the given {@link Lane} as a parent. */
    public Performers(Lane parent) {
       super(parent, false);
    }
 
-   /** Constructs a new object with the given TaskManual as a parent. */
+   /** Constructs a new object with the given {@link TaskManual} as a parent. */
    public Performers(TaskManual parent) {
       super(parent, false);
    }
 
-   /** Constructs a new object with the given TaskUser as a parent. */
+   /** Constructs a new object with the given {@link TaskUser} as a parent. */
    public Performers(TaskUser parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new Performer object. This object is not member of the collection yet, it
+    * Generates new {@link Performer} object. This object is not member of the collection yet, it
     * has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {

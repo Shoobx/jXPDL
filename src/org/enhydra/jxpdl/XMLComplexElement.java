@@ -34,6 +34,9 @@ public abstract class XMLComplexElement extends XMLBaseForCollectionAndComplex {
     * Creates a new instance of element: sets <code>name</code> to name of concrete class
     * implementation of this abstract class, and <code>parent</code> and
     * <code>isRequired</code> properties to the specified ones.
+    * 
+    * @param parent Parent element
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLComplexElement(XMLElement parent, boolean isRequired) {
       super(parent, isRequired);
@@ -45,6 +48,10 @@ public abstract class XMLComplexElement extends XMLBaseForCollectionAndComplex {
     * implementation of this abstract class, and <code>parent</code>,
     * <code>isRequired</code> and <code>xpdl1support</code> properties to the specified
     * ones.
+    * 
+    * @param parent Parent element.
+    * @param isRequired true if this attribute is required by XPDL schema.
+    * @param xpdl1support true if element structure should support XPDL 1 schema.
     */
    public XMLComplexElement(XMLElement parent, boolean isRequired, boolean xpdl1support) {
       super(parent, isRequired, xpdl1support);
@@ -54,6 +61,10 @@ public abstract class XMLComplexElement extends XMLBaseForCollectionAndComplex {
    /**
     * Creates a new instance of element: sets <code>name</code>, <code>parent</code>
     * <code>isRequired</code> properties to specified ones.
+    * 
+    * @param parent Parent element
+    * @param name Name of this attribute.
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLComplexElement(XMLElement parent, String name, boolean isRequired) {
       super(parent, name, isRequired);
@@ -95,7 +106,10 @@ public abstract class XMLComplexElement extends XMLBaseForCollectionAndComplex {
    }
 
    /**
-    * It is empty if its value is not set, and if all elements in the structure are empty.
+    * This element is empty if its value is not set, and if all elements in the structure
+    * are empty.
+    * 
+    * @return true if element is empty.
     */
    public boolean isEmpty() {
       boolean isEmpty = true;
@@ -109,7 +123,9 @@ public abstract class XMLComplexElement extends XMLBaseForCollectionAndComplex {
    }
 
    /**
-    * Returns the collection of XML elements this element is made of.
+    * Returns the collection of XMLElement instances this element is made of.
+    * 
+    * @return The collection of XMLElement instances this element is made of.
     */
    public ArrayList getXMLElements() {
       ArrayList els = new ArrayList();
@@ -124,7 +140,9 @@ public abstract class XMLComplexElement extends XMLBaseForCollectionAndComplex {
    }
 
    /**
-    * Returns the collection of XML attributes this element is made of.
+    * Returns the collection of XMLAttribute instances this element is made of.
+    * 
+    * @return The collection of XMLAttribute instances this element is made of.
     */
    public ArrayList getXMLAttributes() {
       ArrayList attribs = new ArrayList();
@@ -140,6 +158,9 @@ public abstract class XMLComplexElement extends XMLBaseForCollectionAndComplex {
 
    /**
     * Sets the element from structure with specified name to the specified value.
+    * 
+    * @param name The name of the element within the structure.
+    * @param value The value to set for the element.
     */
    public void set(String name, String value) {
       if (isReadOnly) {
@@ -156,6 +177,9 @@ public abstract class XMLComplexElement extends XMLBaseForCollectionAndComplex {
    /**
     * Sets the element that is placed at specified location within structure to the
     * specified value.
+    * 
+    * @param no The position of element within the structure.
+    * @param value The value to set for the element.
     */
    public boolean set(int no, String value) {
       if (no < 0 || no >= size())
@@ -169,12 +193,22 @@ public abstract class XMLComplexElement extends XMLBaseForCollectionAndComplex {
       return true;
    }
 
-   /** Gets the element with specified name from stucture. */
+   /**
+    * Gets the element with specified name from structure.
+    * 
+    * @param name Name of the element.
+    * @return The element with specified name.
+    */
    public XMLElement get(String name) {
       return (XMLElement) elementMap.get(name);
    }
 
-   /** Returns true if there is an element with such element in structure. */
+   /**
+    * Returns true if there is an element with such element in structure.
+    * 
+    * @param name The name of the element.
+    * @return true if there is an element in the structure.
+    */
    public boolean containsName(String name) {
       return elementMap.containsKey(name);
    }

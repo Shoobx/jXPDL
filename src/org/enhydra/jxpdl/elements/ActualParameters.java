@@ -29,31 +29,31 @@ import org.enhydra.jxpdl.XMLElement;
 public class ActualParameters extends XMLCollection {
 
    /**
-    * Constructs a new object with the given Tool as a parent. This constructor is used
-    * only when reading XPDL 1 files.
+    * Constructs a new object with the given {@link Tool} as a parent. This constructor is
+    * used only when reading XPDL 1 files.
     */
    public ActualParameters(Tool parent) {
       super(parent, false);
    }
 
-   /** Constructs a new object with the given SubFlow as a parent. */
+   /** Constructs a new object with the given {@link SubFlow} as a parent. */
    public ActualParameters(SubFlow parent) {
       super(parent, false);
    }
 
-   /** Constructs a new object with the given TaskApplication as a parent. */
+   /** Constructs a new object with the given {@link TaskApplication} as a parent. */
    public ActualParameters(TaskApplication parent) {
       super(parent, false);
    }
 
-   /** Constructs a new object with the given PassingTypes as a parent. */
+   /** Constructs a new object with the given {@link PassingTypes} as a parent. */
    public ActualParameters(PassingTypes parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new ActualParameter object. This object is not member of the collection
-    * yet, it has to be explicitly added to the collection.
+    * Generates new {@link ActualParameter} object. This object is not member of the
+    * collection yet, it has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
       return new ActualParameter(this);

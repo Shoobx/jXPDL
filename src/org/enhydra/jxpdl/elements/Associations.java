@@ -27,13 +27,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Associations extends XMLCollection {
 
-   /** Constructs a new object with the given Package as a parent. */
+   /** Constructs a new object with the given {@link Package} as a parent. */
    public Associations(Package parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new Association object. This object is not member of the collection yet,
+    * Generates new {@link Association} object. This object is not member of the collection yet,
     * it has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -41,7 +41,7 @@ public class Associations extends XMLCollection {
    }
 
    /**
-    * Returns the Association object (the member of this Associations collection) with
+    * Returns the {@link Association} object (the member of this Associations collection) with
     * specified Id.
     */
    public Association getAssociation(String Id) {

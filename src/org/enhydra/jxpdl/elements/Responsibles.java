@@ -28,13 +28,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Responsibles extends XMLCollection {
 
-   /** Constructs a new object with the given RedefinableHeader as a parent. */
+   /** Constructs a new object with the given {@link RedefinableHeader} as a parent. */
    public Responsibles(RedefinableHeader parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new Responsible object. This object is not member of the collection yet,
+    * Generates new {@link Responsible} object. This object is not member of the collection yet,
     * it has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {

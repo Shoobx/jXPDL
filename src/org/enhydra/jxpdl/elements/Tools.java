@@ -28,13 +28,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Tools extends XMLCollection {
 
-   /** Constructs a new object with the given ImplementationTypes as a parent. */
+   /** Constructs a new object with the given {@link ImplementationTypes} as a parent. */
    public Tools(ImplementationTypes parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new Tool object. This object is not member of the collection yet, it has
+    * Generates new {@link Tool} object. This object is not member of the collection yet, it has
     * to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {

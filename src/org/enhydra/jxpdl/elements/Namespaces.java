@@ -28,13 +28,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Namespaces extends XMLCollection {
 
-   /** Constructs a new object with the given Package as a parent. */
+   /** Constructs a new object with the given {@link Package} as a parent. */
    public Namespaces(Package parent) {
       super(parent, true);
    }
 
    /**
-    * Generates new Namespace object. This object is not member of the collection yet, it
+    * Generates new {@link Namespace} object. This object is not member of the collection yet, it
     * has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {

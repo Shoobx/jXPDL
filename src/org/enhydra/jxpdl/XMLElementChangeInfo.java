@@ -42,7 +42,10 @@ public class XMLElementChangeInfo {
    /** The constant that defines the change "action" type REPOSITION. */
    public static final int REPOSITIONED = 7;
 
-   /** The map holding the action types (integer value) as keys and action name (String) as values. */
+   /**
+    * The map holding the action types (integer value) as keys and action name (String) as
+    * values.
+    */
    private static Map actionToNameMap = new HashMap();
    static {
       actionToNameMap.put(new Integer(XMLElementChangeInfo.UPDATED), "UPDATED");
@@ -66,59 +69,103 @@ public class XMLElementChangeInfo {
    /** The action type for this object */
    protected int action;
 
-   /** Returns the action type for this change. */
+   /**
+    * Returns the action type for this change.
+    * 
+    * @return The action type for this change.
+    */
    public int getAction() {
       return this.action;
    }
 
-   /** Sets the action type for this change. */
+   /**
+    * Sets the action type for this change.
+    * 
+    * @param action The action type.
+    */
    public void setAction(int action) {
       this.action = action;
    }
 
-   /** Returns the list of changed sub-elements for this change. */
+   /**
+    * Returns the list of changed sub-elements for this change.
+    * 
+    * @return The list of changed sub-elements.
+    */
    public List getChangedSubElements() {
       return new ArrayList(this.changedSubElements);
    }
 
-   /** Sets the list of changed sub-elements for this change. */
+   /**
+    * Sets the list of changed sub-elements for this change.
+    * 
+    * @param changedSubElements The list of changed sub-elements.
+    */
    public void setChangedSubElements(List changedSubElements) {
       if (changedSubElements != null) {
          this.changedSubElements = new ArrayList(changedSubElements);
       }
    }
 
-   /** Returns the new value for this change. */
+   /**
+    * Returns the new value for this change.
+    * 
+    * @return The new value.
+    */
    public Object getNewValue() {
       return this.newValue;
    }
 
-   /** Sets the new value for this change. */
+   /**
+    * Sets the new value for this change.
+    * 
+    * @param newValue The new value.
+    */
    public void setNewValue(Object newValue) {
       this.newValue = newValue;
    }
 
-   /** Returns the old value for this change. */
+   /**
+    * Returns the old value for this change.
+    * 
+    * @return The old value.
+    */
    public Object getOldValue() {
       return this.oldValue;
    }
 
-   /** Sets the old value for this change. */
+   /**
+    * Sets the old value for this change.
+    * 
+    * @param oldValue The old value.
+    */
    public void setOldValue(Object oldValue) {
       this.oldValue = oldValue;
    }
 
-   /** Returns the changed element for this change. */
+   /**
+    * Returns the changed element for this change.
+    * 
+    * @return The changed element.
+    */
    public XMLElement getChangedElement() {
       return this.changedElement;
    }
 
-   /** Sets the changed element for this change. */
+   /**
+    * Sets the changed element for this change.
+    * 
+    * @param changedElement The changed element.
+    */
    public void setChangedElement(XMLElement changedElement) {
       this.changedElement = changedElement;
    }
 
-   /** Returns the action name for this change. */
+   /**
+    * Returns the action name for this change.
+    * 
+    * @return The action name.
+    */
    public String getActionName() {
       return (String) XMLElementChangeInfo.actionToNameMap.get(new Integer(action));
    }

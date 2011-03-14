@@ -36,12 +36,14 @@ public abstract class XMLElement implements Serializable, Cloneable {
    protected transient List listeners = new ArrayList();
 
    /**
-    * Flag used to indicate whether main listner will be notified upon the changes to this element.
+    * Flag used to indicate whether main listner will be notified upon the changes to this
+    * element.
     */
    protected transient boolean notifyMainListeners = false;
 
    /**
-    * Flag used to indicate whether listners will be notified upon the changes to this element.
+    * Flag used to indicate whether listners will be notified upon the changes to this
+    * element.
     */
    protected transient boolean notifyListeners = false;
 
@@ -88,6 +90,9 @@ public abstract class XMLElement implements Serializable, Cloneable {
     * <code>isRequired</code> properties to the specified ones.
     * <p>
     * It also sets the value of this element to an empty String.
+    * 
+    * @param parent Parent element
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLElement(XMLElement parent, boolean isRequired) {
       this.parent = parent;
@@ -105,6 +110,10 @@ public abstract class XMLElement implements Serializable, Cloneable {
     * ones.
     * <p>
     * It also sets the value of this element to an empty String.
+    * 
+    * @param parent Parent element.
+    * @param isRequired true if this attribute is required by XPDL schema.
+    * @param xpdl1support true if element structure should support XPDL 1 schema.
     */
    public XMLElement(XMLElement parent, boolean isRequired, boolean xpdl1support) {
       this(parent, isRequired);
@@ -116,6 +125,10 @@ public abstract class XMLElement implements Serializable, Cloneable {
     * <code>isRequired</code> properties to specified ones.
     * <p>
     * It also sets the value of this element to an empty String.
+    * 
+    * @param parent Parent element
+    * @param name Name of this attribute.
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLElement(XMLElement parent, String name, boolean isRequired) {
       this.parent = parent;
@@ -127,6 +140,8 @@ public abstract class XMLElement implements Serializable, Cloneable {
 
    /**
     * Returns true if XPDL 1.0 support is active.
+    * 
+    * @return true if XPDL 1.0 support is active.
     */
    public boolean isXPDL1Support() {
       return xpdl1support;
@@ -141,6 +156,8 @@ public abstract class XMLElement implements Serializable, Cloneable {
 
    /**
     * Makes this element equal to the given one.
+    * 
+    * @param el The element to make equality with.
     */
    public void makeAs(XMLElement el) {
       if (!(el != null && el.getClass().equals(this.getClass()) && el.name.equals(this.name))) {
@@ -158,16 +175,18 @@ public abstract class XMLElement implements Serializable, Cloneable {
     * <p>
     * If element is read only, and one wants to change its property, the RuntimeException
     * will be thrown.
+    * 
+    * @param ro If true, element will be read-only.
     */
    public void setReadOnly(boolean ro) {
       this.isReadOnly = ro;
    }
 
    /**
-    * Returns the 'read only' status of element.
-    * <p>
     * If element is read only, and one wants to change its property, the RuntimeException
     * will be thrown.
+    * 
+    * @return The 'read only' status of element.
     */
    public boolean isReadOnly() {
       return isReadOnly;
@@ -178,6 +197,8 @@ public abstract class XMLElement implements Serializable, Cloneable {
     * element is required, its value must be defined (In the case of complex elements, all
     * the required subelements must be defined). Otherwise, the whole Package won't be
     * valid by the XPDL schema.
+    * 
+    * @return true if element is required.
     */
    public boolean isRequired() {
       return isRequired;
@@ -185,6 +206,8 @@ public abstract class XMLElement implements Serializable, Cloneable {
 
    /**
     * Indicates if element is empty.
+    * 
+    * @return true if element is empty.
     */
    public boolean isEmpty() {
       return !(value != null && value.trim().length() > 0);
@@ -195,6 +218,8 @@ public abstract class XMLElement implements Serializable, Cloneable {
     * sets the actual value of the element. If it is choice attribute, it sets the choosen
     * value. Only some complex elements (Condition, SchemaType, and ExtendedAttribute)
     * allows you to use this method, while others will throw RuntimeException.
+    * 
+    * @param v Value to set.
     */
    public void setValue(String v) {
       if (isReadOnly) {
@@ -228,6 +253,8 @@ public abstract class XMLElement implements Serializable, Cloneable {
 
    /**
     * Returns the element value.
+    * 
+    * @return The element value.
     */
    public String toValue() {
       return value;
@@ -235,12 +262,18 @@ public abstract class XMLElement implements Serializable, Cloneable {
 
    /**
     * Returns the name of element.
+    * 
+    * @return The name of element.
     */
    public String toName() {
       return name;
    }
 
-   /** Gets the parent element in DOM tree. */
+   /**
+    * Gets the parent element in Java Model tree.
+    * 
+    * @return Parent element in Java Model tree.
+    */
    public XMLElement getParent() {
       return parent;
    }
@@ -250,6 +283,8 @@ public abstract class XMLElement implements Serializable, Cloneable {
     * <p>
     * This method is used when collection, complex element or complex choice is cloned, to
     * set new parent element of the cloned sub-elements.
+    * 
+    * @param el The parent element.
     */
    public void setParent(XMLElement el) {
       this.parent = el;
@@ -257,6 +292,8 @@ public abstract class XMLElement implements Serializable, Cloneable {
 
    /**
     * Used to create exact copy of the element.
+    * 
+    * @return The exact copy of this XMLElement.
     */
    public Object clone() {
       // NOTE: DO NOT MAKE A originalHashCode as new Integer(this.hasCode())
@@ -284,11 +321,19 @@ public abstract class XMLElement implements Serializable, Cloneable {
 
    /**
     * Returns the hash code of the element as it was during its creation.
+    * 
+    * @return The hash code of the element as it was during its creation.
     */
    public Integer getOriginalElementHashCode() {
       return originalElementHashCode;
    }
 
+   /**
+    * Compares this XMLElement instance with given one. The equality depends on the type
+    * of super-class.
+    * 
+    * @return true if XMLElement instances are equal.
+    */
    public boolean equals(Object e) {
       // System.out.println("Checking eq for el "+e+" with el "+this);
       if (this == e) {
@@ -315,7 +360,9 @@ public abstract class XMLElement implements Serializable, Cloneable {
    }
 
    /**
-    * Returns the list of XMLElementChangeListener listeners for this element. 
+    * Returns the list of XMLElementChangeListener listeners for this element.
+    * 
+    * @return The list of XMLElementChangeListener listeners for this element.
     */
    public List getListeners() {
       if (listeners == null) {
@@ -325,7 +372,9 @@ public abstract class XMLElement implements Serializable, Cloneable {
    }
 
    /**
-    * Adds new listener for this element. 
+    * Adds new listener for this element.
+    * 
+    * @param listener The listener to add.
     */
    public void addListener(XMLElementChangeListener listener) {
       if (listeners == null) {
@@ -337,6 +386,9 @@ public abstract class XMLElement implements Serializable, Cloneable {
 
    /**
     * Removes the listener for this element.
+    * 
+    * @param listener The listener to remove.
+    * @return true if listenr is removed.
     */
    public boolean removeListener(XMLElementChangeListener listener) {
       if (listeners == null) {
@@ -348,6 +400,8 @@ public abstract class XMLElement implements Serializable, Cloneable {
 
    /**
     * Notifies all the listeners about the changes to this element.
+    * 
+    * @param info The change info.
     */
    protected void notifyListeners(XMLElementChangeInfo info) {
       Iterator it = getListeners().iterator();
@@ -358,7 +412,9 @@ public abstract class XMLElement implements Serializable, Cloneable {
    }
 
    /**
-    * Notifies the main listener about the chagnes to this element.
+    * Notifies the main listener about the changes to this element.
+    * 
+    * @param info The change info.
     */
    protected void notifyMainListeners(XMLElementChangeInfo info) {
       XMLElement main = getMainElement();
@@ -373,6 +429,8 @@ public abstract class XMLElement implements Serializable, Cloneable {
 
    /**
     * Gets the top-most parent element in the hierarchy.
+    * 
+    * @return The top-most parent element in the hierarchy.
     */
    protected XMLElement getMainElement() {
       XMLElement el = this;
@@ -386,28 +444,42 @@ public abstract class XMLElement implements Serializable, Cloneable {
 
    /**
     * Returns true if this is the 'main' element (element that does not have parent).
+    * 
+    * @return true if this is the 'main' element (element that does not have parent).
     */
    protected boolean isMainElement() {
       return false;
    }
 
    /**
-    * Turns on/off the notification of the main listener. 
+    * Turns on/off the notification of the main listener.
+    * 
+    * @param notify if true, notification will be turned-on
     */
    public void setNotifyMainListeners(boolean notify) {
       this.notifyMainListeners = notify;
    }
 
    /**
-    * Turns on/off the notification of listeners. 
+    * Turns on/off the notification of listeners.
+    * 
+    * @param notify if true, notification will be turned-on
     */
    public void setNotifyListeners(boolean notify) {
       this.notifyListeners = notify;
    }
 
    /**
-    * Creates the XMLElementChangeInfo object which contains the information about the changes to the element. 
-    */   
+    * Creates the XMLElementChangeInfo object which contains the information about the
+    * changes to the element.
+    * 
+    * @param oldVal Old value
+    * @param newVal New value
+    * @param changedSubElements List of changed sub-elements (used for XMLCollection
+    *           changes)
+    * @param action The change action
+    * @return The newly created XMLElementChangeInfo object.
+    */
    protected XMLElementChangeInfo createInfo(Object oldVal,
                                              Object newVal,
                                              List changedSubElements,

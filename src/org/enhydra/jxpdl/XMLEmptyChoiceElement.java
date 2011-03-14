@@ -28,6 +28,7 @@ public final class XMLEmptyChoiceElement extends XMLComplexElement {
    /**
     * Creates a new instance of element: sets <code>parent</code> property to specified
     * one.
+    * @param parent The parent element.
     */
    public XMLEmptyChoiceElement(XMLElement parent) {
       super(parent, false);

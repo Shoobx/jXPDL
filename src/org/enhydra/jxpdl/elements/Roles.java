@@ -29,7 +29,7 @@ import org.enhydra.jxpdl.XMLElement;
 public class Roles extends XMLCollection {
 
    /**
-    * Constructs a new object with the given PartnerLinkType as a parent. This collection
+    * Constructs a new object with the given {@link PartnerLinkType} as a parent. This collection
     * can contain maximum 2 elements.
     */
    public Roles(PartnerLinkType parent) {
@@ -37,7 +37,7 @@ public class Roles extends XMLCollection {
    }
 
    /**
-    * Generates new Role object. This object is not member of the collection yet, it has
+    * Generates new {@link Role} object. This object is not member of the collection yet, it has
     * to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {

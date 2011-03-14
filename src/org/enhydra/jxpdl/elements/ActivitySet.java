@@ -92,9 +92,9 @@ public class ActivitySet extends XMLCollectionElement {
    }
 
    /**
-    * Returns the "cached" list of Activity elements which are starting for this
-    * ActivitySet. It can be used if this element's mode is read-only mode, otherwise it
-    * throws RuntimeException.
+    * Returns the "cached" list of {@link Activity} elements which are starting for this
+    * {@link ActivitySet}. It can be used if this element's mode is read-only mode,
+    * otherwise it throws RuntimeException.
     */
    public ArrayList getStartingActivities() {
       if (!isReadOnly) {
@@ -104,9 +104,9 @@ public class ActivitySet extends XMLCollectionElement {
    }
 
    /**
-    * Returns the "cached" list of Activity elements which are ending for this
-    * ActivitySet. It can be used if this element's mode is read-only mode, otherwise it
-    * throws RuntimeException.
+    * Returns the "cached" list of {@link Activity} elements which are ending for this
+    * {@link ActivitySet}. It can be used if this element's mode is read-only mode,
+    * otherwise it throws RuntimeException.
     */
    public ArrayList getEndingActivities() {
       if (!isReadOnly) {
@@ -116,16 +116,16 @@ public class ActivitySet extends XMLCollectionElement {
    }
 
    /**
-    * Returns the Activity object (the member of this element's Activities collection) with
-    * specified Id.
+    * Returns the {@link Activity} object (the member of this element's Activities
+    * collection) with specified Id.
     */
    public Activity getActivity(String Id) {
       return getActivities().getActivity(Id);
    }
 
    /**
-    * Returns the Transition object (the member of this element's Transitions collection) with
-    * specified Id.
+    * Returns the {@link Transition} object (the member of this element's Transitions
+    * collection) with specified Id.
     */
    public Transition getTransition(String Id) {
       return getTransitions().getTransition(Id);

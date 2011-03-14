@@ -56,6 +56,9 @@ public class Activity extends XMLCollectionElement {
    /**
     * Constructs a new object with the given Activities as a parent. It can be specified
     * if object will have XPDL 1 support or not.
+    * 
+    * @param acts {@link Activities} instance.
+    * @param xpdl1support true if object will have XPDL 1 support.
     */
    public Activity(Activities acts, boolean xpdl1support) {
       super(acts, true, xpdl1support);
@@ -180,7 +183,12 @@ public class Activity extends XMLCollectionElement {
       nonExceptionalIncomingTransitions = new ArrayList();
    }
 
-   /** Puts the given Transition into the right "cache" list. */
+   /**
+    * Puts the given Transition into the right "cache" list.
+    * 
+    * @param t {@link Transition} instance.
+    * @param outg true if this is outgoing transition.
+    */
    protected void putTransitionInTheRightList(Transition t, boolean outg) {
       Condition condition = t.getCondition();
       String condType = condition.getType();
@@ -201,9 +209,11 @@ public class Activity extends XMLCollectionElement {
    }
 
    /**
-    * Returns the list of Transition elements which are outgoing for this activity. It can
-    * be used if this element's mode is read-only mode, otherwise it throws
-    * RuntimeException.
+    * Returns the list of {@link Transition} elements which are outgoing for this
+    * activity. It can be used if this element's mode is read-only mode, otherwise it
+    * throws RuntimeException.
+    * 
+    * @return The list of {@link Transition} elements.
     */
    public ArrayList getOutgoingTransitions() {
       if (!isReadOnly) {
@@ -213,9 +223,11 @@ public class Activity extends XMLCollectionElement {
    }
 
    /**
-    * Returns the list of Transition elements which are incoming for this activity. It can
-    * be used if this element's mode is read-only mode, otherwise it throws
-    * RuntimeException.
+    * Returns the list of {@link Transition} elements which are incoming for this
+    * activity. It can be used if this element's mode is read-only mode, otherwise it
+    * throws RuntimeException.
+    * 
+    * @return The list of {@link Transition} elements.
     */
    public ArrayList getIncomingTransitions() {
       if (!isReadOnly) {
@@ -225,9 +237,11 @@ public class Activity extends XMLCollectionElement {
    }
 
    /**
-    * Returns the list of Transition elements which are non-exceptional and outgoing for
-    * this activity. It can be used if this element's mode is read-only mode, otherwise it
-    * throws RuntimeException.
+    * Returns the list of {@link Transition} elements which are non-exceptional and
+    * outgoing for this activity. It can be used if this element's mode is read-only mode,
+    * otherwise it throws RuntimeException.
+    * 
+    * @return The list of {@link Transition} elements.
     */
    public ArrayList getNonExceptionalOutgoingTransitions() {
       if (!isReadOnly) {
@@ -237,9 +251,11 @@ public class Activity extends XMLCollectionElement {
    }
 
    /**
-    * Returns the list of Transition elements which are exceptional and outgoing for this
-    * activity. It can be used if this element's mode is read-only mode, otherwise it
-    * throws RuntimeException.
+    * Returns the list of {@link Transition} elements which are exceptional and outgoing
+    * for this activity. It can be used if this element's mode is read-only mode,
+    * otherwise it throws RuntimeException.
+    * 
+    * @return The list of {@link Transition} elements.
     */
    public ArrayList getExceptionalOutgoingTransitions() {
       if (!isReadOnly) {
@@ -249,9 +265,11 @@ public class Activity extends XMLCollectionElement {
    }
 
    /**
-    * Returns the list of Transition elements which are non-exceptional and incoming for
-    * this activity. It can be used if this element's mode is read-only mode, otherwise it
-    * throws RuntimeException.
+    * Returns the list of {@link Transition} elements which are non-exceptional and
+    * incoming for this activity. It can be used if this element's mode is read-only mode,
+    * otherwise it throws RuntimeException.
+    * 
+    * @return The list of {@link Transition} elements.
     */
    public ArrayList getNonExceptionalIncomingTransitions() {
       if (!isReadOnly) {
@@ -261,9 +279,11 @@ public class Activity extends XMLCollectionElement {
    }
 
    /**
-    * Returns the list of Transition elements which are exceptional and outgoing for this
-    * activity. It can be used if this element's mode is read-only mode, otherwise it
-    * throws RuntimeException.
+    * Returns the list of {@link Transition} elements which are exceptional and outgoing
+    * for this activity. It can be used if this element's mode is read-only mode,
+    * otherwise it throws RuntimeException.
+    * 
+    * @return The list of {@link Transition} elements.
     */
    public ArrayList getExceptionalIncomingTransitions() {
       if (!isReadOnly) {
@@ -275,6 +295,8 @@ public class Activity extends XMLCollectionElement {
    /**
     * Returns true if this Activity's Split type is Parallel, or if there is no Split at
     * all.
+    * 
+    * @return true if {@link Split} type is Parallel.
     */
    public boolean isAndTypeSplit() {
       return XMLUtil.isANDTypeSplitOrJoin(this, 0);
@@ -283,6 +305,8 @@ public class Activity extends XMLCollectionElement {
    /**
     * Returns true if this Activity's Join type is Parallel, or if there is no Join at
     * all.
+    * 
+    * @return true if {@link Join} type is Parallel.
     */
    public boolean isAndTypeJoin() {
       return XMLUtil.isANDTypeSplitOrJoin(this, 1);
@@ -291,6 +315,8 @@ public class Activity extends XMLCollectionElement {
    /**
     * Returns the number representing the start mode of the activity (1-Manual,
     * 0-Automatic or no mode defined).
+    * 
+    * @return the number representing start mode.
     */
    public int getActivityStartMode() {
       return XMLUtil.getStartMode(this);
@@ -299,6 +325,8 @@ public class Activity extends XMLCollectionElement {
    /**
     * Returns the number representing the finish mode of the activity (1-Manual,
     * 0-Automatic or no mode defined).
+    * 
+    * @return the number representing finish mode.
     */
    public int getActivityFinishMode() {
       return XMLUtil.getFinishMode(this);
@@ -307,6 +335,8 @@ public class Activity extends XMLCollectionElement {
    /**
     * Returns the number representing the activity type (see XPDLConstants class for
     * different activity type constants).
+    * 
+    * @return the number representing type of activity.
     */
    public int getActivityType() {
       XMLElement ch = getActivityTypes().getChoosen();
@@ -356,6 +386,9 @@ public class Activity extends XMLCollectionElement {
    /**
     * Returns true if this is sub-flow activity type and its execution is Synchronous. If
     * it is not a sub-flow activity, RuntimeException is thrown.
+    * 
+    * @return true if this is sub-flow activity and {@link SubFlow} execution is
+    *         Synchronous.
     */
    public boolean isSubflowSynchronous() {
       if (getActivityType() != XPDLConstants.ACTIVITY_TYPE_SUBFLOW) {
@@ -364,22 +397,36 @@ public class Activity extends XMLCollectionElement {
       return XMLUtil.isSubflowSynchronous(this);
    }
 
-   /** Returns the Name attribute value of this object. */
+   /**
+    * Returns the Name attribute value of this object.
+    * 
+    * @return The name.
+    */
    public String getName() {
       return get("Name").toValue();
    }
 
-   /** Sets the Name attribute value of this object. */
+   /**
+    * Sets the Name attribute value of this object.
+    * 
+    * @param name The name
+    */
    public void setName(String name) {
       set("Name", name);
    }
 
-   /** Returns the StartMode attribute value of this object. */
+   /**
+    * Returns the StartMode attribute value of this object.
+    * 
+    * @return The StartMode.
+    */
    public String getStartMode() {
       return get("StartMode").toValue();
    }
 
-   /** Sets the StartMode attribute value of this object to an empty string. */
+   /**
+    * Sets the StartMode attribute value of this object to an empty string.
+    */
    public void setStartModeNONE() {
       get("StartMode").setValue(XPDLConstants.ACTIVITY_MODE_NONE);
    }
@@ -394,7 +441,10 @@ public class Activity extends XMLCollectionElement {
       get("StartMode").setValue(XPDLConstants.ACTIVITY_MODE_MANUAL);
    }
 
-   /** Returns the FinishMode attribute value of this object. */
+   /** Returns the FinishMode attribute value of this object.
+    * 
+    * @return The FinishMode.
+    */
    public String getFinishMode() {
       return get("FinishMode").toValue();
    }

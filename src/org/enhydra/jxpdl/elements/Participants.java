@@ -28,18 +28,18 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Participants extends XMLCollection {
 
-   /** Constructs a new object with the given Package as a parent. */
+   /** Constructs a new object with the given {@link Package} as a parent. */
    public Participants(Package parent) {
       super(parent, false);
    }
 
-   /** Constructs a new object with the given WorkflowProcess as a parent. */
+   /** Constructs a new object with the given {@link WorkflowProcess} as a parent. */
    public Participants(WorkflowProcess parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new Participant object. This object is not member of the collection yet,
+    * Generates new {@link Participant} object. This object is not member of the collection yet,
     * it has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -47,7 +47,7 @@ public class Participants extends XMLCollection {
    }
 
    /**
-    * Returns the Participant object (the member of this Participant collection) with
+    * Returns the {@link Participant} object (the member of this Participant collection) with
     * specified Id.
     */
    public Participant getParticipant(String Id) {

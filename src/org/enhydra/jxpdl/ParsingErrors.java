@@ -1,20 +1,20 @@
 /**
-* Together XPDL Model
-* Copyright (C) 2010 Together Teamsolutions Co., Ltd. 
-* 
-* This program is free software: you can redistribute it and/or modify 
-* it under the terms of the GNU General Public License as published by 
-* the Free Software Foundation, either version 3 of the License, or 
-* (at your option) any later version. 
-*
-* This program is distributed in the hope that it will be useful, 
-* but WITHOUT ANY WARRANTY; without even the implied warranty of 
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
-* GNU General Public License for more details. 
-*
-* You should have received a copy of the GNU General Public License 
-* along with this program. If not, see http://www.gnu.org/licenses
-*/
+ * Together XPDL Model
+ * Copyright (C) 2010 Together Teamsolutions Co., Ltd. 
+ * 
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or 
+ * (at your option) any later version. 
+ *
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * GNU General Public License for more details. 
+ *
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see http://www.gnu.org/licenses
+ */
 
 package org.enhydra.jxpdl;
 
@@ -27,20 +27,30 @@ import org.xml.sax.SAXParseException;
 
 /**
  * Class that serves as an ErrorHandler for DOM parser.
- *  @author Sasa Bojanic
+ * 
+ * @author Sasa Bojanic
  */
 public class ParsingErrors implements ErrorHandler {
 
-   public static String ERROR="[Error]";
-   public static String WARNING="[Warning]";
-   public static String FATAL_ERROR="[Fatal Error]";
-   public static String AT_LINE_NO_STRING=" at line number ";
+   /** Constant representing Error notification message. */
+   public static String ERROR = "[Error]";
 
-   public ParsingErrors () {
+   /** Constant representing Warning notification message. */
+   public static String WARNING = "[Warning]";
+
+   /** Constant representing Fatal Error notification message. */
+   public static String FATAL_ERROR = "[Fatal Error]";
+
+   /** Constant representing at line number notification message. */
+   public static String AT_LINE_NO_STRING = " at line number ";
+
+   /** The list of error messages. */
+   List errorMessages = new ArrayList();
+
+   /** Creates a new object. */
+   public ParsingErrors() {
       super();
    }
-
-   List errorMessages = new ArrayList();
 
    public void warning(SAXParseException ex) {
       store(ex, WARNING);
@@ -54,6 +64,11 @@ public class ParsingErrors implements ErrorHandler {
       store(ex, FATAL_ERROR);
    }
 
+   /**
+    * Returns a list of error messages.
+    * 
+    * @return A list of error messages.
+    */
    public List getErrorMessages() {
       return errorMessages;
    }
@@ -64,8 +79,9 @@ public class ParsingErrors implements ErrorHandler {
 
    void store(SAXParseException ex, String type) {
       // build error text
-      String errorString= type+AT_LINE_NO_STRING+ex.getLineNumber()
-         +": "+ex.getMessage()+"\n";
+      String errorString = type
+                           + AT_LINE_NO_STRING + ex.getLineNumber() + ": "
+                           + ex.getMessage() + "\n";
       errorMessages.add(errorString);
    }
 }

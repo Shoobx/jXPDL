@@ -28,35 +28,50 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Activities extends XMLCollection {
 
-   /** Constructs a new object with the given WorkflowProcess as a parent. */
+   /**
+    * Constructs a new object with the given {@link WorkflowProcess} as a parent.
+    * 
+    * @param parent {@link WorkflowProcess} instance.
+    */
    public Activities(WorkflowProcess parent) {
       super(parent, false);
    }
 
-   /** Constructs a new object with the given ActivitySet as a parent. */
+   /**
+    * Constructs a new object with the given {@link ActivitySet} as a parent.
+    * 
+    * @param parent {@link ActivitySet} instance.
+    */
    public Activities(ActivitySet parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new Activity object. This object is not member of the collection yet, it
-    * has to be explicitly added to the collection.
+    * Generates new {@link Activity} object. This object is not member of the collection
+    * yet, it has to be explicitly added to the collection.
+    * 
+    * @return {@link Activity} instance.
     */
    public XMLElement generateNewElement() {
       return new Activity(this, false);
    }
 
    /**
-    * Generates new Activity object with XPDL 1 support. This object is not member of the
-    * collection yet, it has to be explicitly added to the collection.
+    * Generates new {@link Activity} object with XPDL 1 support. This object is not member
+    * of the collection yet, it has to be explicitly added to the collection.
+    * 
+    * @return {@link Activity} instance.
     */
    public XMLElement generateNewElementWithXPDL1Support() {
       return new Activity(this, true);
    }
 
    /**
-    * Returns the Activity object (the member of this Activities collection) with
+    * Returns the {@link Activity} object (the member of this Activities collection) with
     * specified Id.
+    * 
+    * @param Id Id of {@link Activity} to get.
+    * @return {@link Activity} instance.
     */
    public Activity getActivity(String Id) {
       return (Activity) super.getCollectionElement(Id);

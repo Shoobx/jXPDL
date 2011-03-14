@@ -28,13 +28,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class ActivitySets extends XMLCollection {
 
-   /** Constructs a new object with the given WorkflowProcess as a parent. */
+   /** Constructs a new object with the given {@link WorkflowProcess} as a parent. */
    public ActivitySets(WorkflowProcess parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new ActivitySet object. This object is not member of the collection yet,
+    * Generates new {@link ActivitySet} object. This object is not member of the collection yet,
     * it has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -42,7 +42,7 @@ public class ActivitySets extends XMLCollection {
    }
 
    /**
-    * Returns the ActivitySet object (the member of this ActivitySets collection) with
+    * Returns the {@link ActivitySet} object (the member of this ActivitySets collection) with
     * specified Id.
     */
    public ActivitySet getActivitySet(String Id) {

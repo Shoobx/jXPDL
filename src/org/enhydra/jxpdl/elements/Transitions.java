@@ -28,18 +28,18 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Transitions extends XMLCollection {
 
-   /** Constructs a new object with the given WorkflowProcess as a parent. */
+   /** Constructs a new object with the given {@link WorkflowProcess} as a parent. */
    public Transitions (WorkflowProcess parent) {
       super(parent, false);
    }
 
-   /** Constructs a new object with the given ActivitySet as a parent. */
+   /** Constructs a new object with the given {@link ActivitySet} as a parent. */
    public Transitions (ActivitySet parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new Transition object. This object is not member of the collection yet, it
+    * Generates new {@link Transition} object. This object is not member of the collection yet, it
     * has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -47,7 +47,7 @@ public class Transitions extends XMLCollection {
    }
 
    /**
-    * Returns the Transition object (the member of this Transitions collection) with
+    * Returns the {@link Transition} object (the member of this Transitions collection) with
     * specified Id.
     */
    public Transition getTransition (String Id) {

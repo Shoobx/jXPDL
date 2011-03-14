@@ -48,7 +48,7 @@ public class ExtendedAttributes extends XMLCollection {
     */
    protected String extAttribsString;
 
-   /** Constructs a new object with the given XMLComplexElement as a parent. */
+   /** Constructs a new object with the given {@link XMLComplexElement} as a parent. */
    public ExtendedAttributes(XMLComplexElement parent) {
       super(parent, false);
    }
@@ -59,7 +59,7 @@ public class ExtendedAttributes extends XMLCollection {
    }
 
    /**
-    * Generates new ExtendedAttribute object. This object is not member of the collection
+    * Generates new {@link ExtendedAttribute} object. This object is not member of the collection
     * yet, it has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -67,7 +67,7 @@ public class ExtendedAttributes extends XMLCollection {
    }
 
    /**
-    * Returns the first ExtendedAttribute from this collection that has the given name, or
+    * Returns the first {@link ExtendedAttribute} from this collection that has the given name, or
     * null if there is no one.
     */
    public ExtendedAttribute getFirstExtendedAttributeForName(String name) {

@@ -27,13 +27,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class DODataFields extends XMLCollection {
 
-   /** Constructs a new object with the given DataObject as a parent. */
+   /** Constructs a new object with the given {@link DataObject} as a parent. */
    public DODataFields (DataObject parent) {
       super(parent, "DataFields", false);
    }
 
    /**
-    * Generates new DODataField object. This object is not member of the collection yet, it
+    * Generates new {@link DODataField} object. This object is not member of the collection yet, it
     * has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -41,7 +41,7 @@ public class DODataFields extends XMLCollection {
    }
 
    /**
-    * Returns the DODataField object (the member of this DODataFields collection) with
+    * Returns the {@link DODataField} object (the member of this DODataFields collection) with
     * specified Id.
     */
    public DODataField getDODataField (String Id) {

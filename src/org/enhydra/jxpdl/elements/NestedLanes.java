@@ -30,13 +30,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class NestedLanes extends XMLCollection {
 
-   /** Constructs a new object with the given Lane as a parent. */
+   /** Constructs a new object with the given {@link Lane} as a parent. */
    public NestedLanes(Lane parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new NestedLane object. This object is not member of the collection yet, it
+    * Generates new {@link NestedLane} object. This object is not member of the collection yet, it
     * has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -44,7 +44,7 @@ public class NestedLanes extends XMLCollection {
    }
 
    /**
-    * Returns the NestedLane object (the member of this NestedLanes collection) with
+    * Returns the {@link NestedLane} object (the member of this NestedLanes collection) with
     * specified Id.
     */
    public NestedLane getNestedLane(String Id) {

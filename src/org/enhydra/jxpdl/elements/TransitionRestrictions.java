@@ -28,13 +28,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class TransitionRestrictions extends XMLCollection {
 
-   /** Constructs a new object with the given Activity as a parent. */
+   /** Constructs a new object with the given {@link Activity} as a parent. */
    public TransitionRestrictions (Activity act) {
       super(act, false);
    }
 
    /**
-    * Generates new TransitionRestriction object. This object is not member of the collection yet, it
+    * Generates new {@link TransitionRestriction} object. This object is not member of the collection yet, it
     * has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {

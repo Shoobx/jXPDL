@@ -24,7 +24,7 @@ import java.util.Vector;
  * This class can be used to check if the graph is cyclic, or to find index of
  * corresponding join node for the given split node index. When constructing class, you
  * have to pass it the incidence matrix, which has to be the two-dimensional array of
- * booleans , where the rows and column indexes represents the graph node indexes, and
+ * booleans, where the rows and column indexes represents the graph node indexes, and
  * values represents if there is a connection between these nodes. If there is connection
  * from node <b>i</b> to the node <b>j</b> it is represented by putting <b>true</true>
  * into j'th column of the i'th row.
@@ -32,16 +32,22 @@ import java.util.Vector;
  * @author Predrag Djojic
  */
 public class GraphChecker {
-   /** Incidence matrix. */
+   /** The two dimensional array of booleans representing the graphs incidence matrix. */
    private boolean[][] mat;
 
-   /** Temporary incidence matrix. */
+   /** The original incidence matrix at a time of creation of this object instance. */
    private boolean[][] tempMat;
 
-   /** Dimension of the matrix. */
+   /** Dimension of the incidence matrix. */
    private int dim = 0;
 
-   /** Returns true if source node is linked to the destination node. */
+   /**
+    * Returns true if source node is linked to the destination node.
+    * 
+    * @param srcNode Source node.
+    * @param dstNode Destination node.
+    * @return true if source node is linked to the destination node.
+    */
    private boolean isLinked(int srcNode, int dstNode) {
       return mat[srcNode][dstNode];
    }
@@ -50,41 +56,76 @@ public class GraphChecker {
    // mat[srcNode][dstNode]=true;
    // }
 
-   /** Unlinks source and destination node. */
+   /**
+    * Unlinks source and destination node.
+    * 
+    * @param srcNode Source node.
+    * @param dstNode Destination node.
+    */
    private void unlink(int srcNode, int dstNode) {
       mat[srcNode][dstNode] = false;
    }
 
-   /** Unlinks the parents of the node at given position. */
+   /**
+    * Unlinks the parents of the node at given position.
+    * 
+    * @param node Node which will be unlinked from its parents.
+    */
    private void unlinkParents(int node) {
       for (int i = 0; i < dim; i++) {
          unlink(i, node);
       }
    }
 
-   /** Unlinks the children of the node at given position. */
+   /**
+    * Unlinks the children of the node at given position.
+    * 
+    * @param node Node which will be unlinked from its parents.
+    */
    private void unlinkChildren(int node) {
       for (int i = 0; i < dim; i++) {
          unlink(node, i);
       }
    }
 
-   /** Returns the value of the node at given position. */
+   /**
+    * Returns the Integer value of the node.
+    * 
+    * @param index Index.
+    * @return The Integer value of the node.
+    */
    private Integer node(int index) {
       return new Integer(index);
    }
 
-   /** Returns the value of the node. */
+   /**
+    * Returns the int value of the node.
+    * 
+    * @param node Node
+    * @return The int value of the node.
+    */
    private int index(Integer node) {
       return node.intValue();
    }
 
-   /** Returns the value of the node with a given value. */
+   /**
+    * Returns the value of the node with a given position.
+    * 
+    * @param nodeSet The vecotr of nodes.
+    * @param pos Position of a node to check.
+    * @return The int value of the node.
+    */
    private int indexAt(Vector nodeSet, int pos) {
       return index((Integer) nodeSet.elementAt(pos));
    }
 
-   /** Returns true if node at given position is contained within given set. */
+   /**
+    * Returns true if node at given position is contained within given set.
+    * 
+    * @param nodeSet The vector of nodes.
+    * @param nodeIndex Index of a node to check.
+    * @return true if node at given position is contained within given set.
+    */
    private boolean isInSet(Vector nodeSet, int nodeIndex) {
       for (int i = 0; i < nodeSet.size(); i++) {
          if (nodeIndex == indexAt(nodeSet, i)) {
@@ -94,7 +135,9 @@ public class GraphChecker {
       return false;
    }
 
-   /** Returns true if graph is empty. */
+   /**
+    * Returns true if graph is empty.
+    */
    private boolean isGraphEmpty() {
       boolean link = false;
       for (int i = 0; i < dim; i++) {
@@ -116,7 +159,12 @@ public class GraphChecker {
    //
    // }
 
-   /** Returns true if node at given position is split node. */
+   /**
+    * Returns true if node at given position is split node.
+    * 
+    * @param node Node
+    * @return true if node at given position is split node.
+    */
    private boolean isSplit(int node) {
       int childCount = 0;
       for (int i = 0; i < dim; i++) {
@@ -127,12 +175,22 @@ public class GraphChecker {
       return (childCount > 1);
    }
 
-   /** Returns true if node at given position is isolated. */
+   /**
+    * Returns true if node at given position is isolated.
+    * 
+    * @param node Node
+    * @return true if node at given position is isolated.
+    */
    private boolean isIsolated(int node) {
       return (!hasChild(node)) || (!hasParent(node));
    }
 
-   /** Returns true if node at given position has child. */
+   /**
+    * Returns true if node at given position has child.
+    * 
+    * @param node Node
+    * @return true if node at given position has child.
+    */
    private boolean hasChild(int node) {
       boolean child = false;
       for (int i = 0; i < dim; i++) {
@@ -141,7 +199,12 @@ public class GraphChecker {
       return child;
    }
 
-   /** Returns true if node at given position has parent. */
+   /**
+    * Returns true if node at given position has parent.
+    * 
+    * @param node Node
+    * @return true if node at given position has parent.
+    */
    private boolean hasParent(int node) {
       boolean parent = false;
       for (int i = 0; i < dim; i++) {
@@ -165,7 +228,6 @@ public class GraphChecker {
             mat[x][y] = tempMat[x][y];
          }
       }
-
    }
 
    /** Undoes the changes by filling with the original one. */

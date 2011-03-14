@@ -56,6 +56,8 @@ public abstract class XMLBaseForCollectionAndComplex extends XMLElement {
     * Creates a new instance of element: sets <code>name</code> to name of concrete class
     * implementation of this abstract class, and <code>parent</code> and
     * <code>isRequired</code> properties to the specified ones.
+    * @param parent Parent element
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLBaseForCollectionAndComplex(XMLElement parent, boolean isRequired) {
       super(parent, isRequired);
@@ -68,6 +70,9 @@ public abstract class XMLBaseForCollectionAndComplex extends XMLElement {
     * implementation of this abstract class, and <code>parent</code>,
     * <code>isRequired</code> and <code>xpdl1support</code> properties to the specified
     * ones.
+    * @param parent Parent element.
+    * @param isRequired true if this attribute is required by XPDL schema.
+    * @param xpdl1support true if element structure should support XPDL 1 schema.
     */
    public XMLBaseForCollectionAndComplex(XMLElement parent,
                                          boolean isRequired,
@@ -80,6 +85,9 @@ public abstract class XMLBaseForCollectionAndComplex extends XMLElement {
    /**
     * Creates a new instance of element: sets <code>name</code>, <code>parent</code>
     * <code>isRequired</code> properties to specified ones.
+    * @param parent Parent element
+    * @param name Name of this attribute.
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLBaseForCollectionAndComplex(XMLElement parent,
                                          String name,
@@ -110,6 +118,7 @@ public abstract class XMLBaseForCollectionAndComplex extends XMLElement {
 
    /**
     * Sets this element, and all contained elements to be read only or not.
+    * @param ro if true the element and all sub-elements will be read-only.
     */
    public void setReadOnly(boolean ro) {
       super.setReadOnly(ro);
@@ -125,6 +134,7 @@ public abstract class XMLBaseForCollectionAndComplex extends XMLElement {
 
    /**
     * Notifies main listeners of this element, and all contained elements.
+    * @param notify if true the main listener will be notified on any change to this element or its sub-elements.
     */
    public void setNotifyMainListeners(boolean notify) {
       super.setNotifyMainListeners(notify);
@@ -137,6 +147,7 @@ public abstract class XMLBaseForCollectionAndComplex extends XMLElement {
 
    /**
     * Notifies listeners of this element, and all contained elements.
+    * @param notify if true the listeners will be notified on any change to this element or its sub-elements.
     */
    public void setNotifyListeners(boolean notify) {
       super.setNotifyListeners(notify);
@@ -151,7 +162,7 @@ public abstract class XMLBaseForCollectionAndComplex extends XMLElement {
     * Initializes caches in read-only mode. If mode is not read-only, throws
     * RuntimeException.
     * 
-    * @param xmli TODO
+    * @param xmli The instance of XMLInterface class.
     */
    public void initCaches(XMLInterface xmli) {
       if (!isReadOnly) {
@@ -187,18 +198,34 @@ public abstract class XMLBaseForCollectionAndComplex extends XMLElement {
       cachesInitialized = false;
    }
 
-   /** Adds new element. */
+   /** Adds new element.
+    * 
+    * @param el Element to add.
+    */
    protected abstract void add(XMLElement el);
 
-   /** Adds new element to a certain position */
+   /** Adds new element to a certain position
+    * 
+    * @param no The position of element to add.
+    * @param el Element to add.
+    * @return true if element is added to the structure/collection.
+    */
    protected abstract boolean add(int no, XMLElement el);
 
-   /** Returns true if there is such element in collection. */
+   /** Returns true if there is such element in collection.
+    * 
+    * @param el Element to check.
+    * @return true if element is contained within collection.
+    */
    public boolean contains(XMLElement el) {
       return elements.contains(el);
    }
 
-   /** Gets the element from specified location. */
+   /** Gets the element from specified location.
+    * 
+    * @param no The element location.
+    * @return The element at specified location.
+    */
    public XMLElement get(int no) {
       if (no < 0 || no >= size())
          throw new RuntimeException("There is no element at position " + no + "!");
@@ -206,17 +233,26 @@ public abstract class XMLBaseForCollectionAndComplex extends XMLElement {
       return (XMLElement) elements.get(no);
    }
 
-   /** Returns the number of elements. */
+   /** Returns the number of elements within collection.
+    * 
+    * @return The number of elements within collection.
+    */
    public int size() {
       return elements.size();
    }
 
-   /** Returns the copy of the list all elements within collection. */
+   /** Returns the copy of the list all elements within collection.
+    * 
+    * @return The copy of the list all elements within collection.
+    */
    public ArrayList toElements() {
       return new ArrayList(elements);
    }
 
-   /** Returns the copy of the map of all elements within collection. */
+   /** Returns the copy of the map of all elements within collection.
+    * 
+    * @return The copy of the map of all elements within collection.
+    */
    public SequencedHashMap toElementMap() {
       return new SequencedHashMap(elementMap);
    }

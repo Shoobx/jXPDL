@@ -28,13 +28,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class TypeDeclarations extends XMLCollection {
 
-   /** Constructs a new object with the given Package as a parent. */
+   /** Constructs a new object with the given {@link Package} as a parent. */
    public TypeDeclarations(Package p) {
       super(p, false);
    }
 
    /**
-    * Generates new TypeDeclaration object. This object is not member of the collection
+    * Generates new {@link TypeDeclaration} object. This object is not member of the collection
     * yet, it has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -42,7 +42,7 @@ public class TypeDeclarations extends XMLCollection {
    }
 
    /**
-    * Returns the TypeDeclaration object (the member of this TypeDeclarations collection)
+    * Returns the {@link TypeDeclaration} object (the member of this TypeDeclarations collection)
     * with specified Id.
     */
    public TypeDeclaration getTypeDeclaration(String Id) {

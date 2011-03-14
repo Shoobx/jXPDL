@@ -28,13 +28,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Pools extends XMLCollection {
 
-   /** Constructs a new object with the given Package as a parent. */
+   /** Constructs a new object with the given {@link Package} as a parent. */
    public Pools(Package parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new Pool object. This object is not member of the collection yet, it has
+    * Generates new {@link Pool} object. This object is not member of the collection yet, it has
     * to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -42,7 +42,7 @@ public class Pools extends XMLCollection {
    }
 
    /**
-    * Returns the Pool object (the member of this Pools collection) with specified Id.
+    * Returns the {@link Pool} object (the member of this Pools collection) with specified Id.
     */
    public Pool getPool(String Id) {
       return (Pool) super.getCollectionElement(Id);

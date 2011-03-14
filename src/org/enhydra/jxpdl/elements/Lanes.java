@@ -28,13 +28,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Lanes extends XMLCollection {
 
-   /** Constructs a new object with the given Pool as a parent. */
+   /** Constructs a new object with the given {@link Pool} as a parent. */
    public Lanes(Pool parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new Lane object. This object is not member of the collection yet, it has
+    * Generates new {@link Lane} object. This object is not member of the collection yet, it has
     * to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -42,7 +42,7 @@ public class Lanes extends XMLCollection {
    }
 
    /**
-    * Returns the Lane object (the member of this Lanes collection) with specified Id.
+    * Returns the {@link Lane} object (the member of this Lanes collection) with specified Id.
     */
    public Lane getLane(String Id) {
       return (Lane) super.getCollectionElement(Id);

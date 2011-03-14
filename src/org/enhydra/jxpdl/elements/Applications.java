@@ -28,18 +28,18 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class Applications extends XMLCollection {
 
-   /** Constructs a new object with the given Package as a parent. */
+   /** Constructs a new object with the given {@link Package} as a parent. */
    public Applications(Package parent) {
       super(parent, false);
    }
 
-   /** Constructs a new object with the given WorkflowProcess as a parent. */
+   /** Constructs a new object with the given {@link WorkflowProcess} as a parent. */
    public Applications(WorkflowProcess parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new Application object. This object is not member of the collection yet,
+    * Generates new {@link Application} object. This object is not member of the collection yet,
     * it has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -47,7 +47,7 @@ public class Applications extends XMLCollection {
    }
 
    /**
-    * Returns the Application object (the member of this Applications collection) with
+    * Returns the {@link Application} object (the member of this Applications collection) with
     * specified Id.
     */
    public Application getApplication(String Id) {

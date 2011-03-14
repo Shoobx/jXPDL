@@ -34,6 +34,8 @@ public class ShowLicense {
     * provided String arguments is equal to '-showlicense', the class prints TXM license
     * (the license text file has to be in the classpath), otherwise it prints TXM GNU
     * Disclaimer.
+    * @param args String array with arguments. The only relevant argument is currently -showlicense.
+    * @return false if GNU disclaimer was printed
     */
    public static boolean showLicense(String[] args) {
       String gnuDisclaimer = "\n";

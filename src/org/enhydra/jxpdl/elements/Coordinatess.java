@@ -22,19 +22,19 @@ import org.enhydra.jxpdl.XMLCollection;
 import org.enhydra.jxpdl.XMLElement;
 
 /**
- *  Helper class for storing all the Coordinates elements.
+ *  Helper class for storing all the {@link Coordinates} elements.
  *
  *  @author Sasa Bojanic
  */
 public class Coordinatess extends XMLCollection {
 
-   /** Constructs a new object with the given ConnectorGraphicsInfo as a parent. */
+   /** Constructs a new object with the given {@link ConnectorGraphicsInfo} as a parent. */
 	public Coordinatess(ConnectorGraphicsInfo parent) {
 		super(parent, false);
 	}
 
    /**
-    * Generates new Coordinate object. This object is not member of the collection yet,
+    * Generates new {@link Coordinates} object. This object is not member of the collection yet,
     * it has to be explicitly added to the collection.
     */
 	public XMLElement generateNewElement() {

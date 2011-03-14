@@ -29,13 +29,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class NodeGraphicsInfos extends XMLCollection {
 
-   /** Constructs a new object with the given XMLComplexObject as a parent. */
+   /** Constructs a new object with the given {@link XMLComplexElement} as a parent. */
    public NodeGraphicsInfos(XMLComplexElement parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new NodeGraphicsInfos object. This object is not member of the collection
+    * Generates new {@link NodeGraphicsInfos} object. This object is not member of the collection
     * yet, it has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {

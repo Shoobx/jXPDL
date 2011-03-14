@@ -40,12 +40,21 @@ public abstract class XMLComplexChoice extends XMLElement {
    /**
     * Creates a new instance of element: sets <code>name</code>, <code>parent</code>
     * <code>isRequired</code> properties to specified ones.
+    * 
+    * @param parent Parent element
+    * @param name Name of this attribute.
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLComplexChoice(XMLComplexElement parent, String name, boolean isRequired) {
       super(parent, name, isRequired);
       fillChoices();
    }
 
+   /**
+    * This implementation does nothing.
+    * 
+    * @param v The value to set.
+    */
    public void setValue(String v) {
       // throw new RuntimeException("Can't set value for this type of element!");
    }
@@ -82,6 +91,8 @@ public abstract class XMLComplexChoice extends XMLElement {
    /**
     * Overrides super-method to set this element and all of its choice elements read only
     * value to the one specified.
+    * 
+    * @param ro true if element will be read-only.
     */
    public void setReadOnly(boolean ro) {
       super.setReadOnly(ro);
@@ -107,6 +118,8 @@ public abstract class XMLComplexChoice extends XMLElement {
    /**
     * Initializes caches in read-only mode. If mode is not read-only, throws
     * RuntimeException.
+    * 
+    * @param xmli XMLInterface instance.
     */
    public void initCaches(XMLInterface xmli) {
       if (!isReadOnly) {
@@ -138,7 +151,11 @@ public abstract class XMLComplexChoice extends XMLElement {
       cachesInitialized = false;
    }
 
-   /** Returns true if there is no chosen element. */
+   /**
+    * Checks if there is no chosen element.
+    * 
+    * @return true if there is no chosen element.
+    */
    public boolean isEmpty() {
       return (choosen instanceof XMLEmptyChoiceElement);
    }
@@ -146,18 +163,26 @@ public abstract class XMLComplexChoice extends XMLElement {
    /**
     * The possible choices - instances of XMLElement class.
     * 
-    * @return the possible choices for this element.
+    * @return The possible choices for this element.
     */
    public ArrayList getChoices() {
       return choices;
    }
 
-   /** Returns the chosen XMLElement. */
+   /**
+    * Returns the chosen XMLElement.
+    * 
+    * @return The chosen XMLElement.
+    */
    public XMLElement getChoosen() {
       return choosen;
    }
 
-   /** Sets the chosen XMLElement. */
+   /**
+    * Sets the chosen XMLElement.
+    * 
+    * @param ch Element to set.
+    */
    public void setChoosen(XMLElement ch) {
       if (isReadOnly) {
          throw new RuntimeException("Can't set the value of read only element!");

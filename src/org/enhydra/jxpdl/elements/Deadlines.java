@@ -22,14 +22,14 @@ import org.enhydra.jxpdl.XMLCollection;
 import org.enhydra.jxpdl.XMLElement;
 
 /**
- * Helper class for storing all the Deadline elements.
+ * Helper class for storing all the {@link Deadline} elements.
  * 
  * @author Sasa Bojanic
  */
 public class Deadlines extends XMLCollection {
 
    /**
-    * Constructs a new object with the given Activity as a parent. It can be specified if
+    * Constructs a new object with the given {@link Activity} as a parent. It can be specified if
     * object will have XPDL 1 support or not.
     */
    public Deadlines(Activity parent, boolean xpdl1support) {
@@ -37,7 +37,7 @@ public class Deadlines extends XMLCollection {
    }
 
    /**
-    * Generates new Deadline object. This object is not member of the collection yet, it
+    * Generates new {@link Deadline} object. This object is not member of the collection yet, it
     * has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -45,7 +45,7 @@ public class Deadlines extends XMLCollection {
    }
 
    /**
-    * Generates new Deadline object with XPDL 1 support. This object is not member of the
+    * Generates new {@link Deadline} object with XPDL 1 support. This object is not member of the
     * collection yet, it has to be explicitly added to the collection.
     */
    public XMLElement generateNewElementWithXPDL1Support() {

@@ -332,6 +332,9 @@ public class XMLInterfaceImpl implements XMLInterface {
     * of external package, i.e. if external package reference is
     * ../tests/maintest/testPackage.xpdl, it is assumed that external package's Id is
     * testPackage.
+    * @param pkgContents The list of the byte[] representation's of Package element.
+    * @param isFileStream true if stream represents the XML file content.
+    * @return The Package element.
     */
    public Package openPackagesFromStreams(List pkgContents, boolean isFileStream)
       throws Exception {
@@ -351,6 +354,9 @@ public class XMLInterfaceImpl implements XMLInterface {
     * as Id of external package, i.e. if external package reference is
     * ../tests/maintest/testPackage.xpdl, it is assumed that external package's Id is
     * testPackage.
+    * @param pkgContent The stream content of the Package.
+    * @param isFileStream true if stream represents the XML file content.
+    * @return The Package element.
     */
    public Package openPackageFromStream(byte[] pkgContent, boolean isFileStream)
       throws Exception {
@@ -574,6 +580,8 @@ public class XMLInterfaceImpl implements XMLInterface {
    /**
     * Returns the instance of XPDLRepositoryHandler used to fill the package object from
     * XML Document.
+    * @return the instance of XPDLRepositoryHandler used to fill the package object from
+    * XML Document.
     */
    public XPDLRepositoryHandler getXPDLRepositoryHandler() {
       if (xpdlRep == null) {
@@ -586,6 +594,7 @@ public class XMLInterfaceImpl implements XMLInterface {
    /**
     * Sets the instance of XPDLRepositoryHandler used to fill the package object from XML
     * Document.
+    * @param newXPDLRep The instance of XPDLRepositoryHandler.
     */
    public void setXPDLRepositoryHandler(XPDLRepositoryHandler newXPDLRep) {
       xpdlRep = newXPDLRep;

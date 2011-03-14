@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
  */
 public class Version {
 
+   /** Holds version information. */
    private static long version = 1138194850828L;
 
    static {
@@ -45,6 +46,8 @@ public class Version {
    /**
     * Returns the current version number which is the timestamp information about the last
     * change to XPDL model.
+    * 
+    * @return the current version number.
     */
    public static long getVersion() {
       return version;

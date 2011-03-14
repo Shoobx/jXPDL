@@ -28,13 +28,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class TransitionRefs extends XMLCollection {
 
-   /** Constructs a new object with the given Split as a parent. */
+   /** Constructs a new object with the given {@link Split} as a parent. */
    public TransitionRefs(Split parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new TransitionRef object. This object is not member of the collection yet,
+    * Generates new {@link TransitionRef} object. This object is not member of the collection yet,
     * it has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -42,7 +42,7 @@ public class TransitionRefs extends XMLCollection {
    }
 
    /**
-    * Returns the TransitionRef object (the member of this TransitionRefs collection) with
+    * Returns the {@link TransitionRef} object (the member of this TransitionRefs collection) with
     * specified Id.
     */
    public TransitionRef getTransitionRef(String Id) {

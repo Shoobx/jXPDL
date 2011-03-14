@@ -28,13 +28,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class WorkflowProcesses extends XMLCollection {
 
-   /** Constructs a new object with the given Package as a parent. */
+   /** Constructs a new object with the given {@link Package} as a parent. */
    public WorkflowProcesses(Package parent) {
       super(parent, false);
    }
 
    /**
-    * Generates new WorkflowProcess object. This object is not member of the collection
+    * Generates new {@link WorkflowProcess} object. This object is not member of the collection
     * yet, it has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {
@@ -42,7 +42,7 @@ public class WorkflowProcesses extends XMLCollection {
    }
 
    /**
-    * Returns the WorkflowProcess object (the member of this WorkflowProcesses collection)
+    * Returns the {@link WorkflowProcess} object (the member of this WorkflowProcesses collection)
     * with specified Id.
     */
    public WorkflowProcess getWorkflowProcess(String Id) {

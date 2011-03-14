@@ -58,7 +58,14 @@ public final class XMLValidationError {
    /** XMLElement that this error object is related to. */
    private XMLElement element;
 
-   /** Constructs new object by passing all the attributes. */
+   /** Constructs new object by passing all the attributes.
+    * 
+    * @param type The type.
+    * @param subType The sub-type.
+    * @param id The Id.
+    * @param desc The description.
+    * @param el The element derived from {@link XMLElement}.
+    */
    public XMLValidationError(String type,
                              String subType,
                              String id,
@@ -71,27 +78,42 @@ public final class XMLValidationError {
       this.element = el;
    }
 
-   /** Returns the type of error for this object. */
+   /** Returns the type of error for this object.
+    * 
+    * @return the type of error for this object.
+    */
    public String getType() {
       return type;
    }
 
-   /** Returns the sub-type of error for this object. */
+   /** Returns the sub-type of error for this object.
+    * 
+    * @return the sub-type of error for this object.
+    */
    public String getSubType() {
       return sub_type;
    }
 
-   /** Returns the Id of error for this object. */
+   /** Returns the Id of error for this object.
+    * 
+    * @return the Id of error for this object.
+    */
    public String getId() {
       return id;
    }
 
-   /** Returns the Description of error for this object. */
+   /** Returns the Description of error for this object.
+    * 
+    * @return the Description of error for this object.
+    */
    public String getDescription() {
       return description;
    }
 
-   /** Returns the XMLElement this error object is related to. */
+   /** Returns the XMLElement this error object is related to.
+    * 
+    * @return the XMLElement this error object is related to.
+    */
    public XMLElement getElement() {
       return element;
    }

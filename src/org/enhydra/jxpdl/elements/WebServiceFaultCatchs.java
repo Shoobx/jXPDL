@@ -29,13 +29,13 @@ import org.enhydra.jxpdl.XMLElement;
  */
 public class WebServiceFaultCatchs extends XMLCollection {
 
-   /** Constructs a new object with the given element as a parent. */
+   /** Constructs a new object with the {@link XMLComplexElement} given element as a parent. */
    public WebServiceFaultCatchs (XMLComplexElement ce) {
       super(ce, false);
    }
 
    /**
-    * Generates new WebServiceFaultCache object. This object is not member of the collection yet, it
+    * Generates new {@link WebServiceFaultCatch} object. This object is not member of the collection yet, it
     * has to be explicitly added to the collection.
     */
    public XMLElement generateNewElement() {

@@ -31,6 +31,8 @@ public abstract class XMLSimpleElement extends XMLElement {
     * <code>isRequired</code> properties to the specified ones.
     * <p>
     * It also sets the value of this element to an empty String.
+    * @param parent Parent element
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLSimpleElement (XMLElement parent, boolean isRequired) {
       super(parent, isRequired);
@@ -41,6 +43,9 @@ public abstract class XMLSimpleElement extends XMLElement {
     * <code>isRequired</code> properties to specified ones.
     * <p>
     * It also sets the value of this element to an empty String.
+    * @param parent Parent element
+    * @param name Name of this attribute.
+    * @param isRequired true if this attribute is required by XPDL schema.
     */
    public XMLSimpleElement (XMLElement parent, String name, boolean isRequired) {
       super(parent, name, isRequired);
