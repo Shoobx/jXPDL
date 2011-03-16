@@ -318,7 +318,7 @@ public class XPDLRepositoryHandler {
     * Transforms XPDL w3c Node into appropriate representation (the instance of class
     * extending {@link XMLSimpleElement}) of the Java Object model.
     * 
-    * @param w3c {@link Node}.
+    * @param node w3c {@link Node}.
     * @param el Element derived from {@link XMLSimpleElement}.
     */
    public void fromXML(Node node, XMLSimpleElement el) {

@@ -85,12 +85,6 @@
       <mkdir dir="${build.dir}/dist"/>
       <mkdir dir="${build.dir}/examples"/>
 
-      <!--Update build timestamp-->
-      <tstamp>
-         <format property="build.timestamp" pattern="yyyyMMdd-HHmm" locale="en,UK" />
-      </tstamp>
-      <echo file="${build.dir}/BuildID.txt" message="${build.timestamp}" />
-      
       <copy todir="${build.dir}">
          <fileset dir="${input.dir}" includes="build.xml"/>
       </copy>
@@ -208,6 +202,11 @@
    </target>
    
    <target name="_versionUp2date">
+      <!--Update build timestamp-->
+      <tstamp>
+         <format property="build.timestamp" pattern="yyyyMMdd-HHmm" locale="en,UK" />
+      </tstamp>
+      <echo file="${build.dir}/BuildID.txt" message="${build.timestamp}" />        
       <uptodate property="versionUp2date" targetfile="${basedir}/src/org/enhydra/jxpdl/resources/version.properties" >
          <srcfiles dir= "${basedir}/src" includes="**/*.java"/>
       </uptodate>
@@ -237,7 +236,11 @@
             basedir="${classes.dir}"
             compress="false">
          <manifest>
-				<attribute name="Implementation-Version" value="${version}-${release}" />
+				<attribute name="Vendor" value="Together Teamsolutions Co., Ltd." />
+				<attribute name="Title" value="Together XPDL Model" />
+				<attribute name="Version" value="${version}-${release}" />
+				<attribute name="Build-Id" value="${build.timestamp}" />
+            <attribute name="Project-URL" value="http://sourceforge.net/projects/jxpdl" />
          </manifest>
       </jar>
    </target>
