@@ -232,6 +232,16 @@
       <echo message="Building TXM jar libraries ..."/>
       <echo message="******************************************"/>
       <echo message=""/>
+      <if>
+         <equals arg1="${build.debug}" arg2="on" />
+         <then>
+            <property name="build.type" value="debug"/>
+         </then>
+         <else>
+            <property name="build.type" value="release"/>         
+         </else>
+      </if>
+      
       <jar jarfile="${output.lib.dir}/${jar.name}.jar"
             basedir="${classes.dir}"
             compress="false">
@@ -240,6 +250,7 @@
 				<attribute name="Title" value="Together XPDL Model" />
 				<attribute name="Version" value="${version}-${release}" />
 				<attribute name="Build-Id" value="${build.timestamp}" />
+				<attribute name="Build-Type" value="${build.type}" />
             <attribute name="Project-URL" value="http://sourceforge.net/projects/jxpdl" />
          </manifest>
       </jar>

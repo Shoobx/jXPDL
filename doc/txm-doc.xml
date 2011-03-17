@@ -2256,6 +2256,7 @@ pkg.getParticipants().add(p3);
           <para>Fix for migrating from XPDL 1: proper handling of Tool activity that has many tools and different 
      Start/Finish modes</para>
         </listitem>
+        <listitem>
           <para>Updated JAR's MANIFEST information</para>
         </listitem>
       </itemizedlist>
