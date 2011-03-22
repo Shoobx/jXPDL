@@ -246,11 +246,11 @@
             basedir="${classes.dir}"
             compress="false">
          <manifest>
-				<attribute name="Vendor" value="Together Teamsolutions Co., Ltd." />
-				<attribute name="Title" value="Together XPDL Model" />
-				<attribute name="Version" value="${version}-${release}" />
-				<attribute name="Build-Id" value="${build.timestamp}" />
-				<attribute name="Build-Type" value="${build.type}" />
+            <attribute name="Vendor" value="Together Teamsolutions Co., Ltd." />
+            <attribute name="Title" value="Together XPDL Model" />
+            <attribute name="Version" value="${version}-${release}" />
+            <attribute name="Build-Id" value="${build.timestamp}" />
+            <attribute name="Build-Type" value="${build.type}" />
             <attribute name="Project-URL" value="http://sourceforge.net/projects/jxpdl" />
          </manifest>
       </jar>
