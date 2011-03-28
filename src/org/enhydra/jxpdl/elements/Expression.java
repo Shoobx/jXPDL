@@ -18,17 +18,15 @@
 
 package org.enhydra.jxpdl.elements;
 
-
-
 /**
  * Represents corresponding element from XPDL schema.
  * 
  * @author Sasa Bojanic
  */
-public class ActualParameter extends ExpressionType {
+public class Expression extends ExpressionType {
 
-   /** Constructs a new object with the given ActualParameters as a parent. */
-   public ActualParameter(ActualParameters parent) {
+   /** Constructs a new object with the given Condition as a parent. */
+   public Expression(Condition parent) {
       super(parent, true);
    }
 

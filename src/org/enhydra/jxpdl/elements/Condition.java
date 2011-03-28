@@ -46,8 +46,10 @@ public class Condition extends XMLComplexElement {
             XPDLConstants.CONDITION_TYPE_EXCEPTION,
             XPDLConstants.CONDITION_TYPE_DEFAULTEXCEPTION
       }, 0);
-
+      Expression refExpression = new Expression(this);
+      
       add(attrType);
+      add(refExpression);
    }
 
    public void makeAs(XMLElement el) {
@@ -65,7 +67,7 @@ public class Condition extends XMLComplexElement {
          notify = true;
       }
 
-      this.value = v;
+      this.value = v.trim();
 
       if (notify && (notifyMainListeners || notifyListeners)) {
          XMLElementChangeInfo info = createInfo(oldValue,
@@ -79,6 +81,11 @@ public class Condition extends XMLComplexElement {
             notifyMainListeners(info);
          }
       }
+   }
+
+   /** Returns the Expression element of this object. */
+   public Expression getExpresssion() {
+      return (Expression) get("Expression");
    }
 
    /** Returns the Type attribute of this object. */

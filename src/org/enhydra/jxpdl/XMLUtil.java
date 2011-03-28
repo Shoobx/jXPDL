@@ -510,10 +510,12 @@ public class XMLUtil {
    }
 
    /**
-    * Returns string representation of XML chunk representing {@link ExtendedAttributes} element.
+    * Returns string representation of XML chunk representing {@link ExtendedAttributes}
+    * element.
     * 
     * @param extAttribs {@link ExtendedAttributes} element.
-    * @return String representation of XML chunk representing {@link ExtendedAttributes} element.
+    * @return String representation of XML chunk representing {@link ExtendedAttributes}
+    *         element.
     */
    public static String stringifyExtendedAttributes(ExtendedAttributes extAttribs)
       throws Exception {
@@ -538,7 +540,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns {@link ExtendedAttributes} element created by parsing given string representation.
+    * Returns {@link ExtendedAttributes} element created by parsing given string
+    * representation.
     * 
     * @param extAttribs String representing XML content of {@link ExtendedAttributes}.
     * @return The {@link ExtendedAttributes} element created by parsing given string
@@ -722,6 +725,25 @@ public class XMLUtil {
    }
 
    /**
+    * Returns the parent {@link Application} element for the given element or null if
+    * there is no such parent.
+    * 
+    * @param el The {@link XMLElement} instance
+    * @return The parent {@link Application} element for the given element or null if
+    *         there is no such parent.
+    */
+   public static Application getApplication(XMLElement el) {
+      if (el == null)
+         return null;
+      while (!(el instanceof Application)) {
+         el = el.getParent();
+         if (el == null)
+            break;
+      }
+      return (Application) el;
+   }
+
+   /**
     * Returns the parent {@link Pool} element for the given element or null if there is no
     * such parent.
     * 
@@ -757,6 +779,25 @@ public class XMLUtil {
             break;
       }
       return (ActivitySet) el;
+   }
+
+   /**
+    * Returns the parent {@link ActivitySet} or {@link WorkflowProcess} element for the
+    * given element or null if there is no such parent.
+    * 
+    * @param el The {@link XMLElement} instance.
+    * @return The parent {@link ActivitySet} or {@link WorkflowProcess} element for the
+    *         given element or null if there is no such parent.
+    */
+   public static XMLCollectionElement getActivitySetOrWorkflowProcess (XMLElement el) {
+      if (el == null)
+         return null;
+      while (!(el instanceof ActivitySet || el instanceof WorkflowProcess)) {
+         el = el.getParent();
+         if (el == null)
+            break;
+      }
+      return (XMLCollectionElement) el;
    }
 
    /**
@@ -1806,9 +1847,8 @@ public class XMLUtil {
             bas.add(act);
             if (!recursivly)
                continue;
-            ActivitySets ass = getWorkflowProcess(act).getActivitySets();
             String asId = ba.getActivitySetId();
-            ActivitySet as = ass.getActivitySet(asId);
+            ActivitySet as = getWorkflowProcess(act).getActivitySet(asId);
             if (as != null) {
                bas.addAll(getBlockActivities(as, true));
             }
@@ -2147,34 +2187,18 @@ public class XMLUtil {
    /**
     * Returns a map of the data fields (keys are strings representing data field Id,
     * values are {@link DataField} objects) accessible to be referenced from the given
-    * package level.
+    * package/workflow process.
     * 
-    * @param forPkg The {@link Package} instance.
+    * @param pkgOrWp {@link Package} or {@link WorkflowProcess} instance.
     * @return Map where keys are strings representing data field Id, and values are
     *         {@link DataField} instances.
     */
-   public static SequencedHashMap getPossibleDataFields(Package forPkg) {
+   public static SequencedHashMap getPossibleDataFields(XMLComplexElement pkgOrWp) {
+      List ds = ((DataFields) pkgOrWp.get("DataFields")).toElements();
       SequencedHashMap dfs = new SequencedHashMap();
-      Iterator it = forPkg.getDataFields().toElements().iterator();
-      while (it.hasNext()) {
-         DataField df = (DataField) it.next();
-         dfs.put(df.getId(), df);
+      if (pkgOrWp instanceof WorkflowProcess) {
+         dfs.putAll(getPossibleDataFields(XMLUtil.getPackage(pkgOrWp)));
       }
-      return dfs;
-   }
-
-   /**
-    * Returns a map of the data fields (keys are strings representing data field Id,
-    * values are {@link DataField} objects) accessible to be referenced from the given
-    * workflow process.
-    * 
-    * @param forWP The {@link WorkflowProcess} instance.
-    * @return Map where keys are strings representing data field Id, and values are
-    *         {@link DataField} instances.
-    */
-   public static SequencedHashMap getPossibleDataFields(WorkflowProcess forWP) {
-      List ds = forWP.getDataFields().toElements();
-      SequencedHashMap dfs = getPossibleDataFields(XMLUtil.getPackage(forWP));
       Iterator it = ds.iterator();
       while (it.hasNext()) {
          DataField df = (DataField) it.next();
@@ -2186,21 +2210,29 @@ public class XMLUtil {
    /**
     * Returns a map of the data fields and formal parameters (keys are strings
     * representing data field or formal parameter Id, values are {@link DataField} or
-    * {@link FormalParameter} objects) accessible to be referenced from the given
-    * {@link WorkflowProcess}.
+    * {@link FormalParameter} objects) accessible to be referenced from the given element.
+    * If element is on Package level, only Package data fields will be returned,
+    * otherwise, the map will contain both Package data fields and WorkflowProcess data
+    * fields and formal parameters.
     * 
-    * @param forWP {@link WorkflowProcess} instance.
+    * @param expressionElement Instance of object derived from {@link XMLElement}.
     * @return Map where keys are strings representing data field or formal parameter Id,
     *         and values are {@link DataField} or {@link FormalParameter} instances.
     */
-   public static SequencedHashMap getPossibleVariables(WorkflowProcess forWP) {
-      SequencedHashMap vars = getPossibleDataFields(forWP);
-      Iterator it = forWP.getFormalParameters().toElements().iterator();
-      while (it.hasNext()) {
-         FormalParameter fp = (FormalParameter) it.next();
-         if (!vars.containsKey(fp.getId())) {
-            vars.put(fp.getId(), fp);
+   public static SequencedHashMap getPossibleVariables(XMLElement expressionElement) {
+      SequencedHashMap vars = null;
+      WorkflowProcess wp = XMLUtil.getWorkflowProcess(expressionElement);
+      if (wp != null) {
+         vars = getPossibleDataFields(wp);
+         Iterator it = wp.getFormalParameters().toElements().iterator();
+         while (it.hasNext()) {
+            FormalParameter fp = (FormalParameter) it.next();
+            if (!vars.containsKey(fp.getId())) {
+               vars.put(fp.getId(), fp);
+            }
          }
+      } else {
+         vars = getPossibleDataFields(XMLUtil.getPackage(expressionElement));
       }
       return vars;
    }
@@ -4164,7 +4196,7 @@ public class XMLUtil {
          if (wp != null) {
             references.addAll(tGetLaneReferences(wp, referencedId));
          } else {
-            ActivitySet as = getActivitySet(p);
+            ActivitySet as = getActivitySetForPool(p);
             if (as != null) {
                references.addAll(tGetLaneReferences(as, referencedId));
             }
@@ -4702,15 +4734,15 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
+    * Returns the list of {@link BlockActivity} elements within the given
     * {@link WorkflowProcess}/{@link ActivitySet} 'wpOrAs' that have reference to the
     * ActivitySet with Id equal to 'referencedId'.
     * 
     * @param wpOrAs {@link WorkflowProcess} or {@link ActivitySet} instance.
     * @param referencedId The referenced Id.
-    * @return The list of elements (derived from {@link XMLElement}).
+    * @return The list of {@link BlockActivity} elements.
     */
-   protected static List tGetActivitySetReferences(XMLCollectionElement wpOrAs,
+   public static List tGetActivitySetReferences(XMLCollectionElement wpOrAs,
                                                    String referencedId) {
       List references = new ArrayList();
       if (referencedId.equals("")) {

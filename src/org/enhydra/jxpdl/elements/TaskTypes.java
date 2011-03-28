@@ -44,7 +44,7 @@ public class TaskTypes extends XMLComplexChoice {
 //		choices.add(new TaskReceive(this));
 //		choices.add(new TaskManual(this));
 //		choices.add(new TaskReference(this));
-//		choices.add(new TaskScript(this));
+		choices.add(new TaskScript(this));
 //		choices.add(new TaskSend(this));
 //		choices.add(new TaskUser(this));
 		choosen = (XMLElement) choices.get(0);
@@ -92,15 +92,15 @@ public class TaskTypes extends XMLComplexChoice {
 //		setChoosen((TaskReference) choices.get(4));
 //	}
 //	
-//   /** Returns TaskScript choice element. */
-//	public TaskScript getTaskScript() {
-//		return (TaskScript) choices.get(1);
-//	}
+   /** Returns TaskScript choice element. */
+	public TaskScript getTaskScript() {
+		return (TaskScript) choices.get(1);
+	}
 
-//   /** Sets TaskScript choice element as the chosen one. */
-//	public void setTaskScript() {
-//		setChoosen((TaskScript) choices.get(1));
-//	}
+   /** Sets TaskScript choice element as the chosen one. */
+	public void setTaskScript() {
+		setChoosen((TaskScript) choices.get(1));
+	}
 //	
 //	public TaskSend getTaskSend() {
 //		return (TaskSend) choices.get(6);

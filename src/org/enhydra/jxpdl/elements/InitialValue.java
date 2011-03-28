@@ -18,15 +18,13 @@
 
 package org.enhydra.jxpdl.elements;
 
-import org.enhydra.jxpdl.XMLSimpleElement;
-
 
 /**
  * Represents corresponding element from XPDL schema.
  * 
  * @author Sasa Bojanic
  */
-public class InitialValue extends XMLSimpleElement { //ExpressionType
+public class InitialValue extends ExpressionType {
 
    /**
     * Constructs a new object with the given DataField as a parent.

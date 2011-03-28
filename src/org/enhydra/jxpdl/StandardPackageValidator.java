@@ -63,6 +63,7 @@ import org.enhydra.jxpdl.elements.DeclaredType;
 import org.enhydra.jxpdl.elements.EnumerationType;
 import org.enhydra.jxpdl.elements.EnumerationValue;
 import org.enhydra.jxpdl.elements.ExceptionName;
+import org.enhydra.jxpdl.elements.ExpressionType;
 import org.enhydra.jxpdl.elements.ExternalPackage;
 import org.enhydra.jxpdl.elements.FormalParameter;
 import org.enhydra.jxpdl.elements.FormalParameters;
@@ -91,16 +92,6 @@ import org.xml.sax.InputSource;
  * Standard implementation of XMLValidator interface for validating XPDL model.
  * 
  * @author Sasa Bojanic
- */
-/**
- * @author sasaboy
- *
- */
-/**
- * @author sasaboy
- */
-/**
- * @author sasaboy
  */
 public class StandardPackageValidator implements XMLValidator {
 
@@ -344,6 +335,8 @@ public class StandardPackageValidator implements XMLValidator {
                   cl = XMLAttribute.class;
                } else if (XMLSimpleElement.class.isAssignableFrom(cl)) {
                   cl = XMLSimpleElement.class;
+               } else if (ExpressionType.class.isAssignableFrom(cl)) {
+                  cl = ExpressionType.class;
                } else if (XMLComplexElement.class.isAssignableFrom(cl)) {
                   cl = XMLComplexElement.class;
                } else if (XMLCollection.class.isAssignableFrom(cl)) {
@@ -1006,6 +999,16 @@ public class StandardPackageValidator implements XMLValidator {
                                                           el);
          existingErrors.add(verr);
       }
+   }
+
+   /**
+    * This implementation does nothing.
+    * 
+    * @param el Element to validate
+    * @param existingErrors List of existing errors.
+    * @param fullCheck If false, validation will stop after the first error is found.
+    */
+   public void validateElement(ExpressionType el, List existingErrors, boolean fullCheck) {
    }
 
    /**
@@ -2798,9 +2801,10 @@ public class StandardPackageValidator implements XMLValidator {
    /**
     * Returns the map of variables that can be used within actual parameter or condition
     * expressions.
+    * 
     * @param el Element for which the choices are retrieved.
     * @return The map of variables that can be used within actual parameter or condition
-    * expressions.
+    *         expressions.
     */
    protected Map getActualParameterOrConditionChoices(XMLElement el) {
       return XMLUtil.getPossibleVariables(XMLUtil.getWorkflowProcess(el));
@@ -2808,6 +2812,7 @@ public class StandardPackageValidator implements XMLValidator {
 
    /**
     * Returns the map of variables that can be used within deadline condition expressions.
+    * 
     * @param el Element for which the choices are retrieved.
     * @return the map of variables that can be used within deadline condition expressions.
     */
@@ -2815,7 +2820,8 @@ public class StandardPackageValidator implements XMLValidator {
       return XMLUtil.getPossibleVariables(XMLUtil.getWorkflowProcess(el));
    }
 
-   /** Returns the map of variables that can be used within performer expressions.
+   /**
+    * Returns the map of variables that can be used within performer expressions.
     * 
     * @param el Element for which the choices are retrieved.
     * @return the map of variables that can be used within performer expressions.

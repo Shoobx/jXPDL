@@ -2245,7 +2245,22 @@ pkg.getParticipants().add(p3);
           <para>The name of the class XMLInterfaceForJDK13 changed into XMLInterfaceImpl</para>          
         </listitem>
         <listitem>
-          <para>Added missing Java API Docu</para>          
+          <para>Added support for TaskScript element from XPDL 2.</para>
+        </listitem>   
+        <listitem>
+          <para>ActualParameter, InitialValue updated to XPDL 2. Now extending ExpressionType element and have ability to define custom script language description.</para>
+        </listitem>   
+        <listitem>
+          <para>Condition element updated to XPDL 2 - now possible to define custom script language.</para>
+        </listitem>          
+        <listitem>
+          <para>StandardPackageValidator extended to add support for ExpressionType element validation.</para>
+        </listitem>          
+        <listitem>
+          <para>XMLUtil improved and extended with more utility methods.</para>
+        </listitem>          
+        <listitem>
+          <para>JAVA API documentation updated (now much better documented).</para>
         </listitem>   
         <listitem>
           <para>Fix for migrating from XPDL 1: proper handling of circular transition for the activity

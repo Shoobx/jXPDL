@@ -1,3 +1,11 @@
+2011-03-28 Sasa Bojanic <sasaboy@together.at>
+   # Added support for TaskScript element from XPDL 2.
+   # ActualParameter, InitialValue updated to XPDL 2. Now extending ExpressionType element and have 
+     ability to define custom script language description.
+   # Condition element updated to XPDL 2 - now possible to define custom script language.
+   # StandardPackageValidator extended to add support for ExpressionType element validation.
+   # XMLUtil improved and extended with more utility methods.
+
 2011-03-22 Sasa Bojanic <sasaboy@together.at>
    # readregistry.exe replaced with the newer version now comming from its own project TRR (Together Read Registry), version 1.0-1
    
@@ -5,7 +13,7 @@
    # Updated JAR's MANIFEST information
    
 2011-03-11 Sasa Bojanic <sasaboy@together.at>
-   # Added missing Java API Docu
+   # JAVA API documentation updated (now much better documented)
    
 2011-03-08 Sasa Bojanic <sasaboy@together.at>
    # The name of the class XMLInterfaceForJDK13 changed into XMLInterfaceImpl
