@@ -2664,11 +2664,6 @@ public class XMLUtil {
          System.out.println("...XPDL is valid");
       }
 
-      WorkflowProcess wp = (WorkflowProcess) pkg.getWorkflowProcesses().get(0);
-      List sas = wp.getStartingActivities();
-      for (int i = 0; i < sas.size(); i++) {
-         System.out.println("SA" + i + "=" + ((Activity) sas.get(i)).getId());
-      }
       int ind = inputFile.lastIndexOf(".");
       String outF = null;
       if (ind >= 0) {

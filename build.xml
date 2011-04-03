@@ -27,13 +27,12 @@
 
       <property name="jar.name"         value="jxpdl"/>
       <property name="classes.dir"      location="${basedir}/classes" />
-      <property name="lib.dir"          location="${basedir}/lib"/>
       <property name="input.dir"          location="${basedir}/input"/>
       <property name="output.dir"       location="${basedir}/output"/>
       <property name="build.dir"        location="${output.dir}/${app.name}-${version}-${release}"/>
       <property name="output.lib.dir"   location="${build.dir}/lib"/>
       <property name="output.doc.dir"   location="${build.dir}/doc"/>
-      <property name="util.dir"         location="${basedir}/util"/>
+      <property name="tools.dir"         location="${basedir}/tools"/>
       <property name="input.dir"        location="${basedir}/input"/>
       <property name="licenses.dir"     location="${basedir}/licenses"/>
 
@@ -51,7 +50,7 @@
 
       <!-- Including external if task-->
       <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" 
-            classpath="${util.dir}/build/antcontrib.jar"/>
+            classpath="${tools.dir}/ant/antcontrib.jar"/>
 
       <!-- Windows/Linux specific target definitions -->        
       <condition property="os.prepare.target" value="prepareForLinux">
@@ -95,8 +94,8 @@
       
       <!-- copy everything from lib directory -->
       <copy todir="${output.lib.dir}">
-         <fileset dir="${lib.dir}"/>
-         <fileset dir="${util.dir}/ant" includes="ant.jar,ant-launcher.jar,antcontrib.jar"/>
+         <fileset dir="${tools.dir}/xerces" includes="*.jar"/>
+         <fileset dir="${tools.dir}/ant" includes="*.jar"/>
       </copy>
 
       <!-- copy everything from examples directory -->
@@ -173,8 +172,9 @@
             debug="${build.debug}"
             encoding="ISO-8859-1">
          <classpath>
-            <pathelement location="${lib.dir}/xercesImpl.jar"/>
-            <pathelement location="${lib.dir}/xml-apis.jar"/>
+            <fileset dir="${tools.dir}/xerces">
+               <include name="*.jar" />
+            </fileset>
          </classpath>
       </javac>
       <copy todir="${classes.dir}/org/enhydra/jxpdl">

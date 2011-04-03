@@ -1,3 +1,6 @@
+2011-04-02 Sasa Bojanic <sasaboy@together.at>
+   # Project restructured, build scripts changed (all libraries now in tools sub-folders)
+   
 2011-03-28 Sasa Bojanic <sasaboy@together.at>
    # Added support for TaskScript element from XPDL 2.
    # ActualParameter, InitialValue updated to XPDL 2. Now extending ExpressionType element and have 
