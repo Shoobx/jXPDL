@@ -104,7 +104,7 @@
       </copy>
 
       <copy todir="${build.dir}/licenses">
-         <fileset dir="${licenses.dir}" includes="*.*" excludes="txm-includes*" />
+         <fileset dir="${licenses.dir}" includes="*.*" excludes="txm-includes*,docbook.txt" />
       </copy>
       <copy todir="${build.dir}/licenses">
          <fileset dir="${licenses.dir}" includes="*.*" />
