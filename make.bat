@@ -74,9 +74,9 @@ echo Parameters value for using with make.bat :
 echo.
 echo make                     - Displays Help screen
 echo make help                - Displays Help screen
-echo make buildAll            - Builds and configures TXM with javadoc and docbook documentation
-echo make buildNoDoc          - Builds and configures TXM without javadoc and docbook documentation
-echo make buildDoc            - Builds docbook documentation
+echo make buildAll            - Builds and configures TXM with documentation
+echo make buildNoDoc          - Builds and configures TXM without documentation
+echo make buildDoc            - Builds documentation only
 echo make debug               - Builds TXM JAR file with included debug information
 echo make dependencies        - Creates TWS and TWE dependencies within distributions folder
 echo make dependency_tws      - Creates TWS dependencies within distributions folder

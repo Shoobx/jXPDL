@@ -212,11 +212,9 @@ configure -version 1.0 -release 1 -jdkhome C:/jdk1.6 -instdir C:/JXPDL</programl
       <para>Possible build targets for the make script are:</para>
 
       <para><programlisting>make help            - Displays Help screen
-make buildAll        - Builds and configures TXM with javadoc and 
-                       docbook documentation
-make buildNoDoc      - Builds and configures TXM without javadoc and 
-                       docbook documentation
-make buildDoc        - Builds docbook documentation
+make buildAll        - Builds and configures TXM with documentation
+make buildNoDoc      - Builds and configures TXM without documentation
+make buildDoc        - Builds documentation only
 make debug           - Builds TXM JAR file with included debug information
 make dependencies    - Creates TWS and TWE dependencies within 
                        distributions folder

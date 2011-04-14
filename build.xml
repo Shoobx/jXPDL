@@ -27,12 +27,12 @@
 
       <property name="jar.name"         value="jxpdl"/>
       <property name="classes.dir"      location="${basedir}/classes" />
-      <property name="input.dir"          location="${basedir}/input"/>
+      <property name="input.dir"        location="${basedir}/input"/>
       <property name="output.dir"       location="${basedir}/output"/>
       <property name="build.dir"        location="${output.dir}/${app.name}-${version}-${release}"/>
       <property name="output.lib.dir"   location="${build.dir}/lib"/>
       <property name="output.doc.dir"   location="${build.dir}/doc"/>
-      <property name="tools.dir"         location="${basedir}/tools"/>
+      <property name="tools.dir"        location="${basedir}/tools"/>
       <property name="input.dir"        location="${basedir}/input"/>
       <property name="licenses.dir"     location="${basedir}/licenses"/>
 
@@ -104,11 +104,11 @@
       </copy>
 
       <copy todir="${build.dir}/licenses">
-         <fileset dir="${licenses.dir}" includes="*.*" excludes="txm-includes*,docbook.txt" />
+         <fileset dir="${licenses.dir}" includes="*.*" excludes="${app.name}-includes*,docbook.txt" />
       </copy>
       <copy todir="${build.dir}/licenses">
          <fileset dir="${licenses.dir}" includes="*.*" />
-         <mapper type="regexp" from="txm-includes.xlsx" to="txm-includes-${version}-${release}.xlsx" />
+         <mapper type="regexp" from="${app.name}-includes.xlsx" to="${app.name}-includes-${version}-${release}.xlsx" />
       </copy>
       
       <!-- runs specific, windows or linux prepare statements via apropriate target -->
@@ -263,7 +263,7 @@
    <!-- =================================================================== -->
    <!-- Building all                                                        -->
    <!-- =================================================================== -->
-   <target name="buildAll" depends="jar, configure, buildAllDoc"/>
+   <target name="buildAll" depends="jar, configure, buildDoc"/>
 
    <!-- =================================================================== -->
    <!-- Building without documentation                                      -->
@@ -272,15 +272,8 @@
     
    <!-- Builds Documentation                                                 -->
    <!-- ==================================================================== -->
-   <target name="buildAllDoc">
-      <ant dir="${doc.dir}" />
-   </target>
-
-   <!-- ==================================================================== -->
-   <!-- Builds DocBook Documentation                                         -->
-   <!-- ==================================================================== -->
    <target name="buildDoc">
-      <ant dir="${doc.dir}" target="buildDocBook" />
+      <ant dir="${doc.dir}" />
    </target>
 
    <target name="initDist">
@@ -399,11 +392,11 @@
       </zip>
    </target>
 
-   <target name="dependencies" depends="clean,dependency_twe,_dependency_tws" unless="${rebranding}"/>
+   <target name="dependencies" depends="clean, buildAll, _dependency_twe, _dependency_tws" unless="${rebranding}"/>
 
-   <target name="dependency_tws" depends="buildAll,_dependency_tws" unless="${rebranding}"/>
+   <target name="dependency_tws" depends="clean, buildAll,_dependency_tws" unless="${rebranding}"/>
    
-   <target name="dependency_twe" depends="buildAll,_dependency_twe" unless="${rebranding}"/>
+   <target name="dependency_twe" depends="clean, buildAll,_dependency_twe" unless="${rebranding}"/>
    
    <target name="_dependencies" depends="_dependency_tws,_dependency_twe" unless="${rebranding}"/>
 
@@ -423,23 +416,23 @@
 
 
    <target name="distOther">
-      <copy file="${output.doc.dir}/txm-doc-current.pdf" tofile="${output.doc.dir}/txm-doc-${version}-${release}.pdf"/>
-      <copy file="${output.doc.dir}/txm-doc-current.html" tofile="${output.doc.dir}/txm-doc-${version}-${release}.html"/>
+      <copy file="${output.doc.dir}/${app.name}-doc-current.pdf" tofile="${output.doc.dir}/${app.name}-doc-${version}-${release}.pdf"/>
+      <copy file="${output.doc.dir}/${app.name}-doc-current.html" tofile="${output.doc.dir}/${app.name}-doc-${version}-${release}.html"/>
       <zip destfile="${dist.community.dir}/${app.name}-doc-${version}-${release}.zip" update="true">
-         <zipfileset dir="${output.doc.dir}" excludes="txm-doc-current.*"/>
+         <zipfileset dir="${output.doc.dir}" excludes="${app.name}-doc-current.*"/>
       </zip>
       <copy todir="${dist.community.dir}">
-         <fileset dir="${output.doc.dir}" includes="txm-doc-current.pdf" />
+         <fileset dir="${output.doc.dir}" includes="${app.name}-doc-current.pdf" />
       </copy>      
       <copy todir="${dist.doc.dir}">
-         <fileset dir="${output.doc.dir}" excludes="txm-doc-current.*"/>
+         <fileset dir="${output.doc.dir}" excludes="${app.name}-doc-current.*"/>
       </copy>
       <delete quiet="true">
-         <fileset dir="${output.doc.dir}" includes="txm-doc-${version}-${release}.*" />
+         <fileset dir="${output.doc.dir}" includes="${app.name}-doc-${version}-${release}.*" />
       </delete>      
       <copy todir="${dist.internal.dir}">
-         <fileset dir="${licenses.dir}" includes="txm-includes.xlsx" />
-         <mapper type="regexp" from="txm-includes.xlsx" to="txm-includes-${version}-${release}.xlsx" />
+         <fileset dir="${licenses.dir}" includes="${app.name}-includes.xlsx" />
+         <mapper type="regexp" from="${app.name}-includes.xlsx" to="${app.name}-includes-${version}-${release}.xlsx" />
       </copy>
       <copy todir="${dist.internal.dir}">
          <fileset dir="${build.dir}" includes="BuildID.txt" />
@@ -458,10 +451,6 @@
       <delete dir="${classes.dir}"/>
       <delete dir="${output.dir}"/>
       <delete dir="${basedir}/distribution" />
-      <delete>
-         <fileset dir="${basedir}/doc" includes="log.txt,txm-doc.xml~" defaultexcludes="false"/>
-      </delete>
-      <delete dir="${basedir}/doc/tmp" />
    </target>
 
    <target name="cleanClasses">
@@ -495,9 +484,9 @@
       <echo>
 make                     - Displays Help screen
 make help                - Displays Help screen
-make buildAll            - Builds and configures TXM with javadoc and docbook documentation
-make buildNoDoc          - Builds and configures TXM without javadoc and docbook documentation
-make buildDoc            - Builds docbook documentation
+make buildAll            - Builds and configures TXM with documentation
+make buildNoDoc          - Builds and configures TXM without documentation
+make buildDoc            - Builds documentation only
 make debug               - Builds TXM JAR file with included debug information
 make dependencies        - Creates TWS and TWE dependencies within distributions folder
 make dependency_tws      - Creates TWS dependencies within distributions folder
