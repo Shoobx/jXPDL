@@ -294,7 +294,7 @@
    <target name="distributions" depends="clean, prepare, initDist">
       <antcall target="${os.buildSrc.target}"/>
       <antcall target="jar"/>
-      <antcall target="buildAllDoc"/>
+      <antcall target="buildDoc"/>
       <antcall target="${os.buildBin.target}"/>
 
       <echo message="Distribution of ${app.name}-${version}-${release} with complete documentation has been built!"/>
