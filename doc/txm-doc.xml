@@ -216,9 +216,7 @@ make buildAll        - Builds and configures TXM with documentation
 make buildNoDoc      - Builds and configures TXM without documentation
 make buildDoc        - Builds documentation only
 make debug           - Builds TXM JAR file with included debug information
-make dependencies    - Creates TWS and TWE dependencies within 
-                       distributions folder
-make dependency_tws  - Creates TWS dependencies within distributions folder
+make dependencies    - Creates TWE dependencies within distributions folder
 make dependency_twe  - Creates TWE dependencies within distributions folder
 make install         - Installs and configures TXM into directory defined 
                        by parameter install.dir in build.properties file. 
@@ -2277,6 +2275,9 @@ pkg.getParticipants().add(p3);
         </listitem>
         <listitem>
           <para>Project restructured, build scripts changed (all libraries now in tools sub-folders)</para>
+        </listitem>
+        <listitem>
+          <para>Now making output dependencies only for TWE (TWS gets TXM through TWE)</para>
         </listitem>
       </itemizedlist>
     </section>

@@ -392,28 +392,18 @@
       </zip>
    </target>
 
-   <target name="dependencies" depends="clean, buildAll, _dependency_twe, _dependency_tws" unless="${rebranding}"/>
+   <target name="dependencies" depends="dependency_twe" unless="${rebranding}"/>
 
-   <target name="dependency_tws" depends="clean, buildAll,_dependency_tws" unless="${rebranding}"/>
-   
    <target name="dependency_twe" depends="clean, buildAll,_dependency_twe" unless="${rebranding}"/>
    
-   <target name="_dependencies" depends="_dependency_tws,_dependency_twe" unless="${rebranding}"/>
+   <target name="_dependencies" depends="_dependency_twe" unless="${rebranding}"/>
 
-   <target name="_dependency_tws" unless="${rebranding}">
-      <mkdir dir="${dist.dependencies.dir}/tws" />
-      <copy todir="${dist.dependencies.dir}/tws" overwrite="true">
-         <fileset dir="${output.lib.dir}" includes="${jar.name}.jar" />
-      </copy>
-   </target>
-   
    <target name="_dependency_twe" unless="${rebranding}">
       <mkdir dir="${dist.dependencies.dir}/twe" />
       <copy todir="${dist.dependencies.dir}/twe" overwrite="true">
          <fileset dir="${output.lib.dir}" includes="${jar.name}.jar" />
       </copy>
    </target>
-
 
    <target name="distOther">
       <copy file="${output.doc.dir}/${app.name}-doc-current.pdf" tofile="${output.doc.dir}/${app.name}-doc-${version}-${release}.pdf"/>
@@ -488,8 +478,7 @@ make buildAll            - Builds and configures TXM with documentation
 make buildNoDoc          - Builds and configures TXM without documentation
 make buildDoc            - Builds documentation only
 make debug               - Builds TXM JAR file with included debug information
-make dependencies        - Creates TWS and TWE dependencies within distributions folder
-make dependency_tws      - Creates TWS dependencies within distributions folder
+make dependencies        - Creates TWE dependencies within distributions folder
 make dependency_twe      - Creates TWE dependencies within distributions folder
 make install             - Installs and configures TXM into directory defined by parameter install.dir in build.properties file. 
                            You can set this parameter value by using command: configure -instdir PATH_TO_DIR.

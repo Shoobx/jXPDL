@@ -1,3 +1,6 @@
+2011-04-19 Sasa Bojanic <sasaboy@together.at>
+   # now delivering dependencies only to TWE (TWS gets TXM from TWE)
+
 2011-04-14 Sasa Bojanic <sasaboy@together.at>
    # buildDoc target now also builds JavaDoc API documentation
    
