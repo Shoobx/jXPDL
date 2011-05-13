@@ -36,7 +36,7 @@ function help {
    echo
    echo "Example:"
    echo
-   echo "./configure -version 1.0 -release 1 -jdkhome /usr/jdk1.6 -instdir /tmp/TXM"
+   echo "./configure -version 1.1 -release 1 -jdkhome /usr/jdk1.6 -instdir /tmp/TXM"
 }
 
 for n in $*
@@ -48,7 +48,7 @@ do
 	esac            
 done                    
                         
-version=1.0
+version=1.1
 release=1
 install_DOT_dir=
 
