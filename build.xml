@@ -400,7 +400,7 @@
 
    <target name="_dependency_twe" unless="${rebranding}">
       <mkdir dir="${dist.dependencies.dir}/twe" />
-      <copy todir="${dist.dependencies.dir}/twe" overwrite="true">
+      <copy todir="${dist.dependencies.dir}/twe/tools/txm" overwrite="true">
          <fileset dir="${output.lib.dir}" includes="${jar.name}.jar" />
       </copy>
    </target>

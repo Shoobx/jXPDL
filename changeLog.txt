@@ -1,5 +1,7 @@
 ###### TXM 1.1-1 RELEASED ######
-
+2011-05-24 Sasa Bojanic <sasaboy@together.at>
+   # dependency output for TWE is now in the same folder structure as appears in TWE (twe/tools/txm)
+   
 2011-04-19 Sasa Bojanic <sasaboy@together.at>
    # now delivering dependencies only to TWE (TWS gets TXM from TWE)
 
