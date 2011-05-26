@@ -334,14 +334,13 @@ make distributions   - Builds and configures TXM with all documentations
       <figure>
         <title>Package Meta-Model</title>
 
-      <mediaobject condition="demo-details">
-        <imageobject>
-          <imagedata contentdepth="100%"
-                     fileref="images/package_meta_model.jpg" scalefit="1"
-                     width="100%" />
-        </imageobject>
-      </mediaobject>
-
+        <mediaobject condition="demo-details">
+          <imageobject>
+            <imagedata contentdepth="100%"
+                       fileref="images/package_meta_model.jpg" scalefit="1"
+                       width="100%" />
+          </imageobject>
+        </mediaobject>
       </figure>
 
       <para>For each of the above entities, there is an associated set of
@@ -1210,14 +1209,13 @@ pkg.getPools.add(p);
       <figure>
         <title>Workflow Process Meta-Model</title>
 
-      <mediaobject condition="demo-details">
-        <imageobject>
-          <imagedata contentdepth="100%"
-                     fileref="images/process_meta_model.jpg" scalefit="1"
-                     width="100%" />
-        </imageobject>
-      </mediaobject>
-
+        <mediaobject condition="demo-details">
+          <imageobject>
+            <imagedata contentdepth="100%"
+                       fileref="images/process_meta_model.jpg" scalefit="1"
+                       width="100%" />
+          </imageobject>
+        </mediaobject>
       </figure>
 
       <para condition="demo-emptytext">The Workflow Process Definition defines
@@ -1796,18 +1794,17 @@ pkg.getPools.add(p);
           <para>The following diagram illustrates the generic structure of
           activities:</para>
 
-      <figure>
-        <title>Generic Structure of Activities</title>
+          <figure>
+            <title>Generic Structure of Activities</title>
 
-          <mediaobject>
-            <imageobject>
-              <imagedata contentdepth="100%"
-                         fileref="images/process_activity_structures.jpg"
-                         scalefit="1" width="100%" />
-            </imageobject>
-          </mediaobject>
-
-      </figure>
+            <mediaobject>
+              <imageobject>
+                <imagedata contentdepth="100%"
+                           fileref="images/process_activity_structures.jpg"
+                           scalefit="1" width="100%" />
+              </imageobject>
+            </mediaobject>
+          </figure>
 
           <para>There are different type of activities. Currently not all of
           them are supported by TXM.</para>
@@ -2223,61 +2220,110 @@ pkg.getParticipants().add(p3);
 
       <itemizedlist>
         <listitem>
-          <para>Ant libraries upgraded to version 1.8.2 (removed ant-nodeps.jar)</para>
+          <para>Apache Ant libraries updated to version 1.8.2 (ant.jar and
+          ant-launcher.jar)</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Removed nodeps.jar</para>
+            </listitem>
+          </itemizedlist>
         </listitem>
+
         <listitem>
-          <para>Xerces library upgraded to version 2.11.0</para>
+          <para>Xerces library updated to version 2.11.0
+          (xercesImpl.jar)</para>
         </listitem>
+
         <listitem>
-          <para>Commons IO library upgraded to version 2.0.1</para>
+          <para>Apache Common I/O library updated to version 2.0.1
+          (commons-io.jar)</para>
         </listitem>
+
         <listitem>
-          <para>The build.debug property removed from build.properties file, new build target "debug" introduced to build TXM JAR file with DEBUG information in the classes</para>
+          <para>Updated build script to support building of debug version and
+          added "debug" folder to output.</para>
         </listitem>
+
         <listitem>
-          <para>The project distribution now also contains debug folder with TXM JAR file that includes DEBUG information.</para>
+          <para>XMLInterfaceForJDK13 class renamed to XMLInterfaceImpl</para>
         </listitem>
-        <listitem>
-          <para>The name of the class XMLInterfaceForJDK13 changed into XMLInterfaceImpl</para>          
-        </listitem>
+
         <listitem>
           <para>Added support for TaskScript element from XPDL 2.</para>
-        </listitem>   
-        <listitem>
-          <para>ActualParameter, InitialValue updated to XPDL 2. Now extending ExpressionType element and have ability to define custom script language description.</para>
-        </listitem>   
-        <listitem>
-          <para>Condition element updated to XPDL 2 - now possible to define custom script language.</para>
-        </listitem>          
-        <listitem>
-          <para>StandardPackageValidator extended to add support for ExpressionType element validation.</para>
-        </listitem>          
-        <listitem>
-          <para>XMLUtil improved and extended with more utility methods.</para>
-        </listitem>          
-        <listitem>
-          <para>JAVA API documentation updated (now much better documented).</para>
-        </listitem>   
-        <listitem>
-          <para>Fix for migrating from XPDL 1: proper handling of circular transition for the activity
-     in the case activity has to be splitted into several activities (e.g. multiple tools activity, 
-     or activity with improper split/join types which are splitted by adding additional Route activities)</para>
         </listitem>
+
         <listitem>
-          <para>Fix for migrating from XPDL 1: proper handling of Tool activity that has many tools and different 
-     Start/Finish modes</para>
+          <para>ActualParameter, InitialValue updated to XPDL 2. Now extending
+          ExpressionType element and have ability to define custom script
+          language description.</para>
         </listitem>
+
+        <listitem>
+          <para>Condition element updated to XPDL 2 - now possible to define
+          custom script language.</para>
+        </listitem>
+
+        <listitem>
+          <para>StandardPackageValidator extended to add support for
+          ExpressionType element validation.</para>
+        </listitem>
+
+        <listitem>
+          <para>XMLUtil improved and extended with more utility
+          methods.</para>
+        </listitem>
+
+        <listitem>
+          <para>Updated JAVA API documentation.</para>
+        </listitem>
+
+        <listitem>
+          <para>Added fix for migrating from XPDL 1: proper handling of
+          circular transition for the activity in the case activity has to be
+          splitted into several activities (e.g. multiple tools activity, or
+          activity with improper split/join types which are splitted by adding
+          additional Route activities)</para>
+        </listitem>
+
+        <listitem>
+          <para>Added fix for migrating from XPDL 1: proper handling of Tool
+          activity that has many tools and different Start/Finish modes</para>
+        </listitem>
+
         <listitem>
           <para>Updated JAR's MANIFEST information</para>
         </listitem>
+
         <listitem>
-          <para>readregistry.exe replaced with the newer version now comming from its own project TRR (Together Read Registry), version 1.0-1</para>
+          <para>Added Together Read Registry (TRR) library version
+          1.0-1</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Removed readregistry.nsi</para>
+            </listitem>
+          </itemizedlist>
         </listitem>
+
         <listitem>
-          <para>Project restructured, build scripts changed (all libraries now in tools sub-folders)</para>
+          <para>Project restructured, build scripts changed (all libraries now
+          in tools sub-folders)</para>
         </listitem>
+
         <listitem>
-          <para>Now making output dependencies only for TWE (TWS gets TXM through TWE)</para>
+          <para>Standardized the project sources:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Updated build procedures and directory structure.</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>Updated dependencies. Now only making dependencies for TWE
+          (TWS gets TXM through TWE)</para>
         </listitem>
       </itemizedlist>
     </section>
