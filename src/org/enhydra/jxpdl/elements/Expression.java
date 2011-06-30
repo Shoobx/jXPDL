@@ -27,7 +27,7 @@ public class Expression extends ExpressionType {
 
    /** Constructs a new object with the given Condition as a parent. */
    public Expression(Condition parent) {
-      super(parent, true);
+      super(parent, false);
    }
 
 }
