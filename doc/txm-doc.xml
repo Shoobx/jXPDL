@@ -187,7 +187,7 @@ configure -rebranding - Flag that determines if the project
                         Possible values [true/false].
 configure -language   - Language to be used for rebranding.
 
-Multiple parameters can be specified at ones.
+Multiple parameters can be specified at once.
 
 
 Example:
