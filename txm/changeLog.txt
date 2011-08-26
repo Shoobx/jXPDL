@@ -1,0 +1,72 @@
+###### TXM 1.2-1 RELEASED ######
+2011-08-23 Sasa Bojanic <sasaboy@together.at>
+   # the validation of actual/formal parameter's by type now considers "isArray" attribute
+     of formal parameter/variable referenced by actual parameter
+
+2011-08-19 Sasa Bojanic <sasaboy@together.at>
+   # build scripts corrected so the sources can be built if they are in the folder which contains spaces in the path
+
+2011-07-21 Sasa Bojanic <sasaboy@together.at>
+   # now possible to manualy specify "buildid" configuration parameter (e.g. configure -buildid 20110721-0808)
+ 
+###### TXM 1.1-1 RELEASED ######
+2011-05-24 Sasa Bojanic <sasaboy@together.at>
+   # dependency output for TWE is now in the same folder structure as appears in TWE (twe/tools/txm)
+   
+2011-04-19 Sasa Bojanic <sasaboy@together.at>
+   # now delivering dependencies only to TWE (TWS gets TXM from TWE)
+
+2011-04-14 Sasa Bojanic <sasaboy@together.at>
+   # buildDoc target now also builds JavaDoc API documentation
+   
+2011-04-04 Sasa Bojanic <sasaboy@together.at>
+   # Project restructured, build scripts changed (docbook files moved to tools\docbook folder)
+
+2011-04-02 Sasa Bojanic <sasaboy@together.at>
+   # Project restructured, build scripts changed (all libraries now in tools sub-folders)
+   
+2011-03-28 Sasa Bojanic <sasaboy@together.at>
+   # Added support for TaskScript element from XPDL 2.
+   # ActualParameter, InitialValue updated to XPDL 2. Now extending ExpressionType element and have 
+     ability to define custom script language description.
+   # Condition element updated to XPDL 2 - now possible to define custom script language.
+   # StandardPackageValidator extended to add support for ExpressionType element validation.
+   # XMLUtil improved and extended with more utility methods.
+
+2011-03-22 Sasa Bojanic <sasaboy@together.at>
+   # readregistry.exe replaced with the newer version now comming from its own project TRR (Together Read Registry), version 1.0-1
+   
+2011-03-16 Sasa Bojanic <sasaboy@together.at>
+   # Updated JAR's MANIFEST information
+   
+2011-03-11 Sasa Bojanic <sasaboy@together.at>
+   # JAVA API documentation updated (now much better documented)
+   
+2011-03-08 Sasa Bojanic <sasaboy@together.at>
+   # The name of the class XMLInterfaceForJDK13 changed into XMLInterfaceImpl
+   
+2011-03-07 Sasa Bojanic <sasaboy@together.at>
+   # Not packaging Java API documentation into distribution zip/tar.gz files
+
+2011-02-23 Sasa Bojanic <sasaboy@together.at>
+   # The build.debug property removed from build.properties file, new build target "debug" introduced 
+     to build TXM JAR file with DEBUG information in the classes
+   # The project distribution now also contains debug folder with TXM JAR file that includes DEBUG information     
+   
+2011-02-18 Sasa Bojanic <sasaboy@together.at>
+   # Ant libraries upgraded to version 1.8.2 (removed ant-nodeps.jar)
+   # Xerces library upgraded to version 2.11.0
+   # Commons IO library upgraded to version 2.0.1
+
+2011-02-15 Sasa Bojanic <sasaboy@together.at>
+   # Fix for migrating from XPDL 1: proper handling of circular transition for the activity
+     in the case activity has to be splitted into several activities (e.g. multiple tools activity, 
+     or activity with improper split/join types which are splitted by adding additional Route activities)
+   # Fix for migrating from XPDL 1: proper handling of Tool activity that has many tools and different 
+     Start/Finish modes
+     
+###### TXM 1.0-1 RELEASED ######
+
+2010-11-12 Sasa Bojanic <sasaboy@together.at>
+   # XPDL model taken out from TWS project, adjusted, implemented XPDL2 support with automatic
+     transformation of XPDL1 into XPDL2

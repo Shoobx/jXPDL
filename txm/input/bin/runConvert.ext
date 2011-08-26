@@ -1,0 +1,24 @@
+@ECHO_OFF@
+@COMMENT@    Together XPDL Model
+@COMMENT@    Copyright (C) 2010 Together Teamsolutions Co., Ltd.
+@COMMENT@
+@COMMENT@    This program is free software: you can redistribute it and/or modify
+@COMMENT@    it under the terms of the GNU General Public License as published by
+@COMMENT@    the Free Software Foundation, either version 3 of the License, or 
+@COMMENT@    (at your option) any later version.
+@COMMENT@
+@COMMENT@    This program is distributed in the hope that it will be useful, 
+@COMMENT@    but WITHOUT ANY WARRANTY; without even the implied warranty of
+@COMMENT@    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+@COMMENT@    GNU General Public License for more details.
+@COMMENT@ 
+@COMMENT@    You should have received a copy of the GNU General Public License
+@COMMENT@    along with this program. If not, see http://www.gnu.org/licenses
+@COMMENT@-----------------------------------------------------------------------
+
+@BIN_BASH@
+
+@ECHO_EMPTY@
+@ECHO@ -***** XPDL 1.0 to XPDL 2.1 Conversion Test *****-
+@ECHO_EMPTY@
+"@JAVA_DIR@@SEPARATOR@bin@SEPARATOR@java" -Xmx128M -Djava.ext.dirs=..@SEPARATOR@lib org.enhydra.jxpdl.XMLUtil convert ..@SEPARATOR@examples@SEPARATOR@leave_request_xpdl1.xpdl @PARAM_SIGN@*
