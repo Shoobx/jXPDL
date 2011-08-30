@@ -1,4 +1,7 @@
 ###### TXM 1.2-1 RELEASED ######
+2011-08-30 Sasa Bojanic <sasaboy@together.at>
+   # try/catch blocks removed from documentation build.xml file
+
 2011-08-23 Sasa Bojanic <sasaboy@together.at>
    # the validation of actual/formal parameter's by type now considers "isArray" attribute
      of formal parameter/variable referenced by actual parameter
