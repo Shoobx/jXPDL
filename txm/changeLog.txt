@@ -1,4 +1,7 @@
 ###### TXM 1.2-1 RELEASED ######
+2011-09-09 Sasa Bojanic <sasaboy@together.at>
+   # support for TAB builds
+   
 2011-08-30 Sasa Bojanic <sasaboy@together.at>
    # try/catch blocks removed from documentation build.xml file
 
