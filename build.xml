@@ -26,10 +26,12 @@
       </replace>
 
       <property file="build.properties"/>
+      <property file="version.properties"/>
 
       <!-- Project constants -->
       <property name="targetVM" value="1.5" />
       <property name="app.name" value="txm"/>
+      <property name="project.name" value="Together XPDL Model" />
 
       <property name="jar.name"         value="jxpdl"/>
       <property name="classes.dir"      location="${basedir}/classes" />
@@ -352,8 +354,8 @@
       <zip destfile="${dist.community.dir}/${dist.file.name}.zip" update="true" >
          <zipfileset dir="${output.dir}" excludes="**/doc/api/**" />
       </zip>
-
-      <antcall target="_dependencies"/>            
+      <antcall target="create.components"/>
+      <antcall target="_dependencies"/>
       <ant target="distOther"/>
    </target>
 
@@ -451,7 +453,24 @@
          <zipfileset dir="${output.dir}" includes="**/lib/${jar.name}.jar" />
       </zip>
    </target>
-    
+
+   <target name="create.components">
+      <property name="dist.component.dir" location="${dist.dir}/components"/>
+      <property name="component.dir" location="${basedir}/components"/>
+      <mkdir dir="${dist.component.dir}"/>
+      <copy todir="${dist.component.dir}/${app.name}">
+         <fileset dir="${output.lib.dir}" includes="${jar.name}.jar" />
+      </copy>
+      <copy todir="${dist.component.dir}/${app.name}">
+         <fileset dir="${component.dir}" includes="Component.properties" />  
+      </copy>
+      <replace file="${dist.component.dir}/${app.name}/Component.properties" value="">
+         <replacefilter token="@COMPONENTNAME@" value="${app.name}-(${project.name})" />
+         <replacefilter token="@VERSION@" value="${version}-${release}" />
+         <replacefilter token="@TIMESTAMP@" value="${build.timestamp}" />
+      </replace>
+   </target>
+
    <!-- =================================================================== -->
    <!-- Cleans everything                                                   -->
    <!-- =================================================================== -->
