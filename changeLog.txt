@@ -1,4 +1,7 @@
 ###### TXM 1.2-1 RELEASED ######
+2011-09-19 Sasa Bojanic <sasaboy@together.at>
+   # Release notes updated
+   
 2011-09-09 Sasa Bojanic <sasaboy@together.at>
    # support for TAB builds
    

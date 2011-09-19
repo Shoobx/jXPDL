@@ -2217,6 +2217,45 @@ pkg.getParticipants().add(p3);
     <title>Release Notes</title>
 
     <section>
+      <title>Release 1.2-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>The validation of actual/formal parameter's by type now
+          considers "isArray" attribute of formal parameter/variable
+          referenced by actual parameter</para>
+        </listitem>
+
+        <listitem>
+          <para>Build process changed (preparations for new TAB based
+          release):</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>now possible to manualy specify "buildid" configuration
+              parameter (e.g. configure -buildid 20110721-0808)</para>
+            </listitem>
+
+            <listitem>
+              <para>build scripts corrected so the sources can be built if
+              they are in the folder which contains spaces in the path</para>
+            </listitem>
+
+            <listitem>
+              <para>try/catch blocks removed from documentation build.xml
+              file</para>
+            </listitem>
+
+            <listitem>
+              <para>components folder in the distribution output/components
+              files in the sources (TAB support)</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
       <title>Release 1.1-1</title>
 
       <itemizedlist>
