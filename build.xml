@@ -47,7 +47,7 @@
       <property name="doc.dir" location="${basedir}/doc" />
       <!-- Including external if task-->
       <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" 
-            classpath="${tools.dir}/ant/antcontrib.jar"/>
+            classpath="${tools.dir}/antcontrib/antcontrib.jar"/>
 
       <!-- Windows/Linux specific target definitions -->        
       <condition property="os.prepare.target" value="prepareForLinux">
@@ -92,7 +92,9 @@
       <!-- copy everything from lib directory -->
       <copy todir="${output.lib.dir}">
          <fileset dir="${tools.dir}/xerces" includes="*.jar"/>
+         <fileset dir="${tools.dir}/xml-commons" includes="*.jar"/>
          <fileset dir="${tools.dir}/ant" includes="*.jar"/>
+         <fileset dir="${tools.dir}/antcontrib" includes="*.jar"/>
       </copy>
 
       <!-- copy everything from examples directory -->
@@ -469,6 +471,12 @@
          <replacefilter token="@VERSION@" value="${version}-${release}" />
          <replacefilter token="@TIMESTAMP@" value="${build.timestamp}" />
       </replace>
+      <copy todir="${dist.component.dir}">
+         <fileset dir="${tools.dir}">
+            <include name="xerces/**" />
+            <include name="xml-commons/**" />
+         </fileset>
+      </copy>	
    </target>
 
    <!-- =================================================================== -->
