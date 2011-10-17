@@ -62,32 +62,32 @@
       <property name="tmp.dir" location="${basedir}/tmp" />
       <property name="sources.dir" location="${project.dir}/src" />
 
-      <property name="docbook.dir" location="${tools.dir}/docbook" />
+      <property name="docbook.xsl.dir" location="${tools.dir}/docbook-xsl" />
+      <property name="docbook.dtd.dir" location="${tools.dir}/docbook-dtd" />
       <property name="ant.lib.dir" location="${tools.dir}/ant" />
       <property name="fop.lib.dir" location="${tools.dir}/fop" />
       <property name="xalan.lib.dir" location="${tools.dir}/xalan" />
-      <property name="xerces.lib.dir" location="${tools.dir}/xerces" />
 
       <!--Set the main classpath-->
       <path id="classpath">
-         <pathelement location="${xerces.lib.dir}/xercesImpl.jar" />
-         <pathelement location="${xerces.lib.dir}/xml-apis.jar" />
+         <pathelement location="${tools.dir}/xerces/xercesImpl.jar" />
+         <pathelement location="${tools.dir}/xml-commons/xml-apis.jar" />
       </path>
 
       <!--Set the classpath for docbook-->
       <path id="xalan-classpath">
          <fileset dir="${xalan.lib.dir}">
-            <include name="**/*.jar" />
+            <include name="*.jar" />
          </fileset>
       </path>
 
-      <property name="docbook.fo.xsl" location="${docbook.dir}/xsl/fo/docbook.xsl" />
-      <property name="docbook.pdf.classpath" location="${fop.lib.dir}/fop.jar${path.separator}${fop.lib.dir}/batik.jar${path.separator}${fop.lib.dir}/avalon-framework.jar${path.separator}${fop.lib.dir}/commons-io.jar${path.separator}${fop.lib.dir}/xmlgraphics-commons.jar${path.separator}${fop.lib.dir}/commons-logging.jar" />
+      <property name="docbook.fo.xsl" location="${docbook.xsl.dir}/xsl/fo/docbook.xsl" />
+      <property name="docbook.pdf.classpath" location="${fop.lib.dir}/fop.jar${path.separator}${tools.dir}/batik/batik.jar${path.separator}${tools.dir}/avalon-framework/avalon-framework.jar${path.separator}${tools.dir}/commons-io/commons-io.jar${path.separator}${tools.dir}/xmlgraphics-commons/xmlgraphics-commons.jar${path.separator}${tools.dir}/commons-logging/commons-logging.jar" />
 
       <!-- Setting IF task -->
       <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask">
          <classpath>
-            <fileset dir="${ant.lib.dir}">
+            <fileset dir="${tools.dir}/antcontrib">
                <include name="antcontrib.jar" />
             </fileset>
          </classpath>
@@ -96,6 +96,9 @@
       <taskdef name="fop" classname="org.apache.fop.tools.anttasks.Fop">
          <classpath>
             <fileset dir="${fop.lib.dir}">
+               <include name="*.jar" />
+            </fileset>
+            <fileset dir="${tools.dir}/commons-logging">
                <include name="*.jar" />
             </fileset>
          </classpath>
@@ -119,7 +122,7 @@
       </copy>
       <copy file="${doc.dir}/${docbook.name}.xml" tofile="${tmp.dir}/${docbook.name}.xml" />
       <copy todir="${tmp.dir}/docbook">
-         <fileset dir="${docbook.dir}/dtd"/>
+         <fileset dir="${docbook.dtd.dir}/dtd"/>
       </copy>
    </target>
 
@@ -162,13 +165,13 @@
             <include name="${docbook.name}-current.html" />
          </fileset>
       </copy>
-      <copy file="${docbook.dir}/css/html.css" todir="${output.doc.dir}" />
+      <copy file="${docbook.xsl.dir}/css/html.css" todir="${output.doc.dir}" />
    </target>
 
    <target name="prepareDocbook" depends="content, docbook.check" unless="docbook.notRequired">
       <echo message="compile docbook with docbook.xsl" />
       <java classname="org.apache.xalan.xslt.Process" classpathref="xalan-classpath" fork="true" dir="${tmp.dir}">
-         <arg line="-param html.stylesheet html.css -param ignore.image.scaling 1 -out '${docbook.name}-current.html' -in '${docbook.name}.xml' -xsl '${docbook.dir}/xsl/html/docbook.xsl'" />
+         <arg line="-param html.stylesheet html.css -param ignore.image.scaling 1 -out '${docbook.name}-current.html' -in '${docbook.name}.xml' -xsl '${docbook.xsl.dir}/xsl/html/docbook.xsl'" />
       </java>
 
       <echo message="docbook to ${docbook.name}.fo" />
@@ -178,7 +181,7 @@
                        -param ulink.footnotes 1 
                        -out '${docbook.name}.fo' 
                        -in '${docbook.name}.xml' 
-                       -xsl '${docbook.dir}/xsl/fo/docbook.xsl'" />
+                       -xsl '${docbook.xsl.dir}/xsl/fo/docbook.xsl'" />
                        <!-- 
                        -param page.margin.inner 0.5in 
                        -param page.margin.outer 0.5in 
