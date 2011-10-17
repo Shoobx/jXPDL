@@ -465,6 +465,7 @@
       </copy>
       <copy todir="${dist.component.dir}/${app.name}">
          <fileset dir="${component.dir}" includes="Component.properties" />  
+         <fileset dir="${licenses.dir}" includes="GPL-3.0.txt" />  
       </copy>
       <replace file="${dist.component.dir}/${app.name}/Component.properties" value="">
          <replacefilter token="@COMPONENTNAME@" value="${app.name}-(${project.name})" />
