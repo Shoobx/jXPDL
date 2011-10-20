@@ -415,16 +415,16 @@
 
    <target name="dependencies" depends="dependency_twe" unless="${rebranding}"/>
 
-   <target name="dependency_twe" depends="clean, buildNoDoc,_dependency_twe" unless="${rebranding}"/>
+   <target name="dependency_twe" depends="clean, buildNoDoc, create.components, _dependency_twe" unless="${rebranding}"/>
    
    <target name="_dependencies" depends="_dependency_twe" unless="${rebranding}"/>
 
    <target name="_dependency_twe" unless="${rebranding}">
       <property name="dist.dir" location="${basedir}/distribution/${app.name}-${version}-${release}_${build.timestamp}" />
       <property name="dist.dependencies.dir" location="${dist.dir}/dependencies" />
-      <mkdir dir="${dist.dependencies.dir}/twe" />
+      <mkdir dir="${dist.dependencies.dir}" />
       <copy todir="${dist.dependencies.dir}/twe/tools/txm" overwrite="true">
-         <fileset dir="${output.lib.dir}" includes="${jar.name}.jar" />
+         <fileset dir="${dist.dir}/components" includes="txm/**" />
       </copy>
    </target>
 
