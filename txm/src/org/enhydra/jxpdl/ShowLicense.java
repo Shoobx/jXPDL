@@ -1,6 +1,6 @@
 /**
  * Together XPDL Model
- * Copyright (C) 2010 Together Teamsolutions Co., Ltd. 
+ * Copyright (C) 2011 Together Teamsolutions Co., Ltd. 
  * 
  * This program is free software: you can redistribute it and/or modify 
  * it under the terms of the GNU General Public License as published by 
@@ -41,7 +41,7 @@ public class ShowLicense {
       String gnuDisclaimer = "\n";
       gnuDisclaimer += "\n";
       gnuDisclaimer += "Together XPDL Model";
-      gnuDisclaimer += "\nCopyright (C) 2010 Together Teamsolutions Co., Ltd.";
+      gnuDisclaimer += "\nCopyright (C) 2011 Together Teamsolutions Co., Ltd.";
       gnuDisclaimer += "\n";
       gnuDisclaimer += "\nThis program comes with ABSOLUTELY NO WARRANTY; for details use the -showlicense option.";
       gnuDisclaimer += "\nThis is free software, and you are welcome to redistribute it under certain conditions; use the -showlicense option for details.";

@@ -1,6 +1,6 @@
 <!--
     Together XPDL Model
-    Copyright (C) 2010 Together Teamsolutions Co., Ltd.
+    Copyright (C) 2011 Together Teamsolutions Co., Ltd.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -412,16 +412,16 @@
    </target>
 
    <target name="distOther">
-      <copy file="${output.doc.dir}/${app.name}-doc-current.pdf" tofile="${output.doc.dir}/${app.name}-doc-${version}-${release}.pdf"/>
-      <copy file="${output.doc.dir}/${app.name}-doc-current.html" tofile="${output.doc.dir}/${app.name}-doc-${version}-${release}.html"/>
-      <zip destfile="${dist.community.dir}/${app.name}-doc-${version}-${release}.zip" update="true">
-         <zipfileset dir="${output.doc.dir}" excludes="${app.name}-doc-current.*"/>
+      <copy file="${output.doc.dir}/${app.name}-current.doc.pdf" tofile="${output.doc.dir}/${app.name}-doc-${version}-${release}.pdf"/>
+      <copy file="${output.doc.dir}/${app.name}-current.doc.html" tofile="${output.doc.dir}/${app.name}-doc-${version}-${release}.html"/>
+      <zip destfile="${dist.community.dir}/${app.name}-${version}-${release}.doc.zip" update="true">
+         <zipfileset dir="${output.doc.dir}" excludes="${app.name}-current.doc.*"/>
       </zip>
       <copy todir="${dist.community.dir}">
-         <fileset dir="${output.doc.dir}" includes="${app.name}-doc-current.pdf" />
+         <fileset dir="${output.doc.dir}" includes="${app.name}-current.doc.pdf" />
       </copy>      
       <copy todir="${dist.doc.dir}">
-         <fileset dir="${output.doc.dir}" excludes="${app.name}-doc-current.*"/>
+         <fileset dir="${output.doc.dir}" excludes="${app.name}-current.doc.*"/>
       </copy>
       <delete quiet="true">
          <fileset dir="${output.doc.dir}" includes="${app.name}-doc-${version}-${release}.*" />
