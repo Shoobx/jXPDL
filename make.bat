@@ -40,8 +40,6 @@ if %~1==buildAll goto continue
 if %~1==buildNoDoc goto continue
 if %~1==buildDoc goto continue
 if %~1==debug goto continue
-if %~1==dependencies goto continue
-if %~1==dependency_twe goto continue
 if %~1==install goto continue
 if %~1==clean goto continue
 if %~1==distributions goto continue
@@ -77,8 +75,6 @@ echo make buildAll            - Builds and configures TXM with documentation
 echo make buildNoDoc          - Builds and configures TXM without documentation
 echo make buildDoc            - Builds documentation only
 echo make debug               - Builds TXM JAR file with included debug information
-echo make dependencies        - Creates TWE dependencies within distributions folder
-echo make dependency_twe      - Creates TWE dependencies within distributions folder
 echo make install             - Installs and configures TXM into directory defined by parameter install.dir in build.properties file. 
 echo                            You can set this parameter value by using command: configure -instdir PATH_TO_DIR.
 echo                            It should be called only after make buildAll target is executed!

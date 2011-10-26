@@ -217,8 +217,6 @@ make buildAll        - Builds and configures TXM with documentation
 make buildNoDoc      - Builds and configures TXM without documentation
 make buildDoc        - Builds documentation only
 make debug           - Builds TXM JAR file with included debug information
-make dependencies    - Creates TWE dependencies within distributions folder
-make dependency_twe  - Creates TWE dependencies within distributions folder
 make install         - Installs and configures TXM into directory defined 
                        by parameter install.dir in build.properties file. 
                        This parameter can be set by using command: 
@@ -2215,6 +2213,17 @@ pkg.getParticipants().add(p3);
 
   <chapter id="releasenotes">
     <title>Release Notes</title>
+
+    <section>
+      <title>Release 1.3-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Project structure changed according to the new standard (no
+          dependency output anymore, components output instead).</para>
+        </listitem>
+      </itemizedlist>
+    </section>
 
     <section>
       <title>Release 1.2-1</title>

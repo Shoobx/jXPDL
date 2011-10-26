@@ -294,7 +294,6 @@
       <!-- Set the directories -->
       <property name="dist.community.dir" location="${dist.dir}/community" />
       <property name="dist.debug.dir" location="${dist.dir}/debug" />
-      <property name="dist.dependencies.dir" location="${dist.dir}/dependencies" />
       <property name="dist.internal.dir" location="${dist.dir}/internal" />
       <property name="dist.doc.dir" location="${dist.dir}/documentation" />
 
@@ -357,7 +356,6 @@
          <zipfileset dir="${output.dir}" excludes="**/doc/api/**" />
       </zip>
       <antcall target="create.components"/>
-      <antcall target="_dependencies"/>
       <ant target="distOther"/>
    </target>
 
@@ -411,21 +409,6 @@
             <exclude name="Makefile"/>
          </zipfileset>
       </zip>
-   </target>
-
-   <target name="dependencies" depends="dependency_twe" unless="${rebranding}"/>
-
-   <target name="dependency_twe" depends="clean, buildNoDoc, create.components, _dependency_twe" unless="${rebranding}"/>
-   
-   <target name="_dependencies" depends="_dependency_twe" unless="${rebranding}"/>
-
-   <target name="_dependency_twe" unless="${rebranding}">
-      <property name="dist.dir" location="${basedir}/distribution/${app.name}-${version}-${release}_${build.timestamp}" />
-      <property name="dist.dependencies.dir" location="${dist.dir}/dependencies" />
-      <mkdir dir="${dist.dependencies.dir}" />
-      <copy todir="${dist.dependencies.dir}/twe/tools/txm" overwrite="true">
-         <fileset dir="${dist.dir}/components" includes="txm/**" />
-      </copy>
    </target>
 
    <target name="distOther">
@@ -525,8 +508,6 @@ make buildAll            - Builds and configures TXM with documentation
 make buildNoDoc          - Builds and configures TXM without documentation
 make buildDoc            - Builds documentation only
 make debug               - Builds TXM JAR file with included debug information
-make dependencies        - Creates TWE dependencies within distributions folder
-make dependency_twe      - Creates TWE dependencies within distributions folder
 make install             - Installs and configures TXM into directory defined by parameter install.dir in build.properties file. 
                            You can set this parameter value by using command: configure -instdir PATH_TO_DIR.
                            It should be called only after make buildAll target is executed!
