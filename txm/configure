@@ -175,12 +175,6 @@ buildDoc: FORCE
 debug: FORCE
 	@\$(JAVA) -cp \$(CLASSPATH) org.apache.tools.ant.Main \$@
 
-dependencies: FORCE
-	@\$(JAVA) -cp \$(CLASSPATH) org.apache.tools.ant.Main \$@
-
-dependency_twe: FORCE
-	@\$(JAVA) -cp \$(CLASSPATH) org.apache.tools.ant.Main \$@
-
 install: FORCE
 	@\$(JAVA) -cp \$(CLASSPATH) org.apache.tools.ant.Main \$@
 
