@@ -20,7 +20,9 @@ package org.enhydra.jxpdl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Represents attribute element from XML schema.
@@ -81,6 +83,9 @@ public class XMLAttribute extends XMLElement {
                                        + v + " for attribute " + toName()
                                        + "! Possible values are: " + choices);
          }
+      }
+      if(choices==null) {
+         v = XMLUtil.replaceLFwithCRLF(v);
       }
       super.setValue(v);
    }
