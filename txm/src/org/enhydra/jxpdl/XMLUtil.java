@@ -155,20 +155,66 @@ public class XMLUtil {
     * @return The number of occurrences of string 'toFind' within string 'toSearch'.
     */
    public static int howManyStringsWithinString(String toSearch, String toFind) {
-      try {
-         int startAt = 0;
-         int howMany = 0;
+      return getStringPositionsWithinString(toSearch, toFind).size();
+   }
+   
+   public static String replaceLFwithCRLF(String value) {
+      if (value == null) {
+         return null;
+      }
+      String newValue = value;
+      List ups1 = XMLUtil.getStringPositionsWithinString(value, "\n");
+      List ups2 = XMLUtil.getStringPositionsWithinString(value, "\r\n");
+      if (ups2.size() == 0) {
+         if (ups1.size() > 0) {
+            newValue = newValue.replaceAll("\n", "\r\n");
+         }
+      } else if (ups1.size() > 0) {
+         newValue = "";
+         List repposs = new ArrayList();
+         int beginIndex = 0;
+         for (int i = 0; i < ups1.size(); i++) {
+            Integer up = (Integer) ups1.get(i);
+            if (!ups2.contains(new Integer(up.intValue() - 1))) {
+               repposs.add(up);
+            }
+         }
+         for (int i = 0; i < repposs.size(); i++) {
+            Integer up = (Integer) repposs.get(i);
+            newValue += value.substring(beginIndex, up.intValue()) + "\r\n";
+            beginIndex = up.intValue() + 1;
+         }
+         if (beginIndex < value.length()) {
+            newValue += value.substring(beginIndex);
+         }
+      }
+      return newValue;
+   }
+   
 
+   /**
+    * The List of Integer values representing the position of the string 'toFind' within string toSearch.
+    * 
+    * @param toSearch
+    * @param toFind
+    * @return The List of Integer values representing the position of the string 'toFind' within string toSearch.
+    */
+   public static List getStringPositionsWithinString(String toSearch, String toFind) {
+      try {
+         List ret = new ArrayList();
+         int startAt = 0;
          int fnd;
          while ((fnd = toSearch.indexOf(toFind, startAt)) != -1) {
-            howMany++;
+            ret.add(new Integer(fnd));
             startAt = (fnd + toFind.length());
+            
          }
-         return howMany;
+         return ret;
       } catch (Exception ex) {
-         return -1;
+         return new ArrayList();
       }
    }
+   
 
    /**
     * Returns canonical path based on provided relative path and base directory.

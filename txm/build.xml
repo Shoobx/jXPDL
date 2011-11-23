@@ -107,7 +107,7 @@
       </copy>
       <copy todir="${build.dir}/licenses">
          <fileset dir="${licenses.dir}" includes="*.*" />
-         <mapper type="regexp" from="${app.name}-includes.xlsx" to="${app.name}-includes-${version}-${release}.xlsx" />
+         <mapper type="regexp" from="${app.name}-includes.csv" to="${app.name}-includes-${version}-${release}.csv" />
       </copy>
       
       <!-- runs specific, windows or linux prepare statements via apropriate target -->
@@ -427,8 +427,8 @@
          <fileset dir="${output.doc.dir}" includes="${app.name}-doc-${version}-${release}.*" />
       </delete>      
       <copy todir="${dist.internal.dir}">
-         <fileset dir="${licenses.dir}" includes="${app.name}-includes.xlsx" />
-         <mapper type="regexp" from="${app.name}-includes.xlsx" to="${app.name}-includes-${version}-${release}.xlsx" />
+         <fileset dir="${licenses.dir}" includes="${app.name}-includes.csv" />
+         <mapper type="regexp" from="${app.name}-includes.csv" to="${app.name}-includes-${version}-${release}.csv" />
       </copy>
       <copy todir="${dist.internal.dir}">
          <fileset dir="${build.dir}" includes="BuildID.txt" />

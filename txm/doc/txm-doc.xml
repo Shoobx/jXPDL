@@ -1,69 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-"docbook/docbookx.dtd">
-<book id="txmug" lang="en" revision="0" status="work in progress">
-  <title><inlinemediaobject>
-      <imageobject>
-        <imagedata contentdepth="100%" fileref="images/logo.jpg" scalefit="1"
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V5.0//EN" "docbook/docbook.dtd">
+
+<!--
+	Together XPDL Model
+	Copyright (C) 2011 Together Teamsolutions Co., Ltd.
+	
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see http://www.gnu.org/licenses
+-->
+
+<book xml:id="txmug" xml:lang="en" version="5.0" status="work in progress">
+	<title>
+		<inlinemediaobject>
+			<imageobject>
+			<imagedata contentdepth="100%" fileref="images/logo.jpg" scalefit="1"
                    valign="middle" width="100%" />
-      </imageobject>
-    </inlinemediaobject></title>
+			</imageobject>
+		</inlinemediaobject>
+		<replaceable><?coverdetail?></replaceable>
+	</title>
+	<titleabbrev>Together XPDL Model</titleabbrev>
 
-  <titleabbrev></titleabbrev>
+	<info>
+		<title>Together XPDL Model</title>
+		<subtitle>User Manual</subtitle>
 
-  <bookinfo>
-    <title>Together XPDL Model</title>
+		<authorgroup>
+			<author><personname>Together Teamsolutions Co., Ltd. in Thailand.</personname></author>
+		</authorgroup>
 
-    <subtitle>User Manual</subtitle>
+		<copyright>
+			<year>2011</year>
+			<holder>Together Teamsolutions Co., Ltd. in Thailand. Permission is
+			granted to copy, distribute and/or modify this document under the terms
+			of the GNU Free Documentation License, Version 1.3 or any later version
+			published by the Free Software Foundation; with the Invariant Sections
+			being <remark>"Introduction", "Build Guide", "Installation Guide", "XPDL
+			Meta-Model", "Programming Samples", "Examples", "Release Notes", and with 
+			the Front-Cover Texts. A copy of the license is included in the section 
+			entitled "GNU Free Documentation License"</remark>.</holder>
+		</copyright>
 
-    <authorgroup>
-      <corpauthor>Together Teamsolutions Co., Ltd.</corpauthor>
-    </authorgroup>
+		<legalnotice>
+			<para>Together Teamsolutions Co., Ltd DISCLAIMS ALL WARRANTIES, EXPRESS
+			OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF
+			THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED
+			WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</para>
 
-    <copyright>
-      <year>2010</year>
+			<para>While every precaution has been taken in the preparation of this
+			book, the publisher assumes no responsibility for errors or omissions,
+			or for damages resulting from the use of the information contained in
+			this book.</para>
 
-      <holder>Together Teamsolutions Co., Ltd. Permission is granted to copy,
-      distribute and/or modify this document under the terms of the GNU Free
-      Documentation License, Version 1.3 or any later version published by the
-      Free Software Foundation; with the Invariant Sections being
-      <emphasis>"Introduction","Build Guide,"Installation Guide","XPDL
-      Meta-Model","Programming Samples","Examples","Release Notes"</emphasis>"
-      no Front-Cover Texts, and no Back-Cover Texts. A copy of the license is
-      included in the section entitled "GNU Free Documentation
-      License".</holder>
-    </copyright>
+			<para>The Together logos are registered trademarks of GrECo
+			International Holding AG in Austria / Europe. Java and all Java-based
+			trademarks or logos are trademarks or registered trademarks of Oracle
+			Corporation, in the United States States and other countries. Together
+			Teamsolutions Co., Ltd. is independent of Oracle Corporation.</para>
 
-    <legalnotice>
-      <para>Together Teamsolutions Co., Ltd DISCLAIMS ALL WARRANTIES, EXPRESS
-      OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF
-      THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED
-      WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR
-      PURPOSE.</para>
+			<para>In this document parts of the original XPDL 2.1 specification -
+			<link
+			xlink:href="http://www.wfmc.org/Download-document/WFMC-TC-1025-Oct-10-08-A-Final-XPDL-2.1-Specification.html">WfMC
+			XPDL 2.1 Specification</link> are used. The Workflow Management
+			Coalition and its members are the owners of the copyright of this
+			specification.</para>
+		</legalnotice>
+	</info>
 
-      <para>While every precaution has been taken in the preparation of this
-      book, the publisher assumes no responsibility for errors or omissions,
-      or for damages resulting from the use of the information contained in
-      this book.</para>
+	<toc></toc>
 
-      <para>The Together logos are registered trademarks of GrECo
-      International Holding AG in Austria / Europe. Java and all Java-based
-      trademarks or logos are trademarks or registered trademarks of Oracle
-      Corporation, in the United States States and other countries. Together
-      Teamsolutions Co., Ltd. is independent of Oracle Corporation.</para>
-
-      <para>In this document parts of the original XPDL 2.1 specification -
-      <ulink
-      url="http://www.wfmc.org/Download-document/WFMC-TC-1025-Oct-10-08-A-Final-XPDL-2.1-Specification.html">WfMC
-      XPDL 2.1 Specification</ulink> are used. The Workflow Management
-      Coalition and its members are the owners of the copyright of this
-      specification.</para>
-    </legalnotice>
-  </bookinfo>
-
-  <toc></toc>
-
-  <chapter id="introduction">
+  <chapter xml:id="introduction">
     <title>Introduction</title>
 
     <para>Together XPDL Model (TXM) is a library that provides capability to
@@ -84,29 +100,29 @@
     connected with the transitions), the uniqueness of Ids of activities will
     be Package based, etc.</para>
 
-    <para>TXM source code was taken out from <ulink
-    url="http://www.together.at/prod/workflow/tws">Together Workflow
-    Server</ulink> project and a separate project is made out of it. The
-    reason was to have the common XPDL model used by both <ulink
-    url="http://www.together.at/prod/workflow/twe">Together Workflow
-    Editor</ulink>, and by <ulink
-    url="http://www.together.at/prod/workflow/tws">Together Workflow
-    Server</ulink> projects.</para>
+    <para>TXM source code was taken out from <link
+    xlink:href="http://www.together.at/prod/workflow/tws">Together Workflow
+    Server</link> project and a separate project is made out of it. The
+    reason was to have the common XPDL model used by both <link
+    xlink:href="http://www.together.at/prod/workflow/twe">Together Workflow
+    Editor</link>, and by <link
+    xlink:href="http://www.together.at/prod/workflow/tws">Together Workflow
+    Server</link> projects.</para>
   </chapter>
 
-  <chapter id="buildguide">
+  <chapter xml:id="buildguide">
     <title>Build Guide</title>
 
     <sect1>
       <title>Getting the source code</title>
 
       <para>The source code of the project can be obtained either via SVN
-      (please read instructions how to check out sources at <ulink
-      url="http://sourceforge.net/projects/jxpdl/develop">SourceForge</ulink>)
+      (please read instructions how to check out sources at <link
+      xlink:href="http://sourceforge.net/projects/jxpdl/develop">SourceForge</link>)
       or by downloading the latest <emphasis
       role="bold">txm-x.y-z.src.zip</emphasis>/<emphasis
-      role="bold">txm-x.y-z.src.tar.gz</emphasis> package from <ulink
-      url="http://sourceforge.net/projects/jxpdl/files">SourceForge</ulink>.</para>
+      role="bold">txm-x.y-z.src.tar.gz</emphasis> package from <link
+      xlink:href="http://sourceforge.net/projects/jxpdl/files">SourceForge</link>.</para>
     </sect1>
 
     <sect1>
@@ -246,15 +262,15 @@ make distributions   - Builds and configures TXM with all documentations
     </sect1>
   </chapter>
 
-  <chapter id="installationguide">
+  <chapter xml:id="installationguide">
     <title>Installation guide</title>
 
     <sect1>
       <title>Getting the binaries</title>
 
       <para>The latest binary packages of Together XPDL Model can be
-      downloaded from <ulink
-      url="http://sourceforge.net/projects/jxpdl/files">SourceForge</ulink></para>
+      downloaded from <link
+      xlink:href="http://sourceforge.net/projects/jxpdl/files">SourceForge</link></para>
     </sect1>
 
     <sect1>
@@ -282,7 +298,7 @@ make distributions   - Builds and configures TXM with all documentations
     </sect1>
   </chapter>
 
-  <chapter id="xpdl_meta_model">
+  <chapter xml:id="xpdl_meta_model">
     <title>XPDL Meta-Model</title>
 
     <para>WfMC provides an interface for workflow process definition. The
@@ -325,7 +341,7 @@ make distributions   - Builds and configures TXM with all documentations
     <para>This chapter gives overview of Meta-Model entities
     (<emphasis>Meta-Model framework</emphasis>).</para>
 
-    <sect1 id="Meta_Model">
+    <sect1 xml:id="Meta_Model">
       <title>Package Meta-Model</title>
 
       <para>The meta-model identifies the basic set of entities and attributes
@@ -383,7 +399,7 @@ make distributions   - Builds and configures TXM with all documentations
       process definition.</para>
     </sect1>
 
-    <sect1 id="Package">
+    <sect1 xml:id="Package">
       <title>Package</title>
 
       <para>It is possible to define several processes within one package,
@@ -423,7 +439,7 @@ make distributions   - Builds and configures TXM with all documentations
       <para>TXM provides a way to manage above listed entities (within one
       package).</para>
 
-      <sect2 id="Package_Attributes">
+      <sect2 xml:id="Package_Attributes">
         <title>Package Attributes</title>
 
         <table frame="all">
@@ -1182,7 +1198,7 @@ pkg.getPools.add(p);
       </sect2>
     </sect1>
 
-    <sect1 id="Package_ExtendedAttributes">
+    <sect1 xml:id="Package_ExtendedAttributes">
       <title>Extended Attributes</title>
 
       <para>XPDL contains most of the entities, which are likely to be
@@ -1193,7 +1209,7 @@ pkg.getPools.add(p);
       any additional entity characteristics.</para>
     </sect1>
 
-    <sect1 id="Process_ProcessDefinition">
+    <sect1 xml:id="Process_ProcessDefinition">
       <title>Workflow Process</title>
 
       <para>The Process Definition entity provides contextual information that
@@ -1650,7 +1666,7 @@ pkg.getPools.add(p);
           block activities.</para>
         </sect3>
 
-        <sect3 id="Process_Activity">
+        <sect3 xml:id="Process_Activity">
           <title>Activities</title>
 
           <para>Generally, any process comprises a number of steps, which lead
@@ -1818,7 +1834,7 @@ pkg.getPools.add(p);
           End mode, Priority, Limit, Type, Deadline collection, etc.</para>
         </sect3>
 
-        <sect3 id="Process_Transitions">
+        <sect3 xml:id="Process_Transitions">
           <title>Transitions</title>
 
           <para condition="demo-details">Link between two activities is
@@ -2149,15 +2165,15 @@ pkg.getParticipants().add(p3);
 </programlisting>
   </chapter>
 
-  <chapter id="examples">
+  <chapter xml:id="examples">
     <title>Examples</title>
 
     <para>As mentioned in <xref linkend="introduction" />, TXM's main purpose
-    is to act as a common library for <ulink
-    url="http://www.together.at/prod/workflow/twe">Together Workflow
-    Editor</ulink> and by <ulink
-    url="http://www.together.at/prod/workflow/tws">Together Workflow
-    Server</ulink> projects.</para>
+    is to act as a common library for <link
+    xlink:href="http://www.together.at/prod/workflow/twe">Together Workflow
+    Editor</link> and by <link
+    xlink:href="http://www.together.at/prod/workflow/tws">Together Workflow
+    Server</link> projects.</para>
 
     <para>Nevertheless, the TXM project has two samples which will be
     described in this chapter. This samples are actually utilizing the code
@@ -2212,13 +2228,25 @@ pkg.getParticipants().add(p3);
     </section>
   </chapter>
 
-  <chapter id="releasenotes">
+  <chapter xml:id="releasenotes">
     <title>Release Notes</title>
 
     <section>
       <title>Release 1.3-1</title>
 
       <itemizedlist>
+        <listitem>
+			<para>Replacing LF character with CRLF in XPDL output (for XML schema attribute elements).</para>
+        </listitem>
+
+        <listitem>
+			<para>Updated DOCBOOK DTD to version 5.0</para>
+        </listitem>
+		
+		<listitem>
+			<para>Updated 3-line titlepage of documentation (PDF)</para>
+		</listitem>
+		
         <listitem>
           <para>Project structure changed according to the new standard (no
           dependency output anymore, components output instead).</para>
