@@ -451,7 +451,7 @@
       <if>
          <available type="file" file="${basedir}/licenses/${app.name}-patches.csv" />
          <then>
-            <copy todir="${distribution.dir}/internal">
+            <copy todir="${dist.internal.dir}">
                <fileset file="${basedir}/licenses/${app.name}-patches.csv" />
                <globmapper from="${app.name}-patches.csv" to="${app.name}-patches-${version}-${release}.csv" />
             </copy>
@@ -460,7 +460,7 @@
       <if>
          <available type="file" file="${basedir}/licenses/${app.name}-restrictions.csv" />
          <then>
-            <copy todir="${distribution.dir}/internal">
+            <copy todir="${dist.internal.dir}">
                <fileset file="${basedir}/licenses/${app.name}-restrictions.csv" />
                <globmapper from="${app.name}-restrictions.csv" to="${app.name}-restrictions-${version}-${release}.csv" />
             </copy>
