@@ -109,6 +109,24 @@
          <fileset dir="${licenses.dir}" includes="*.*" />
          <mapper type="regexp" from="${app.name}-includes.csv" to="${app.name}-includes-${version}-${release}.csv" />
       </copy>
+      <if>
+         <available type="file" file="${basedir}/licenses/${app.name}-patches.csv" />
+         <then>
+            <copy todir="${build.dir}/licenses">
+               <fileset file="${basedir}/licenses/${app.name}-patches.csv" />
+               <globmapper from="${app.name}-patches.csv" to="${app.name}-patches-${version}-${release}.csv" />
+            </copy>
+         </then>
+      </if>
+      <if>
+         <available type="file" file="${basedir}/licenses/${app.name}-restrictions.csv" />
+         <then>
+            <copy todir="${build.dir}/licenses">
+               <fileset file="${basedir}/licenses/${app.name}-restrictions.csv" />
+               <globmapper from="${app.name}-restrictions.csv" to="${app.name}-restrictions-${version}-${release}.csv" />
+            </copy>
+         </then>
+      </if>
       
       <!-- runs specific, windows or linux prepare statements via apropriate target -->
       <antcall target ="${os.prepare.target}"/>
@@ -430,6 +448,24 @@
          <fileset dir="${licenses.dir}" includes="${app.name}-includes.csv" />
          <mapper type="regexp" from="${app.name}-includes.csv" to="${app.name}-includes-${version}-${release}.csv" />
       </copy>
+      <if>
+         <available type="file" file="${basedir}/licenses/${app.name}-patches.csv" />
+         <then>
+            <copy todir="${distribution.dir}/internal">
+               <fileset file="${basedir}/licenses/${app.name}-patches.csv" />
+               <globmapper from="${app.name}-patches.csv" to="${app.name}-patches-${version}-${release}.csv" />
+            </copy>
+         </then>
+      </if>
+      <if>
+         <available type="file" file="${basedir}/licenses/${app.name}-restrictions.csv" />
+         <then>
+            <copy todir="${distribution.dir}/internal">
+               <fileset file="${basedir}/licenses/${app.name}-restrictions.csv" />
+               <globmapper from="${app.name}-restrictions.csv" to="${app.name}-restrictions-${version}-${release}.csv" />
+            </copy>
+         </then>
+      </if>
       <copy todir="${dist.internal.dir}">
          <fileset dir="${build.dir}" includes="BuildID.txt" />
       </copy>
@@ -460,7 +496,7 @@
             <include name="xerces/**" />
             <include name="xml-commons/**" />
          </fileset>
-      </copy>	
+      </copy>   
    </target>
 
    <!-- =================================================================== -->
