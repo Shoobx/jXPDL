@@ -32,7 +32,7 @@
         
       <!-- Including external if task-->
       <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" 
-            classpath="${basedir}/util/build/antcontrib.jar"/>
+            classpath="${basedir}/lib/antcontrib.jar"/>
 
 
       <if>
