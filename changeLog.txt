@@ -1,4 +1,8 @@
 ###### TXM 1.3-1 RELEASED ######
+2011-12-07 Sasa Bojanic <sasaboy@together.at>
+   # Updated configure.bat script not to have default values for VERSION/RELEASE and not to override 
+     the values in version.properties file unless explicitely specified by configure script argument
+
 2011-11-30 Sasa Bojanic <sasaboy@together.at>
    # Updated commons-io library to version 2.1
    # build procedure will now put the txm-patches and txm-restriction files to the proper places
