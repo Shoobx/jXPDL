@@ -44,7 +44,7 @@ find "version=" < version.properties > version.txt
 for /F "tokens=1,2* delims==" %%i in (version.txt) do SET VERSION=%%j
 del version.txt>nul
 
-rem ***** init release version from version.properties file
+rem ***** init release from version.properties file
 find "release=" < version.properties > release.txt
 for /F "tokens=1,2* delims==" %%i in (release.txt) do SET RELEASE=%%j
 del release.txt>nul
