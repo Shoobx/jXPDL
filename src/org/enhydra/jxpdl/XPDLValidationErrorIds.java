@@ -29,6 +29,9 @@ public final class XPDLValidationErrorIds {
    /** Constant representing error for non-unique Id. */
    public static final String ERROR_NON_UNIQUE_ID = "ERROR_NON_UNIQUE_ID";
 
+   /** Constant representing error for non-allowed length of the elements' value. */
+   public static final String ERROR_UNALLOWED_LENGTH = "ERROR_UNALLOWED_LENGTH";
+   
    /** Constant representing error for non-existing workflow process reference. */
    public static final String ERROR_NON_EXISTING_WORKFLOW_PROCESS_REFERENCE = "ERROR_NON_EXISTING_WORKFLOW_PROCESS_REFERENCE";
 
