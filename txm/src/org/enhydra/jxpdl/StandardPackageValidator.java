@@ -433,6 +433,17 @@ public class StandardPackageValidator implements XMLValidator {
          checkBlockId(el, existingErrors);
       }
 
+      if (!fullCheck && existingErrors.size() > 0) {
+         return;
+      }
+      if (!isElementLengthOK(el)) {
+         XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+                                                          XMLValidationError.SUB_TYPE_LOGIC,
+                                                          XPDLValidationErrorIds.ERROR_UNALLOWED_LENGTH,
+                                                          el.toName(),
+                                                          el);
+         existingErrors.add(verr);         
+      }
    }
 
    /**
@@ -510,6 +521,14 @@ public class StandardPackageValidator implements XMLValidator {
     * @param fullCheck If false, validation will stop after the first error is found.
     */
    public void validateElement(XMLSimpleElement el, List existingErrors, boolean fullCheck) {
+      if (!isElementLengthOK(el)) {
+         XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+                                                          XMLValidationError.SUB_TYPE_LOGIC,
+                                                          XPDLValidationErrorIds.ERROR_UNALLOWED_LENGTH,
+                                                          el.toName(),
+                                                          el);
+         existingErrors.add(verr);         
+      }      
    }
 
    /**
@@ -1837,6 +1856,10 @@ public class StandardPackageValidator implements XMLValidator {
       return false;
    }
 
+   public boolean isElementLengthOK(XMLElement el) {
+      return true;
+   }
+   
    /**
     * Returns true if the Id is valid according to XML restrictions for xsd:NMTOKEN type
     * attributes.
