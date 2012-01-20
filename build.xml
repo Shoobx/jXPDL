@@ -430,8 +430,8 @@
    </target>
 
    <target name="distOther">
-      <copy file="${output.doc.dir}/${app.name}-current.doc.pdf" tofile="${output.doc.dir}/${app.name}-doc-${version}-${release}.pdf"/>
-      <copy file="${output.doc.dir}/${app.name}-current.doc.html" tofile="${output.doc.dir}/${app.name}-doc-${version}-${release}.html"/>
+      <copy file="${output.doc.dir}/${app.name}-current.doc.pdf" tofile="${output.doc.dir}/${app.name}-${version}-${release}.doc.pdf"/>
+      <copy file="${output.doc.dir}/${app.name}-current.doc.html" tofile="${output.doc.dir}/${app.name}-${version}-${release}.doc.html"/>
       <zip destfile="${dist.community.dir}/${app.name}-${version}-${release}.doc.zip" update="true">
          <zipfileset dir="${output.doc.dir}" excludes="${app.name}-current.doc.*"/>
       </zip>
@@ -442,7 +442,7 @@
          <fileset dir="${output.doc.dir}" excludes="${app.name}-current.doc.*"/>
       </copy>
       <delete quiet="true">
-         <fileset dir="${output.doc.dir}" includes="${app.name}-doc-${version}-${release}.*" />
+         <fileset dir="${output.doc.dir}" includes="${app.name}-${version}-${release}.doc.*" />
       </delete>      
       <copy todir="${dist.internal.dir}">
          <fileset dir="${licenses.dir}" includes="${app.name}-includes.csv" />
