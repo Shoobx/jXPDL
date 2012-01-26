@@ -107,14 +107,14 @@
       </copy>
       <copy todir="${build.dir}/licenses">
          <fileset dir="${licenses.dir}" includes="*.*" />
-         <mapper type="regexp" from="${app.name}-includes.csv" to="${app.name}-includes-${version}-${release}.csv" />
+         <mapper type="regexp" from="${app.name}-includes.csv" to="${app.name}-${version}-${release}.includes.csv" />
       </copy>
       <if>
          <available type="file" file="${basedir}/licenses/${app.name}-patches.csv" />
          <then>
             <copy todir="${build.dir}/licenses">
                <fileset file="${basedir}/licenses/${app.name}-patches.csv" />
-               <globmapper from="${app.name}-patches.csv" to="${app.name}-patches-${version}-${release}.csv" />
+               <globmapper from="${app.name}-patches.csv" to="${app.name}-${version}-${release}.patches.csv" />
             </copy>
          </then>
       </if>
@@ -123,7 +123,7 @@
          <then>
             <copy todir="${build.dir}/licenses">
                <fileset file="${basedir}/licenses/${app.name}-restrictions.csv" />
-               <globmapper from="${app.name}-restrictions.csv" to="${app.name}-restrictions-${version}-${release}.csv" />
+               <globmapper from="${app.name}-restrictions.csv" to="${app.name}-${version}-${release}.restrictions.csv" />
             </copy>
          </then>
       </if>
@@ -446,14 +446,14 @@
       </delete>      
       <copy todir="${dist.internal.dir}">
          <fileset dir="${licenses.dir}" includes="${app.name}-includes.csv" />
-         <mapper type="regexp" from="${app.name}-includes.csv" to="${app.name}-includes-${version}-${release}.csv" />
+         <mapper type="regexp" from="${app.name}-includes.csv" to="${app.name}-${version}-${release}.includes.csv" />
       </copy>
       <if>
          <available type="file" file="${basedir}/licenses/${app.name}-patches.csv" />
          <then>
             <copy todir="${dist.internal.dir}">
                <fileset file="${basedir}/licenses/${app.name}-patches.csv" />
-               <globmapper from="${app.name}-patches.csv" to="${app.name}-patches-${version}-${release}.csv" />
+               <globmapper from="${app.name}-patches.csv" to="${app.name}-${version}-${release}.patches.csv" />
             </copy>
          </then>
       </if>
@@ -462,7 +462,7 @@
          <then>
             <copy todir="${dist.internal.dir}">
                <fileset file="${basedir}/licenses/${app.name}-restrictions.csv" />
-               <globmapper from="${app.name}-restrictions.csv" to="${app.name}-restrictions-${version}-${release}.csv" />
+               <globmapper from="${app.name}-restrictions.csv" to="${app.name}-${version}-${release}.restrictions.csv" />
             </copy>
          </then>
       </if>
