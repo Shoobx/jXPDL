@@ -1,3 +1,7 @@
+###### TXM 1.4-1 RELEASED ######
+2012-02-23 Sasa Bojanic <sasaboy@together.at>
+   # Compiled code can be executed only with Java7
+
 ###### TXM 1.3-1 RELEASED ######
 2011-12-15 Sasa Bojanic <sasaboy@together.at>
    # New method for XPDL validation to validate length...dummy implementation which can be overriden

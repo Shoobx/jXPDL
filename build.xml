@@ -29,7 +29,7 @@
       <property file="version.properties"/>
 
       <!-- Project constants -->
-      <property name="targetVM" value="1.6" />
+      <property name="targetVM" value="1.7" />
       <property name="app.name" value="txm"/>
       <property name="project.name" value="Together XPDL Model" />
 
