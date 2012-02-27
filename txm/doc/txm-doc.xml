@@ -218,7 +218,7 @@ Multiple parameters can be specified at once.
 
 Example:
 
-configure -version 1.0 -release 1 -buildid 20110721-0808 -jdkhome C:/jdk1.6 -instdir C:/JXPDL</programlisting>
+configure -version 1.4 -release 1 -buildid 20120301-0808 -jdkhome C:/jdk1.7 -instdir C:/JXPDL</programlisting>
 
       <para>The configure script will create/change the <emphasis
       role="bold">build.properties</emphasis> file based on the parameters
