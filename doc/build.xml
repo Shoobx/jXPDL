@@ -145,6 +145,7 @@
          splitindex="yes" 
          access="private" 
          encoding="ISO-8859-1" 
+         failonerror="true"
          additionalparam="-J-Xmx128m -breakiterator -quiet"/>
    </target>
 
