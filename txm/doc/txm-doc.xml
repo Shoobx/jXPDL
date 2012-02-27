@@ -23,7 +23,7 @@
   <title><inlinemediaobject>
       <imageobject>
         <imagedata contentdepth="100%" fileref="images/logo.jpg" scalefit="1"
-                   valign="middle" width="100%"></imagedata>
+                   valign="middle" width="100%"/>
       </imageobject>
     </inlinemediaobject> <replaceable><?coverdetail ?></replaceable></title>
 
@@ -80,7 +80,7 @@
     </legalnotice>
   </info>
 
-  <toc></toc>
+  <toc/>
 
   <chapter xml:id="introduction">
     <title>Introduction</title>
@@ -142,7 +142,7 @@
 
           <itemizedlist>
             <listitem>
-              <para>Java Development Kit (JDK) version 6 or later</para>
+              <para>Java Development Kit (JDK) version 7 or later</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -164,7 +164,7 @@
             </listitem>
 
             <listitem>
-              <para>Java Development Kit (JDK) version 6 or later</para>
+              <para>Java Development Kit (JDK) version 7 or later</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -286,7 +286,7 @@ make distributions   - Builds and configures TXM with all documentations
       <title>Prerequisites</title>
 
       <para>The only prerequisite to be able to use TXM on Windows or Linux
-      system is Java JRE 1.6 installed on the machine.</para>
+      system is Java JRE 1.7 installed on the machine.</para>
     </sect1>
 
     <sect1>
@@ -300,7 +300,7 @@ make distributions   - Builds and configures TXM with all documentations
       be executed without parameters, otherwise it should be called with a
       parameter specifying JAVA_HOME value, e.g.:</para>
 
-      <programlisting>configure -jdkhome c:\jdk1.6.0_20</programlisting>
+      <programlisting>configure -jdkhome c:\jdk1.7.0_03</programlisting>
 
       <para>This will prepare different <emphasis
       role="bold">.bat/.sh</emphasis> scripts in examples directory.</para>
@@ -363,7 +363,7 @@ make distributions   - Builds and configures TXM with all documentations
           <imageobject>
             <imagedata contentdepth="100%"
                        fileref="images/package_meta_model.jpg" scalefit="1"
-                       width="100%"></imagedata>
+                       width="100%"/>
           </imageobject>
         </mediaobject>
       </figure>
@@ -455,7 +455,7 @@ make distributions   - Builds and configures TXM with all documentations
           <title>General attributes</title>
 
           <tgroup align="left" cols="3" colsep="1" rowsep="1">
-            <colspec align="center" colnum="2" colwidth="1.00*" />
+            <colspec align="center" colnum="2" colwidth="1.00*"/>
 
             <thead>
               <row>
@@ -494,7 +494,7 @@ make distributions   - Builds and configures TXM with all documentations
           <title>Conformance Class</title>
 
           <tgroup align="left" cols="3" colsep="1" rowsep="1">
-            <colspec align="center" colnum="2" />
+            <colspec align="center" colnum="2"/>
 
             <thead>
               <row>
@@ -544,7 +544,7 @@ make distributions   - Builds and configures TXM with all documentations
           <title>Script element</title>
 
           <tgroup align="left" cols="3" colsep="1" rowsep="1">
-            <colspec align="left" colnum="2" colwidth="1.00*" />
+            <colspec align="left" colnum="2" colwidth="1.00*"/>
 
             <thead>
               <row>
@@ -654,7 +654,7 @@ eas.add(ea);</programlisting>
             <title>Package Header</title>
 
             <tgroup align="left" cols="3" colsep="1" rowsep="1">
-              <colspec align="center" colnum="2" />
+              <colspec align="center" colnum="2"/>
 
               <thead>
                 <row>
@@ -753,7 +753,7 @@ ph.setCostUnit("$");</programlisting>
             <title>Redefinable Header</title>
 
             <tgroup align="left" cols="3" colsep="1" rowsep="1">
-              <colspec align="center" colnum="2" />
+              <colspec align="center" colnum="2"/>
 
               <thead>
                 <row>
@@ -989,11 +989,11 @@ apps.add(app);</programlisting>
             <title>Data Field</title>
 
             <tgroup cols="3">
-              <colspec colname="col01" colnum="1" colwidth="2.00*" />
+              <colspec colname="col01" colnum="1" colwidth="2.00*"/>
 
-              <colspec colname="col1" colnum="2" colwidth="1*" />
+              <colspec colname="col1" colnum="2" colwidth="1*"/>
 
-              <colspec colname="col03" colnum="3" colwidth="2.00*" />
+              <colspec colname="col03" colnum="3" colwidth="2.00*"/>
 
               <thead>
                 <row>
@@ -1238,7 +1238,7 @@ pkg.getPools.add(p);
           <imageobject>
             <imagedata contentdepth="100%"
                        fileref="images/process_meta_model.jpg" scalefit="1"
-                       width="100%"></imagedata>
+                       width="100%"/>
           </imageobject>
         </mediaobject>
       </figure>
@@ -1270,7 +1270,7 @@ pkg.getPools.add(p);
           <title>General Attributes</title>
 
           <tgroup cols="3" colsep="1" rowsep="1">
-            <colspec align="center" colnum="2" />
+            <colspec align="center" colnum="2"/>
 
             <thead>
               <row>
@@ -1319,7 +1319,7 @@ pkg.getPools.add(p);
           <title>Process Header</title>
 
           <tgroup cols="3" colsep="1" rowsep="1">
-            <colspec align="center" colnum="2" />
+            <colspec align="center" colnum="2"/>
 
             <thead>
               <row>
@@ -1457,7 +1457,7 @@ pkg.getPools.add(p);
           <title>Redefinable Header</title>
 
           <tgroup cols="3" colsep="1" rowsep="1">
-            <colspec align="center" colnum="2" />
+            <colspec align="center" colnum="2"/>
 
             <thead>
               <row>
@@ -1689,11 +1689,11 @@ pkg.getPools.add(p);
 
             <tgroup cols="3" colsep="1" rowsep="1">
               <colspec align="center" colname="col0" colnum="1"
-                       colwidth="2.33*" />
+                       colwidth="2.33*"/>
 
-              <colspec colname="col02" colnum="2" colwidth="1.00*" />
+              <colspec colname="col02" colnum="2" colwidth="1.00*"/>
 
-              <colspec colname="col2" colnum="3" colwidth="6.04*" />
+              <colspec colname="col2" colnum="3" colwidth="6.04*"/>
 
               <thead>
                 <row>
@@ -1826,7 +1826,7 @@ pkg.getPools.add(p);
               <imageobject>
                 <imagedata contentdepth="100%"
                            fileref="images/process_activity_structures.jpg"
-                           scalefit="1" width="100%"></imagedata>
+                           scalefit="1" width="100%"/>
               </imageobject>
             </mediaobject>
           </figure>
@@ -1863,7 +1863,7 @@ pkg.getPools.add(p);
             <title>Transition</title>
 
             <tgroup cols="3" colsep="1" rowsep="1">
-              <colspec align="center" colnum="2" />
+              <colspec align="center" colnum="2"/>
 
               <thead>
                 <row>
@@ -2177,7 +2177,7 @@ pkg.getParticipants().add(p3);
   <chapter xml:id="examples">
     <title>Examples</title>
 
-    <para>As mentioned in <xref linkend="introduction" />, TXM's main purpose
+    <para>As mentioned in <xref linkend="introduction"/>, TXM's main purpose
     is to act as a common library for <link
     xlink:href="http://www.together.at/prod/workflow/twe"
     xmlns:xlink="http://www.w3.org/1999/xlink">Together Workflow Editor</link>
@@ -2208,7 +2208,7 @@ pkg.getParticipants().add(p3);
           <imageobject>
             <imagedata align="center" contentdepth="100%"
                        fileref="images/runconvert.jpg" scalefit="1"
-                       width="100%"></imagedata>
+                       width="100%"/>
           </imageobject>
         </mediaobject>
       </figure>
@@ -2231,7 +2231,7 @@ pkg.getParticipants().add(p3);
           <imageobject>
             <imagedata align="center" contentdepth="100%"
                        fileref="images/runcreate.jpg" scalefit="1"
-                       width="100%"></imagedata>
+                       width="100%"/>
           </imageobject>
         </mediaobject>
       </figure>
@@ -2243,6 +2243,12 @@ pkg.getParticipants().add(p3);
 
     <section>
       <title>Release 1.4-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Java 7 is now prerequisite</para>
+        </listitem>
+      </itemizedlist>
     </section>
 
     <section>
