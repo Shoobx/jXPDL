@@ -162,7 +162,7 @@ echo.
 echo.
 echo Example:
 echo.
-echo configure -version 1.1 -release 1 -buildid 20110721-0808 -jdkhome C:/jdk1.6 -instdir C:/TXM
+echo configure -version 1.4 -release 1 -buildid 20120301-0808 -jdkhome C:/jdk1.7 -instdir C:/TXM
 echo.
 goto end
 
