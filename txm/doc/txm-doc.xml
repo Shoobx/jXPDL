@@ -2246,6 +2246,11 @@ pkg.getParticipants().add(p3);
 
       <itemizedlist>
         <listitem>
+          <para>Fixed bug in XMLUtil class when returning Participant
+          references (some Lane references could be omitted)</para>
+        </listitem>
+
+        <listitem>
           <para>Java 7 is now prerequisite</para>
         </listitem>
 

@@ -4000,9 +4000,7 @@ public class XMLUtil {
             while (pri.hasNext()) {
                Performer perf = (Performer) pri.next();
                if (perf.toValue().equals(referencedId)) {
-                  if (!references.contains(perf)) {
-                     references.add(perf);
-                  }
+                  references.add(perf);
                }
             }
          }
