@@ -1,6 +1,6 @@
 ###### TXM 1.4-1 RELEASED ######
 2012-03-20 Sasa Bojanic <sasaboy@together.at>
-   # Fixed bug in XMLUtil class when returning Participant references (some Lane references could be omitted)
+   # Fixed bug in XMLUtil class when returning Participant references (some Lane references could have been omitted)
    
 2012-02-23 Sasa Bojanic <sasaboy@together.at>
    # Compiled code can be executed only with Java7
