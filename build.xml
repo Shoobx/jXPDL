@@ -291,25 +291,9 @@
          </manifest>
       </jar>
 
-     <if>
-      <not>
-         <equals arg1="${os}" arg2="unix" />
-      </not>
-      <then>
-         <if>
-            <not>
-               <equals arg1="${sign.alias}" arg2="" />
-            </not>
-            <then>
-               <antcall target="signjarfiles" />
-            </then>
-         </if>      
-      </then>
-     </if>
-     
    </target>
    
-   <target name="_debug" depends="cleanClasses, setDebug, jar"/>
+   <target name="_debug" depends="cleanClasses, setDebug, jar, signJar"/>
 
    <target name="debug" depends="clean, _debug"/>
    
@@ -357,6 +341,7 @@
    <target name="distributions" depends="clean, prepare, initDist">
       <antcall target="${os.buildSrc.target}"/>
       <antcall target="jar"/>
+      <antcall target="signJar"/>
       <antcall target="buildDoc"/>
       <antcall target="${os.buildBin.target}"/>
 
@@ -578,14 +563,29 @@ make distributions       - Builds and configures TXM with all documentations and
    </target>
 
    
-   <target name="signjarfiles">
-      <echo message="Signing with Together certificate" />
-      <signjar alias="${sign.alias}"
-         storepass="${sign.pwd}"
-         keystore="${sign.privatekey}"
-         storetype="pkcs12">
-         <fileset dir="${output.lib.dir}" includes="${jar.name}.jar" />
-      </signjar>
-   </target>  
+   <target name="signJar">
+      <if>
+         <not>
+            <equals arg1="${os}" arg2="unix" />
+         </not>
+         <then>
+            <if>
+               <not>
+                  <equals arg1="${sign.alias}" arg2="" />
+               </not>
+               <then>
+                  <echo message="Signing with Together certificate" />
+                  <signjar alias="${sign.alias}"
+                     storepass="${sign.pwd}"
+                     keystore="${sign.privatekey}"
+                     storetype="pkcs12">
+                     <fileset dir="${output.lib.dir}" includes="${jar.name}.jar" />
+                  </signjar>
+               </then>
+            </if>      
+         </then>
+      </if>   
+   </target>
+   
    
 </project>
