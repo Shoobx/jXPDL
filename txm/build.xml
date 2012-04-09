@@ -27,6 +27,8 @@
 
       <property file="build.properties"/>
       <property file="version.properties"/>
+     <property file="sign.properties" />
+     <property name="sign.alias" value=""/>
 
       <!-- Project constants -->
       <property name="targetVM" value="1.7" />
@@ -49,6 +51,12 @@
       <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" 
             classpath="${tools.dir}/antcontrib/antcontrib.jar"/>
 
+     <condition property="os" value="windows">
+        <os family="windows" />
+     </condition>
+     <condition property="os" value="unix">
+        <os family="unix" />
+     </condition>
       <!-- Windows/Linux specific target definitions -->        
       <condition property="os.prepare.target" value="prepareForLinux">
          <os family="unix"/>
@@ -282,6 +290,23 @@
             <attribute name="Project-URL" value="http://sourceforge.net/projects/jxpdl" />
          </manifest>
       </jar>
+
+     <if>
+      <not>
+         <equals arg1="${os}" arg2="unix" />
+      </not>
+      <then>
+         <if>
+            <not>
+               <equals arg1="${sign.alias}" arg2="" />
+            </not>
+            <then>
+               <antcall target="signjarfiles" />
+            </then>
+         </if>      
+      </then>
+     </if>
+     
    </target>
    
    <target name="_debug" depends="cleanClasses, setDebug, jar"/>
@@ -552,4 +577,15 @@ make distributions       - Builds and configures TXM with all documentations and
       </echo>
    </target>
 
+   
+   <target name="signjarfiles">
+      <echo message="Signing with Together certificate" />
+      <signjar alias="${sign.alias}"
+         storepass="${sign.pwd}"
+         keystore="${sign.privatekey}"
+         storetype="pkcs12">
+         <fileset dir="${output.lib.dir}" includes="${jar.name}.jar" />
+      </signjar>
+   </target>  
+   
 </project>
