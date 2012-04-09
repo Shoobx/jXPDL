@@ -267,6 +267,33 @@ make distributions   - Builds and configures TXM with all documentations
       role="bold"><emphasis role="bold">distribution</emphasis></emphasis>
       folder will be created in the root directory of the project source
       containing the appropriate OS specific binary distributions.</para>
+
+      <para>On Windows, to have the resulting JAR file automatically signed,
+      the file called <emphasis role="bold">sign.properties</emphasis> should
+      be placed in the root directory of the projects source with the
+      following properties:</para>
+
+      <para><programlisting>sign.tool       - absolute path to the sign tool executable file
+sign.privatekey - absolute path to the private key used for signing
+sign.pwd        - password for signing
+sign.alias      - sign alias</programlisting>example sign.properties
+      file:</para>
+
+      <para><programlisting>sign.tool=D:/signtool/signtool.exe
+sign.privatekey=D:/signtool/privatekey.pfx
+sign.pwd=agles87t24e25NDwas
+sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
+      alias can be produced by the usage of Java's keytool by executing the
+      command:</para>
+
+      <para><emphasis role="bold">keytool -v -list -storetype pkcs12
+      -storepass PRIVATE-KEY-PASSWORD -keystore
+      PATH-TO-PRIVATE-KEY</emphasis></para>
+
+      <para>where PRIVATE-KEY-PASSWORD is the same as the property sign.pwd
+      from sign.properties file described above, and PATH-TO-PRIVATE-KEY is
+      the same as the property sign.privatekey from this properties
+      file.</para>
     </sect1>
   </chapter>
 
