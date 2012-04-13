@@ -404,6 +404,8 @@
             <exclude name="output/**" />
             <exclude name="bin/**" />
             <exclude name="**/classes/**" />
+            <exclude name="doc/tmp/**"/>
+            <exclude name="doc/docbook/**"/>
             <exclude name="build.properties" />
             <exclude name="Makefile" />
          </tarfileset>
@@ -433,6 +435,7 @@
             <exclude name="bin/**"/>
             <exclude name="**/classes/**"/>
             <exclude name="doc/tmp/**"/>
+            <exclude name="doc/docbook/**"/>
             <exclude name="build.properties"/>
             <exclude name="Makefile"/>
          </zipfileset>
