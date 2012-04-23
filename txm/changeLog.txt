@@ -1,4 +1,8 @@
 ###### TXM 1.4-1 RELEASED ######
+2012-04-23 Sasa Bojanic <sasaboy@together.at>
+   # Documentation folder removed from distribution
+   # Description of txm component improved
+
 2012-04-09 Sasa Bojanic <sasaboy@together.at>
    # signing JAR files with Together certificate
 
