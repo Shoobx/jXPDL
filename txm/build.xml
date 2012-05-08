@@ -562,6 +562,7 @@ make distributions       - Builds and configures TXM with all documentations and
 
    
    <target name="signJar">
+<!--
       <if>
          <not>
             <equals arg1="${os}" arg2="unix" />
@@ -583,6 +584,7 @@ make distributions       - Builds and configures TXM with all documentations and
             </if>      
          </then>
       </if>   
+-->      
    </target>
    
    

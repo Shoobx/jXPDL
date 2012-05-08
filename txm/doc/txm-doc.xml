@@ -267,7 +267,7 @@ make distributions   - Builds and configures TXM with all documentations
       role="bold"><emphasis role="bold">distribution</emphasis></emphasis>
       folder will be created in the root directory of the project source
       containing the appropriate OS specific binary distributions.</para>
-
+<!--
       <para>On Windows, to have the resulting JAR file automatically signed,
       the file called <emphasis role="bold">sign.properties</emphasis> should
       be placed in the root directory of the projects source with the
@@ -294,6 +294,7 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
       from sign.properties file described above, and PATH-TO-PRIVATE-KEY is
       the same as the property sign.privatekey from this properties
       file.</para>
+-->      
     </sect1>
   </chapter>
 
