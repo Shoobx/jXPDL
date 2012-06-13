@@ -551,7 +551,6 @@
       <delete dir="${classes.dir}"/>
       <delete dir="${output.dir}"/>
       <delete dir="${basedir}/distribution" />
-      <delete dir="${basedir}/shared" />
    </target>
 
    <target name="cleanClasses">
