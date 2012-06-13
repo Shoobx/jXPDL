@@ -38,6 +38,7 @@
       <property name="jar.name"         value="jxpdl"/>
       <property name="classes.dir"      location="${basedir}/classes" />
       <property name="input.dir"        location="${basedir}/input"/>
+      <property name="share.dir"       location="${basedir}/shared"/>
       <property name="output.dir"       location="${basedir}/output"/>
       <property name="build.dir"        location="${output.dir}/${app.name}-${version}-${release}"/>
       <property name="output.lib.dir"   location="${build.dir}/lib"/>
@@ -79,11 +80,26 @@
             <equals arg1="${install.dir}X" arg2="X"/>
          </not>
       </condition>
+	
+	<condition property="use.shared" value="true">
+		<and>
+			<os family="unix"/>
+			<available type="file" file="${share.dir}/${app.name}-${version}-${release}.zip" />
+		</and>
+	</condition>
+	<property name="use.shared" value="false"/>
 
    <!-- =================================================================== -->
    <!-- Prepare TXM module                                                  -->
    <!-- =================================================================== -->
    <target name="prepare">
+   	
+   	  <if>
+   	     <available type="file" file="${share.dir}/${app.name}-${version}-${release}.zip" />
+   	     <then>
+   	        <unzip src="${share.dir}/${app.name}-${version}-${release}.zip" dest="${output.dir}" />
+   	     </then>
+   	  </if>
       <!-- create directory structure -->
       <mkdir dir="${output.lib.dir}"/>
       <mkdir dir="${build.dir}/dist"/>
@@ -146,6 +162,12 @@
    <!-- Prepare TXM module - Linux Part                                     -->
    <!-- =================================================================== -->
    <target name="prepareForLinux">
+      <delete>
+    	<fileset dir="${build.dir}">
+    	    <include name="configure.*"/>
+    	</fileset>
+      </delete>
+
       <!-- create Linux specific oyster root file -->
       <copy todir="${build.dir}" includeEmptyDirs="false" overwrite="yes">
          <fileset dir="${input.dir}">
@@ -167,7 +189,11 @@
    <!-- Prepare TXM module - Windows Part                                   -->
    <!-- =================================================================== -->
    <target name="prepareForWindows">
-
+   	  <delete>
+   	     <fileset dir="${build.dir}">
+   	        <include name="configure.*"/>
+   	     </fileset>
+   	  </delete>
       <!-- create Windows specific oyster root files -->
       <copy todir="${build.dir}" includeEmptyDirs="false" overwrite="yes">
          <fileset dir="${input.dir}">
@@ -184,7 +210,7 @@
    <!-- =================================================================== -->
    <!-- Compile Generator module                                            -->
    <!-- =================================================================== -->
-   <target name="compile" depends="updateVersion">
+   <target name="compile" depends="updateVersion" unless="${use.shared}">
       <mkdir dir="${classes.dir}"/>
       <copy todir="${classes.dir}">
          <fileset dir="${basedir}/src"
@@ -262,7 +288,7 @@
    <!-- =================================================================== -->
    <!-- Making jxpdl.jar                                                    -->
    <!-- =================================================================== -->
-   <target name="jar" depends="compile">
+   <target name="jar" depends="compile" unless="${use.shared}">
       <echo message=""/>
       <echo message="******************************************"/>
       <echo message="Building TXM jar libraries ..."/>
@@ -309,7 +335,7 @@
     
    <!-- Builds Documentation                                                 -->
    <!-- ==================================================================== -->
-   <target name="buildDoc">
+   <target name="buildDoc" unless="${use.shared}">
       <ant dir="${doc.dir}" />
    </target>
 
@@ -401,9 +427,11 @@
             <exclude name="distribution/**" />
             <exclude name="output/**" />
             <exclude name="bin/**" />
+         	<exclude name="shared/**"/>
             <exclude name="**/classes/**" />
             <exclude name="doc/tmp/**"/>
             <exclude name="doc/docbook/**"/>
+            <exclude name="sign.properties" />
             <exclude name="build.properties" />
             <exclude name="Makefile" />
          </tarfileset>
@@ -431,9 +459,11 @@
             <exclude name="distribution/**"/>
             <exclude name="output/**"/>
             <exclude name="bin/**"/>
+         	<exclude name="shared/**"/>
             <exclude name="**/classes/**"/>
             <exclude name="doc/tmp/**"/>
             <exclude name="doc/docbook/**"/>
+            <exclude name="sign.properties" />
             <exclude name="build.properties"/>
             <exclude name="Makefile"/>
          </zipfileset>
@@ -521,6 +551,7 @@
       <delete dir="${classes.dir}"/>
       <delete dir="${output.dir}"/>
       <delete dir="${basedir}/distribution" />
+      <delete dir="${basedir}/shared" />
    </target>
 
    <target name="cleanClasses">
