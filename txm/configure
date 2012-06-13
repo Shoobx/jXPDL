@@ -49,24 +49,25 @@ do
 	esac            
 done                    
                         
-version=1.1
-release=1
 buildid=
 install_DOT_dir=
 
 cd $(dirname $0)        
                         
-if
-	[[ -r ./build.properties ]]
-then
-	fname=/tmp/.build.properties$$.tmp
-	grep -v "^[ 	]*#" ./build.properties |
-		grep -v ^$ |
-		sed -e 's/\./_DOT_/g' >$fname
-	. $fname
-	rm  $fname
-else
-        touch ./build.properties
+if test -r ./build.properties ; then
+    grep -v ^# ./build.properties |grep -v ^$|sed -e 's|\.|_DOT_|g'>./tmp.properties
+#    cp build.properties tmp.properties
+    dos2unix -n tmp.properties tmp.properties
+    . ./tmp.properties
+    rm ./tmp.properties
+fi
+
+if test -r ./version.properties ; then
+    grep -v ^# ./version.properties |grep -v ^$|sed -e 's|\.|_DOT_|g'>./tmpv.properties
+#    cp version.properties tmpv.properties
+    dos2unix -n tmpv.properties tmpv.properties
+    . ./tmpv.properties
+    rm ./tmpv.properties
 fi
 
 for n in $*             
@@ -119,23 +120,23 @@ done
 if test -n "$jdk_DOT_dir"; then
     jdk_DOT_dir=`echo $jdk_DOT_dir|sed -e 's|_DOT_|\.|g'`
     version=`echo $version|sed -e 's|_DOT_|\.|g'`
-else	
+else
     if test -n "$JAVA_HOME"; then
       jdk_DOT_dir=$JAVA_HOME
     else
-       which_java=`which javac 2>/dev/null`
+      which_javac=`which javac 2>/dev/null`
        if test -n "$which_javac"; then
-	      cd `dirname $which_javac`/..
-	      jdk_DOT_dir=$PWD
-	      cd -
+	   cd `dirname $which_javac`/..
+	   jdk_DOT_dir=$PWD
+	   cd -
        else
 	   {
 	       echo "$0: error: JAVA_HOME not defined
    Try \`$0 --help' for more information." >&2
 	       { (exit 1); exit 1; };
 	   }
-      fi
-   fi
+       fi
+    fi
 fi
 
 
@@ -194,40 +195,26 @@ Try \`$0 --help' for more information." >&2
 	{ (exit 1); exit 1; };
     }
 fi
-fnameOld=/tmp/$$build.properties.old
-fname=/tmp/$$build.properties
-cp -p ./build.properties $fnameOld
-sed "
-/^[ 	]*version=/c\\
-version=$version
-/^[ 	]*release=/c\\
-release=$release
-/^[ 	]*buildid=/c\\
-buildid=$buildid
-/^[ 	]*jdk.dir=/c\\
-jdk.dir=$jdk_DOT_dir
-/^[ 	]*install.dir=/c\\
-install.dir=$install_DOT_dir
 
-" $fnameOld >$fname
+rm -f ./build.properties
 
-rm build.properties
-
-sed  -e 's|_DOT_|\.|g' $fname >>build.properties
+echo "# Configured on "`uname -n`" at "`date` >build.properties
 (
-	for pName in jdk.dir version release buildid install.dir
-	do
-		value=$(echo $pName | sed "s/\./_DOT_/g")
-		if
-			 ! grep "^[      ]*$pName=" $fname >/dev/null
-		then
-			if
-				eval [[ -n \$$value ]]
-			then
-				eval echo "$pName=\$$value"
-			fi
-		fi
-	done
-)|sed -e 's|_DOT_|\.|g'>>build.properties
-chmod a+r build.properties
-rm $fname $fnameOld
+    echo ""
+    echo "### ----------        Build Id    --------- ###"
+    echo "buildid=$buildid"
+    echo "### ----------   jdk dir                ---------- ###"
+    echo "jdk.dir=$jdk_DOT_dir"
+    echo "### ----------      Install directory   --------- ###"
+    echo "install.dir=$install_DOT_dir"
+    echo "#####################"
+)|sed -e 's|_DOT_|\.|g'>>build.properties 
+
+rm -f ./version.properties
+
+(
+    echo "#####################"
+    echo "version=$version"
+    echo "release=$release"
+    echo "#####################"
+)|sed -e 's|_DOT_|\.|g'>>version.properties 
