@@ -47,8 +47,8 @@
       granted to copy, distribute and/or modify this document under the terms
       of the GNU Free Documentation License, Version 1.3 or any later version
       published by the Free Software Foundation; with the Invariant Sections
-      being <remark>"Introduction", "Build Guide", "Installation Guide", "XPDL
-      Meta-Model", "Programming Samples", "Examples", "Release Notes", and
+      being <remark>"Introduction", "Installation Guide", "XPDL Meta-Model",
+      "Programming Samples", "Examples", "Build Guide", "Release Notes", and
       with the Front-Cover Texts. A copy of the license is included in the
       section entitled "GNU Free Documentation License"</remark>.</holder>
     </copyright>
@@ -114,188 +114,6 @@
     xlink:href="http://www.together.at/prod/workflow/tws"
     xmlns:xlink="http://www.w3.org/1999/xlink">Together Workflow Server</link>
     projects.</para>
-  </chapter>
-
-  <chapter xml:id="buildguide">
-    <title>Build Guide</title>
-
-    <sect1>
-      <title>Getting the source code</title>
-
-      <para>The source code of the project can be obtained either via SVN
-      (please read instructions how to check out sources at <link
-      xlink:href="http://sourceforge.net/projects/jxpdl/develop"
-      xmlns:xlink="http://www.w3.org/1999/xlink">SourceForge</link>) or by
-      downloading the latest <emphasis
-      role="bold">txm-x.y-z.src.zip</emphasis>/<emphasis
-      role="bold">txm-x.y-z.src.tar.gz</emphasis> package from <link
-      xlink:href="http://sourceforge.net/projects/jxpdl/files"
-      xmlns:xlink="http://www.w3.org/1999/xlink">SourceForge</link>.</para>
-    </sect1>
-
-    <sect1>
-      <title>Prerequisites</title>
-
-      <itemizedlist>
-        <listitem>
-          <para>Windows</para>
-
-          <itemizedlist>
-            <listitem>
-              <para>Java Development Kit (JDK) version 7 or later</para>
-            </listitem>
-          </itemizedlist>
-        </listitem>
-
-        <listitem>
-          <para>Fedora (Linux)</para>
-
-          <itemizedlist>
-            <listitem>
-              <para>bash</para>
-            </listitem>
-
-            <listitem>
-              <para>tar</para>
-            </listitem>
-
-            <listitem>
-              <para>make</para>
-            </listitem>
-
-            <listitem>
-              <para>Java Development Kit (JDK) version 7 or later</para>
-            </listitem>
-          </itemizedlist>
-        </listitem>
-      </itemizedlist>
-    </sect1>
-
-    <sect1>
-      <title>Preparing the build environment</title>
-
-      <para>Execute the <emphasis role="bold">configure</emphasis> script from
-      the root directory of the project source. Specific JAVA version can be
-      set for building (different from the one registered with your system) by
-      executing:</para>
-
-      <para><itemizedlist>
-          <listitem>
-            <para>Windows</para>
-
-            <para>configure -jdkhome %JAVA_HOME%</para>
-          </listitem>
-
-          <listitem>
-            <para>Fedora (Linux)</para>
-
-            <para>./configure -jdkhome %JAVA_HOME%</para>
-          </listitem>
-        </itemizedlist>(Where JAVA_HOME is the path to your JDK
-      installation)</para>
-
-      <para>Possible parameters for the <emphasis
-      role="bold">configure</emphasis> script are:</para>
-
-      <programlisting>configure             - Creates build.properties file with default values
-                        for all possible parameters. It can work only if 
-                        there is a default JAVA registered with the system.
-configure -help       - Displays Help screen
-configure -version    - Sets the version number for the project.
-configure -release    - Sets the release number for the project.
-configure -buildid    - Sets the build id for the project.
-configure -jdkhome    - Sets the "JAVA HOME" location of Java to be used 
-                        to compile the project.
-configure -instdir    - Sets the location of the installation dir used when
-                        executing make script with install target specified.
-configure -rebranding - Flag that determines if the project 
-                        will be "rebranded" with the context of branding folder. 
-                        Possible values [true/false].
-configure -language   - Language to be used for rebranding.
-
-Multiple parameters can be specified at once.
-
-
-Example:
-
-configure -version 1.4 -release 1 -buildid 20120301-0808 -jdkhome C:/jdk1.7 -instdir C:/JXPDL</programlisting>
-
-      <para>The configure script will create/change the <emphasis
-      role="bold">build.properties</emphasis> file based on the parameters
-      provided. This file can also be manually changed to adjust your
-      environment/parameters for building the project from the sources.</para>
-    </sect1>
-
-    <sect1>
-      <title>Compiling and building</title>
-
-      <para>Execute the <emphasis role="bold">make</emphasis> script with the
-      <emphasis role="bold">buildAll</emphasis> target from the root directory
-      of the project source. When the building process finishes, the project
-      binaries will be in <emphasis role="bold">output/txm-x.y-z</emphasis>
-      folder.</para>
-
-      <para>Possible build targets for the make script are:</para>
-
-      <para><programlisting>make help            - Displays Help screen
-make buildAll        - Builds and configures TXM with documentation
-make buildNoDoc      - Builds and configures TXM without documentation
-make buildDoc        - Builds documentation only
-make debug           - Builds TXM JAR file with included debug information
-make install         - Installs and configures TXM into directory defined 
-                       by parameter install.dir in build.properties file. 
-                       This parameter can be set by using command: 
-                       configure -instdir PATH_TO_DIR.
-                       It should be called only after make buildAll target 
-                       is executed!
-make clean           - Removes the output and distribution folder (in order 
-                       to start a new compilation from scratch)
-make distributions   - Builds and configures TXM with all documentations 
-                       and creates distribution package
-</programlisting></para>
-    </sect1>
-
-    <sect1>
-      <title>Packaging distributions</title>
-
-      <para>Assuming that the environment is already configured as described
-      previously, to create the project distribution packages, execute:</para>
-
-      <programlisting>make distributions</programlisting>
-
-      <para>When the building process finishes, the <emphasis
-      role="bold"><emphasis role="bold">distribution</emphasis></emphasis>
-      folder will be created in the root directory of the project source
-      containing the appropriate OS specific binary distributions.</para>
-<!--
-      <para>On Windows, to have the resulting JAR file automatically signed,
-      the file called <emphasis role="bold">sign.properties</emphasis> should
-      be placed in the root directory of the projects source with the
-      following properties:</para>
-
-      <para><programlisting>sign.tool       - absolute path to the sign tool executable file
-sign.privatekey - absolute path to the private key used for signing
-sign.pwd        - password for signing
-sign.alias      - sign alias</programlisting>example sign.properties
-      file:</para>
-
-      <para><programlisting>sign.tool=D:/signtool/signtool.exe
-sign.privatekey=D:/signtool/privatekey.pfx
-sign.pwd=agles87t24e25NDwas
-sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
-      alias can be produced by the usage of Java's keytool by executing the
-      command:</para>
-
-      <para><emphasis role="bold">keytool -v -list -storetype pkcs12
-      -storepass PRIVATE-KEY-PASSWORD -keystore
-      PATH-TO-PRIVATE-KEY</emphasis></para>
-
-      <para>where PRIVATE-KEY-PASSWORD is the same as the property sign.pwd
-      from sign.properties file described above, and PATH-TO-PRIVATE-KEY is
-      the same as the property sign.privatekey from this properties
-      file.</para>
--->      
-    </sect1>
   </chapter>
 
   <chapter xml:id="installationguide">
@@ -2266,6 +2084,189 @@ pkg.getParticipants().add(p3);
     </section>
   </chapter>
 
+  <chapter xml:id="buildguide">
+    <title>Build Guide</title>
+
+    <sect1>
+      <title>Getting the source code</title>
+
+      <para>The source code of the project can be obtained either via SVN
+      (please read instructions how to check out sources at <link
+      xlink:href="http://sourceforge.net/projects/jxpdl/develop"
+      xmlns:xlink="http://www.w3.org/1999/xlink">SourceForge</link>) or by
+      downloading the latest <emphasis
+      role="bold">txm-x.y-z.src.zip</emphasis>/<emphasis
+      role="bold">txm-x.y-z.src.tar.gz</emphasis> package from <link
+      xlink:href="http://sourceforge.net/projects/jxpdl/files"
+      xmlns:xlink="http://www.w3.org/1999/xlink">SourceForge</link>.</para>
+    </sect1>
+
+    <sect1>
+      <title>Prerequisites</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Windows</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Java Development Kit (JDK) version 7 or later</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>Fedora (Linux)</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>bash</para>
+            </listitem>
+
+            <listitem>
+              <para>tar</para>
+            </listitem>
+
+            <listitem>
+              <para>make</para>
+            </listitem>
+
+            <listitem>
+              <para>Java Development Kit (JDK) version 7 or later</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+    </sect1>
+
+    <sect1>
+      <title>Preparing the build environment</title>
+
+      <para>Execute the <emphasis role="bold">configure</emphasis> script from
+      the root directory of the project source. Specific JAVA version can be
+      set for building (different from the one registered with your system) by
+      executing:</para>
+
+      <para><itemizedlist>
+          <listitem>
+            <para>Windows</para>
+
+            <para>configure -jdkhome %JAVA_HOME%</para>
+          </listitem>
+
+          <listitem>
+            <para>Fedora (Linux)</para>
+
+            <para>./configure -jdkhome %JAVA_HOME%</para>
+          </listitem>
+        </itemizedlist>(Where JAVA_HOME is the path to your JDK
+      installation)</para>
+
+      <para>Possible parameters for the <emphasis
+      role="bold">configure</emphasis> script are:</para>
+
+      <programlisting>configure             - Creates build.properties file with default values
+                        for all possible parameters. It can work only if 
+                        there is a default JAVA registered with the system.
+configure -help       - Displays Help screen
+configure -version    - Sets the version number for the project.
+configure -release    - Sets the release number for the project.
+configure -buildid    - Sets the build id for the project.
+configure -jdkhome    - Sets the "JAVA HOME" location of Java to be used 
+                        to compile the project.
+configure -instdir    - Sets the location of the installation dir used when
+                        executing make script with install target specified.
+configure -rebranding - Flag that determines if the project 
+                        will be "rebranded" with the context of branding folder. 
+                        Possible values [true/false].
+configure -language   - Language to be used for rebranding.
+
+Multiple parameters can be specified at once.
+
+
+Example:
+
+configure -version 1.4 -release 1 -buildid 20120301-0808 -jdkhome C:/jdk1.7 -instdir C:/JXPDL</programlisting>
+
+      <para>The configure script will create/change the <emphasis
+      role="bold">build.properties</emphasis> file based on the parameters
+      provided. This file can also be manually changed to adjust your
+      environment/parameters for building the project from the sources.</para>
+    </sect1>
+
+    <sect1>
+      <title>Compiling and building</title>
+
+      <para>Execute the <emphasis role="bold">make</emphasis> script with the
+      <emphasis role="bold">buildAll</emphasis> target from the root directory
+      of the project source. When the building process finishes, the project
+      binaries will be in <emphasis role="bold">output/txm-x.y-z</emphasis>
+      folder.</para>
+
+      <para>Possible build targets for the make script are:</para>
+
+      <para><programlisting>make help            - Displays Help screen
+make buildAll        - Builds and configures TXM with documentation
+make buildNoDoc      - Builds and configures TXM without documentation
+make buildDoc        - Builds documentation only
+make debug           - Builds TXM JAR file with included debug information
+make install         - Installs and configures TXM into directory defined 
+                       by parameter install.dir in build.properties file. 
+                       This parameter can be set by using command: 
+                       configure -instdir PATH_TO_DIR.
+                       It should be called only after make buildAll target 
+                       is executed!
+make clean           - Removes the output and distribution folder (in order 
+                       to start a new compilation from scratch)
+make distributions   - Builds and configures TXM with all documentations 
+                       and creates distribution package
+</programlisting></para>
+    </sect1>
+
+    <sect1>
+      <title>Packaging distributions</title>
+
+      <para>Assuming that the environment is already configured as described
+      previously, to create the project distribution packages, execute:</para>
+
+      <programlisting>make distributions</programlisting>
+
+      <para>When the building process finishes, the <emphasis
+      role="bold"><emphasis role="bold">distribution</emphasis></emphasis>
+      folder will be created in the root directory of the project source
+      containing the appropriate OS specific binary distributions.</para>
+
+      <!--
+      <para>On Windows, to have the resulting JAR file automatically signed,
+      the file called <emphasis role="bold">sign.properties</emphasis> should
+      be placed in the root directory of the projects source with the
+      following properties:</para>
+
+      <para><programlisting>sign.tool       - absolute path to the sign tool executable file
+sign.privatekey - absolute path to the private key used for signing
+sign.pwd        - password for signing
+sign.alias      - sign alias</programlisting>example sign.properties
+      file:</para>
+
+      <para><programlisting>sign.tool=D:/signtool/signtool.exe
+sign.privatekey=D:/signtool/privatekey.pfx
+sign.pwd=agles87t24e25NDwas
+sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
+      alias can be produced by the usage of Java's keytool by executing the
+      command:</para>
+
+      <para><emphasis role="bold">keytool -v -list -storetype pkcs12
+      -storepass PRIVATE-KEY-PASSWORD -keystore
+      PATH-TO-PRIVATE-KEY</emphasis></para>
+
+      <para>where PRIVATE-KEY-PASSWORD is the same as the property sign.pwd
+      from sign.properties file described above, and PATH-TO-PRIVATE-KEY is
+      the same as the property sign.privatekey from this properties
+      file.</para>
+-->
+    </sect1>
+  </chapter>
+
   <chapter xml:id="releasenotes">
     <title>Release Notes</title>
 
@@ -2274,10 +2275,9 @@ pkg.getParticipants().add(p3);
 
       <itemizedlist>
         <listitem>
-          <para></para>
+          <para/>
         </listitem>
       </itemizedlist>
-
     </section>
 
     <section>
