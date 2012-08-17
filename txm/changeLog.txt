@@ -1,3 +1,5 @@
+###### TXM 1.6-1 RELEASED ######
+
 ###### TXM 1.5-1 RELEASED ######
 2012-07-23 Sasa Bojanic <sasaboy@together.at>
    # Documentation: chapter Build Guide put at the end (before Release Notes)
