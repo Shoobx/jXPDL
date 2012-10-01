@@ -1,3 +1,5 @@
+###### TXM 1.7-1 RELEASED #####
+
 ###### TXM 1.6-1 RELEASED #####
 2012-09-14 Sasa Bojanic <sasaboy@together.at>
    # Updated following 3rd party components: ant v1.8.4, commons-io v2.4, docbook-xsl 1.77.1, iText5 v5.3.2, jgraph v5.14.0.0, 
