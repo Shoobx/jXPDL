@@ -157,7 +157,7 @@ public class XMLUtil {
    public static int howManyStringsWithinString(String toSearch, String toFind) {
       return getStringPositionsWithinString(toSearch, toFind).size();
    }
-   
+
    public static String replaceLFwithCRLF(String value) {
       if (value == null) {
          return null;
@@ -190,14 +190,15 @@ public class XMLUtil {
       }
       return newValue;
    }
-   
 
    /**
-    * The List of Integer values representing the position of the string 'toFind' within string toSearch.
+    * The List of Integer values representing the position of the string 'toFind' within
+    * string toSearch.
     * 
     * @param toSearch
     * @param toFind
-    * @return The List of Integer values representing the position of the string 'toFind' within string toSearch.
+    * @return The List of Integer values representing the position of the string 'toFind'
+    *         within string toSearch.
     */
    public static List getStringPositionsWithinString(String toSearch, String toFind) {
       try {
@@ -207,14 +208,13 @@ public class XMLUtil {
          while ((fnd = toSearch.indexOf(toFind, startAt)) != -1) {
             ret.add(new Integer(fnd));
             startAt = (fnd + toFind.length());
-            
+
          }
          return ret;
       } catch (Exception ex) {
          return new ArrayList();
       }
    }
-   
 
    /**
     * Returns canonical path based on provided relative path and base directory.
@@ -835,7 +835,7 @@ public class XMLUtil {
     * @return The parent {@link ActivitySet} or {@link WorkflowProcess} element for the
     *         given element or null if there is no such parent.
     */
-   public static XMLCollectionElement getActivitySetOrWorkflowProcess (XMLElement el) {
+   public static XMLCollectionElement getActivitySetOrWorkflowProcess(XMLElement el) {
       if (el == null)
          return null;
       while (!(el instanceof ActivitySet || el instanceof WorkflowProcess)) {
@@ -1285,6 +1285,25 @@ public class XMLUtil {
     *         'expr'.
     */
    public static List getUsingPositions(String expr, String dfOrFpId, Map allVars) {
+      return getUsingPositions(expr, dfOrFpId, allVars, true);
+   }
+
+   /**
+    * Returns the list of positions (Integers) of string 'dfOrFpId' within the string
+    * 'expr'.
+    * 
+    * @param expr String to check.
+    * @param dfOrFpId Id of {@link DataField} or {@link FormalParameter}.
+    * @param allVars Map of variables that can occur within expression.
+    * @param checkPrevAndNextCharacter true if characters prior and post to dfOrFpId
+    *           occurence should be checked for validity
+    * @return The list of positions (Integers) of string 'dfOrFpId' within the string
+    *         'expr'.
+    */
+   public static List getUsingPositions(String expr,
+                                        String dfOrFpId,
+                                        Map allVars,
+                                        boolean checkPrevAndNextCharacter) {
       List positions = new ArrayList();
       if (expr.trim().equals("") || dfOrFpId.trim().equals(""))
          return positions;
@@ -1303,53 +1322,55 @@ public class XMLUtil {
             positions.add(new Integer(pos));
             break;
          }
-         boolean prevOK, nextOK;
+         boolean prevOK = false, nextOK = false;
          char prev, next;
          // if given Id is found within expression string
          // check if Id string is part of some other Id name
 
-         // check if char previous to the position of found Id is OK
-         if (foundAt == 0) {
-            prevOK = true;
-         } else {
-            prev = exprToParse.charAt(foundAt - 1);
-            prevOK = !XMLUtil.isIdValid(String.valueOf(prev)) || prev == ':';
-            // System.out.println("Is prev char "+prev+" ok = "+prevOK);
-         }
+         if (checkPrevAndNextCharacter) {
+            // check if char previous to the position of found Id is OK
+            if (foundAt == 0) {
+               prevOK = true;
+            } else {
+               prev = exprToParse.charAt(foundAt - 1);
+               prevOK = !XMLUtil.isIdValid(String.valueOf(prev)) || prev == ':';
+               // System.out.println("Is prev char "+prev+" ok = "+prevOK);
+            }
 
-         // check if char after found ID string is OK
-         if (foundAt + dfOrFpId.length() == exprToParse.length()) {
-            nextOK = true;
-         } else {
-            next = exprToParse.charAt(foundAt + dfOrFpId.length());
-            nextOK = !XMLUtil.isIdValid(String.valueOf(next));
-            if (!nextOK && (next == '-' || next == '.')) {
+            // check if char after found ID string is OK
+            if (foundAt + dfOrFpId.length() == exprToParse.length()) {
                nextOK = true;
-               List varIdsWithChar = new ArrayList(allVars.keySet());
-               Iterator li = varIdsWithChar.iterator();
-               while (li.hasNext()) {
-                  String vid = (String) li.next();
-                  if (vid.indexOf(next) <= 0) {
-                     li.remove();
-                  }
-               }
-               if (varIdsWithChar.size() > 0) {
-                  li = varIdsWithChar.iterator();
+            } else {
+               next = exprToParse.charAt(foundAt + dfOrFpId.length());
+               nextOK = !XMLUtil.isIdValid(String.valueOf(next));
+               if (!nextOK && (next == '-' || next == '.')) {
+                  nextOK = true;
+                  List varIdsWithChar = new ArrayList(allVars.keySet());
+                  Iterator li = varIdsWithChar.iterator();
                   while (li.hasNext()) {
                      String vid = (String) li.next();
-                     int ovp = exprToParse.indexOf(vid);
-                     if (ovp == foundAt) {
-                        nextOK = false;
-                        break;
+                     if (vid.indexOf(next) <= 0) {
+                        li.remove();
+                     }
+                  }
+                  if (varIdsWithChar.size() > 0) {
+                     li = varIdsWithChar.iterator();
+                     while (li.hasNext()) {
+                        String vid = (String) li.next();
+                        int ovp = exprToParse.indexOf(vid);
+                        if (ovp == foundAt) {
+                           nextOK = false;
+                           break;
+                        }
                      }
                   }
                }
+               // System.out.println("Is next char "+next+" ok = "+nextOK);
             }
-            // System.out.println("Is next char "+next+" ok = "+nextOK);
          }
 
          // if this is really the Id, add its position in expression
-         if (prevOK && nextOK) {
+         if (!checkPrevAndNextCharacter || (prevOK && nextOK)) {
             int pos = foundAt;
             if (positions.size() > 0) {
                pos += ((Integer) positions.get(positions.size() - 1)).intValue()
@@ -4782,7 +4803,7 @@ public class XMLUtil {
     * @return The list of {@link BlockActivity} elements.
     */
    public static List tGetActivitySetReferences(XMLCollectionElement wpOrAs,
-                                                   String referencedId) {
+                                                String referencedId) {
       List references = new ArrayList();
       if (referencedId.equals("")) {
          return references;
