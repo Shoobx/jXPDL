@@ -1,4 +1,7 @@
 ###### TXM 1.7-1 RELEASED #####
+2012-10-04 Sasa Bojanic <sasaboy@together.at>
+   # Improved validation for Formal/Actual parameter matching (now for INOUT/OUT formal parameters we can use ONLY defined variables)
+   
 2012-10-03 Sasa Bojanic <sasaboy@together.at>
    # New method to return all the positions of one string within another string added to XMLUtil class
 

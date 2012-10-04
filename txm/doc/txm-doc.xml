@@ -2277,7 +2277,10 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
         <listitem>
           <para>New method to return all the positions of one string within another string added to XMLUtil class</para>
         </listitem>
-      </itemizedlist>
+        <listitem>
+          <para>Improved validation for Formal/Actual parameter matching (now for INOUT/OUT formal parameters we can use ONLY defined variables)</para>
+        </listitem>
+        </itemizedlist>
     </section>
 
     <section>

@@ -2585,12 +2585,14 @@ public class StandardPackageValidator implements XMLValidator {
 
          // find the type of actual param.
          Map idToDFOrFP = getActualParameterOrConditionChoices(aps);
+         Map idToRealDFOrFP = XMLUtil.getPossibleVariables(XMLUtil.getWorkflowProcess(aps));
          String apWRD = ap.toValue();
          XMLCollectionElement ce = (XMLCollectionElement) idToDFOrFP.get(apWRD);
-
-         // if the actual parameter is an expression, and the mode is not
-         // IN, return 2, which signals that parameter types don't match
-         if (ce == null) {
+         XMLCollectionElement realce = (XMLCollectionElement) idToRealDFOrFP.get(apWRD);
+         
+         // if the actual parameter is not a reference to a variable and the mode is not
+         // IN, generate error
+         if (realce==null && !fpMode.equals(XPDLConstants.FORMAL_PARAMETER_MODE_IN)) {
             if (!fpMode.equals(XPDLConstants.FORMAL_PARAMETER_MODE_IN)) {
                XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                                 XMLValidationError.SUB_TYPE_LOGIC,
@@ -2598,9 +2600,14 @@ public class StandardPackageValidator implements XMLValidator {
                                                                 apWRD,
                                                                 ap);
                existingErrors.add(verr);
-               continue;
-            }
+               if (!fullCheck)
+                  return;
 
+               continue;
+            }            
+         }
+         
+         if (ce == null) {
             boolean evaluateToString = false;
             if (fpType instanceof BasicType) {
                String fpAT = ((BasicType) fpType).getType();
