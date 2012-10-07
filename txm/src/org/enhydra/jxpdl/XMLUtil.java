@@ -3139,7 +3139,10 @@ public class XMLUtil {
    public static String generateUniqueId(XMLCollection cel, Set skipIds) {
       String id;
       long nextId = 0;
-      String prefix = prefix = XMLUtil.getPackage(cel).getId() + "_";
+      String prefix = "";
+      if (XMLUtil.getPackage(cel) != null) {
+         prefix = XMLUtil.getPackage(cel).getId() + "_";
+      }
       if (XMLUtil.getWorkflowProcess(cel) != null) {
          prefix = XMLUtil.getWorkflowProcess(cel).getId() + "_";
       } else if (XMLUtil.getPool(cel) != null) {
@@ -3170,7 +3173,7 @@ public class XMLUtil {
       } else if (cel instanceof TypeDeclarations) {
          prefix += "td";
       } else if (cel instanceof WorkflowProcesses) {
-         prefix = XMLUtil.getPackage(cel).getId() + "_wp";
+         prefix += "wp";
       }
 
       XMLCollectionElement cl = (XMLCollectionElement) cel.generateNewElement();
