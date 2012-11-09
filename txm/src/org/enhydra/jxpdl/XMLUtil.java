@@ -372,6 +372,7 @@ public class XMLUtil {
          // Create parser
          DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
          factory.setValidating(false);
+         factory.setNamespaceAware(true);
          DocumentBuilder parser = factory.newDocumentBuilder();
          Document document = null;
 
