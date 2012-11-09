@@ -101,7 +101,7 @@ public abstract class XMLBaseForCollectionAndComplex extends XMLElement {
     * Throws RuntimeException if not overriden by implementor class.
     */
    public void setValue(String v) {
-      throw new RuntimeException("Can't set value for this type of element!");
+      throw new RuntimeException("Can't set value for this type of element! Element name is "+toName());
    }
 
    /**

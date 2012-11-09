@@ -352,6 +352,23 @@ public class XMLUtil {
     */
    public static synchronized String getIdFromFile(String xmlFile) {
       try {
+         Document document = getDocumentFromFile(xmlFile);
+         return XMLUtil.getId(document.getDocumentElement());
+      } catch (Exception ex) {
+         return "";
+      }
+   }
+
+   /**
+    * Returns the {@link Document} object made out of XML document contained within a
+    * given xml file.
+    * 
+    * @param xmlFile The XML file location.
+    * @return The document node of XML document contained within a given xml file or NULL
+    *         if something goes wrong.
+    */
+   public static synchronized Document getDocumentFromFile(String xmlFile) {
+      try {
          // Create parser
          DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
          factory.setValidating(false);
@@ -371,11 +388,9 @@ public class XMLUtil {
          } catch (Exception ex) {
             document = parser.parse(new InputSource(new StringReader(xmlFile)));
          }
-         return XMLUtil.getId(document.getDocumentElement());
+         return document;
       } catch (Exception ex) {
-         return "";
-      } finally {
-
+         return null;
       }
    }
 
