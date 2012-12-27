@@ -2281,13 +2281,18 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
 
         <listitem>
           <para>New static method to get document node from XML file at a
-          given location added to XMLUtil class. </para>
+          given location added to XMLUtil class.</para>
         </listitem>
 
         <listitem>
           <para>Improved validation for Formal/Actual parameter matching (now
           for INOUT/OUT formal parameters we can use ONLY defined
           variables)</para>
+        </listitem>
+
+        <listitem>
+          <para>Fix: Now properly handling persistence of Artifact's
+          DataObjects' DataField collection</para>
         </listitem>
       </itemizedlist>
     </section>

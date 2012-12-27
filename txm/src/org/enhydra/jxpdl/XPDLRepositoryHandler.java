@@ -33,6 +33,7 @@ import org.enhydra.jxpdl.elements.ActualParameters;
 import org.enhydra.jxpdl.elements.BlockActivity;
 import org.enhydra.jxpdl.elements.Condition;
 import org.enhydra.jxpdl.elements.Coordinatess;
+import org.enhydra.jxpdl.elements.DODataFields;
 import org.enhydra.jxpdl.elements.Deadline;
 import org.enhydra.jxpdl.elements.DeadlineCondition;
 import org.enhydra.jxpdl.elements.Deadlines;
@@ -254,11 +255,12 @@ public class XPDLRepositoryHandler {
             if (el instanceof XMLComplexElement) {
                Node child = XMLUtil.getChildByName(node, nameSpacePrefix + elName);
                fromXML(child, (XMLComplexElement) el);
-               // Specific case if element is Deadlines, WebServiceFaultCatch, Coordinates
-               // or NestedLanes
+               // Specific case if element is Deadlines, WebServiceFaultCatch,
+               // Coordinates, NestedLanes or DODataFields
             } else if (el instanceof Deadlines
                        || el instanceof WebServiceFaultCatchs
-                       || el instanceof Coordinatess || el instanceof NestedLanes) {
+                       || el instanceof Coordinatess || el instanceof NestedLanes
+                       || el instanceof DODataFields) {
                fromXML(node, (XMLCollection) el);
             } else if (el instanceof XMLCollection) {
                Node child = XMLUtil.getChildByName(node, nameSpacePrefix + elName);
@@ -408,11 +410,11 @@ public class XPDLRepositoryHandler {
                                   + cel.size());
             String elName = cel.toName();
             Node node = parent;
-            // Specific code for handling Deadlines, WebServiceFaultCatch, NestedLanes and
-            // Coordinatess
+            // Specific code for handling Deadlines, WebServiceFaultCatch, NestedLanes,
+            // Coordinatess and DODataFields
             if (!(elName.equals("Deadlines")
                   || elName.equals("WebServiceFaultCatchs")
-                  || elName.equals("NestedLanes") || elName.equals("Coordinatess"))) {
+                  || elName.equals("NestedLanes") || elName.equals("Coordinatess") || cel instanceof DODataFields)) {
                node = (parent.getOwnerDocument()).createElement(xpdlPrefix + elName);
             }
             for (Iterator it = cel.toElements().iterator(); it.hasNext();) {
@@ -423,8 +425,8 @@ public class XPDLRepositoryHandler {
                   toXML(node, (XMLComplexElement) el);
                }
             }
-            // If Deadlines, WebServiceFaultCatchs, NestedLanes or Coordinatess are
-            // handled, node==parent
+            // If Deadlines, WebServiceFaultCatchs, NestedLanes, Coordinatess or
+            // DODataFields are handled, node==parent
             if (node != parent) {
                parent.appendChild(node);
             }
