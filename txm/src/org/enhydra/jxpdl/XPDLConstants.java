@@ -74,6 +74,12 @@ public final class XPDLConstants {
    /** Constant representing basic type datetime. */
    public static final String BASIC_TYPE_DATETIME = "DATETIME";
 
+   /** Constant representing basic type date. */
+   public static final String BASIC_TYPE_DATE = "DATE";
+
+   /** Constant representing basic type time. */
+   public static final String BASIC_TYPE_TIME = "TIME";
+
    /** Constant representing basic type boolean. */
    public static final String BASIC_TYPE_BOOLEAN = "BOOLEAN";
 

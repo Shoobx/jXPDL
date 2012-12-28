@@ -46,6 +46,8 @@ public class BasicType extends XMLComplexElement {
             XPDLConstants.BASIC_TYPE_INTEGER,
             XPDLConstants.BASIC_TYPE_REFERENCE,
             XPDLConstants.BASIC_TYPE_DATETIME,
+            XPDLConstants.BASIC_TYPE_DATE,
+            XPDLConstants.BASIC_TYPE_TIME,
             XPDLConstants.BASIC_TYPE_BOOLEAN,
             XPDLConstants.BASIC_TYPE_PERFORMER
       }, 0);
@@ -86,6 +88,16 @@ public class BasicType extends XMLComplexElement {
    /** Sets the Type attribute value of this object to DATETIME. */
    public void setTypeDATETIME() {
       getTypeAttribute().setValue(XPDLConstants.BASIC_TYPE_DATETIME);
+   }
+
+   /** Sets the Type attribute value of this object to DATE. */
+   public void setTypeDATE() {
+      getTypeAttribute().setValue(XPDLConstants.BASIC_TYPE_DATE);
+   }
+
+   /** Sets the Type attribute value of this object to TIME. */
+   public void setTypeTIME() {
+      getTypeAttribute().setValue(XPDLConstants.BASIC_TYPE_TIME);
    }
 
    /** Sets the Type attribute value of this object to BOOLEAN. */

@@ -2294,6 +2294,17 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
           <para>Fix: Now properly handling persistence of Artifact's
           DataObjects' DataField collection</para>
         </listitem>
+
+        <listitem>
+          <para>Supported BasicType DATE and TIME data types, corresponding
+          Java type properties set to java.sql.Date and java.sql.Time
+          respectively</para>
+        </listitem>
+
+        <listitem>
+          <para>Java type value for DATETIME type changed from java.util.Date
+          to java.sql.Timestamp</para>
+        </listitem>
       </itemizedlist>
     </section>
 

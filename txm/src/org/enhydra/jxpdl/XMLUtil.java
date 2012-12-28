@@ -144,7 +144,9 @@ public class XMLUtil {
       basicTypesMap.put("STRING", "java.lang.String");
       basicTypesMap.put("INTEGER", "java.lang.Long");
       basicTypesMap.put("FLOAT", "java.lang.Double");
-      basicTypesMap.put("DATETIME", "java.util.Date");
+      basicTypesMap.put("DATETIME", "java.sql.Timestamp");
+      basicTypesMap.put("DATE", "java.sql.Date");
+      basicTypesMap.put("TIME", "java.sql.Time");
    }
 
    /**
