@@ -1,4 +1,9 @@
 ###### TXM 1.7-1 RELEASED #####
+2013-01-14 Sasa Bojanic <sasaboy@together.at>
+   # introduced XMLUtil.getUsingPositions() method with new parameter "checkText" to check if searched variable is text (not a variable reference)
+   # XMLUtil.getVariableReferences() and XMLUtil.updateWorkflowProcessReferences() methods are now using new XMLUtil.getUsingPositions() method 
+     with additional parameter for additional check to avoid considering a text as a variable
+     
 2012-12-28 Sasa Bojanic <sasaboy@together.at>
    # Supported BasicType DATE and TIME data types, corresponding Java type properties set to java.sql.Date and java.sql.Time respectively
    # Java type value for DATETIME type changed from java.util.Date to java.sql.Timestamp

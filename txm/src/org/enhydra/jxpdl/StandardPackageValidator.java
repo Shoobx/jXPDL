@@ -2771,39 +2771,12 @@ public class StandardPackageValidator implements XMLValidator {
     * @return true if the given 'expr' string can be a valid expression.
     */
    public boolean canBeExpression(String expr, Map allVars, boolean evaluateToString) {
-      String exprToParse = new String(expr);
 
       boolean canBeExpression = expr.indexOf(".") >= 0;
 
-      if (evaluateToString
-          && (expr.startsWith("\"") && expr.endsWith("\""))
-          || (expr.startsWith("'") && expr.endsWith("'"))) {
-         canBeExpression = true;
-      }
-      // System.err.println("CBE1="+canBeExpression);
-      if (!canBeExpression) {
-         boolean validVarId = XMLUtil.isIdValid(exprToParse);
-         if (validVarId && allVars.containsKey(exprToParse)) {
-            canBeExpression = true;
-         }
-      }
-      // System.err.println("CBE2="+canBeExpression);
-
-      if (!canBeExpression) {
-         Iterator it = allVars.keySet().iterator();
-         while (it.hasNext()) {
-            String varId = (String) it.next();
-            if (XMLUtil.getUsingPositions(exprToParse, varId, allVars).size() > 0) {
-               // System.err.println("CBE2.5 - can be expr because var "+varId+" is
-               // possibly used");
-               canBeExpression = true;
-               break;
-            }
-         }
-      }
-      // System.err.println("CBE3="+canBeExpression);
-
-      return canBeExpression;
+      if (canBeExpression) return true;
+      
+      return XMLUtil.canBeExpression(expr, allVars, evaluateToString);
    }
 
    /**

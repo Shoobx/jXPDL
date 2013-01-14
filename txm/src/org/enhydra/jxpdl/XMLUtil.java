@@ -1322,6 +1322,15 @@ public class XMLUtil {
                                         String dfOrFpId,
                                         Map allVars,
                                         boolean checkPrevAndNextCharacter) {
+      return getUsingPositions(expr, dfOrFpId, allVars, checkPrevAndNextCharacter, false);
+   }
+      
+   public static List getUsingPositions(String expr,
+                                           String dfOrFpId,
+                                           Map allVars,
+                                           boolean checkPrevAndNextCharacter,
+                                           boolean checkText) {
+      
       List positions = new ArrayList();
       if (expr.trim().equals("") || dfOrFpId.trim().equals(""))
          return positions;
@@ -1387,8 +1396,22 @@ public class XMLUtil {
             }
          }
 
+         boolean isTxt = true;
+         int indofplus = exprToParse.lastIndexOf("+", foundAt);
+         int indofquotes = exprToParse.lastIndexOf("\"", indofplus);
+         if (foundAt == 0 || (foundAt > indofplus && indofplus > indofquotes && indofquotes>=0)) {
+            if (foundAt > 0) {
+               if (exprToParse.substring(indofquotes+1, indofplus).trim().equals("")
+                   && exprToParse.substring(indofplus+1, foundAt).trim().equals("")) {
+                  isTxt = false;
+               }
+            } else {
+               isTxt = false;
+            }
+         }
+
          // if this is really the Id, add its position in expression
-         if (!checkPrevAndNextCharacter || (prevOK && nextOK)) {
+         if ((!checkPrevAndNextCharacter || (prevOK && nextOK)) && (!checkText || !isTxt)) {
             int pos = foundAt;
             if (positions.size() > 0) {
                pos += ((Integer) positions.get(positions.size() - 1)).intValue()
@@ -4697,7 +4720,7 @@ public class XMLUtil {
          Iterator itap = aps.iterator();
          while (itap.hasNext()) {
             ActualParameter ap = (ActualParameter) itap.next();
-            if (XMLUtil.getUsingPositions(ap.toValue(), dfOrFpId, allVars).size() > 0) {
+            if (XMLUtil.getUsingPositions(ap.toValue(), dfOrFpId, allVars,true,true).size() > 0) {
                references.add(ap);
             }
          }
@@ -4706,7 +4729,7 @@ public class XMLUtil {
          while (itdls.hasNext()) {
             Deadline dl = (Deadline) itdls.next();
             String dcond = dl.getDeadlineDuration();
-            if (XMLUtil.getUsingPositions(dcond, dfOrFpId, allVars).size() > 0) {
+            if (XMLUtil.getUsingPositions(dcond, dfOrFpId, allVars, true, true).size() > 0) {
                references.add(dl.get("DeadlineCondition"));
             }
          }
@@ -4714,7 +4737,7 @@ public class XMLUtil {
          // performer (can be expression containing variable, or direct variable
          // reference)
          String perf = act.getFirstPerformer();
-         if (XMLUtil.getUsingPositions(perf, dfOrFpId, allVars).size() > 0) {
+         if (XMLUtil.getUsingPositions(perf, dfOrFpId, allVars, true, true).size() > 0) {
             references.add(act.getFirstPerformerObj());
          }
       }
@@ -4724,7 +4747,7 @@ public class XMLUtil {
       it = ((Transitions) wpOrAs.get("Transitions")).toElements().iterator();
       while (it.hasNext()) {
          Transition t = (Transition) it.next();
-         if (XMLUtil.getUsingPositions(t.getCondition().toValue(), dfOrFpId, allVars)
+         if (XMLUtil.getUsingPositions(t.getCondition().toValue(), dfOrFpId, allVars, true, true)
             .size() > 0) {
             references.add(t.getCondition());
          }
@@ -5772,7 +5795,7 @@ public class XMLUtil {
          List positions = XMLUtil.getUsingPositions(expr,
                                                     oldDfOrFpId,
                                                     XMLUtil.getWorkflowProcess(apOrPerfOrCondOrDlCond)
-                                                       .getAllVariables());
+                                                       .getAllVariables(), true, true);
          for (int i = 0; i < positions.size(); i++) {
             int pos = ((Integer) positions.get(i)).intValue();
             int realPos = pos + varLengthDiff * i;
