@@ -1426,6 +1426,146 @@ public class XMLUtil {
       return positions;
    }
 
+   
+   /**
+    * Determines an order of String variables considering the usage of one variable within
+    * others. The variable that is used by another variable will have lower index in the
+    * resulting list.
+    */
+   public static List<String> determineVariableEvaluationOrder(Map<String, String> variables)
+      throws Exception {
+      List<String> sortList = new ArrayList<String>(variables.keySet());
+      List<String> ret = new ArrayList<String>(sortList);
+      int[][] matrix = new int[ret.size()][ret.size()];
+      for (int i = 0; i < sortList.size(); i++) {
+         String id2handle = sortList.get(i);
+         for (int j = 0; j < ret.size(); j++) {
+            String id = ret.get(j);
+            String value = variables.get(id);
+            int ups = XMLUtil.getUsingPositions(value, id2handle, variables, true, true)
+               .size();
+            matrix[i][j] = ups;
+         }
+      }
+      for (int i = 0; i < matrix.length; i++) {
+         if (matrix[i][i] > 0) {
+            throw new Exception("Self references are NOT allowed - variable "
+                                + sortList.get(i) + " is referencing itself!");
+         }
+      }
+      for (int i = 0; i < matrix.length; i++) {
+         for (int j = 0; j < matrix.length; j++) {
+            if (matrix[i][j] > 0 && matrix[j][i] > 0) {
+               throw new Exception("Cross-references are NOT allowed - variables "
+                                   + sortList.get(i) + " and " + sortList.get(j)
+                                   + " are referencing each other!");
+            }
+         }
+      }
+      for (int i = 0; i < matrix.length; i++) {
+         int[] rows = getRowsOrColumns(matrix, i, true);
+         boolean matches = match(matrix, rows, i, new ArrayList());
+         if (matches) {
+            throw new Exception("Implicit cross-references are NOT allowed - variable "
+                                + sortList.get(i) + " has implicit cross-reference!");
+         }
+      }
+      // move the entries that do not reference other entries to the beginning of the list
+      for (int i = 0; i < matrix.length; i++) {
+         int[] rows = getRowsOrColumns(matrix, i, true);
+         if (rows.length == 0) {
+            String toReplace = sortList.get(i);
+            ret.remove(toReplace);
+            ret.add(0, toReplace);
+         }
+      }
+      // move the entries which are not referenced by other entries to the end of the list
+      for (int i = 0; i < matrix.length; i++) {
+         int[] cols = getRowsOrColumns(matrix, i, false);
+         if (cols.length == 0) {
+            String toReplace = sortList.get(i);
+            ret.remove(toReplace);
+            ret.add(toReplace);
+         }
+      }
+
+      // now go through the list and reposition entries again (sequentially iterating
+      // through entries)
+      sortList = new ArrayList(ret);
+
+      for (int i = 0; i < sortList.size(); i++) {
+         String id2handle = sortList.get(i);
+         Iterator<Map.Entry<String, String>> it = variables.entrySet().iterator();
+         while (it.hasNext()) {
+            Map.Entry<String, String> me = it.next();
+            String id = (String) me.getKey();
+            if (id.equals(id2handle))
+               continue;
+            String value = (String) me.getValue();
+
+            // if the variable 'id' contains variable 'id2handle' insure that position of
+            // the variable 'id2handle' is before variable 'id'
+            int ups = XMLUtil.getUsingPositions(value, id2handle, variables, true, true)
+               .size();
+            if (value != null && ups > 0) {
+               int ind1 = ret.indexOf(id2handle);
+               int ind2 = ret.indexOf(id);
+               if (ind1 > ind2) {
+                  ret.remove(ind1);
+                  ret.add(ind2, id2handle);
+               }
+            }
+         }
+      }
+      return ret;
+   }
+
+   private static boolean match(int[][] matrix, int[] is, int j, List processed) {
+      if (contains(is, j)) {
+         return true;
+      }
+      for (int k = 0; k < is.length; k++) {
+         if (!processed.contains(is[k])) {
+            processed.add(is[k]);
+            int[] rows = getRowsOrColumns(matrix, is[k], true);
+            boolean ret = match(matrix, rows, j, processed);
+            return ret;
+         }
+      }
+
+      return false;
+   }
+
+   private static boolean contains(int[] is, int j) {
+      for (int k = 0; k < is.length; k++) {
+         if (is[k] == j) {
+            return true;
+         }
+      }
+      return false;
+   }
+
+   private static int[] getRowsOrColumns(int[][] matrix, int rOrC, boolean searchRows) {
+      List<Integer> ret = new ArrayList<Integer>();
+      for (int rOrCCnt = 0; rOrCCnt < matrix.length; rOrCCnt++) {
+         if (searchRows) {
+            if (matrix[rOrCCnt][rOrC] > 0) {
+               ret.add(new Integer(rOrCCnt));
+            }
+         } else {
+            if (matrix[rOrC][rOrCCnt] > 0) {
+               ret.add(new Integer(rOrCCnt));
+            }
+         }
+      }
+      int[] rOrCs = new int[ret.size()];
+      for (int k = 0; k < ret.size(); k++) {
+         rOrCs[k] = ret.get(k).intValue();
+      }
+      return rOrCs;
+   }
+
+
    /**
     * Returns {@link Join} element of the given activity, or null if there is no Join.
     * 
