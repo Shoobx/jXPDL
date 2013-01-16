@@ -277,7 +277,7 @@
    <target name="clean" depends="init">
       <delete dir="${output.doc.dir}" />
       <delete>
-         <fileset dir="${basedir}" includes="log.txt,${docbook.name}.xml~" defaultexcludes="false"/>
+         <fileset dir="${basedir}" includes="log.txt,${docbook.name}.xml~,${testcase.name}.xml~" defaultexcludes="false"/>
       </delete>
       <delete dir="${basedir}/tmp" />
    </target>

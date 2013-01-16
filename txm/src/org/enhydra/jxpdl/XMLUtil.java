@@ -149,6 +149,12 @@ public class XMLUtil {
       basicTypesMap.put("TIME", "java.sql.Time");
    }
 
+   public final static String EXCEPTION_PREFIX_SELF_REFERENCES_NOT_ALLOWED = "Self-references are NOT allowed: ";
+
+   public final static String EXCEPTION_PREFIX_CROSS_REFERENCES_NOT_ALLOWED = "Cross-references are NOT allowed: ";
+
+   public final static String EXCEPTION_PREFIX_IMPLICIT_CROSS_REFERENCES_NOT_ALLOWED = "Implicit cross-references are NOT allowed: ";
+
    /**
     * Returns the number of occurrences of string 'toFind' within string 'toSearch'.
     * 
@@ -1324,13 +1330,13 @@ public class XMLUtil {
                                         boolean checkPrevAndNextCharacter) {
       return getUsingPositions(expr, dfOrFpId, allVars, checkPrevAndNextCharacter, false);
    }
-      
+
    public static List getUsingPositions(String expr,
-                                           String dfOrFpId,
-                                           Map allVars,
-                                           boolean checkPrevAndNextCharacter,
-                                           boolean checkText) {
-      
+                                        String dfOrFpId,
+                                        Map allVars,
+                                        boolean checkPrevAndNextCharacter,
+                                        boolean checkText) {
+
       List positions = new ArrayList();
       if (expr.trim().equals("") || dfOrFpId.trim().equals(""))
          return positions;
@@ -1399,10 +1405,11 @@ public class XMLUtil {
          boolean isTxt = true;
          int indofplus = exprToParse.lastIndexOf("+", foundAt);
          int indofquotes = exprToParse.lastIndexOf("\"", indofplus);
-         if (foundAt == 0 || (foundAt > indofplus && indofplus > indofquotes && indofquotes>=0)) {
+         if (foundAt == 0
+             || (foundAt > indofplus && indofplus > indofquotes && indofquotes >= 0)) {
             if (foundAt > 0) {
-               if (exprToParse.substring(indofquotes+1, indofplus).trim().equals("")
-                   && exprToParse.substring(indofplus+1, foundAt).trim().equals("")) {
+               if (exprToParse.substring(indofquotes + 1, indofplus).trim().equals("")
+                   && exprToParse.substring(indofplus + 1, foundAt).trim().equals("")) {
                   isTxt = false;
                }
             } else {
@@ -1426,7 +1433,6 @@ public class XMLUtil {
       return positions;
    }
 
-   
    /**
     * Determines an order of String variables considering the usage of one variable within
     * others. The variable that is used by another variable will have lower index in the
@@ -1449,16 +1455,15 @@ public class XMLUtil {
       }
       for (int i = 0; i < matrix.length; i++) {
          if (matrix[i][i] > 0) {
-            throw new Exception("Self references are NOT allowed - variable "
-                                + sortList.get(i) + " is referencing itself!");
+            throw new Exception(EXCEPTION_PREFIX_SELF_REFERENCES_NOT_ALLOWED
+                                + sortList.get(i));
          }
       }
       for (int i = 0; i < matrix.length; i++) {
          for (int j = 0; j < matrix.length; j++) {
             if (matrix[i][j] > 0 && matrix[j][i] > 0) {
-               throw new Exception("Cross-references are NOT allowed - variables "
-                                   + sortList.get(i) + " and " + sortList.get(j)
-                                   + " are referencing each other!");
+               throw new Exception(EXCEPTION_PREFIX_CROSS_REFERENCES_NOT_ALLOWED
+                                   + sortList.get(i) + "," + sortList.get(j));
             }
          }
       }
@@ -1466,8 +1471,8 @@ public class XMLUtil {
          int[] rows = getRowsOrColumns(matrix, i, true);
          boolean matches = match(matrix, rows, i, new ArrayList());
          if (matches) {
-            throw new Exception("Implicit cross-references are NOT allowed - variable "
-                                + sortList.get(i) + " has implicit cross-reference!");
+            throw new Exception(EXCEPTION_PREFIX_IMPLICIT_CROSS_REFERENCES_NOT_ALLOWED
+                                + sortList.get(i));
          }
       }
       // move the entries that do not reference other entries to the beginning of the list
@@ -1564,7 +1569,6 @@ public class XMLUtil {
       }
       return rOrCs;
    }
-
 
    /**
     * Returns {@link Join} element of the given activity, or null if there is no Join.
@@ -4860,7 +4864,8 @@ public class XMLUtil {
          Iterator itap = aps.iterator();
          while (itap.hasNext()) {
             ActualParameter ap = (ActualParameter) itap.next();
-            if (XMLUtil.getUsingPositions(ap.toValue(), dfOrFpId, allVars,true,true).size() > 0) {
+            if (XMLUtil.getUsingPositions(ap.toValue(), dfOrFpId, allVars, true, true)
+               .size() > 0) {
                references.add(ap);
             }
          }
@@ -4887,8 +4892,11 @@ public class XMLUtil {
       it = ((Transitions) wpOrAs.get("Transitions")).toElements().iterator();
       while (it.hasNext()) {
          Transition t = (Transition) it.next();
-         if (XMLUtil.getUsingPositions(t.getCondition().toValue(), dfOrFpId, allVars, true, true)
-            .size() > 0) {
+         if (XMLUtil.getUsingPositions(t.getCondition().toValue(),
+                                       dfOrFpId,
+                                       allVars,
+                                       true,
+                                       true).size() > 0) {
             references.add(t.getCondition());
          }
       }
@@ -5935,7 +5943,9 @@ public class XMLUtil {
          List positions = XMLUtil.getUsingPositions(expr,
                                                     oldDfOrFpId,
                                                     XMLUtil.getWorkflowProcess(apOrPerfOrCondOrDlCond)
-                                                       .getAllVariables(), true, true);
+                                                       .getAllVariables(),
+                                                    true,
+                                                    true);
          for (int i = 0; i < positions.size(); i++) {
             int pos = ((Integer) positions.get(i)).intValue();
             int realPos = pos + varLengthDiff * i;

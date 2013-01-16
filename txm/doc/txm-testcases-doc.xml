@@ -291,17 +291,9 @@
           </row>
 
           <row>
-            <entry>Restrictions</entry>
-
-            <entry>Check output.</entry>
-
-            <entry>Shows output txx-x.y-z.restriction.csv</entry>
-          </row>
-
-          <row>
             <entry>Standardize</entry>
 
-            <entry>Expecte output.</entry>
+            <entry>Expected output.</entry>
 
             <entry>output standardize, doc, output structure, source
             structure, binary structure.</entry>
@@ -310,9 +302,9 @@
           <row>
             <entry>Manifest</entry>
 
-            <entry>-</entry>
+            <entry>Check MANIFEST.MF inside JAR files</entry>
 
-            <entry>Shows in the "jxpdl.jar" &gt;&gt; MANIFEST.MF</entry>
+            <entry>Should show correct information.</entry>
           </row>
 
           <row>
@@ -337,7 +329,7 @@
 
             <entry>Check chapter Introduction in the documentation.</entry>
 
-            <entry>Displays about introduction.</entry>
+            <entry>-</entry>
           </row>
 
           <row>
@@ -346,7 +338,7 @@
             <entry>Check chapter Installation Guide in the
             documentation.</entry>
 
-            <entry>Displays about installation guide.</entry>
+            <entry>-</entry>
           </row>
 
           <row>
@@ -354,7 +346,7 @@
 
             <entry>Check chapter User Guide in the documentation.</entry>
 
-            <entry>Displays about user guide.</entry>
+            <entry>-</entry>
           </row>
 
           <row>
@@ -362,7 +354,7 @@
 
             <entry>Check chapter Build Guide in the documentation.</entry>
 
-            <entry>Displays about build guide.</entry>
+            <entry>-</entry>
           </row>
 
           <row>
