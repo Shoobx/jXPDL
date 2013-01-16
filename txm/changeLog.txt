@@ -1,4 +1,7 @@
 ###### TXM 1.7-1 RELEASED #####
+2013-01-16 Sasa Bojanic <sasaboy@together.at>
+   # Initial testcase documentation added to the project
+
 2013-01-14 Sasa Bojanic <sasaboy@together.at>
    # introduced XMLUtil.getUsingPositions() method with new parameter "checkText" to check if searched variable is text (not a variable reference)
    # XMLUtil.getVariableReferences() and XMLUtil.updateWorkflowProcessReferences() methods are now using new XMLUtil.getUsingPositions() method 
