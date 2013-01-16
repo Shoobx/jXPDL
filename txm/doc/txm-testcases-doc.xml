@@ -273,14 +273,6 @@
           </row>
 
           <row>
-            <entry>Patches</entry>
-
-            <entry>Check the txm-patches.csv</entry>
-
-            <entry>Displays patches version component.</entry>
-          </row>
-
-          <row>
             <entry>Prerequisite Build Linux / Windows</entry>
 
             <entry>Check prereqs.build.windows.csv /
