@@ -23,7 +23,7 @@
   <title><inlinemediaobject>
       <imageobject>
         <imagedata contentdepth="100%" fileref="images/logo.jpg" scalefit="1"
-                   width="100%"/>
+                   width="100%"></imagedata>
       </imageobject>
     </inlinemediaobject> <replaceable><?coverdetail ?></replaceable></title>
 
@@ -75,311 +75,656 @@
     </legalnotice>
   </info>
 
-  <toc/>
+  <toc></toc>
 
-  <chapter xml:id="aa1">
+  <chapter>
     <title>Test Case Builds</title>
 
-    <para><emphasis role="bold">Description:</emphasis></para>
+    <sect1>
+      <title>Test Case: configure.bat</title>
 
-    <para>The following table shows how to check TXM builds.</para>
+      <para><itemizedlist>
+          <listitem>
+            <para>Test configure.bat script</para>
 
-    <table frame="all">
-      <title>Test Case - Builds</title>
+            <table>
+              <title>configure.bat script</title>
 
-      <tgroup align="left" cols="3" colsep="1" rowsep="1">
-        <colspec colname="c1" colwidth="auto"/>
+              <tgroup cols="2" colsep="1" rowsep="1">
+                <colspec colname="c1" colwidth="16*" />
 
-        <colspec colname="c2" colwidth="auto"/>
+                <colspec colname="c2" colwidth="84*" />
 
-        <colspec colname="c3" colwidth="auto"/>
+                <tbody>
+                  <row>
+                    <entry><emphasis role="bold">Purpose :</emphasis></entry>
 
-        <thead>
-          <row>
-            <entry align="left">Action</entry>
+                    <entry>Create build.properties and version.properties
+                    files with the default values for all possible
+                    parameters.</entry>
+                  </row>
 
-            <entry align="left">Input</entry>
+                  <row>
+                    <entry morerows="1"><emphasis role="bold">Prerequisite
+                    :</emphasis></entry>
 
-            <entry align="left">Expected Output</entry>
-          </row>
-        </thead>
+                    <entry>1. CMD.exe</entry>
+                  </row>
 
-        <tbody>
-          <row>
-            <entry>configure</entry>
+                  <row>
+                    <entry>2. configure.bat</entry>
+                  </row>
 
-            <entry>configure</entry>
+                  <row>
+                    <entry><emphasis role="bold">Test Data
+                    :</emphasis></entry>
 
-            <entry>Creates build.properties file with the default values for
-            all possible parameters. It can work only if there is a default
-            "JAVA_HOME"</entry>
-          </row>
+                    <entry>configure</entry>
+                  </row>
 
-          <row>
-            <entry>configure -help</entry>
+                  <row>
+                    <entry morerows="1"><emphasis role="bold">Expected Output
+                    :</emphasis></entry>
 
-            <entry>configure -help</entry>
+                    <entry>1. build.properties</entry>
+                  </row>
 
-            <entry>Displays the help infomation.</entry>
-          </row>
+                  <row>
+                    <entry>2. version.properties</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </table>
 
-          <row>
-            <entry>configure -version</entry>
+            <table frame="all">
+              <title>Test Case: configure.bat with parameters</title>
 
-            <entry>configure -version 2.1</entry>
+              <tgroup align="left" cols="3" colsep="1" rowsep="1">
+                <colspec colname="c1" colwidth="auto" />
 
-            <entry>Sets the version number for the project in
-            version.properties. ( In the version.properties &gt;&gt; version =
-            2.1 )</entry>
-          </row>
+                <colspec colname="c2" colwidth="auto" />
 
-          <row>
-            <entry>configure -release</entry>
+                <colspec colname="c3" colwidth="auto" />
 
-            <entry>configure -release 1</entry>
+                <thead>
+                  <row>
+                    <entry align="center">Action</entry>
 
-            <entry>Sets the release number for the project in
-            version.properties. ( In the version.properties &gt;&gt; release =
-            1 )</entry>
-          </row>
+                    <entry align="center">Input Data</entry>
 
-          <row>
-            <entry>configure -buildid</entry>
+                    <entry align="center">Expected Output</entry>
+                  </row>
+                </thead>
 
-            <entry>configure -buildid 123456789</entry>
+                <tbody>
+                  <row>
+                    <entry>configure</entry>
 
-            <entry>Sets the build id for the project. ( In the
-            build.properties &gt;&gt; buildid = 123456789 )</entry>
-          </row>
+                    <entry>configure</entry>
 
-          <row>
-            <entry>configure -jdkhome</entry>
+                    <entry>Creates build.properties file with the default
+                    values for all possible parameters. It can work only if
+                    there is a default "JAVA_HOME"</entry>
+                  </row>
 
-            <entry>configure -jdkhome %JAVA_HOME%</entry>
+                  <row>
+                    <entry>configure -help</entry>
 
-            <entry>Sets the "JAVA HOME" location of Java to be used to compile
-            the project. ( In the build.properties &gt;&gt; jdk.dir =
-            C:\Java\jdk1.7.0_07 )</entry>
-          </row>
+                    <entry>configure -help</entry>
 
-          <row>
-            <entry>configure -instdir</entry>
+                    <entry>Displays the help infomation.</entry>
+                  </row>
 
-            <entry>configure -instdir C:/TXM</entry>
+                  <row>
+                    <entry>configure -version</entry>
 
-            <entry>Sets the location of the installation directory used when
-            executing make script with the install target specified. ( In the
-            build.properties &gt;&gt; install.dir = C:\TXM )</entry>
-          </row>
+                    <entry>configure -version 1.7</entry>
 
-          <row>
-            <entry>make</entry>
+                    <entry>Sets the version number for the project in
+                    version.properties. ( In the version.properties &gt;&gt;
+                    version = 1.7 )</entry>
+                  </row>
+
+                  <row>
+                    <entry>configure -release</entry>
+
+                    <entry>configure -release 1</entry>
+
+                    <entry>Sets the release number for the project in
+                    version.properties. ( In the version.properties &gt;&gt;
+                    release = 1 )</entry>
+                  </row>
+
+                  <row>
+                    <entry>configure -buildid</entry>
+
+                    <entry>configure -buildid 20120130-0900</entry>
+
+                    <entry>Sets the build id for the project. ( In the
+                    build.properties &gt;&gt; buildid = 20120130-0900
+                    )</entry>
+                  </row>
+
+                  <row>
+                    <entry>configure -jdkhome</entry>
+
+                    <entry>configure -jdkhome C:/Program
+                    Files/Java/jdk1.7.0_11</entry>
+
+                    <entry>Sets the "JAVA HOME" location of Java to be used to
+                    compile the project. ( In the build.properties &gt;&gt;
+                    jdk.dir = C:/Program Files/Java/jdk1.7.0_11 )</entry>
+                  </row>
+
+                  <row>
+                    <entry>configure -instdir</entry>
+
+                    <entry>configure -instdir C:/TXM</entry>
+
+                    <entry>Sets the location of the installation directory
+                    used when executing make script with the install target
+                    specified. ( In the build.properties &gt;&gt; install.dir
+                    = C:\TXM)</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </table>
+
+            <para><emphasis role="bold">Steps:</emphasis></para>
+
+            <orderedlist>
+              <listitem>
+                <para>Open CMD.exe</para>
+
+                <figure>
+                  <title>configure -&gt; open command prompt</title>
+
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata contentdepth="100%"
+                                 fileref="images/1-Chapter1/1-cmd.jpg"
+                                 scalefit="1" width="100%"></imagedata>
+                    </imageobject>
+                  </mediaobject>
+                </figure>
+              </listitem>
+
+              <listitem>
+                <para>Change current directory to project directory.</para>
+              </listitem>
+
+              <listitem>
+                <para>Run configure.bat with paramerter</para>
+
+                <figure>
+                  <title>Example: configure -help</title>
+
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata contentdepth="100%"
+                                 fileref="images/1-Chapter1/2-configure-help.jpg"
+                                 scalefit="1" width="100%"></imagedata>
+                    </imageobject>
+                  </mediaobject>
+                </figure>
+
+                <figure>
+                  <title>Configure multiple parameters to
+                  version.properties</title>
+
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata contentdepth="100%"
+                                 fileref="images/1-Chapter1/3-configure-version.jpg"
+                                 scalefit="1" width="100%"></imagedata>
+                    </imageobject>
+                  </mediaobject>
+                </figure>
+
+                <figure>
+                  <title>Example configure multiple parameters to
+                  build.properties</title>
+
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata contentdepth="100%"
+                                 fileref="images/1-Chapter1/4-configure-build.jpg"
+                                 scalefit="1" width="100%"></imagedata>
+                    </imageobject>
+                  </mediaobject>
+                </figure>
+              </listitem>
+
+              <listitem>
+                <para>Check configure result in project directory.</para>
+
+                <figure>
+                  <title>Open version.properties file</title>
+
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata contentdepth="100%"
+                                 fileref="images/1-Chapter1/5-result-version.properties.jpg"
+                                 scalefit="1" width="100%"></imagedata>
+                    </imageobject>
+                  </mediaobject>
+                </figure>
+
+                <figure>
+                  <title>Open build.properties file</title>
+
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata contentdepth="100%"
+                                 fileref="images/1-Chapter1/6-result-build.properties.jpg"
+                                 scalefit="1" width="100%"></imagedata>
+                    </imageobject>
+                  </mediaobject>
+                </figure>
+              </listitem>
+            </orderedlist>
+          </listitem>
+        </itemizedlist></para>
+
+      <para></para>
+    </sect1>
 
-            <entry>make</entry>
+    <sect1>
+      <title>Test Case: make.bat</title>
 
-            <entry>Displays the Help Information.</entry>
-          </row>
+      <para><itemizedlist>
+          <listitem>
+            <para>Test make.bat script</para>
 
-          <row>
-            <entry>make clean</entry>
+            <table>
+              <title>make.bat script</title>
 
-            <entry>make clean</entry>
+              <tgroup cols="2" colsep="1" rowsep="1">
+                <colspec colname="c1" colwidth="16*" />
 
-            <entry>Removes the output and the distributions folder.</entry>
-          </row>
+                <colspec colname="c2" colwidth="84*" />
 
-          <row>
-            <entry>make buildAll</entry>
+                <tbody>
+                  <row>
+                    <entry><emphasis role="bold">Purpose :</emphasis></entry>
 
-            <entry>make buildAll</entry>
+                    <entry>When the building process finishes, the project
+                    binaries will be in output/txm-1.7-1 folder.</entry>
+                  </row>
 
-            <entry>Builds and configures TXM with documentation.</entry>
-          </row>
+                  <row>
+                    <entry morerows="1"><emphasis role="bold">Prerequisite
+                    :</emphasis></entry>
 
-          <row>
-            <entry>make buildDoc</entry>
+                    <entry>1. CMD.exe</entry>
+                  </row>
 
-            <entry>make buildDoc</entry>
+                  <row>
+                    <entry>2. make.bat</entry>
+                  </row>
 
-            <entry>Builds documentation only.</entry>
-          </row>
+                  <row>
+                    <entry><emphasis role="bold">Test Data
+                    :</emphasis></entry>
 
-          <row>
-            <entry>make buildNoDoc</entry>
+                    <entry>make</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </table>
 
-            <entry>make buildNoDoc</entry>
+            <table frame="all">
+              <title>Test Case: make.bat with parameters</title>
 
-            <entry>Builds and configures TXM without documentation.</entry>
-          </row>
+              <tgroup align="left" cols="3" colsep="1" rowsep="1">
+                <colspec colname="c1" colwidth="auto" />
 
-          <row>
-            <entry>make distributions</entry>
+                <colspec colname="c2" colwidth="auto" />
 
-            <entry>make distributions</entry>
+                <colspec colname="c3" colwidth="auto" />
 
-            <entry>Builds and configures TXM with all documentations and
-            creates distributions package.</entry>
-          </row>
+                <thead>
+                  <row>
+                    <entry align="center">Action</entry>
 
-          <row>
-            <entry>make debug</entry>
+                    <entry align="center">Input Data</entry>
 
-            <entry>make debug</entry>
+                    <entry align="center">Expected Output</entry>
+                  </row>
+                </thead>
 
-            <entry>Builds TXM JAR file (jxpdl.jar) with included debug
-            information.</entry>
-          </row>
+                <tbody>
+                  <row>
+                    <entry>make</entry>
 
-          <row>
-            <entry>*Latest Component</entry>
+                    <entry>make</entry>
 
-            <entry>Check in the components folder.</entry>
+                    <entry>Displays the Help Information.</entry>
+                  </row>
 
-            <entry>Shows components for project.</entry>
-          </row>
+                  <row>
+                    <entry>make clean</entry>
 
-          <row>
-            <entry>Signing</entry>
+                    <entry>make clean</entry>
 
-            <entry>Right click "txm-x.y-z.exe" (build by TAB) &gt;&gt;
-            Properties &gt;&gt; "Digital Signatures" tab.</entry>
+                    <entry>Removes the output and the distributions
+                    folder.</entry>
+                  </row>
 
-            <entry>Displays Signature list correctly.</entry>
-          </row>
+                  <row>
+                    <entry>make buildAll</entry>
+
+                    <entry>make buildAll</entry>
+
+                    <entry>Builds and configures Together XPDL Model with
+                    documentation.</entry>
+                  </row>
+
+                  <row>
+                    <entry>make buildDoc</entry>
+
+                    <entry>make buildDoc</entry>
+
+                    <entry>Builds documentation only.</entry>
+                  </row>
+
+                  <row>
+                    <entry>make buildNoDoc</entry>
+
+                    <entry>make buildNoDoc</entry>
+
+                    <entry>Builds and configures Together XPDL Model without
+                    documentation.</entry>
+                  </row>
+
+                  <row>
+                    <entry>make distributions</entry>
+
+                    <entry>make distributions</entry>
+
+                    <entry>Builds and configures Together XPDL Model with all
+                    documentations and creates distributions package.</entry>
+                  </row>
+
+                  <row>
+                    <entry>make debug</entry>
+
+                    <entry>make debug</entry>
+
+                    <entry>Builds Together XPDL Model JAR file(s) with
+                    included debug information.</entry>
+                  </row>
+
+                  <row>
+                    <entry>make install</entry>
+
+                    <entry>make install</entry>
+
+                    <entry>Installs and configures Together XPDL Model into
+                    directory defined by parameter install.dir in the
+                    build.properties file.</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </table>
+
+            <para><emphasis role="bold">Steps:</emphasis></para>
+
+            <orderedlist>
+              <listitem>
+                <para>Open CMD.exe</para>
+
+                <figure>
+                  <title>make -&gt; open command prompt</title>
 
-          <row>
-            <entry>Timestamp</entry>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata contentdepth="100%"
+                                 fileref="images/1-Chapter1/1-cmd.jpg"
+                                 scalefit="1" width="100%"></imagedata>
+                    </imageobject>
+                  </mediaobject>
+                </figure>
+              </listitem>
 
-            <entry>-</entry>
+              <listitem>
+                <para>Change current directory to project directory.</para>
+              </listitem>
 
-            <entry>Shows properties detail timestamp.</entry>
-          </row>
+              <listitem>
+                <para>Run make.bat with paramerter</para>
 
-          <row>
-            <entry>Version</entry>
+                <figure>
+                  <title>Example: make help</title>
 
-            <entry>-</entry>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata contentdepth="100%"
+                                 fileref="images/1-Chapter1/7-make.jpg"
+                                 scalefit="1" width="100%"></imagedata>
+                    </imageobject>
+                  </mediaobject>
+                </figure>
 
-            <entry>Displays version number correctly.</entry>
-          </row>
+                <figure>
+                  <title>Example: make distributions</title>
 
-          <row>
-            <entry>Include List</entry>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata contentdepth="100%"
+                                 fileref="images/1-Chapter1/8-make-distributions.jpg"
+                                 scalefit="1" width="100%"></imagedata>
+                    </imageobject>
+                  </mediaobject>
+                </figure>
+              </listitem>
+            </orderedlist>
+          </listitem>
+        </itemizedlist></para>
+    </sect1>
 
-            <entry>Check the txm-includes.csv</entry>
+    <sect1>
+      <title>Test Case: standardize</title>
 
-            <entry>Displays component lists for include to TXM project (tools
-            folder).</entry>
-          </row>
+      <para><itemizedlist>
+          <listitem>
+            <para>Test check standardize sources ,input ,output ,etc</para>
 
-          <row>
-            <entry>Prerequisite Build Linux / Windows</entry>
+            <table>
+              <title>standardize</title>
 
-            <entry>Check prereqs.build.windows.csv /
-            prereqs.build.linux.csv</entry>
+              <tgroup cols="2" colsep="1" rowsep="1">
+                <colspec colname="c1" colwidth="16*" />
 
-            <entry>Shows prerequisite build of project.</entry>
-          </row>
+                <colspec colname="c2" colwidth="84*" />
 
-          <row>
-            <entry>Prerequisite Install Linux / Windows</entry>
+                <tbody>
+                  <row>
+                    <entry><emphasis role="bold">Purpose :</emphasis></entry>
 
-            <entry>Check prereqs.install.windows.csv /
-            prereqs.install.linux.csv</entry>
+                    <entry>Check standardize source ,input ,output
+                    ,etc</entry>
+                  </row>
 
-            <entry>Shows prerequisite install of project.</entry>
-          </row>
+                  <row>
+                    <entry><emphasis role="bold">Prerequisite
+                    :</emphasis></entry>
 
-          <row>
-            <entry>Standardize</entry>
+                    <entry>-</entry>
+                  </row>
 
-            <entry>Expected output.</entry>
+                  <row>
+                    <entry><emphasis role="bold">Test Data
+                    :</emphasis></entry>
 
-            <entry>output standardize, doc, output structure, source
-            structure, binary structure.</entry>
-          </row>
+                    <entry>Standardize sources ,input ,output ,documents ,
+                    files ,copy right</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </table>
 
-          <row>
-            <entry>Manifest</entry>
+            <table frame="all">
+              <title>Test Case: Builds</title>
 
-            <entry>Check MANIFEST.MF inside JAR files</entry>
+              <tgroup align="left" cols="3" colsep="1" rowsep="1">
+                <colspec colname="c1" colwidth="auto" />
 
-            <entry>Should show correct information.</entry>
-          </row>
+                <colspec colname="c2" colwidth="auto" />
 
-          <row>
-            <entry>Copyright</entry>
+                <colspec colname="c3" colwidth="auto" />
 
-            <entry>Right click "txm-x.y-z.exe" &gt;&gt; Properties &gt;&gt;
-            "Details" tab</entry>
+                <thead>
+                  <row>
+                    <entry align="left">Action</entry>
 
-            <entry>Displays "Copyright" correctly.</entry>
-          </row>
+                    <entry align="left">Input Data</entry>
 
-          <row>
-            <entry>Documentation</entry>
+                    <entry align="left">Expected Output</entry>
+                  </row>
+                </thead>
 
-            <entry>Check output &gt;&gt; doc folder.</entry>
+                <tbody>
+                  <row>
+                    <entry>Version</entry>
 
-            <entry>Shows documentation in doc folder.</entry>
-          </row>
+                    <entry>Checks Version</entry>
 
-          <row>
-            <entry>- Introduction</entry>
+                    <entry>Shows version number correctly.</entry>
+                  </row>
 
-            <entry>Check chapter Introduction in the documentation.</entry>
+                  <row>
+                    <entry>Include List</entry>
 
-            <entry>-</entry>
-          </row>
+                    <entry>Checks the txm-includes.csv</entry>
 
-          <row>
-            <entry>- Installation Guide</entry>
+                    <entry>Shows component lists for include to Together XPDL
+                    Model project (tools folder) correctly.</entry>
+                  </row>
 
-            <entry>Check chapter Installation Guide in the
-            documentation.</entry>
+                  <row>
+                    <entry>Restrictions</entry>
 
-            <entry>-</entry>
-          </row>
+                    <entry>Checks the txm-restriction.csv</entry>
 
-          <row>
-            <entry>- User Guide</entry>
+                    <entry>Shows output txm-1.7-1.restriction.csv</entry>
+                  </row>
 
-            <entry>Check chapter User Guide in the documentation.</entry>
+                  <row>
+                    <entry>Patches</entry>
 
-            <entry>-</entry>
-          </row>
+                    <entry>Checks the txm-patches.csv</entry>
 
-          <row>
-            <entry>- Build Guide</entry>
+                    <entry>Displays patches version component.</entry>
+                  </row>
 
-            <entry>Check chapter Build Guide in the documentation.</entry>
+                  <row>
+                    <entry>Prerequisite Build Linux</entry>
 
-            <entry>-</entry>
-          </row>
+                    <entry>Checks prereqs.build.linux.csv</entry>
 
-          <row>
-            <entry>- Release Note</entry>
+                    <entry>Shows prerequisite build of project.</entry>
+                  </row>
 
-            <entry>Check chapter Releases Notes in the documentation.</entry>
+                  <row>
+                    <entry>Prerequisite Build Windows</entry>
 
-            <entry>Shows the latest release update.</entry>
-          </row>
+                    <entry>Checks prereqs.build.windows.csv</entry>
 
-          <row>
-            <entry>- Licenses</entry>
+                    <entry>Shows prerequisite build of project.</entry>
+                  </row>
 
-            <entry>Check Licenses.</entry>
+                  <row>
+                    <entry>Prerequisite Install Linux</entry>
 
-            <entry>Shows project licenses correctly.</entry>
-          </row>
-        </tbody>
-      </tgroup>
-    </table>
+                    <entry>Checks prereqs.install.linux.csv</entry>
 
-    <note>
-      <para>*Some projects have Latest Component. TXM project does not have
-      "components folder" in the result output folder.</para>
-    </note>
+                    <entry>Shows prerequisite install of project.</entry>
+                  </row>
+
+                  <row>
+                    <entry>Prerequisite Install Windows</entry>
+
+                    <entry>Checks prereqs.install.windows.csv</entry>
+
+                    <entry>Shows prerequisite install of project.</entry>
+                  </row>
+
+                  <row>
+                    <entry>Standardize</entry>
+
+                    <entry>Expected output.</entry>
+
+                    <entry>output standardize, doc, output structure, source
+                    structure, binary structure.</entry>
+                  </row>
+
+                  <row>
+                    <entry>Standard Manifest content</entry>
+
+                    <entry>Checks Manifest (JAR,WAR Files) Conent</entry>
+
+                    <entry>Shows Correctly
+                    Vender,Title,BuildID,Version,Project URL</entry>
+                  </row>
+
+                  <row>
+                    <entry>Documentation</entry>
+
+                    <entry>Checks output &gt;&gt; doc folder.</entry>
+
+                    <entry>Shows documentation in doc folder.</entry>
+                  </row>
+
+                  <row>
+                    <entry>- Introduction</entry>
+
+                    <entry>Checks chapter Introduction in the
+                    documentation.</entry>
+
+                    <entry>Displays about introduction.</entry>
+                  </row>
+
+                  <row>
+                    <entry>- User Guide</entry>
+
+                    <entry>Checks chapter User Guide in the
+                    documentation.</entry>
+
+                    <entry>Displays about user guide.</entry>
+                  </row>
+
+                  <row>
+                    <entry>- Build Guide</entry>
+
+                    <entry>Checks chapter Build Guide in the
+                    documentation.</entry>
+
+                    <entry>Displays about build guide.</entry>
+                  </row>
+
+                  <row>
+                    <entry>- Release Note</entry>
+
+                    <entry>Checks chapter Releases Notes in the
+                    documentation.</entry>
+
+                    <entry>Shows the latest release update.</entry>
+                  </row>
+
+                  <row>
+                    <entry>- Licenses</entry>
+
+                    <entry>Checks Licenses.</entry>
+
+                    <entry>Shows project licenses correctly.</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </table>
+          </listitem>
+        </itemizedlist></para>
+    </sect1>
   </chapter>
 
   <chapter>
@@ -394,11 +739,11 @@
       <title>Test Case - Installation</title>
 
       <tgroup align="left" cols="3" colsep="1" rowsep="1">
-        <colspec colname="c1" colwidth="auto"/>
+        <colspec colname="c1" colwidth="auto" />
 
-        <colspec colname="c2" colwidth="auto"/>
+        <colspec colname="c2" colwidth="auto" />
 
-        <colspec colname="c3" colwidth="auto"/>
+        <colspec colname="c3" colwidth="auto" />
 
         <thead>
           <row>
@@ -435,11 +780,11 @@
       <title>Test Case - Feature</title>
 
       <tgroup align="left" cols="3" colsep="1" rowsep="1">
-        <colspec colname="c1" colwidth="auto"/>
+        <colspec colname="c1" colwidth="auto" />
 
-        <colspec colname="c2" colwidth="auto"/>
+        <colspec colname="c2" colwidth="auto" />
 
-        <colspec colname="c3" colwidth="auto"/>
+        <colspec colname="c3" colwidth="auto" />
 
         <thead>
           <row>
