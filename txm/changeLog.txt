@@ -1,3 +1,5 @@
+###### TXM 1.8-1 RELEASED #####
+
 ###### TXM 1.7-1 RELEASED #####
 2013-01-16 Sasa Bojanic <sasaboy@together.at>
    # Initial testcase documentation added to the project
