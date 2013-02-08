@@ -3302,15 +3302,9 @@ public class XMLUtil {
     * @return String array of tokens.
     */
    public static String[] tokenize(String input, String boundary) {
-      if (input == null)
-         input = "";
-      StringTokenizer t = new StringTokenizer(input, boundary);
-      String cmd[] = new String[t.countTokens()];
-      int j = 0;
-      while (t.hasMoreTokens())
-         cmd[j++] = t.nextToken();
-
-      return cmd;
+      if (input == null || input.trim().equals(""))
+         return new String[0];
+      return input.split(boundary);
    }
 
    /**
