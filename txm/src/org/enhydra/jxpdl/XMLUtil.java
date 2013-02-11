@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.concurrent.locks.Condition;
 
 import javax.tools.Tool;
@@ -76,6 +75,7 @@ import org.enhydra.jxpdl.elements.ExternalPackage;
 import org.enhydra.jxpdl.elements.ExternalReference;
 import org.enhydra.jxpdl.elements.FormalParameter;
 import org.enhydra.jxpdl.elements.FormalParameters;
+import org.enhydra.jxpdl.elements.InitialValue;
 import org.enhydra.jxpdl.elements.Join;
 import org.enhydra.jxpdl.elements.Lane;
 import org.enhydra.jxpdl.elements.Lanes;
@@ -1331,28 +1331,25 @@ public class XMLUtil {
       return getUsingPositions(expr, dfOrFpId, allVars, checkPrevAndNextCharacter, false);
    }
 
-   public static List getUsingPositions(String expr,
-                                        String dfOrFpId,
-                                        Map allVars,
-                                        boolean checkPrevAndNextCharacter,
-                                        boolean checkText) {
+   public static List<Integer> getUsingPositions(String expr,
+                                                 String dfOrFpId,
+                                                 Map allVars,
+                                                 boolean checkPrevAndNextCharacter,
+                                                 boolean checkText) {
 
-      List positions = new ArrayList();
+      List<Integer> positions = new ArrayList<Integer>();
       if (expr.trim().equals("") || dfOrFpId.trim().equals(""))
          return positions;
       String exprToParse = new String(expr);
       int foundAt = -1;
+      int realPos = -1;
       while ((foundAt = exprToParse.indexOf(dfOrFpId)) >= 0) {
          // System.out.println("Searching for using positions of variable "+dfOrFpId+" in expression "+exprToParse+" -> found "+foundAt);
+         realPos = realPos + (realPos >= 0 ? dfOrFpId.length() : 1) + foundAt;
          if (foundAt < 0)
             break;
          if (exprToParse.equals(dfOrFpId)) {
-            int pos = foundAt;
-            if (positions.size() > 0) {
-               pos += ((Integer) positions.get(positions.size() - 1)).intValue()
-                      + dfOrFpId.length();
-            }
-            positions.add(new Integer(pos));
+            positions.add(new Integer(realPos));
             break;
          }
          boolean prevOK = false, nextOK = false;
@@ -1366,7 +1363,8 @@ public class XMLUtil {
                prevOK = true;
             } else {
                prev = exprToParse.charAt(foundAt - 1);
-               prevOK = !XMLUtil.isIdValid(String.valueOf(prev)) || prev == ':';
+               prevOK = !XMLUtil.isIdValid(String.valueOf(prev))
+                        || prev == ':' || prev == '-';
                // System.out.println("Is prev char "+prev+" ok = "+prevOK);
             }
 
@@ -1402,32 +1400,24 @@ public class XMLUtil {
             }
          }
          boolean isTxt = true;
-         int indofplus = exprToParse.lastIndexOf("+", foundAt);
-         int indofquotes = exprToParse.lastIndexOf("\"", indofplus);
+         int indofquotes = expr.lastIndexOf("\"", realPos);
+         int indofplus = expr.indexOf("+", indofquotes);
          if (foundAt == 0) {
             isTxt = false;
-         } else if (foundAt > indofplus && indofplus > indofquotes && indofquotes >= 0) {
-            if (exprToParse.substring(indofquotes + 1, indofplus).trim().equals("")
-                && exprToParse.substring(indofplus + 1, foundAt).trim().equals("")) {
+         } else if (realPos > indofplus && indofplus > indofquotes && indofquotes >= 0) {
+            if (expr.substring(indofquotes + 1, indofplus).trim().equals("")) {
                isTxt = false;
             }
-         } else {
+         } else if (indofquotes < 0) {
             isTxt = false;
          }
-
          // if this is really the Id, add its position in expression
          if ((!checkPrevAndNextCharacter || (prevOK && nextOK)) && (!checkText || !isTxt)) {
-            int pos = foundAt;
-            if (positions.size() > 0) {
-               pos += ((Integer) positions.get(positions.size() - 1)).intValue()
-                      + dfOrFpId.length();
-            }
-            positions.add(new Integer(pos));
+            positions.add(new Integer(realPos));
          }
          exprToParse = exprToParse.substring(foundAt + dfOrFpId.length());
          // System.out.println("New expr to parse is "+exprToParse);
       }
-      // System.out.println("Using positions of variable "+dfOrFpId+" for expression: "+expr+", "+positions);
       return positions;
    }
 
@@ -4592,6 +4582,8 @@ public class XMLUtil {
          return references;
       }
 
+      references.addAll(getInitialValueReferences(pkg, referencedId));
+
       Iterator it = pkg.getWorkflowProcesses().toElements().iterator();
       while (it.hasNext()) {
          WorkflowProcess wp = (WorkflowProcess) it.next();
@@ -4893,6 +4885,40 @@ public class XMLUtil {
          }
       }
 
+      if (wpOrAs instanceof WorkflowProcess) {
+         references.addAll(getInitialValueReferences(wpOrAs, dfOrFpId));
+      }
+      return references;
+   }
+
+   protected static List getInitialValueReferences(XMLComplexElement pkgOrWp,
+                                                   String dfOrFpId) {
+      List references = new ArrayList();
+
+      DataFields dfs = null;
+      Map allVars = new HashMap();
+      if (pkgOrWp instanceof WorkflowProcess) {
+         dfs = ((WorkflowProcess) pkgOrWp).getDataFields();
+         allVars = ((WorkflowProcess) pkgOrWp).getAllVariables();
+      } else {
+         dfs = ((Package) pkgOrWp).getDataFields();
+         Iterator it = dfs.toElements().iterator();
+         while (it.hasNext()) {
+            DataField df = (DataField) it.next();
+            allVars.put(df.getId(), df);
+         }
+      }
+      Iterator it = dfs.toElements().iterator();
+      while (it.hasNext()) {
+         DataField df = (DataField) it.next();
+         if (XMLUtil.getUsingPositions(df.getInitialValue(),
+                                       dfOrFpId,
+                                       allVars,
+                                       true,
+                                       true).size() > 0) {
+            references.add(df.get("InitialValue"));
+         }
+      }
       return references;
    }
 
@@ -5932,10 +5958,22 @@ public class XMLUtil {
       while (it.hasNext()) {
          XMLElement apOrPerfOrCondOrDlCond = (XMLElement) it.next();
          String expr = apOrPerfOrCondOrDlCond.toValue();
+         Map allVars = new HashMap();
+         WorkflowProcess wp = XMLUtil.getWorkflowProcess(apOrPerfOrCondOrDlCond);
+         if (wp != null) {
+            allVars = wp.getAllVariables();
+         } else if (apOrPerfOrCondOrDlCond instanceof InitialValue) {
+            DataFields dfs = ((Package) XMLUtil.getPackage(apOrPerfOrCondOrDlCond)).getDataFields();
+            Iterator it2 = dfs.toElements().iterator();
+            while (it2.hasNext()) {
+               DataField df = (DataField) it2.next();
+               allVars.put(df.getId(), df);
+            }
+         }
+
          List positions = XMLUtil.getUsingPositions(expr,
                                                     oldDfOrFpId,
-                                                    XMLUtil.getWorkflowProcess(apOrPerfOrCondOrDlCond)
-                                                       .getAllVariables(),
+                                                    allVars,
                                                     true,
                                                     true);
          for (int i = 0; i < positions.size(); i++) {
