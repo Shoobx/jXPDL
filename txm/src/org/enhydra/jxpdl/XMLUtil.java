@@ -4891,7 +4891,7 @@ public class XMLUtil {
       return references;
    }
 
-   protected static List getInitialValueReferences(XMLComplexElement pkgOrWp,
+   public static List getInitialValueReferences(XMLComplexElement pkgOrWp,
                                                    String dfOrFpId) {
       List references = new ArrayList();
 
@@ -4918,6 +4918,20 @@ public class XMLUtil {
                                        true).size() > 0) {
             references.add(df.get("InitialValue"));
          }
+      }
+      if (pkgOrWp instanceof WorkflowProcess) {
+         it = ((WorkflowProcess)pkgOrWp).getFormalParameters().toElements().iterator();
+         while (it.hasNext()) {
+            FormalParameter fp = (FormalParameter) it.next();
+            if (XMLUtil.getUsingPositions(fp.getInitialValue(),
+                                          dfOrFpId,
+                                          allVars,
+                                          true,
+                                          true).size() > 0) {
+               references.add(fp.get("InitialValue"));
+            }
+         }
+         
       }
       return references;
    }
