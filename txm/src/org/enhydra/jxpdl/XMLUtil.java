@@ -1401,20 +1401,18 @@ public class XMLUtil {
                // System.out.println("Is next char "+next+" ok = "+nextOK);
             }
          }
-
          boolean isTxt = true;
          int indofplus = exprToParse.lastIndexOf("+", foundAt);
          int indofquotes = exprToParse.lastIndexOf("\"", indofplus);
-         if (foundAt == 0
-             || (foundAt > indofplus && indofplus > indofquotes && indofquotes >= 0)) {
-            if (foundAt > 0) {
-               if (exprToParse.substring(indofquotes + 1, indofplus).trim().equals("")
-                   && exprToParse.substring(indofplus + 1, foundAt).trim().equals("")) {
-                  isTxt = false;
-               }
-            } else {
+         if (foundAt == 0) {
+            isTxt = false;
+         } else if (foundAt > indofplus && indofplus > indofquotes && indofquotes >= 0) {
+            if (exprToParse.substring(indofquotes + 1, indofplus).trim().equals("")
+                && exprToParse.substring(indofplus + 1, foundAt).trim().equals("")) {
                isTxt = false;
             }
+         } else {
+            isTxt = false;
          }
 
          // if this is really the Id, add its position in expression
@@ -4869,7 +4867,7 @@ public class XMLUtil {
             Deadline dl = (Deadline) itdls.next();
             String dcond = dl.getDeadlineDuration();
             if (XMLUtil.getUsingPositions(dcond, dfOrFpId, allVars, true, true).size() > 0) {
-               references.add(dl.get("DeadlineCondition"));
+               references.add(dl.get("DeadlineDuration"));
             }
          }
 
