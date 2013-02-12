@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.Vector;
 import java.util.concurrent.locks.Condition;
 
 import javax.tools.Tool;
@@ -1428,6 +1430,17 @@ public class XMLUtil {
     */
    public static List<String> determineVariableEvaluationOrder(Map<String, String> variables)
       throws Exception {
+      return determineVariableEvaluationOrder(variables, true);
+   }
+
+   /**
+    * Determines an order of String variables considering the usage of one variable within
+    * others. The variable that is used by another variable will have lower index in the
+    * resulting list.
+    */
+   public static List<String> determineVariableEvaluationOrder(Map<String, String> variables,
+                                                               boolean checkText)
+      throws Exception {
       List<String> sortList = new ArrayList<String>(variables.keySet());
       List<String> ret = new ArrayList<String>(sortList);
       int[][] matrix = new int[ret.size()][ret.size()];
@@ -1436,8 +1449,11 @@ public class XMLUtil {
          for (int j = 0; j < ret.size(); j++) {
             String id = ret.get(j);
             String value = variables.get(id);
-            int ups = XMLUtil.getUsingPositions(value, id2handle, variables, true, true)
-               .size();
+            int ups = XMLUtil.getUsingPositions(value,
+                                                id2handle,
+                                                variables,
+                                                true,
+                                                checkText).size();
             matrix[i][j] = ups;
          }
       }
@@ -1498,8 +1514,11 @@ public class XMLUtil {
 
             // if the variable 'id' contains variable 'id2handle' insure that position of
             // the variable 'id2handle' is before variable 'id'
-            int ups = XMLUtil.getUsingPositions(value, id2handle, variables, true, true)
-               .size();
+            int ups = XMLUtil.getUsingPositions(value,
+                                                id2handle,
+                                                variables,
+                                                true,
+                                                checkText).size();
             if (value != null && ups > 0) {
                int ind1 = ret.indexOf(id2handle);
                int ind2 = ret.indexOf(id);
@@ -3290,9 +3309,32 @@ public class XMLUtil {
     * @return String array of tokens.
     */
    public static String[] tokenize(String input, String boundary) {
-      if (input == null || input.trim().equals(""))
-         return new String[0];
-      return input.split(boundary);
+      if (input == null)
+         input = "";
+
+      Vector v = new Vector();
+      StringTokenizer t = new StringTokenizer(input, boundary, true);
+      String cmd[];
+
+      String prevT = null;
+      while (t.hasMoreTokens()) {
+         String nt = t.nextToken();
+         if (!nt.equals(boundary)) {
+            v.addElement(nt);
+         }
+         if (nt.equals(prevT)) {
+            v.addElement("");
+         }
+         prevT = nt;
+      }
+      if (input.endsWith(boundary)) {
+         v.addElement("");
+      }
+      cmd = new String[v.size()];
+      for (int i = 0; i < cmd.length; i++)
+         cmd[i] = (String) v.elementAt(i);
+
+      return cmd;
    }
 
    /**
@@ -4891,8 +4933,7 @@ public class XMLUtil {
       return references;
    }
 
-   public static List getInitialValueReferences(XMLComplexElement pkgOrWp,
-                                                   String dfOrFpId) {
+   public static List getInitialValueReferences(XMLComplexElement pkgOrWp, String dfOrFpId) {
       List references = new ArrayList();
 
       DataFields dfs = null;
@@ -4920,7 +4961,7 @@ public class XMLUtil {
          }
       }
       if (pkgOrWp instanceof WorkflowProcess) {
-         it = ((WorkflowProcess)pkgOrWp).getFormalParameters().toElements().iterator();
+         it = ((WorkflowProcess) pkgOrWp).getFormalParameters().toElements().iterator();
          while (it.hasNext()) {
             FormalParameter fp = (FormalParameter) it.next();
             if (XMLUtil.getUsingPositions(fp.getInitialValue(),
@@ -4931,7 +4972,7 @@ public class XMLUtil {
                references.add(fp.get("InitialValue"));
             }
          }
-         
+
       }
       return references;
    }
