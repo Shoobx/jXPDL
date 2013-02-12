@@ -1430,17 +1430,6 @@ public class XMLUtil {
     */
    public static List<String> determineVariableEvaluationOrder(Map<String, String> variables)
       throws Exception {
-      return determineVariableEvaluationOrder(variables, true);
-   }
-
-   /**
-    * Determines an order of String variables considering the usage of one variable within
-    * others. The variable that is used by another variable will have lower index in the
-    * resulting list.
-    */
-   public static List<String> determineVariableEvaluationOrder(Map<String, String> variables,
-                                                               boolean checkText)
-      throws Exception {
       List<String> sortList = new ArrayList<String>(variables.keySet());
       List<String> ret = new ArrayList<String>(sortList);
       int[][] matrix = new int[ret.size()][ret.size()];
@@ -1453,7 +1442,7 @@ public class XMLUtil {
                                                 id2handle,
                                                 variables,
                                                 true,
-                                                checkText).size();
+                                                true).size();
             matrix[i][j] = ups;
          }
       }
@@ -1518,7 +1507,7 @@ public class XMLUtil {
                                                 id2handle,
                                                 variables,
                                                 true,
-                                                checkText).size();
+                                                true).size();
             if (value != null && ups > 0) {
                int ind1 = ret.indexOf(id2handle);
                int ind2 = ret.indexOf(id);
