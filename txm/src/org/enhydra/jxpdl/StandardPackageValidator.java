@@ -67,6 +67,7 @@ import org.enhydra.jxpdl.elements.ExpressionType;
 import org.enhydra.jxpdl.elements.ExternalPackage;
 import org.enhydra.jxpdl.elements.FormalParameter;
 import org.enhydra.jxpdl.elements.FormalParameters;
+import org.enhydra.jxpdl.elements.InitialValue;
 import org.enhydra.jxpdl.elements.Join;
 import org.enhydra.jxpdl.elements.Package;
 import org.enhydra.jxpdl.elements.Participant;
@@ -112,6 +113,12 @@ public class StandardPackageValidator implements XMLValidator {
     * will be validated.
     */
    public static final String VALIDATE_ACTUAL_PARAMETER_EXPRESSIONS = "ValidateActualParameterExpressions";
+
+   /**
+    * Constant for the property setting name that defines if intial value expressions will
+    * be validated.
+    */
+   public static final String VALIDATE_INITIAL_VALUE_EXPRESSIONS = "ValidateInitialValueExpressions";
 
    /**
     * Constant for the property setting name that defines if deadline expressions will be
@@ -442,7 +449,7 @@ public class StandardPackageValidator implements XMLValidator {
                                                           XPDLValidationErrorIds.ERROR_UNALLOWED_LENGTH,
                                                           el.toName(),
                                                           el);
-         existingErrors.add(verr);         
+         existingErrors.add(verr);
       }
    }
 
@@ -527,8 +534,8 @@ public class StandardPackageValidator implements XMLValidator {
                                                           XPDLValidationErrorIds.ERROR_UNALLOWED_LENGTH,
                                                           el.toName(),
                                                           el);
-         existingErrors.add(verr);         
-      }      
+         existingErrors.add(verr);
+      }
    }
 
    /**
@@ -1052,6 +1059,95 @@ public class StandardPackageValidator implements XMLValidator {
                                                              el.getId(),
                                                              el);
             existingErrors.add(verr);
+         }
+      }
+   }
+
+   /**
+    * Validates InitialValue element.
+    * 
+    * @param el Element to validate
+    * @param existingErrors List of existing errors.
+    * @param fullCheck If false, validation will stop after the first error is found.
+    */
+   public void validateElement(InitialValue el, List existingErrors, boolean fullCheck) {
+      if (properties.getProperty(StandardPackageValidator.VALIDATE_INITIAL_VALUE_EXPRESSIONS,
+                                 "false")
+         .equals("true")) {
+         String initialVal = el.toValue();
+         if (initialVal.length() > 0) {
+            if (initialVal.trim().equalsIgnoreCase("null")) {
+               return;
+            }
+            Map vars = getInitialValueChoices(el);
+            XMLCollectionElement fpOrDf = (XMLCollectionElement) el.getParent();
+            DataType dt = (DataType) fpOrDf.get("DataType");
+            DataTypes dtt = dt.getDataTypes();
+            XMLElement dType = dtt.getChoosen();
+            boolean evaluateToString = false;
+            if (dType instanceof BasicType) {
+               String dAT = ((BasicType) dType).getType();
+               if (dAT.equals(XPDLConstants.BASIC_TYPE_STRING)
+                   && !fpOrDf.get("IsArray").toValue().equals("true")) {
+                  evaluateToString = true;
+               }
+            }
+            boolean cbe = canBeExpression(initialVal, vars, evaluateToString);
+            if (!cbe) {
+               if (dType instanceof BasicType
+                   && !fpOrDf.get("IsArray").toValue().equals("true")) {
+                  String fpAT = ((BasicType) dType).getType();
+                  if (fpAT.equals(XPDLConstants.BASIC_TYPE_INTEGER)) {
+                     try {
+                        new Integer(initialVal);
+                        cbe = true;
+                     } catch (Exception ex) {
+                        if (initialVal.toLowerCase().indexOf("short") >= 0
+                            || initialVal.toLowerCase().indexOf("integer") >= 0
+                            || initialVal.toLowerCase().indexOf("long") >= 0) {
+                           cbe = true;
+                        }
+                     }
+                  } else if (fpAT.equals(XPDLConstants.BASIC_TYPE_FLOAT)) {
+                     try {
+                        new Double(initialVal);
+                        cbe = true;
+                     } catch (Exception ex) {
+                        if (initialVal.toLowerCase().indexOf("short") >= 0
+                            || initialVal.toLowerCase().indexOf("integer") >= 0
+                            || initialVal.toLowerCase().indexOf("long") >= 0
+                            || initialVal.toLowerCase().indexOf("float") >= 0
+                            || initialVal.toLowerCase().indexOf("double") >= 0) {
+                           cbe = true;
+                        }
+                     }
+                  } else if (fpAT.equals(XPDLConstants.BASIC_TYPE_BOOLEAN)) {
+                     if (initialVal.equals("false")
+                         || initialVal.equals("true")
+                         || initialVal.toLowerCase().indexOf("boolean") >= 0) {
+                        cbe = true;
+                     }
+                  } else if (fpAT.equals(XPDLConstants.BASIC_TYPE_DATE)
+                             || fpAT.equals(XPDLConstants.BASIC_TYPE_DATETIME)
+                             || fpAT.equals(XPDLConstants.BASIC_TYPE_TIME)) {
+                     if (initialVal.toLowerCase().indexOf("date") >= 0
+                         || initialVal.toLowerCase().indexOf("calendar") >= 0) {
+                        cbe = true;
+                     }
+                  }
+               }
+            }
+            String type = XMLValidationError.TYPE_WARNING;
+            if (!cbe
+                || !(type = additionalExpressionCheck(el, initialVal, vars)).equals("")) {
+               XMLValidationError verr = new XMLValidationError(type,
+                                                                XMLValidationError.SUB_TYPE_LOGIC,
+                                                                XPDLValidationErrorIds.WARNING_INITIAL_VALUE_EXPRESSION_POSSIBLY_INVALID,
+                                                                initialVal,
+                                                                el);
+               existingErrors.add(verr);
+
+            }
          }
       }
    }
@@ -1859,7 +1955,7 @@ public class StandardPackageValidator implements XMLValidator {
    public boolean isElementLengthOK(XMLElement el) {
       return true;
    }
-   
+
    /**
     * Returns true if the Id is valid according to XML restrictions for xsd:NMTOKEN type
     * attributes.
@@ -2589,10 +2685,10 @@ public class StandardPackageValidator implements XMLValidator {
          String apWRD = ap.toValue();
          XMLCollectionElement ce = (XMLCollectionElement) idToDFOrFP.get(apWRD);
          XMLCollectionElement realce = (XMLCollectionElement) idToRealDFOrFP.get(apWRD);
-         
+
          // if the actual parameter is not a reference to a variable and the mode is not
          // IN, generate error
-         if (realce==null && !fpMode.equals(XPDLConstants.FORMAL_PARAMETER_MODE_IN)) {
+         if (realce == null && !fpMode.equals(XPDLConstants.FORMAL_PARAMETER_MODE_IN)) {
             if (!fpMode.equals(XPDLConstants.FORMAL_PARAMETER_MODE_IN)) {
                XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                                 XMLValidationError.SUB_TYPE_LOGIC,
@@ -2604,9 +2700,9 @@ public class StandardPackageValidator implements XMLValidator {
                   return;
 
                continue;
-            }            
+            }
          }
-         
+
          if (ce == null) {
             boolean evaluateToString = false;
             if (fpType instanceof BasicType) {
@@ -2655,6 +2751,13 @@ public class StandardPackageValidator implements XMLValidator {
                          || apWRD.toLowerCase().indexOf("boolean") >= 0) {
                         cbe = true;
                      }
+                  } else if (fpAT.equals(XPDLConstants.BASIC_TYPE_DATE)
+                             || fpAT.equals(XPDLConstants.BASIC_TYPE_DATETIME)
+                             || fpAT.equals(XPDLConstants.BASIC_TYPE_TIME)) {
+                     if (apWRD.toLowerCase().indexOf("date") >= 0
+                         || apWRD.toLowerCase().indexOf("calendar") >= 0) {
+                        cbe = true;
+                     }
                   }
                }
             }
@@ -2680,7 +2783,7 @@ public class StandardPackageValidator implements XMLValidator {
          apType = apdtt.getChoosen();
          boolean invalidType = false;
          boolean apIsArray = new Boolean(ce.get("IsArray").toValue()).booleanValue();
-         if (fpType.getClass().equals(apType.getClass()) && apIsArray==fp.getIsArray()) {
+         if (fpType.getClass().equals(apType.getClass()) && apIsArray == fp.getIsArray()) {
             // if this is BasicType check for subtype matching
             if (fpType instanceof BasicType) {
                String fpAT = ((BasicType) fpType).getType();
@@ -2774,8 +2877,9 @@ public class StandardPackageValidator implements XMLValidator {
 
       boolean canBeExpression = expr.indexOf(".") >= 0;
 
-      if (canBeExpression) return true;
-      
+      if (canBeExpression)
+         return true;
+
       return XMLUtil.canBeExpression(expr, allVars, evaluateToString);
    }
 
@@ -2830,6 +2934,16 @@ public class StandardPackageValidator implements XMLValidator {
     * @return the map of variables that can be used within performer expressions.
     */
    protected Map getPerformerChoices(XMLElement el) {
+      return XMLUtil.getPossibleVariables(XMLUtil.getWorkflowProcess(el));
+   }
+
+   /**
+    * Returns the map of variables that can be used within InitialValue expressions.
+    * 
+    * @param el Element for which the choices are retrieved.
+    * @return the map of variables that can be used within performer expressions.
+    */
+   protected Map getInitialValueChoices(XMLElement el) {
       return XMLUtil.getPossibleVariables(XMLUtil.getWorkflowProcess(el));
    }
 

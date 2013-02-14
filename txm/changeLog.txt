@@ -1,4 +1,7 @@
 ###### TXM 1.8-1 RELEASED #####
+2013-02-14 Sasa Bojanic <sasaboy@together.at>
+   # Improved validation: now also validating InitialValue expressions
+
 2013-02-11 Sasa Bojanic <sasaboy@together.at>
    # Fixed implementation of XMLUtil.getVariableReferences() method to properly detect usage of variables inside deadline expressions
    # Extended implementation of XMLUtil.getVariableReferences() method to recognize usage of variables inside InitialValue expressions

@@ -108,6 +108,12 @@ public final class XPDLValidationErrorIds {
    public static final String WARNING_ACTUAL_PARAMETER_EXPRESSION_POSSIBLY_INVALID = "WARNING_ACTUAL_PARAMETER_EXPRESSION_POSSIBLY_INVALID";
 
    /**
+    * Constant representing warning for Initial Value which expression is possibly
+    * invalid.
+    */
+   public static final String WARNING_INITIAL_VALUE_EXPRESSION_POSSIBLY_INVALID = "WARNING_INITIAL_VALUE_EXPRESSION_POSSIBLY_INVALID";
+
+   /**
     * Constant representing warning for conditional transition that does not define an
     * expression.
     */
