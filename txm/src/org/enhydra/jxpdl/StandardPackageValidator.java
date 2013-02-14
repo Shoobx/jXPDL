@@ -1074,6 +1074,12 @@ public class StandardPackageValidator implements XMLValidator {
       if (properties.getProperty(StandardPackageValidator.VALIDATE_INITIAL_VALUE_EXPRESSIONS,
                                  "false")
          .equals("true")) {
+         if ((el.getParent() instanceof FormalParameter && el.getParent()
+            .getParent()
+            .getParent()
+            .getParent() instanceof Application)) {
+            return;
+         }
          String initialVal = el.toValue();
          if (initialVal.length() > 0) {
             if (initialVal.trim().equalsIgnoreCase("null")) {
