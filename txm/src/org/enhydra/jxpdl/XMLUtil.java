@@ -4205,7 +4205,7 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   protected static List tGetParticipantReferences(XMLComplexElement pkgOrWpOrAs,
+   public static List tGetParticipantReferences(XMLComplexElement pkgOrWpOrAs,
                                                    String referencedId) {
       List references = new ArrayList();
       if (referencedId.equals("")) {
