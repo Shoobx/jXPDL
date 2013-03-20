@@ -153,9 +153,9 @@ public class XMLUtil {
 
    public final static String EXCEPTION_PREFIX_SELF_REFERENCES_NOT_ALLOWED = "Self-references are NOT allowed: ";
 
-   public final static String EXCEPTION_PREFIX_CROSS_REFERENCES_NOT_ALLOWED = "Cross-references are NOT allowed: ";
+   public final static String EXCEPTION_PREFIX_CIRCULAR_REFERENCES_NOT_ALLOWED = "Circular-references are NOT allowed: ";
 
-   public final static String EXCEPTION_PREFIX_IMPLICIT_CROSS_REFERENCES_NOT_ALLOWED = "Implicit cross-references are NOT allowed: ";
+   public final static String EXCEPTION_PREFIX_IMPLICIT_CIRCULAR_REFERENCES_NOT_ALLOWED = "Implicit circular-references are NOT allowed: ";
 
    /**
     * Returns the number of occurrences of string 'toFind' within string 'toSearch'.
@@ -1455,7 +1455,7 @@ public class XMLUtil {
       for (int i = 0; i < matrix.length; i++) {
          for (int j = 0; j < matrix.length; j++) {
             if (matrix[i][j] > 0 && matrix[j][i] > 0) {
-               throw new Exception(EXCEPTION_PREFIX_CROSS_REFERENCES_NOT_ALLOWED
+               throw new Exception(EXCEPTION_PREFIX_CIRCULAR_REFERENCES_NOT_ALLOWED
                                    + sortList.get(i) + "," + sortList.get(j));
             }
          }
@@ -1464,7 +1464,7 @@ public class XMLUtil {
          int[] rows = getRowsOrColumns(matrix, i, true);
          boolean matches = match(matrix, rows, i, new ArrayList());
          if (matches) {
-            throw new Exception(EXCEPTION_PREFIX_IMPLICIT_CROSS_REFERENCES_NOT_ALLOWED
+            throw new Exception(EXCEPTION_PREFIX_IMPLICIT_CIRCULAR_REFERENCES_NOT_ALLOWED
                                 + sortList.get(i));
          }
       }

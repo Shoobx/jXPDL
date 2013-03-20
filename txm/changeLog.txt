@@ -1,4 +1,7 @@
 ###### TXM 1.8-1 RELEASED #####
+2013-03-20 Sasa Bojanic <sasaboy@together.at>
+   # Cross-references -> Circular-references
+
 2013-02-14 Sasa Bojanic <sasaboy@together.at>
    # Improved validation: now also validating InitialValue expressions
 
