@@ -1,4 +1,7 @@
 ###### TXM 1.8-1 RELEASED #####
+2013-05-07 Sasa Bojanic <sasaboy@together.at>
+   # Refactored code in StandardPackageValidator regarding validation of deadlines
+
 2013-03-20 Sasa Bojanic <sasaboy@together.at>
    # Cross-references -> Circular-references
 

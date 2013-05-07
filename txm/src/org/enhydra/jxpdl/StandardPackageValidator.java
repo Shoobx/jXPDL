@@ -579,10 +579,8 @@ public class StandardPackageValidator implements XMLValidator {
          return;
       }
 
-      Set ets = XMLUtil.getExceptionalOutgoingTransitions(el);
       if (el.getDeadlines().size() > 0) {
-         if (ets.size() == 0) {
-
+         if (!isHandlingDeadlines(el)) {
             XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                              XMLValidationError.SUB_TYPE_LOGIC,
                                                              XPDLValidationErrorIds.ERROR_DEADLINES_NOT_PROPERLY_HANDLED_NO_EXCEPTIONAL_TRANSITIONS,
@@ -685,7 +683,7 @@ public class StandardPackageValidator implements XMLValidator {
       // Split type and no. of outgoing transitions
       Split split = XMLUtil.getSplit(el);
       if ((split == null || split.getType().length() == 0)
-          && (outTrans.size() - ets.size()) > 1) {
+          && (outTrans.size() - XMLUtil.getExceptionalOutgoingTransitions(el).size()) > 1) {
          isValid = false;
          XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                           XMLValidationError.SUB_TYPE_LOGIC,
@@ -720,6 +718,10 @@ public class StandardPackageValidator implements XMLValidator {
                                                           existingErrors,
                                                           fullCheck);
 
+   }
+
+   protected boolean isHandlingDeadlines(Activity el) {
+      return XMLUtil.getExceptionalOutgoingTransitions(el).size() > 0;
    }
 
    /**
@@ -998,6 +1000,17 @@ public class StandardPackageValidator implements XMLValidator {
     * @param fullCheck If false, validation will stop after the first error is found.
     */
    public void validateElement(ExceptionName el, List existingErrors, boolean fullCheck) {
+      if (!isDeadlineExceptionValid(el)) {
+         XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+                                                          XMLValidationError.SUB_TYPE_LOGIC,
+                                                          XPDLValidationErrorIds.ERROR_DEADLINE_EXCEPTION_NOT_PROPERLY_HANDLED_MISSING_SPECIFIED_EXCEPTION_TRANSITION_OR_DEFAULT_EXCEPTION_TRANSITION,
+                                                          "",
+                                                          el);
+         existingErrors.add(verr);
+      }
+   }
+
+   protected boolean isDeadlineExceptionValid(ExceptionName el) {
       Activity act = XMLUtil.getActivity(el);
       Set ets = XMLUtil.getExceptionalOutgoingTransitions(act);
       boolean isValid = true;
@@ -1012,19 +1025,12 @@ public class StandardPackageValidator implements XMLValidator {
             String ctype = t.getCondition().getType();
             if (ctype.equals(XPDLConstants.CONDITION_TYPE_DEFAULTEXCEPTION)
                 || cond.equals(en) || cond.length() == 0) {
-               return;
+               return true;
             }
          }
          isValid = false;
       }
-      if (!isValid) {
-         XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
-                                                          XMLValidationError.SUB_TYPE_LOGIC,
-                                                          XPDLValidationErrorIds.ERROR_DEADLINE_EXCEPTION_NOT_PROPERLY_HANDLED_MISSING_SPECIFIED_EXCEPTION_TRANSITION_OR_DEFAULT_EXCEPTION_TRANSITION,
-                                                          "",
-                                                          el);
-         existingErrors.add(verr);
-      }
+      return isValid;
    }
 
    /**
