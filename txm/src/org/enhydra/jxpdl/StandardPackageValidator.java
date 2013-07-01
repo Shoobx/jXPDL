@@ -2926,7 +2926,7 @@ public class StandardPackageValidator implements XMLValidator {
     *         expressions.
     */
    protected Map getActualParameterOrConditionChoices(XMLElement el) {
-      return XMLUtil.getPossibleVariables(XMLUtil.getWorkflowProcess(el));
+      return XMLUtil.getPossibleVariables(el);
    }
 
    /**
@@ -2936,7 +2936,7 @@ public class StandardPackageValidator implements XMLValidator {
     * @return the map of variables that can be used within deadline condition expressions.
     */
    protected Map getDeadlineConditionChoices(XMLElement el) {
-      return XMLUtil.getPossibleVariables(XMLUtil.getWorkflowProcess(el));
+      return XMLUtil.getPossibleVariables(el);
    }
 
    /**
@@ -2946,7 +2946,7 @@ public class StandardPackageValidator implements XMLValidator {
     * @return the map of variables that can be used within performer expressions.
     */
    protected Map getPerformerChoices(XMLElement el) {
-      return XMLUtil.getPossibleVariables(XMLUtil.getWorkflowProcess(el));
+      return XMLUtil.getPossibleVariables(el);
    }
 
    /**
@@ -2956,7 +2956,7 @@ public class StandardPackageValidator implements XMLValidator {
     * @return the map of variables that can be used within performer expressions.
     */
    protected Map getInitialValueChoices(XMLElement el) {
-      return XMLUtil.getPossibleVariables(XMLUtil.getWorkflowProcess(el));
+      return XMLUtil.getPossibleVariables(el);
    }
 
 }
