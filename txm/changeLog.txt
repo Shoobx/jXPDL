@@ -17,7 +17,7 @@
    # Improved implementation of XMLUtil.getUsingPositions() method to properly recognize text and to properly return using positions
 
 2013-02-08 Sasa Bojanic <sasaboy@together.at>
-   # changed implementation of XMLUtil.tokenize() method to use string's split function
+   # improved implementation of XMLUtil.tokenize() method
 
 ###### TXM 1.7-1 RELEASED #####
 2013-01-16 Sasa Bojanic <sasaboy@together.at>

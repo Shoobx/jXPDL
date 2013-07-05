@@ -2275,7 +2275,40 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
 
       <itemizedlist>
         <listitem>
-          <para/>
+          <para>Refactored code in StandardPackageValidator regarding
+          validation of deadlines</para>
+        </listitem>
+
+        <listitem>
+          <para>Improved validation: now also validating InitialValue
+          expressions</para>
+        </listitem>
+
+        <listitem>
+          <para>Fixed implementation of XMLUtil.getVariableReferences() method
+          to properly detect usage of variables inside deadline
+          expressions</para>
+        </listitem>
+
+        <listitem>
+          <para>Extended implementation of XMLUtil.getVariableReferences()
+          method to recognize usage of variables inside InitialValue
+          expressions</para>
+        </listitem>
+
+        <listitem>
+          <para>Improved implementation of XMLUtil.getUsingPositions() method
+          to properly recognize text and to properly return using positions
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>Improved implementation of XMLUtil.tokenize() method</para>
+        </listitem>
+
+        <listitem>
+          <para>New way of signing with timestamping implemented (different
+          servers possible for timestamping)</para>
         </listitem>
       </itemizedlist>
     </section>
