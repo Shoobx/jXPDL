@@ -2,6 +2,7 @@
 2013-07-22 Sasa Bojanic <sasaboy@together.at>
    # Builds changed so that windows build is generating tar.gz and src.tar.gz packages
 
+###### TXM 1.8-1 RELEASED #####
 2013-05-28 Sasa Bojanic <sasaboy@together.at>
    # New way of signing with timestamping implemented (different servers possible for timestamping)
 
