@@ -123,9 +123,8 @@
       </copy>
       <copy file="${doc.dir}/${docbook.name}.xml" tofile="${tmp.dir}/${docbook.name}.xml" />
       <copy file="${doc.dir}/${testcase.name}.xml" tofile="${tmp.dir}/${testcase.name}.xml" />
-      <copy todir="${tmp.dir}/docbook">
-         <fileset dir="${docbook.dtd.dir}/dtd"/>
-      </copy>
+      <replace file="${tmp.dir}/${docbook.name}.xml" encoding="utf-8" token="../tools/docbook-dtd/dtd/docbook.dtd" value="../../tools/docbook-dtd/dtd/docbook.dtd" />   
+      <replace file="${tmp.dir}/${testcase.name}.xml" encoding="utf-8" token="../tools/docbook-dtd/dtd/docbook.dtd" value="../../tools/docbook-dtd/dtd/docbook.dtd" />   
    </target>
 
    <!-- ==================================================================== -->
