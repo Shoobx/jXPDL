@@ -64,7 +64,6 @@
       <property name="sources.dir" location="${project.dir}/src" />
 
       <property name="docbook.xsl.dir" location="${tools.dir}/docbook-xsl" />
-      <property name="docbook.dtd.dir" location="${tools.dir}/docbook-dtd" />
       <property name="ant.lib.dir" location="${tools.dir}/ant" />
       <property name="fop.lib.dir" location="${tools.dir}/fop" />
       <property name="xalan.lib.dir" location="${tools.dir}/xalan" />
