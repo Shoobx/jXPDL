@@ -420,10 +420,30 @@
    <!-- =================================================================== -->
    <target name="distributions" depends="clean, prepare, initDist">
       <antcall target="${os.buildSrc.target}"/>
+      <if>
+         <equals arg1="${os}" arg2="windows" />
+         <then>
+            <antcall target="buildSrcForLinux"/>
+         </then>
+      </if>
+
       <antcall target="jar"/>
       <antcall target="signJar"/>
       <antcall target="buildDoc"/>
-      <antcall target="${os.buildBin.target}"/>
+      <if>
+         <equals arg1="${os}" arg2="windows" />
+         <then>
+            <antcall target="prepareForLinux"/>
+            <antcall target="buildBinForLinux"/>
+            <antcall target="prepareForWindows"/>
+            <antcall target="buildBinForWindows"/>
+            <antcall target="create.components"/>
+            <ant target="distOther"/>            
+         </then>
+         <else>
+            <antcall target="buildBinForLinux"/>
+         </else>
+      </if>
 
       <echo message="Distribution of ${app.name}-${version}-${release} with complete documentation has been built!"/>
    </target>
@@ -463,8 +483,6 @@
       <zip destfile="${dist.community.dir}/${dist.file.name}.zip" update="true" >
          <zipfileset dir="${output.dir}" excludes="**/doc/api/**, **/doc/${app.name}-${version}-${release}.test.pdf" />
       </zip>
-      <antcall target="create.components"/>
-      <ant target="distOther"/>
    </target>
 
 

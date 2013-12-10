@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V5.0//EN"
-"docbook/docbook.dtd">
+"../tools/docbook-dtd/dtd/docbook.dtd">
 <!--
 	Together XPDL Model
 	Copyright (C) 2011 Together Teamsolutions Co., Ltd.
@@ -2269,6 +2269,16 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
 
   <chapter xml:id="releasenotes">
     <title>Release Notes</title>
+
+    <section>
+      <title>Release 1.8-2</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Linux tar.gz distributions now built under windows</para>
+        </listitem>
+      </itemizedlist>
+    </section>
 
     <section>
       <title>Release 1.8-1</title>

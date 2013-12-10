@@ -64,7 +64,6 @@
       <property name="sources.dir" location="${project.dir}/src" />
 
       <property name="docbook.xsl.dir" location="${tools.dir}/docbook-xsl" />
-      <property name="docbook.dtd.dir" location="${tools.dir}/docbook-dtd" />
       <property name="ant.lib.dir" location="${tools.dir}/ant" />
       <property name="fop.lib.dir" location="${tools.dir}/fop" />
       <property name="xalan.lib.dir" location="${tools.dir}/xalan" />
@@ -123,9 +122,8 @@
       </copy>
       <copy file="${doc.dir}/${docbook.name}.xml" tofile="${tmp.dir}/${docbook.name}.xml" />
       <copy file="${doc.dir}/${testcase.name}.xml" tofile="${tmp.dir}/${testcase.name}.xml" />
-      <copy todir="${tmp.dir}/docbook">
-         <fileset dir="${docbook.dtd.dir}/dtd"/>
-      </copy>
+      <replace file="${tmp.dir}/${docbook.name}.xml" encoding="utf-8" token="../tools/docbook-dtd/dtd/docbook.dtd" value="../../tools/docbook-dtd/dtd/docbook.dtd" />   
+      <replace file="${tmp.dir}/${testcase.name}.xml" encoding="utf-8" token="../tools/docbook-dtd/dtd/docbook.dtd" value="../../tools/docbook-dtd/dtd/docbook.dtd" />   
    </target>
 
    <!-- ==================================================================== -->
