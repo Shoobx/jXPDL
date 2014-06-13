@@ -460,7 +460,7 @@
       <echo message=""/>
 
       <tar destfile="${dist.community.dir}/${dist.file.name}.tar" longfile="gnu">
-         <tarfileset dir="${output.dir}" mode="666" excludes="**/doc/api/**,**/doc/${app.name}-${version}-${release}.test.pdf" >
+         <tarfileset dir="${output.dir}" mode="666" excludes="**/doc/api/**, **/doc/${app.name}-${version}-${release}.test.pdf, **/doc/${app.name}-current.test.pdf" >
          </tarfileset>
       </tar>
       <gzip src="${dist.community.dir}/${dist.file.name}.tar"
@@ -481,7 +481,7 @@
       <echo message=""/>
 
       <zip destfile="${dist.community.dir}/${dist.file.name}.zip" update="true" >
-         <zipfileset dir="${output.dir}" excludes="**/doc/api/**, **/doc/${app.name}-${version}-${release}.test.pdf" />
+         <zipfileset dir="${output.dir}" excludes="**/doc/api/**, **/doc/${app.name}-${version}-${release}.test.pdf, **/doc/${app.name}-current.test.pdf" />
       </zip>
    </target>
 
@@ -548,16 +548,17 @@
       <copy file="${output.doc.dir}/${app.name}-current.doc.pdf" tofile="${output.doc.dir}/${app.name}-${version}-${release}.doc.pdf"/>
       <copy file="${output.doc.dir}/${app.name}-current.doc.html" tofile="${output.doc.dir}/${app.name}-${version}-${release}.doc.html"/>
       <zip destfile="${dist.community.dir}/${app.name}-${version}-${release}.doc.zip" update="true">
-         <zipfileset dir="${output.doc.dir}" excludes="${app.name}-current.doc.*,${app.name}-${version}-${release}.test.pdf"/>
+         <zipfileset dir="${output.doc.dir}" excludes="${app.name}-current.doc.*,${app.name}-current.test.*,${app.name}-${version}-${release}.test.pdf"/>
       </zip>
       <copy todir="${dist.community.dir}">
          <fileset dir="${output.doc.dir}" includes="${app.name}-current.doc.pdf" />
       </copy>      
       <delete quiet="true">
          <fileset dir="${output.doc.dir}" includes="${app.name}-${version}-${release}.doc.*" />
-      </delete>      
-		<copy file="${output.doc.dir}/${app.name}-${version}-${release}.test.pdf" tofile="${dist.internal.dir}/${app.name}-${version}-${release}.test.pdf" />	
-      <copy todir="${dist.internal.dir}">
+      </delete>
+   	<copy file="${output.doc.dir}/${app.name}-current.test.pdf" tofile="${dist.internal.dir}/${app.name}-${version}-${release}.test.pdf" />	
+      
+   	<copy todir="${dist.internal.dir}">
          <fileset dir="${licenses.dir}" includes="${app.name}-includes.csv" />
          <mapper type="regexp" from="${app.name}-includes.csv" to="${app.name}-${version}-${release}.includes.csv" />
       </copy>
