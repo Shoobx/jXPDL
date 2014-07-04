@@ -1,4 +1,7 @@
 ###### TXM 1.9-1 RELEASED #####
+2014-07-04 Sasa Bojanic <sasaboy@together.at>
+   # XPDL2 and XPDL1 schemas are now part of documentation distribution package
+
 2013-07-22 Sasa Bojanic <sasaboy@together.at>
    # Builds changed so that windows build is generating tar.gz and src.tar.gz packages
 

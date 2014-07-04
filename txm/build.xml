@@ -549,6 +549,7 @@
       <copy file="${output.doc.dir}/${app.name}-current.doc.html" tofile="${output.doc.dir}/${app.name}-${version}-${release}.doc.html"/>
       <zip destfile="${dist.community.dir}/${app.name}-${version}-${release}.doc.zip" update="true">
          <zipfileset dir="${output.doc.dir}" excludes="${app.name}-current.doc.*,${app.name}-current.test.*,${app.name}-${version}-${release}.test.pdf"/>
+         <zipfileset dir="${basedir}/src/org/enhydra/jxpdl/resources" includes="*.xsd"/>
       </zip>
       <copy todir="${dist.community.dir}">
          <fileset dir="${output.doc.dir}" includes="${app.name}-current.doc.pdf" />
