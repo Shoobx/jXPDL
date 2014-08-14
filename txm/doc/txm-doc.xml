@@ -2277,6 +2277,16 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
         <listitem>
           <para>Linux tar.gz distributions now built under windows</para>
         </listitem>
+
+        <listitem>
+          <para>XPDL2 and XPDL1 schemas are now part of documentation
+          distribution package</para>
+        </listitem>
+
+        <listitem>
+          <para>Improved implementation of XMLUtil.getUsingPositions() method
+          to properly recognize text in expressions</para>
+        </listitem>
       </itemizedlist>
     </section>
 

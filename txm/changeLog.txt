@@ -1,4 +1,7 @@
 ###### TXM 1.9-1 RELEASED #####
+2014-08-14 Sasa Bojanic <sasaboy@together.at>
+   # Improved implementation of XMLUtil.getUsingPositions() method to properly recognize text in expressions
+
 2014-07-04 Sasa Bojanic <sasaboy@together.at>
    # XPDL2 and XPDL1 schemas are now part of documentation distribution package
 

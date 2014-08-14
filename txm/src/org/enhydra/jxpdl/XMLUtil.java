@@ -234,9 +234,7 @@ public class XMLUtil {
     * @param canBeDirectory
     * @return The canonical path based on provided relative path and base directory.
     */
-   public static String getCanonicalPath(String relpath,
-                                         String basedir,
-                                         boolean canBeDirectory) {
+   public static String getCanonicalPath(String relpath, String basedir, boolean canBeDirectory) {
       try {
          File f = null;
          if (basedir == null || basedir.equals("")) {
@@ -589,8 +587,7 @@ public class XMLUtil {
     * @return String representation of XML chunk representing {@link ExtendedAttributes}
     *         element.
     */
-   public static String stringifyExtendedAttributes(ExtendedAttributes extAttribs)
-      throws Exception {
+   public static String stringifyExtendedAttributes(ExtendedAttributes extAttribs) throws Exception {
       try {
          ExtendedAttributes easclone = (ExtendedAttributes) extAttribs.clone();
          easclone.setParent(null);
@@ -606,8 +603,7 @@ public class XMLUtil {
          // byte[] eas=XMLUtil.serialize(easclone);
          // return Base64.encode(eas);
       } catch (Throwable thr) {
-         throw new Exception("Can't stringify extended attributes, error="
-                             + thr.getMessage() + " !");
+         throw new Exception("Can't stringify extended attributes, error=" + thr.getMessage() + " !");
       }
    }
 
@@ -619,8 +615,7 @@ public class XMLUtil {
     * @return The {@link ExtendedAttributes} element created by parsing given string
     *         representation.
     */
-   public static ExtendedAttributes destringyfyExtendedAttributes(String extAttribs)
-      throws Exception {
+   public static ExtendedAttributes destringyfyExtendedAttributes(String extAttribs) throws Exception {
       ExtendedAttributes extAttr = null;
       if (extAttribs != null && !extAttribs.trim().equals("")) {
          try {
@@ -643,8 +638,7 @@ public class XMLUtil {
             return extAttr;
          } catch (Throwable thr) {
             thr.printStackTrace();
-            throw new Exception("Failed to destringify extended attributes, error="
-                                + thr.getMessage() + " !");
+            throw new Exception("Failed to destringify extended attributes, error=" + thr.getMessage() + " !");
          }
       }
 
@@ -677,8 +671,7 @@ public class XMLUtil {
             System.err.println("Errors in ext attribs complex content");
          }
       } catch (Exception ex) {
-         System.err.println("Fatal error while parsing ext. attributes complex content "
-                            + toParse);
+         System.err.println("Fatal error while parsing ext. attributes complex content " + toParse);
          return null;
       }
       if (document != null) {
@@ -697,8 +690,7 @@ public class XMLUtil {
     * @return the value of extended attribute with a given name by searching name/value
     *         pars given in the matrix.
     */
-   public static String getExtendedAttributeValue(String[][] extendedAttributes,
-                                                  String extAttrName) {
+   public static String getExtendedAttributeValue(String[][] extendedAttributes, String extAttrName) {
       if (extendedAttributes != null) {
          for (int i = 0; i < extendedAttributes.length; i++) {
             if (extendedAttributes[i][0].equals(extAttrName)) {
@@ -744,9 +736,7 @@ public class XMLUtil {
             return (String) XMLUtil.basicTypesMap.get(subTypeName);
          }
       } else if (choosenType instanceof DeclaredType) {
-         TypeDeclaration td = XMLUtil.getTypeDeclaration(xmli,
-                                                         pkg,
-                                                         (((DeclaredType) choosenType).getId()));
+         TypeDeclaration td = XMLUtil.getTypeDeclaration(xmli, pkg, (((DeclaredType) choosenType).getId()));
          DataTypes dtypes = td.getDataTypes();
          return getChoosenType(xmli, dtypes, pkg);
       } else if (choosenType instanceof SchemaType) {
@@ -1015,8 +1005,7 @@ public class XMLUtil {
     * @return The parent element of given 'assignableFrom' type for the given element or
     *         null if there is no such parent.
     */
-   public static XMLElement getParentElementByAssignableType(Class assignableFrom,
-                                                             XMLElement el) {
+   public static XMLElement getParentElementByAssignableType(Class assignableFrom, XMLElement el) {
       if (el == null || assignableFrom == null)
          return null;
       while (!assignableFrom.isAssignableFrom(el.getClass())) {
@@ -1096,9 +1085,7 @@ public class XMLUtil {
     *         at a 'toBegin' package and then if not found continues to the external
     *         packages.
     */
-   public static WorkflowProcess findWorkflowProcess(XMLInterface xmlInterface,
-                                                     Package toBegin,
-                                                     String wpId) {
+   public static WorkflowProcess findWorkflowProcess(XMLInterface xmlInterface, Package toBegin, String wpId) {
       WorkflowProcess wp = toBegin.getWorkflowProcess(wpId);
       if (wp == null) {
          List l = XMLUtil.getAllExternalPackageIds(xmlInterface, toBegin, new HashSet());
@@ -1128,9 +1115,7 @@ public class XMLUtil {
     *         a 'toBegin' workflow process and then if not found continues to the package
     *         and then external packages.
     */
-   public static Participant findParticipant(XMLInterface xmlInterface,
-                                             WorkflowProcess toBegin,
-                                             String pId) {
+   public static Participant findParticipant(XMLInterface xmlInterface, WorkflowProcess toBegin, String pId) {
       Participant p = toBegin.getParticipant(pId);
       if (p == null) {
          Package pkg = XMLUtil.getPackage(toBegin);
@@ -1150,9 +1135,7 @@ public class XMLUtil {
     *         a 'toBegin' package and then if not found continues to the external
     *         packages.
     */
-   public static Participant findParticipant(XMLInterface xmlInterface,
-                                             Package toBegin,
-                                             String pId) {
+   public static Participant findParticipant(XMLInterface xmlInterface, Package toBegin, String pId) {
       Participant p = toBegin.getParticipant(pId);
       if (p == null) {
          List l = XMLUtil.getAllExternalPackageIds(xmlInterface, toBegin, new HashSet());
@@ -1182,9 +1165,7 @@ public class XMLUtil {
     *         a 'toBegin' workflow process and then if not found continues to the package
     *         and then external packages.
     */
-   public static Application findApplication(XMLInterface xmlInterface,
-                                             WorkflowProcess toBegin,
-                                             String id) {
+   public static Application findApplication(XMLInterface xmlInterface, WorkflowProcess toBegin, String id) {
       Application a = toBegin.getApplication(id);
       if (a == null) {
          Package pkg = XMLUtil.getPackage(toBegin);
@@ -1204,9 +1185,7 @@ public class XMLUtil {
     *         a 'toBegin' package and then if not found continues to the external
     *         packages.
     */
-   public static Application getApplication(XMLInterface xmlInterface,
-                                            Package toBegin,
-                                            String id) {
+   public static Application getApplication(XMLInterface xmlInterface, Package toBegin, String id) {
       Application a = toBegin.getApplication(id);
       if (a == null) {
          List l = XMLUtil.getAllExternalPackageIds(xmlInterface, toBegin, new HashSet());
@@ -1235,9 +1214,7 @@ public class XMLUtil {
     *         at a 'toBegin' package and then if not found continues to the external
     *         packages.
     */
-   public static TypeDeclaration getTypeDeclaration(XMLInterface xmlInterface,
-                                                    Package toBegin,
-                                                    String id) {
+   public static TypeDeclaration getTypeDeclaration(XMLInterface xmlInterface, Package toBegin, String id) {
       TypeDeclaration td = toBegin.getTypeDeclaration(id);
       if (td == null) {
          List l = XMLUtil.getAllExternalPackageIds(xmlInterface, toBegin, new HashSet());
@@ -1263,16 +1240,12 @@ public class XMLUtil {
     * @param evaluateToString true if expression should be evaluated to string.
     * @return true if given string can represent a script expression.
     */
-   public static boolean canBeExpression(String expr,
-                                         Map allVars,
-                                         boolean evaluateToString) {
+   public static boolean canBeExpression(String expr, Map allVars, boolean evaluateToString) {
       String exprToParse = new String(expr);
 
       boolean canBeExpression = false;
 
-      if (evaluateToString
-          && (expr.startsWith("\"") && expr.endsWith("\""))
-          || (expr.startsWith("'") && expr.endsWith("'"))) {
+      if (evaluateToString && (expr.startsWith("\"") && expr.endsWith("\"")) || (expr.startsWith("'") && expr.endsWith("'"))) {
          canBeExpression = true;
       }
       // System.err.println("CBE1="+canBeExpression);
@@ -1326,18 +1299,11 @@ public class XMLUtil {
     * @return The list of positions (Integers) of string 'dfOrFpId' within the string
     *         'expr'.
     */
-   public static List getUsingPositions(String expr,
-                                        String dfOrFpId,
-                                        Map allVars,
-                                        boolean checkPrevAndNextCharacter) {
+   public static List getUsingPositions(String expr, String dfOrFpId, Map allVars, boolean checkPrevAndNextCharacter) {
       return getUsingPositions(expr, dfOrFpId, allVars, checkPrevAndNextCharacter, false);
    }
 
-   public static List<Integer> getUsingPositions(String expr,
-                                                 String dfOrFpId,
-                                                 Map allVars,
-                                                 boolean checkPrevAndNextCharacter,
-                                                 boolean checkText) {
+   public static List<Integer> getUsingPositions(String expr, String dfOrFpId, Map allVars, boolean checkPrevAndNextCharacter, boolean checkText) {
 
       List<Integer> positions = new ArrayList<Integer>();
       if (expr.trim().equals("") || dfOrFpId.trim().equals(""))
@@ -1365,8 +1331,7 @@ public class XMLUtil {
                prevOK = true;
             } else {
                prev = exprToParse.charAt(foundAt - 1);
-               prevOK = !XMLUtil.isIdValid(String.valueOf(prev))
-                        || prev == ':' || prev == '-';
+               prevOK = !XMLUtil.isIdValid(String.valueOf(prev)) || prev == ':' || prev == '-';
                // System.out.println("Is prev char "+prev+" ok = "+prevOK);
             }
 
@@ -1406,9 +1371,27 @@ public class XMLUtil {
          int indofplus = expr.indexOf("+", indofquotes);
          if (foundAt == 0) {
             isTxt = false;
-         } else if (realPos > indofplus && indofplus > indofquotes && indofquotes >= 0) {
-            if (expr.substring(indofquotes + 1, indofplus).trim().equals("")) {
-               isTxt = false;
+         } else if (realPos > indofplus && indofquotes >= 0) {
+            if (indofplus > indofquotes) {
+               if (expr.substring(indofquotes + 1, indofplus).trim().equals("")) {
+                  isTxt = false;
+               }
+            } else {
+               // check if there are even number of quotes before the variable position ->
+               // in this case it is not a text only
+               int hmq = 1;
+               int pos = indofquotes;
+               while (true) {
+                  pos--;
+                  pos = expr.lastIndexOf("\"", pos);
+                  if (pos < 0) {
+                     break;
+                  }
+                  hmq++;
+               }
+               if (hmq % 2 == 0) {
+                  isTxt = false;
+               }
             }
          } else if (indofquotes < 0) {
             isTxt = false;
@@ -1428,8 +1411,7 @@ public class XMLUtil {
     * others. The variable that is used by another variable will have lower index in the
     * resulting list.
     */
-   public static List<String> determineVariableEvaluationOrder(Map<String, String> variables)
-      throws Exception {
+   public static List<String> determineVariableEvaluationOrder(Map<String, String> variables) throws Exception {
       List<String> sortList = new ArrayList<String>(variables.keySet());
       List<String> ret = new ArrayList<String>(sortList);
       int[][] matrix = new int[ret.size()][ret.size()];
@@ -1438,25 +1420,19 @@ public class XMLUtil {
          for (int j = 0; j < ret.size(); j++) {
             String id = ret.get(j);
             String value = variables.get(id);
-            int ups = XMLUtil.getUsingPositions(value,
-                                                id2handle,
-                                                variables,
-                                                true,
-                                                true).size();
+            int ups = XMLUtil.getUsingPositions(value, id2handle, variables, true, true).size();
             matrix[i][j] = ups;
          }
       }
       for (int i = 0; i < matrix.length; i++) {
          if (matrix[i][i] > 0) {
-            throw new Exception(EXCEPTION_PREFIX_SELF_REFERENCES_NOT_ALLOWED
-                                + sortList.get(i));
+            throw new Exception(EXCEPTION_PREFIX_SELF_REFERENCES_NOT_ALLOWED + sortList.get(i));
          }
       }
       for (int i = 0; i < matrix.length; i++) {
          for (int j = 0; j < matrix.length; j++) {
             if (matrix[i][j] > 0 && matrix[j][i] > 0) {
-               throw new Exception(EXCEPTION_PREFIX_CIRCULAR_REFERENCES_NOT_ALLOWED
-                                   + sortList.get(i) + "," + sortList.get(j));
+               throw new Exception(EXCEPTION_PREFIX_CIRCULAR_REFERENCES_NOT_ALLOWED + sortList.get(i) + "," + sortList.get(j));
             }
          }
       }
@@ -1464,8 +1440,7 @@ public class XMLUtil {
          int[] rows = getRowsOrColumns(matrix, i, true);
          boolean matches = match(matrix, rows, i, new ArrayList());
          if (matches) {
-            throw new Exception(EXCEPTION_PREFIX_IMPLICIT_CIRCULAR_REFERENCES_NOT_ALLOWED
-                                + sortList.get(i));
+            throw new Exception(EXCEPTION_PREFIX_IMPLICIT_CIRCULAR_REFERENCES_NOT_ALLOWED + sortList.get(i));
          }
       }
       // move the entries that do not reference other entries to the beginning of the list
@@ -1503,11 +1478,7 @@ public class XMLUtil {
 
             // if the variable 'id' contains variable 'id2handle' insure that position of
             // the variable 'id2handle' is before variable 'id'
-            int ups = XMLUtil.getUsingPositions(value,
-                                                id2handle,
-                                                variables,
-                                                true,
-                                                true).size();
+            int ups = XMLUtil.getUsingPositions(value, id2handle, variables, true, true).size();
             if (value != null && ups > 0) {
                int ind1 = ret.indexOf(id2handle);
                int ind2 = ret.indexOf(id);
@@ -1603,9 +1574,7 @@ public class XMLUtil {
     * @return Set of given activity's outgoing transitions.
     */
    public static Set getOutgoingTransitions(Activity act) {
-      return XMLUtil.getOutgoingTransitions(act,
-                                            ((Transitions) ((XMLCollectionElement) act.getParent()
-                                               .getParent()).get("Transitions")));
+      return XMLUtil.getOutgoingTransitions(act, ((Transitions) ((XMLCollectionElement) act.getParent().getParent()).get("Transitions")));
    }
 
    /**
@@ -1634,8 +1603,7 @@ public class XMLUtil {
     * @return Set of given activity's exceptional outgoing transitions.
     */
    public static Set getExceptionalOutgoingTransitions(Activity act) {
-      Transitions tras = (Transitions) ((XMLCollectionElement) act.getParent()
-         .getParent()).get("Transitions");
+      Transitions tras = (Transitions) ((XMLCollectionElement) act.getParent().getParent()).get("Transitions");
       return XMLUtil.getExceptionalOutgoingTransitions(act, tras);
    }
 
@@ -1669,8 +1637,7 @@ public class XMLUtil {
     * @return Set of given activity's non-exceptional outgoing transitions.
     */
    public static Set getNonExceptionalOutgoingTransitions(Activity act) {
-      Transitions tras = (Transitions) ((XMLCollectionElement) act.getParent()
-         .getParent()).get("Transitions");
+      Transitions tras = (Transitions) ((XMLCollectionElement) act.getParent().getParent()).get("Transitions");
       return XMLUtil.getNonExceptionalOutgoingTransitions(act, tras);
    }
 
@@ -1704,9 +1671,7 @@ public class XMLUtil {
     * @return Set of given activity's incoming transitions.
     */
    public static Set getIncomingTransitions(Activity act) {
-      return XMLUtil.getIncomingTransitions(act,
-                                            ((Transitions) ((XMLCollectionElement) act.getParent()
-                                               .getParent()).get("Transitions")));
+      return XMLUtil.getIncomingTransitions(act, ((Transitions) ((XMLCollectionElement) act.getParent().getParent()).get("Transitions")));
    }
 
    /**
@@ -1738,8 +1703,7 @@ public class XMLUtil {
       boolean isExcTra = false;
       if (tra != null) {
          String tt = tra.getCondition().getType();
-         if (tt.equals(XPDLConstants.CONDITION_TYPE_EXCEPTION)
-             || tt.equals(XPDLConstants.CONDITION_TYPE_DEFAULTEXCEPTION)) {
+         if (tt.equals(XPDLConstants.CONDITION_TYPE_EXCEPTION) || tt.equals(XPDLConstants.CONDITION_TYPE_DEFAULTEXCEPTION)) {
             isExcTra = true;
          }
       }
@@ -1774,10 +1738,7 @@ public class XMLUtil {
     */
    public static Set getOutgoingAssociations(XMLCollectionElement actOrArt) {
       Set ret = new HashSet();
-      Iterator it = XMLUtil.getPackage(actOrArt)
-         .getAssociations()
-         .toElements()
-         .iterator();
+      Iterator it = XMLUtil.getPackage(actOrArt).getAssociations().toElements().iterator();
       String actId = actOrArt.getId();
       while (it.hasNext()) {
          Association a = (Association) it.next();
@@ -1796,10 +1757,7 @@ public class XMLUtil {
     */
    public static Set getIncomingAssociations(XMLCollectionElement actOrArt) {
       Set ret = new HashSet();
-      Iterator it = XMLUtil.getPackage(actOrArt)
-         .getAssociations()
-         .toElements()
-         .iterator();
+      Iterator it = XMLUtil.getPackage(actOrArt).getAssociations().toElements().iterator();
       String actId = actOrArt.getId();
       while (it.hasNext()) {
          Association a = (Association) it.next();
@@ -1845,8 +1803,7 @@ public class XMLUtil {
     *         or {@link Artifact} object), depending on given boolean parameter (true for
     *         returning the source).
     */
-   protected static XMLCollectionElement getAssociationSourceOrTarget(Association asoc,
-                                                                      boolean source) {
+   protected static XMLCollectionElement getAssociationSourceOrTarget(Association asoc, boolean source) {
       String st = "Source";
       if (!source) {
          st = "Target";
@@ -1870,10 +1827,7 @@ public class XMLUtil {
    public static List getAllArtifactsAndAssociationsForWorkflowProcessOrActivitySet(XMLCollectionElement wpOrAs) {
       List ret = new ArrayList();
 
-      Iterator it = XMLUtil.getPoolForProcessOrActivitySet(wpOrAs)
-         .getLanes()
-         .toElements()
-         .iterator();
+      Iterator it = XMLUtil.getPoolForProcessOrActivitySet(wpOrAs).getLanes().toElements().iterator();
       List laneIds = new ArrayList();
       while (it.hasNext()) {
          Lane l = (Lane) it.next();
@@ -1949,15 +1903,11 @@ public class XMLUtil {
     * @return The {@link WorkflowProcess} instance that is referenced by the given
     *         sub-flow.
     */
-   public static WorkflowProcess getSubflowProcess(XMLInterface xmlInterface,
-                                                   Activity sbflwAct) {
+   public static WorkflowProcess getSubflowProcess(XMLInterface xmlInterface, Activity sbflwAct) {
       if (sbflwAct.getActivityType() != XPDLConstants.ACTIVITY_TYPE_SUBFLOW)
          return null;
       Package pkg = XMLUtil.getPackage(sbflwAct);
-      SubFlow s = sbflwAct.getActivityTypes()
-         .getImplementation()
-         .getImplementationTypes()
-         .getSubFlow();
+      SubFlow s = sbflwAct.getActivityTypes().getImplementation().getImplementationTypes().getSubFlow();
       String subflowID = s.getId();
 
       WorkflowProcess wp = pkg.getWorkflowProcess(subflowID);
@@ -2006,9 +1956,7 @@ public class XMLUtil {
     * @param alreadyGathered Set of already gathered Ids.
     * @return The list of Ids.
     */
-   public static List getAllExternalPackageIds(XMLInterface xmli,
-                                               Package pkg,
-                                               Set alreadyGathered) {
+   public static List getAllExternalPackageIds(XMLInterface xmli, Package pkg, Set alreadyGathered) {
       List l = new ArrayList();
       List workingList = new ArrayList(pkg.getExternalPackageIds());
       workingList.removeAll(alreadyGathered);
@@ -2196,8 +2144,7 @@ public class XMLUtil {
     * @return The string representation of XML part representing given
     *         {@link ExtendedAttributes} element.
     */
-   public static String getExtendedAttributesString(ExtendedAttributes eas)
-      throws Exception {
+   public static String getExtendedAttributesString(ExtendedAttributes eas) throws Exception {
       Document document = null;
 
       DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -2326,8 +2273,7 @@ public class XMLUtil {
     * @return Map where keys are strings representing participant Id, and values are
     *         {@link Participant} instances.
     */
-   public static SequencedHashMap getPossibleParticipants(Package forPkg,
-                                                          XMLInterface xmlInterface) {
+   public static SequencedHashMap getPossibleParticipants(Package forPkg, XMLInterface xmlInterface) {
       SequencedHashMap pars = new SequencedHashMap();
       List l = XMLUtil.getAllExternalPackageIds(xmlInterface, forPkg, new HashSet());
       Iterator itpkg = l.iterator();
@@ -2360,11 +2306,9 @@ public class XMLUtil {
     * @return Map where keys are strings representing participant Id, and values are
     *         {@link Participant} instances.
     */
-   public static SequencedHashMap getPossibleParticipants(WorkflowProcess forWP,
-                                                          XMLInterface xmlInterface) {
+   public static SequencedHashMap getPossibleParticipants(WorkflowProcess forWP, XMLInterface xmlInterface) {
       List ps = forWP.getParticipants().toElements();
-      SequencedHashMap pars = XMLUtil.getPossibleParticipants(XMLUtil.getPackage(forWP),
-                                                              xmlInterface);
+      SequencedHashMap pars = XMLUtil.getPossibleParticipants(XMLUtil.getPackage(forWP), xmlInterface);
       Iterator it = ps.iterator();
       while (it.hasNext()) {
          Participant p = (Participant) it.next();
@@ -2384,8 +2328,7 @@ public class XMLUtil {
     * @return Map where keys are strings representing application Id, and values are
     *         {@link Application} instances.
     */
-   public static SequencedHashMap getPossibleApplications(Package forPkg,
-                                                          XMLInterface xmlInterface) {
+   public static SequencedHashMap getPossibleApplications(Package forPkg, XMLInterface xmlInterface) {
       SequencedHashMap aps = new SequencedHashMap();
       List l = XMLUtil.getAllExternalPackageIds(xmlInterface, forPkg, new HashSet());
       Iterator itpkg = l.iterator();
@@ -2418,11 +2361,9 @@ public class XMLUtil {
     * @return Map where keys are strings representing participant Id, and values are
     *         {@link Application} instances.
     */
-   public static SequencedHashMap getPossibleApplications(WorkflowProcess forWP,
-                                                          XMLInterface xmlInterface) {
+   public static SequencedHashMap getPossibleApplications(WorkflowProcess forWP, XMLInterface xmlInterface) {
       List as = forWP.getApplications().toElements();
-      SequencedHashMap apps = XMLUtil.getPossibleApplications(XMLUtil.getPackage(forWP),
-                                                              xmlInterface);
+      SequencedHashMap apps = XMLUtil.getPossibleApplications(XMLUtil.getPackage(forWP), xmlInterface);
       Iterator it = as.iterator();
       while (it.hasNext()) {
          Application app = (Application) it.next();
@@ -2495,12 +2436,9 @@ public class XMLUtil {
     * @return Map where keys are strings representing data workflow process Id, and values
     *         are {@link WorkflowProcess} instances.
     */
-   public static SequencedHashMap getPossibleSubflowProcesses(SubFlow sbflw,
-                                                              XMLInterface xmlInterface) {
+   public static SequencedHashMap getPossibleSubflowProcesses(SubFlow sbflw, XMLInterface xmlInterface) {
       SequencedHashMap wps = new SequencedHashMap();
-      List l = XMLUtil.getAllExternalPackageIds(xmlInterface,
-                                                XMLUtil.getPackage(sbflw),
-                                                new HashSet());
+      List l = XMLUtil.getAllExternalPackageIds(xmlInterface, XMLUtil.getPackage(sbflw), new HashSet());
       Iterator itpkg = l.iterator();
       while (itpkg.hasNext()) {
          Package p = xmlInterface.getPackageById((String) itpkg.next());
@@ -2512,9 +2450,7 @@ public class XMLUtil {
             }
          }
       }
-      Iterator it = ((WorkflowProcesses) XMLUtil.getParentElement(WorkflowProcesses.class,
-                                                                  sbflw)).toElements()
-         .iterator();
+      Iterator it = ((WorkflowProcesses) XMLUtil.getParentElement(WorkflowProcesses.class, sbflw)).toElements().iterator();
       while (it.hasNext()) {
          WorkflowProcess wp = (WorkflowProcess) it.next();
          wps.put(wp.getId(), wp);
@@ -2532,8 +2468,7 @@ public class XMLUtil {
     * @return Map where keys are strings representing type declaration Id, and values are
     *         {@link TypeDeclaration} instances.
     */
-   public static SequencedHashMap getPossibleTypeDeclarations(Package forPkg,
-                                                              XMLInterface xmlInterface) {
+   public static SequencedHashMap getPossibleTypeDeclarations(Package forPkg, XMLInterface xmlInterface) {
       SequencedHashMap tds = new SequencedHashMap();
       List l = XMLUtil.getAllExternalPackageIds(xmlInterface, forPkg, new HashSet());
       Iterator itpkg = l.iterator();
@@ -2597,10 +2532,7 @@ public class XMLUtil {
    public static boolean isSubflowSynchronous(Activity sbflwActivityDefinition) {
       String type = XPDLConstants.EXECUTION_SYNCHR;
       // Determine subflow type, if it is SYNCHR, terminate it
-      SubFlow subflow = sbflwActivityDefinition.getActivityTypes()
-         .getImplementation()
-         .getImplementationTypes()
-         .getSubFlow();
+      SubFlow subflow = sbflwActivityDefinition.getActivityTypes().getImplementation().getImplementationTypes().getSubFlow();
       type = subflow.getExecution();
 
       if (type.equals(XPDLConstants.EXECUTION_ASYNCHR)) {
@@ -2721,8 +2653,7 @@ public class XMLUtil {
     * @param outTransitions Set or {@link Transition} elements.
     * @return The list of {@link Transition} elements.
     */
-   public static List getOrderedOutgoingTransitions(Activity fromActDef,
-                                                    Set outTransitions) {
+   public static List getOrderedOutgoingTransitions(Activity fromActDef, Set outTransitions) {
       // the iteration should be done on TransitionReferences collection,
       // in order to make ordered transition's list
       Set otCopy = new HashSet(outTransitions);
@@ -2866,9 +2797,7 @@ public class XMLUtil {
          writeToFile(firstIF + "testma", pkg);
       }
       te = System.currentTimeMillis();
-      System.out.println("Handling of "
-                         + (args.length - 1) + " XPDLs lasted " + ((te - ts) / 1000)
-                         + " sec");
+      System.out.println("Handling of " + (args.length - 1) + " XPDLs lasted " + ((te - ts) / 1000) + " sec");
    }
 
    /**
@@ -2945,8 +2874,7 @@ public class XMLUtil {
          id = "test";
       }
 
-      System.out.println("...creating Package [Id="
-                         + id + ",Name=" + name + ",Script-type=text/javascript]");
+      System.out.println("...creating Package [Id=" + id + ",Name=" + name + ",Script-type=text/javascript]");
       Package pkg = new Package();
       pkg.setId(id);
       pkg.setName(name);
@@ -2972,8 +2900,7 @@ public class XMLUtil {
       p3.setName("Secretary");
       p3.getParticipantType().setTypeROLE();
 
-      System.out.println("......creating Pool [Id="
-                         + id + ",Name=" + name + ",Process=" + id + "]");
+      System.out.println("......creating Pool [Id=" + id + ",Name=" + name + ",Process=" + id + "]");
       Pool p = (Pool) pkg.getPools().generateNewElement();
       p.setId(id);
       p.setName(name);
@@ -3016,8 +2943,7 @@ public class XMLUtil {
       art.setName("Second activity comment");
       art.setArtifactTypeAnnotation();
       art.setTextAnnotation("This is a comment for 2nd activity");
-      NodeGraphicsInfo ngia = (NodeGraphicsInfo) art.getNodeGraphicsInfos()
-         .generateNewElement();
+      NodeGraphicsInfo ngia = (NodeGraphicsInfo) art.getNodeGraphicsInfos().generateNewElement();
       System.out.println(".........creating NodeGraphicsInfo[LaneId=lane2,Coordinates=50,50]");
       ngia.setLaneId("lane2");
       ngia.setWidth(95);
@@ -3027,10 +2953,8 @@ public class XMLUtil {
       art.getNodeGraphicsInfos().add(ngia);
       pkg.getArtifacts().add(art);
 
-      System.out.println("......creating WorkflowProcess [Id="
-                         + id + ",Name=" + name + "]");
-      WorkflowProcess wp = (WorkflowProcess) pkg.getWorkflowProcesses()
-         .generateNewElement();
+      System.out.println("......creating WorkflowProcess [Id=" + id + ",Name=" + name + "]");
+      WorkflowProcess wp = (WorkflowProcess) pkg.getWorkflowProcesses().generateNewElement();
       wp.setId(id);
       wp.setName(name);
 
@@ -3049,8 +2973,7 @@ public class XMLUtil {
       act1.getActivityTypes().getImplementation().getImplementationTypes().setNo();
       act1.setFirstPerformer("manager");
       System.out.println("............creating NodeGraphicsInfo[LaneId=lane1,Coordinates=50,50]");
-      NodeGraphicsInfo ngi1 = (NodeGraphicsInfo) act1.getNodeGraphicsInfos()
-         .generateNewElement();
+      NodeGraphicsInfo ngi1 = (NodeGraphicsInfo) act1.getNodeGraphicsInfos().generateNewElement();
       ngi1.setLaneId("lane1");
       ngi1.setWidth(90);
       ngi1.setHeight(60);
@@ -3064,25 +2987,19 @@ public class XMLUtil {
       actd.setName("Decision");
       actd.getActivityTypes().setRoute();
       System.out.println("............creating TransitionRestriction");
-      TransitionRestriction tre = (TransitionRestriction) act1.getTransitionRestrictions()
-         .generateNewElement();
+      TransitionRestriction tre = (TransitionRestriction) act1.getTransitionRestrictions().generateNewElement();
       System.out.println("...............creating TransitionRef[Id=tra2]");
-      TransitionRef tref1 = (TransitionRef) tre.getSplit()
-         .getTransitionRefs()
-         .generateNewElement();
+      TransitionRef tref1 = (TransitionRef) tre.getSplit().getTransitionRefs().generateNewElement();
       tref1.setId("tra2");
       System.out.println("...............creating TransitionRef[Id=tra3]");
-      TransitionRef tref2 = (TransitionRef) tre.getSplit()
-         .getTransitionRefs()
-         .generateNewElement();
+      TransitionRef tref2 = (TransitionRef) tre.getSplit().getTransitionRefs().generateNewElement();
       tref2.setId("tra3");
       tre.getSplit().getTransitionRefs().add(tref1);
       tre.getSplit().getTransitionRefs().add(tref2);
       tre.getSplit().setTypeExclusive();
       actd.getTransitionRestrictions().add(tre);
       System.out.println("............creating NodeGraphicsInfo[LaneId=lane1,Coordinates=200,60]");
-      NodeGraphicsInfo ngid = (NodeGraphicsInfo) actd.getNodeGraphicsInfos()
-         .generateNewElement();
+      NodeGraphicsInfo ngid = (NodeGraphicsInfo) actd.getNodeGraphicsInfos().generateNewElement();
       ngid.setLaneId("lane1");
       ngid.setWidth(40);
       ngid.setHeight(40);
@@ -3098,8 +3015,7 @@ public class XMLUtil {
       act2.getActivityTypes().getImplementation().getImplementationTypes().setNo();
       act2.setFirstPerformer("programmer");
       System.out.println("............creating NodeGraphicsInfo[LaneId=lane2,Coordinates=350,50]");
-      NodeGraphicsInfo ngi2 = (NodeGraphicsInfo) act2.getNodeGraphicsInfos()
-         .generateNewElement();
+      NodeGraphicsInfo ngi2 = (NodeGraphicsInfo) act2.getNodeGraphicsInfos().generateNewElement();
       ngi2.setLaneId("lane2");
       ngi2.setWidth(90);
       ngi2.setHeight(60);
@@ -3115,8 +3031,7 @@ public class XMLUtil {
       act3.getActivityTypes().getImplementation().getImplementationTypes().setNo();
       act3.setFirstPerformer("secretary");
       System.out.println("............creating NodeGraphicsInfo[LaneId=lane3,Coordinates=350,50]");
-      NodeGraphicsInfo ngi3 = (NodeGraphicsInfo) act3.getNodeGraphicsInfos()
-         .generateNewElement();
+      NodeGraphicsInfo ngi3 = (NodeGraphicsInfo) act3.getNodeGraphicsInfos().generateNewElement();
       ngi3.setLaneId("lane3");
       ngi3.setWidth(90);
       ngi3.setHeight(60);
@@ -3180,8 +3095,7 @@ public class XMLUtil {
     * @param readExt true if external packages should be handled.
     * @return The {@link Package} object.
     */
-   public static Package readFromFile(XMLInterface xmli, String inputFile, boolean readExt)
-      throws Exception {
+   public static Package readFromFile(XMLInterface xmli, String inputFile, boolean readExt) throws Exception {
       return xmli.openPackage(inputFile, readExt);
    }
 
@@ -3389,9 +3303,7 @@ public class XMLUtil {
     * @param skipIds Set of Ids to skip.
     * @return The unique Id.
     */
-   public static String generateSimilarOrIdenticalUniqueId(XMLCollection cel,
-                                                           Set skipIds,
-                                                           String origId) {
+   public static String generateSimilarOrIdenticalUniqueId(XMLCollection cel, Set skipIds, String origId) {
       String id = origId;
       long nextId = 0;
 
@@ -3472,15 +3384,10 @@ public class XMLUtil {
     * @return true if the given Id for the given {@link Activity} or {@link Artifact} is
     *         unique (according to XPDL spec).
     */
-   protected static boolean checkActivityOrArtifactId(XMLCollectionElement newEl,
-                                                      String newId) {
+   protected static boolean checkActivityOrArtifactId(XMLCollectionElement newEl, String newId) {
       List elsWithId = new ArrayList();
-      elsWithId.addAll(XMLUtil.getElementsForId(XMLUtil.getPackage(newEl).getArtifacts(),
-                                                newId));
-      Iterator it = XMLUtil.getPackage(newEl)
-         .getWorkflowProcesses()
-         .toElements()
-         .iterator();
+      elsWithId.addAll(XMLUtil.getElementsForId(XMLUtil.getPackage(newEl).getArtifacts(), newId));
+      Iterator it = XMLUtil.getPackage(newEl).getWorkflowProcesses().toElements().iterator();
       while (it.hasNext()) {
          WorkflowProcess proc = (WorkflowProcess) it.next();
          elsWithId.addAll(XMLUtil.getElementsForId(proc.getActivities(), newId));
@@ -3646,9 +3553,7 @@ public class XMLUtil {
     * @return The list of elements (objects which are derived from {@link XMLElement}
     *         object).
     */
-   public static List getReferences(XMLComplexElement pkgOrWp,
-                                    XMLComplexElement referenced,
-                                    XMLInterface xmli) {
+   public static List getReferences(XMLComplexElement pkgOrWp, XMLComplexElement referenced, XMLInterface xmli) {
       if (pkgOrWp instanceof Package) {
          return getReferences((Package) pkgOrWp, referenced, xmli);
       } else if (pkgOrWp instanceof WorkflowProcess) {
@@ -3667,9 +3572,7 @@ public class XMLUtil {
     * @return The list of elements (objects which are derived from {@link XMLElement}
     *         object).
     */
-   public static List getReferences(Package pkg,
-                                    XMLComplexElement referenced,
-                                    XMLInterface xmli) {
+   public static List getReferences(Package pkg, XMLComplexElement referenced, XMLInterface xmli) {
       if (referenced instanceof Package) {
          return getReferences((Package) referenced, xmli);
       } else if (referenced instanceof TypeDeclaration) {
@@ -3864,8 +3767,7 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   protected static List tGetTypeDeclarationReferences(XMLComplexElement pkgOrWp,
-                                                       String referencedId) {
+   protected static List tGetTypeDeclarationReferences(XMLComplexElement pkgOrWp, String referencedId) {
       List references = new ArrayList();
       if (referencedId.equals("")) {
          return references;
@@ -3874,30 +3776,24 @@ public class XMLUtil {
       Iterator it = ((Applications) pkgOrWp.get("Applications")).toElements().iterator();
       while (it.hasNext()) {
          Application app = (Application) it.next();
-         Iterator fps = app.getApplicationTypes()
-            .getFormalParameters()
-            .toElements()
-            .iterator();
+         Iterator fps = app.getApplicationTypes().getFormalParameters().toElements().iterator();
          while (fps.hasNext()) {
             Object obj = fps.next();
             // System.err.println(obj.getClass().getName());
             FormalParameter fp = (FormalParameter) obj;
-            references.addAll(getReferencingDeclaredTypes(fp.getDataType().getDataTypes(),
-                                                          referencedId));
+            references.addAll(getReferencingDeclaredTypes(fp.getDataType().getDataTypes(), referencedId));
          }
       }
       it = ((DataFields) pkgOrWp.get("DataFields")).toElements().iterator();
       while (it.hasNext()) {
          DataField df = (DataField) it.next();
-         references.addAll(getReferencingDeclaredTypes(df.getDataType().getDataTypes(),
-                                                       referencedId));
+         references.addAll(getReferencingDeclaredTypes(df.getDataType().getDataTypes(), referencedId));
       }
       if (pkgOrWp instanceof WorkflowProcess) {
          it = ((WorkflowProcess) pkgOrWp).getFormalParameters().toElements().iterator();
          while (it.hasNext()) {
             FormalParameter fp = (FormalParameter) it.next();
-            references.addAll(getReferencingDeclaredTypes(fp.getDataType().getDataTypes(),
-                                                          referencedId));
+            references.addAll(getReferencingDeclaredTypes(fp.getDataType().getDataTypes(), referencedId));
          }
       }
 
@@ -3925,11 +3821,9 @@ public class XMLUtil {
             toRet.add(choosen);
          }
       } else if (choosen instanceof ArrayType) {
-         return getReferencingDeclaredTypes(((ArrayType) choosen).getDataTypes(),
-                                            typeDeclarationId);
+         return getReferencingDeclaredTypes(((ArrayType) choosen).getDataTypes(), typeDeclarationId);
       } else if (choosen instanceof ListType) {
-         return getReferencingDeclaredTypes(((ListType) choosen).getDataTypes(),
-                                            typeDeclarationId);
+         return getReferencingDeclaredTypes(((ListType) choosen).getDataTypes(), typeDeclarationId);
       } else if (choosen instanceof RecordType || choosen instanceof UnionType) {
          Iterator it = ((XMLCollection) choosen).toElements().iterator();
          while (it.hasNext()) {
@@ -4051,8 +3945,7 @@ public class XMLUtil {
     * @param referenced {@link Association} instance. return The list of elements (derived
     *           from {@link XMLElement}).
     */
-   protected static List tGetAssociationReferences(XMLComplexElement pkgOrWpOrAs,
-                                                   Association referenced) {
+   protected static List tGetAssociationReferences(XMLComplexElement pkgOrWpOrAs, Association referenced) {
       List references = new ArrayList();
       if (referenced.getId().equals("")) {
          return references;
@@ -4062,18 +3955,15 @@ public class XMLUtil {
          Iterator it = ((Package) pkgOrWpOrAs).getArtifacts().toElements().iterator();
          while (it.hasNext()) {
             Artifact art = (Artifact) it.next();
-            if (referenced.getSource().equals(art.getId())
-                || referenced.getTarget().equals(art.getId())) {
+            if (referenced.getSource().equals(art.getId()) || referenced.getTarget().equals(art.getId())) {
                references.add(referenced);
             }
          }
       } else {
-         Iterator it = ((Activities) pkgOrWpOrAs.get("Activities")).toElements()
-            .iterator();
+         Iterator it = ((Activities) pkgOrWpOrAs.get("Activities")).toElements().iterator();
          while (it.hasNext()) {
             Activity act = (Activity) it.next();
-            if (referenced.getSource().equals(act.getId())
-                || referenced.getTarget().equals(act.getId())) {
+            if (referenced.getSource().equals(act.getId()) || referenced.getTarget().equals(act.getId())) {
                references.add(referenced);
             }
          }
@@ -4091,8 +3981,7 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   public static List getParticipantReferences(XMLComplexElement pkgOrWp,
-                                               String referencedId) {
+   public static List getParticipantReferences(XMLComplexElement pkgOrWp, String referencedId) {
       if (referencedId.equals("")) {
          return new ArrayList();
       }
@@ -4112,8 +4001,7 @@ public class XMLUtil {
     * @return The list of elements (derived from {@link XMLElement}).
     */
    public static List getReferences(Package pkg, Participant referenced) {
-      if (XMLUtil.getPackage(referenced) != pkg
-          && pkg.getParticipant(referenced.getId()) != null) {
+      if (XMLUtil.getPackage(referenced) != pkg && pkg.getParticipant(referenced.getId()) != null) {
          return new ArrayList();
       }
 
@@ -4157,13 +4045,11 @@ public class XMLUtil {
     * @return The list of elements (derived from {@link XMLElement}).
     */
    public static List getReferences(WorkflowProcess wp, Participant referenced) {
-      if (XMLUtil.getWorkflowProcess(referenced) == null
-          && wp.getParticipant(referenced.getId()) != null) {
+      if (XMLUtil.getWorkflowProcess(referenced) == null && wp.getParticipant(referenced.getId()) != null) {
          return new ArrayList();
       }
       Package pkg = XMLUtil.getPackage(wp);
-      if (XMLUtil.getPackage(referenced) != pkg
-          && pkg.getParticipant(referenced.getId()) != null) {
+      if (XMLUtil.getPackage(referenced) != pkg && pkg.getParticipant(referenced.getId()) != null) {
          return new ArrayList();
       }
 
@@ -4205,8 +4091,7 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   public static List tGetParticipantReferences(XMLComplexElement pkgOrWpOrAs,
-                                                   String referencedId) {
+   public static List tGetParticipantReferences(XMLComplexElement pkgOrWpOrAs, String referencedId) {
       List references = new ArrayList();
       if (referencedId.equals("")) {
          return references;
@@ -4229,9 +4114,7 @@ public class XMLUtil {
       }
 
       if (!(pkgOrWpOrAs instanceof ActivitySet)) {
-         Iterator it = ((RedefinableHeader) pkgOrWpOrAs.get("RedefinableHeader")).getResponsibles()
-            .toElements()
-            .iterator();
+         Iterator it = ((RedefinableHeader) pkgOrWpOrAs.get("RedefinableHeader")).getResponsibles().toElements().iterator();
          while (it.hasNext()) {
             Responsible rs = (Responsible) it.next();
             if (rs.toValue().equals(referencedId)) {
@@ -4240,8 +4123,7 @@ public class XMLUtil {
          }
       }
       if (!(pkgOrWpOrAs instanceof Package)) {
-         Iterator it = ((Activities) pkgOrWpOrAs.get("Activities")).toElements()
-            .iterator();
+         Iterator it = ((Activities) pkgOrWpOrAs.get("Activities")).toElements().iterator();
          while (it.hasNext()) {
             Activity act = (Activity) it.next();
             String perf = act.getFirstPerformer();
@@ -4263,8 +4145,7 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   public static List getApplicationReferences(XMLComplexElement pkgOrWp,
-                                               String referencedId) {
+   public static List getApplicationReferences(XMLComplexElement pkgOrWp, String referencedId) {
       if (referencedId.equals("")) {
          return new ArrayList();
       }
@@ -4284,8 +4165,7 @@ public class XMLUtil {
     * @return The list of elements (derived from {@link XMLElement})..
     */
    public static List getReferences(Package pkg, Application referenced) {
-      if (XMLUtil.getPackage(referenced) != pkg
-          && pkg.getApplication(referenced.getId()) != null) {
+      if (XMLUtil.getPackage(referenced) != pkg && pkg.getApplication(referenced.getId()) != null) {
          return new ArrayList();
       }
 
@@ -4327,13 +4207,11 @@ public class XMLUtil {
     * @return The list of elements (derived from {@link XMLElement}).
     */
    public static List getReferences(WorkflowProcess wp, Application referenced) {
-      if (XMLUtil.getWorkflowProcess(referenced) == null
-          && wp.getApplication(referenced.getId()) != null) {
+      if (XMLUtil.getWorkflowProcess(referenced) == null && wp.getApplication(referenced.getId()) != null) {
          return new ArrayList();
       }
       Package pkg = XMLUtil.getPackage(wp);
-      if (XMLUtil.getPackage(referenced) != pkg
-          && pkg.getParticipant(referenced.getId()) != null) {
+      if (XMLUtil.getPackage(referenced) != pkg && pkg.getParticipant(referenced.getId()) != null) {
          return new ArrayList();
       }
 
@@ -4375,8 +4253,7 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   protected static List tGetApplicationReferences(XMLCollectionElement wpOrAs,
-                                                   String referencedId) {
+   protected static List tGetApplicationReferences(XMLCollectionElement wpOrAs, String referencedId) {
       List references = new ArrayList();
       if (referencedId.equals("")) {
          return references;
@@ -4387,12 +4264,7 @@ public class XMLUtil {
       Iterator it = getActivities((Activities) wpOrAs.get("Activities"), types).iterator();
       while (it.hasNext()) {
          Activity act = (Activity) it.next();
-         TaskApplication ta = act.getActivityTypes()
-            .getImplementation()
-            .getImplementationTypes()
-            .getTask()
-            .getTaskTypes()
-            .getTaskApplication();
+         TaskApplication ta = act.getActivityTypes().getImplementation().getImplementationTypes().getTask().getTaskTypes().getTaskApplication();
          if (ta.getId().equals(referencedId)) {
             references.add(ta);
          }
@@ -4511,8 +4383,7 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   public static List tGetLaneReferences(XMLComplexElement pkgOrWpOrAs,
-                                         String referencedId) {
+   public static List tGetLaneReferences(XMLComplexElement pkgOrWpOrAs, String referencedId) {
       List references = new ArrayList();
       if (referencedId.equals("")) {
          return references;
@@ -4532,9 +4403,7 @@ public class XMLUtil {
                      references.add(nl);
                   }
                }
-               Iterator ait = ((Package) pkgOrWpOrAs).getArtifacts()
-                  .toElements()
-                  .iterator();
+               Iterator ait = ((Package) pkgOrWpOrAs).getArtifacts().toElements().iterator();
                while (ait.hasNext()) {
                   Artifact a = (Artifact) ait.next();
                   Iterator ngit = a.getNodeGraphicsInfos().toElements().iterator();
@@ -4548,8 +4417,7 @@ public class XMLUtil {
             }
          }
       } else {
-         Iterator it = ((Activities) pkgOrWpOrAs.get("Activities")).toElements()
-            .iterator();
+         Iterator it = ((Activities) pkgOrWpOrAs.get("Activities")).toElements().iterator();
          while (it.hasNext()) {
             Activity act = (Activity) it.next();
             Iterator itn = act.getNodeGraphicsInfos().toElements().iterator();
@@ -4574,8 +4442,7 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   public static List getDataFieldReferences(XMLComplexElement pkgOrWp,
-                                             String referencedId) {
+   public static List getDataFieldReferences(XMLComplexElement pkgOrWp, String referencedId) {
       if (referencedId.equals("")) {
          return new ArrayList();
       }
@@ -4635,8 +4502,7 @@ public class XMLUtil {
     * @return The list of elements (derived from {@link XMLElement}).
     */
    public static List getReferences(WorkflowProcess wp, DataField referenced) {
-      if (XMLUtil.getWorkflowProcess(referenced) == null
-          && (wp.getDataField(referenced.getId()) != null || wp.getFormalParameter(referenced.getId()) != null)) {
+      if (XMLUtil.getWorkflowProcess(referenced) == null && (wp.getDataField(referenced.getId()) != null || wp.getFormalParameter(referenced.getId()) != null)) {
          return new ArrayList();
       }
 
@@ -4679,8 +4545,7 @@ public class XMLUtil {
     */
    public static List getReferences(Package pkg, WorkflowProcess referenced) {
       List references = new ArrayList();
-      if (XMLUtil.getPackage(referenced) != pkg
-          && pkg.getWorkflowProcess(referenced.getId()) != null) {
+      if (XMLUtil.getPackage(referenced) != pkg && pkg.getWorkflowProcess(referenced.getId()) != null) {
          return references;
       }
 
@@ -4767,8 +4632,7 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   protected static List tGetWorkflowProcessReferences(XMLCollectionElement wpOrAs,
-                                                       String referencedId) {
+   protected static List tGetWorkflowProcessReferences(XMLCollectionElement wpOrAs, String referencedId) {
       List references = new ArrayList();
       if (referencedId.equals("")) {
          return references;
@@ -4779,10 +4643,7 @@ public class XMLUtil {
       Iterator it = getActivities((Activities) wpOrAs.get("Activities"), types).iterator();
       while (it.hasNext()) {
          Activity act = (Activity) it.next();
-         SubFlow s = act.getActivityTypes()
-            .getImplementation()
-            .getImplementationTypes()
-            .getSubFlow();
+         SubFlow s = act.getActivityTypes().getImplementation().getImplementationTypes().getSubFlow();
          if (s.getId().equals(referencedId)) {
             references.add(s);
          }
@@ -4861,26 +4722,15 @@ public class XMLUtil {
          // reference)
          List aps = new ArrayList();
          if (type == XPDLConstants.ACTIVITY_TYPE_SUBFLOW) {
-            aps.addAll(act.getActivityTypes()
-               .getImplementation()
-               .getImplementationTypes()
-               .getSubFlow()
-               .getActualParameters()
-               .toElements());
+            aps.addAll(act.getActivityTypes().getImplementation().getImplementationTypes().getSubFlow().getActualParameters().toElements());
          } else if (type == XPDLConstants.ACTIVITY_TYPE_TASK_APPLICATION) {
-            TaskApplication ta = act.getActivityTypes()
-               .getImplementation()
-               .getImplementationTypes()
-               .getTask()
-               .getTaskTypes()
-               .getTaskApplication();
+            TaskApplication ta = act.getActivityTypes().getImplementation().getImplementationTypes().getTask().getTaskTypes().getTaskApplication();
             aps.addAll(ta.getActualParameters().toElements());
          }
          Iterator itap = aps.iterator();
          while (itap.hasNext()) {
             ActualParameter ap = (ActualParameter) itap.next();
-            if (XMLUtil.getUsingPositions(ap.toValue(), dfOrFpId, allVars, true, true)
-               .size() > 0) {
+            if (XMLUtil.getUsingPositions(ap.toValue(), dfOrFpId, allVars, true, true).size() > 0) {
                references.add(ap);
             }
          }
@@ -4907,11 +4757,7 @@ public class XMLUtil {
       it = ((Transitions) wpOrAs.get("Transitions")).toElements().iterator();
       while (it.hasNext()) {
          Transition t = (Transition) it.next();
-         if (XMLUtil.getUsingPositions(t.getCondition().toValue(),
-                                       dfOrFpId,
-                                       allVars,
-                                       true,
-                                       true).size() > 0) {
+         if (XMLUtil.getUsingPositions(t.getCondition().toValue(), dfOrFpId, allVars, true, true).size() > 0) {
             references.add(t.getCondition());
          }
       }
@@ -4941,11 +4787,7 @@ public class XMLUtil {
       Iterator it = dfs.toElements().iterator();
       while (it.hasNext()) {
          DataField df = (DataField) it.next();
-         if (XMLUtil.getUsingPositions(df.getInitialValue(),
-                                       dfOrFpId,
-                                       allVars,
-                                       true,
-                                       true).size() > 0) {
+         if (XMLUtil.getUsingPositions(df.getInitialValue(), dfOrFpId, allVars, true, true).size() > 0) {
             references.add(df.get("InitialValue"));
          }
       }
@@ -4953,11 +4795,7 @@ public class XMLUtil {
          it = ((WorkflowProcess) pkgOrWp).getFormalParameters().toElements().iterator();
          while (it.hasNext()) {
             FormalParameter fp = (FormalParameter) it.next();
-            if (XMLUtil.getUsingPositions(fp.getInitialValue(),
-                                          dfOrFpId,
-                                          allVars,
-                                          true,
-                                          true).size() > 0) {
+            if (XMLUtil.getUsingPositions(fp.getInitialValue(), dfOrFpId, allVars, true, true).size() > 0) {
                references.add(fp.get("InitialValue"));
             }
          }
@@ -5056,8 +4894,7 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of {@link BlockActivity} elements.
     */
-   public static List tGetActivitySetReferences(XMLCollectionElement wpOrAs,
-                                                String referencedId) {
+   public static List tGetActivitySetReferences(XMLCollectionElement wpOrAs, String referencedId) {
       List references = new ArrayList();
       if (referencedId.equals("")) {
          return references;
@@ -5086,8 +4923,7 @@ public class XMLUtil {
     * @return The list of elements (derived from {@link XMLElement}).
     */
    public static List getReferences(Activity act) {
-      return getActivityReferences((XMLCollectionElement) act.getParent().getParent(),
-                                   act.getId());
+      return getActivityReferences((XMLCollectionElement) act.getParent().getParent(), act.getId());
    }
 
    /**
@@ -5099,8 +4935,7 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   public static List getActivityReferences(XMLCollectionElement wpOrAs,
-                                            String referencedId) {
+   public static List getActivityReferences(XMLCollectionElement wpOrAs, String referencedId) {
       List refs = new ArrayList();
       Transitions tras = ((Transitions) wpOrAs.get("Transitions"));
       Iterator it = getTransitions(tras, referencedId, true).iterator();
@@ -5304,8 +5139,7 @@ public class XMLUtil {
       // lm.debug("--------------------- st="+s.getType()+", jt="+j.getType()+",
       // trefss="+trefs.size());
 
-      if (s.getType().equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE)
-          && j.getType().equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE)) {
+      if (s.getType().equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE) && j.getType().equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE)) {
          if (!newTres) {
             tres.remove(tr);
             changed = true;
@@ -5325,9 +5159,7 @@ public class XMLUtil {
     * @param oldActId The old activity Id.
     * @param newActId The new activity Id.
     */
-   public static void updateActivityReferences(List refsTrasAndAsocsToFromTargetSource,
-                                               String oldActId,
-                                               String newActId) {
+   public static void updateActivityReferences(List refsTrasAndAsocsToFromTargetSource, String oldActId, String newActId) {
       Iterator it = refsTrasAndAsocsToFromTargetSource.iterator();
       while (it.hasNext()) {
          ((XMLElement) it.next()).setValue(newActId);
@@ -5341,9 +5173,7 @@ public class XMLUtil {
     * @param oldArtId The old artifact Id.
     * @param newArtId The new artifact Id.
     */
-   public static void updateArtifactReferences(List refsAsocsTargetSource,
-                                               String oldArtId,
-                                               String newArtId) {
+   public static void updateArtifactReferences(List refsAsocsTargetSource, String oldArtId, String newArtId) {
       Iterator it = refsAsocsTargetSource.iterator();
       while (it.hasNext()) {
          ((XMLElement) it.next()).setValue(newArtId);
@@ -5359,10 +5189,7 @@ public class XMLUtil {
     * @param oldTraId The old transition Id.
     * @param newTraId The new transition Id.
     */
-   public static void updateActivityOnTransitionIdChange(Activities acts,
-                                                         String actFromId,
-                                                         String oldTraId,
-                                                         String newTraId) {
+   public static void updateActivityOnTransitionIdChange(Activities acts, String actFromId, String oldTraId, String newTraId) {
       Activity act = acts.getActivity(actFromId);
       updateActivityOnTransitionIdChange(act, oldTraId, newTraId);
    }
@@ -5375,9 +5202,7 @@ public class XMLUtil {
     * @param oldTraId Old transition Id.
     * @param newTraId New transition Id.
     */
-   public static void updateActivityOnTransitionIdChange(Activity act,
-                                                         String oldTraId,
-                                                         String newTraId) {
+   public static void updateActivityOnTransitionIdChange(Activity act, String oldTraId, String newTraId) {
       if (act != null) {
          Split s = XMLUtil.getSplit(act);
          if (s != null) {
@@ -5398,10 +5223,7 @@ public class XMLUtil {
     * @param traOldFromId Old transition's 'From' Id.
     * @param traNewFromId New transition's 'From' Id.
     */
-   public static void updateActivitiesOnTransitionFromChange(Activities acts,
-                                                             String traId,
-                                                             String traOldFromId,
-                                                             String traNewFromId) {
+   public static void updateActivitiesOnTransitionFromChange(Activities acts, String traId, String traOldFromId, String traNewFromId) {
       if (traOldFromId != null) {
          Activity act = acts.getActivity(traOldFromId);
          if (act != null) {
@@ -5425,10 +5247,7 @@ public class XMLUtil {
     * @param traOldToId Old transition's 'To' Id.
     * @param traNewToId New transition's 'To' Id.
     */
-   public static void updateActivitiesOnTransitionToChange(Activities acts,
-                                                           String traId,
-                                                           String traOldToId,
-                                                           String traNewToId) {
+   public static void updateActivitiesOnTransitionToChange(Activities acts, String traId, String traOldToId, String traNewToId) {
       if (traOldToId != null) {
          Activity act = acts.getActivity(traOldToId);
          if (act != null) {
@@ -5573,8 +5392,7 @@ public class XMLUtil {
          XMLCollectionElement a = (XMLCollectionElement) it.next();
          asocsToRemove.addAll(getAssociationsForActivityOrArtifact(a));
       }
-      Associations asocs = XMLUtil.getPackage((XMLElement) actsOrArts.toArray()[0])
-         .getAssociations();
+      Associations asocs = XMLUtil.getPackage((XMLElement) actsOrArts.toArray()[0]).getAssociations();
       it = asocsToRemove.iterator();
       while (it.hasNext()) {
          asocs.remove((Association) it.next());
@@ -5889,8 +5707,7 @@ public class XMLUtil {
     * @param refDeclaredTypes The list of {@link DeclaredType} elements.
     * @param newTdId The new Id of {@link TypeDeclaration}.
     */
-   public static void updateTypeDeclarationReferences(List refDeclaredTypes,
-                                                      String newTdId) {
+   public static void updateTypeDeclarationReferences(List refDeclaredTypes, String newTdId) {
       Iterator it = refDeclaredTypes.iterator();
       while (it.hasNext()) {
          DeclaredType dt = (DeclaredType) it.next();
@@ -5951,8 +5768,7 @@ public class XMLUtil {
     * @param refSbflwsOrPools The list of {@link SubFlow} and {@link Pool} elements.
     * @param newWpId The new Id of {@link WorkflowProcess}.
     */
-   public static void updateWorkflowProcessReferences(List refSbflwsOrPools,
-                                                      String newWpId) {
+   public static void updateWorkflowProcessReferences(List refSbflwsOrPools, String newWpId) {
       Iterator it = refSbflwsOrPools.iterator();
       while (it.hasNext()) {
          Object sorp = it.next();
@@ -5994,9 +5810,7 @@ public class XMLUtil {
     * @param oldDfOrFpId The old Id of {@link DataField} or {@link FormalParameter}.
     * @param newDfOrFpId The new Id of {@link DataField} or {@link FormalParameter}.
     */
-   public static void updateVariableReferences(List refAPsOrPerfsOrCondsOrDlConds,
-                                               String oldDfOrFpId,
-                                               String newDfOrFpId) {
+   public static void updateVariableReferences(List refAPsOrPerfsOrCondsOrDlConds, String oldDfOrFpId, String newDfOrFpId) {
       Iterator it = refAPsOrPerfsOrCondsOrDlConds.iterator();
       int varLengthDiff = newDfOrFpId.length() - oldDfOrFpId.length();
       while (it.hasNext()) {
@@ -6015,11 +5829,7 @@ public class XMLUtil {
             }
          }
 
-         List positions = XMLUtil.getUsingPositions(expr,
-                                                    oldDfOrFpId,
-                                                    allVars,
-                                                    true,
-                                                    true);
+         List positions = XMLUtil.getUsingPositions(expr, oldDfOrFpId, allVars, true, true);
          for (int i = 0; i < positions.size(); i++) {
             int pos = ((Integer) positions.get(i)).intValue();
             int realPos = pos + varLengthDiff * i;
@@ -6103,9 +5913,7 @@ public class XMLUtil {
     * @return Map where keys are Strings representing Id of participant, and values are
     *         {@link Participant} elements.
     */
-   public static SequencedHashMap getPossibleResponsibles(Responsibles resp,
-                                                          Responsible rsp,
-                                                          XMLInterface xmli) {
+   public static SequencedHashMap getPossibleResponsibles(Responsibles resp, Responsible rsp, XMLInterface xmli) {
       SequencedHashMap choices = null;
       if (XMLUtil.getWorkflowProcess(resp) != null) {
          choices = XMLUtil.getPossibleParticipants(XMLUtil.getWorkflowProcess(resp), xmli);
@@ -6139,8 +5947,7 @@ public class XMLUtil {
       while (epids.hasNext()) {
          try {
             Package extP = xmli.getPackageById((String) epids.next());
-            if (XMLUtil.getAllExternalPackageIds(xmli, extP, new HashSet())
-               .contains(pkg.getId())) {
+            if (XMLUtil.getAllExternalPackageIds(xmli, extP, new HashSet()).contains(pkg.getId())) {
                crossRefs = true;
                break;
             }
@@ -6157,8 +5964,7 @@ public class XMLUtil {
     * @param xpdlh {@link XMLInterface} instance.
     * @return Set of String elements.
     */
-   public static Set getAllExtendedAttributeNames(XMLComplexElement cel,
-                                                  XMLInterface xpdlh) {
+   public static Set getAllExtendedAttributeNames(XMLComplexElement cel, XMLInterface xpdlh) {
       Set extAttribNames = new HashSet();
 
       Iterator it = xpdlh.getAllPackages().iterator();
@@ -6182,68 +5988,54 @@ public class XMLUtil {
          Iterator it = pkg.getWorkflowProcesses().toElements().iterator();
          while (it.hasNext()) {
             WorkflowProcess wp = (WorkflowProcess) it.next();
-            extAttribNames.addAll(getAllExtendedAttributeNamesForElements(wp.getActivities()
-               .toElements()));
+            extAttribNames.addAll(getAllExtendedAttributeNamesForElements(wp.getActivities().toElements()));
 
             Iterator asets = wp.getActivitySets().toElements().iterator();
             while (asets.hasNext()) {
                ActivitySet as = (ActivitySet) asets.next();
-               extAttribNames.addAll(getAllExtendedAttributeNamesForElements(as.getActivities()
-                  .toElements()));
+               extAttribNames.addAll(getAllExtendedAttributeNamesForElements(as.getActivities().toElements()));
             }
          }
       } else if (cel instanceof Application) {
-         extAttribNames.addAll(getAllExtendedAttributeNamesForElements(pkg.getApplications()
-            .toElements()));
+         extAttribNames.addAll(getAllExtendedAttributeNamesForElements(pkg.getApplications().toElements()));
          Iterator it = pkg.getWorkflowProcesses().toElements().iterator();
          while (it.hasNext()) {
             WorkflowProcess wp = (WorkflowProcess) it.next();
-            extAttribNames.addAll(getAllExtendedAttributeNamesForElements(wp.getApplications()
-               .toElements()));
+            extAttribNames.addAll(getAllExtendedAttributeNamesForElements(wp.getApplications().toElements()));
          }
       } else if (cel instanceof DataField) {
-         extAttribNames.addAll(getAllExtendedAttributeNamesForElements(pkg.getDataFields()
-            .toElements()));
+         extAttribNames.addAll(getAllExtendedAttributeNamesForElements(pkg.getDataFields().toElements()));
          Iterator it = pkg.getWorkflowProcesses().toElements().iterator();
          while (it.hasNext()) {
             WorkflowProcess wp = (WorkflowProcess) it.next();
-            extAttribNames.addAll(getAllExtendedAttributeNamesForElements(wp.getDataFields()
-               .toElements()));
+            extAttribNames.addAll(getAllExtendedAttributeNamesForElements(wp.getDataFields().toElements()));
          }
       } else if (cel instanceof ExternalPackage) {
-         extAttribNames.addAll(getAllExtendedAttributeNamesForElements(pkg.getExternalPackages()
-            .toElements()));
+         extAttribNames.addAll(getAllExtendedAttributeNamesForElements(pkg.getExternalPackages().toElements()));
       } else if (cel instanceof Package) {
-         extAttribNames.addAll(getAllExtendedAttributeNames(pkg.getExtendedAttributes()
-            .toElements()));
+         extAttribNames.addAll(getAllExtendedAttributeNames(pkg.getExtendedAttributes().toElements()));
       } else if (cel instanceof Participant) {
-         extAttribNames.addAll(getAllExtendedAttributeNamesForElements(pkg.getParticipants()
-            .toElements()));
+         extAttribNames.addAll(getAllExtendedAttributeNamesForElements(pkg.getParticipants().toElements()));
          Iterator it = pkg.getWorkflowProcesses().toElements().iterator();
          while (it.hasNext()) {
             WorkflowProcess wp = (WorkflowProcess) it.next();
-            extAttribNames.addAll(getAllExtendedAttributeNamesForElements(wp.getParticipants()
-               .toElements()));
+            extAttribNames.addAll(getAllExtendedAttributeNamesForElements(wp.getParticipants().toElements()));
          }
       } else if (cel instanceof Transition) {
          Iterator it = pkg.getWorkflowProcesses().toElements().iterator();
          while (it.hasNext()) {
             WorkflowProcess wp = (WorkflowProcess) it.next();
-            extAttribNames.addAll(getAllExtendedAttributeNamesForElements(wp.getTransitions()
-               .toElements()));
+            extAttribNames.addAll(getAllExtendedAttributeNamesForElements(wp.getTransitions().toElements()));
             Iterator asets = wp.getActivitySets().toElements().iterator();
             while (asets.hasNext()) {
                ActivitySet as = (ActivitySet) asets.next();
-               extAttribNames.addAll(getAllExtendedAttributeNamesForElements(as.getTransitions()
-                  .toElements()));
+               extAttribNames.addAll(getAllExtendedAttributeNamesForElements(as.getTransitions().toElements()));
             }
          }
       } else if (cel instanceof TypeDeclaration) {
-         extAttribNames.addAll(getAllExtendedAttributeNamesForElements(pkg.getTypeDeclarations()
-            .toElements()));
+         extAttribNames.addAll(getAllExtendedAttributeNamesForElements(pkg.getTypeDeclarations().toElements()));
       } else if (cel instanceof WorkflowProcess) {
-         extAttribNames.addAll(getAllExtendedAttributeNamesForElements(pkg.getWorkflowProcesses()
-            .toElements()));
+         extAttribNames.addAll(getAllExtendedAttributeNamesForElements(pkg.getWorkflowProcesses().toElements()));
       }
       return extAttribNames;
    }
