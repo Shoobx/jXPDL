@@ -69,6 +69,7 @@ import org.enhydra.jxpdl.elements.FormalParameter;
 import org.enhydra.jxpdl.elements.FormalParameters;
 import org.enhydra.jxpdl.elements.InitialValue;
 import org.enhydra.jxpdl.elements.Join;
+import org.enhydra.jxpdl.elements.Limit;
 import org.enhydra.jxpdl.elements.Package;
 import org.enhydra.jxpdl.elements.Participant;
 import org.enhydra.jxpdl.elements.Performer;
@@ -233,15 +234,10 @@ public class StandardPackageValidator implements XMLValidator {
     * @param pEncoding Encoding used during parsing of XPDL.
     * @param pLocale Locale used during parsing of XPDL.
     */
-   public void init(XMLInterface pXmlInterface,
-                    Package pPkg,
-                    boolean pGetExistingSchemaValidationErrors,
-                    String pEncoding,
-                    String pLocale) {
+   public void init(XMLInterface pXmlInterface, Package pPkg, boolean pGetExistingSchemaValidationErrors, String pEncoding, String pLocale) {
       Properties tempProperties = new Properties();
       tempProperties.putAll(settings);
-      tempProperties.put(StandardPackageValidator.GET_EXISTING_SCHEMA_VALIDATION_ERRORS,
-                         String.valueOf(pGetExistingSchemaValidationErrors));
+      tempProperties.put(StandardPackageValidator.GET_EXISTING_SCHEMA_VALIDATION_ERRORS, String.valueOf(pGetExistingSchemaValidationErrors));
       tempProperties.put(StandardPackageValidator.CHECK_EXTERNAL_PACKAGES, "true");
       tempProperties.put(StandardPackageValidator.ENCODING, pEncoding);
       tempProperties.put(StandardPackageValidator.LOCALE, pLocale);
@@ -334,8 +330,7 @@ public class StandardPackageValidator implements XMLValidator {
             });
          } catch (Exception ex) {
             if (!(cl == XMLSimpleElement.class
-                  || cl == XMLAttribute.class || cl == XMLComplexChoice.class
-                  || cl == XMLComplexElement.class || cl == XMLCollectionElement.class || cl == XMLCollection.class)) {
+                  || cl == XMLAttribute.class || cl == XMLComplexChoice.class || cl == XMLComplexElement.class || cl == XMLCollectionElement.class || cl == XMLCollection.class)) {
                if (XMLComplexChoice.class.isAssignableFrom(cl)) {
                   cl = XMLComplexChoice.class;
                } else if (XMLAttribute.class.isAssignableFrom(cl)) {
@@ -471,9 +466,7 @@ public class StandardPackageValidator implements XMLValidator {
     * @param existingErrors List of existing errors.
     * @param fullCheck If false, validation will stop after the first error is found.
     */
-   public void validateElement(XMLEmptyChoiceElement el,
-                               List existingErrors,
-                               boolean fullCheck) {
+   public void validateElement(XMLEmptyChoiceElement el, List existingErrors, boolean fullCheck) {
    }
 
    /**
@@ -498,9 +491,7 @@ public class StandardPackageValidator implements XMLValidator {
     * @param existingErrors List of existing errors.
     * @param fullCheck If false, validation will stop after the first error is found.
     */
-   public void validateElement(XMLCollectionElement el,
-                               List existingErrors,
-                               boolean fullCheck) {
+   public void validateElement(XMLCollectionElement el, List existingErrors, boolean fullCheck) {
       validateElement((XMLComplexElement) el, existingErrors, fullCheck);
    }
 
@@ -511,9 +502,7 @@ public class StandardPackageValidator implements XMLValidator {
     * @param existingErrors List of existing errors.
     * @param fullCheck If false, validation will stop after the first error is found.
     */
-   public void validateElement(XMLComplexElement el,
-                               List existingErrors,
-                               boolean fullCheck) {
+   public void validateElement(XMLComplexElement el, List existingErrors, boolean fullCheck) {
       for (Iterator it = el.toElements().iterator(); it.hasNext();) {
          XMLElement cel = (XMLElement) it.next();
          validateElement(cel, existingErrors, fullCheck);
@@ -598,8 +587,7 @@ public class StandardPackageValidator implements XMLValidator {
       Set outTrans = XMLUtil.getOutgoingTransitions(el);
       Set inTrans = XMLUtil.getIncomingTransitions(el);
 
-      if (el.getActivityType() == XPDLConstants.ACTIVITY_TYPE_EVENT_START
-          || el.getActivityType() == XPDLConstants.ACTIVITY_TYPE_EVENT_END) {
+      if (el.getActivityType() == XPDLConstants.ACTIVITY_TYPE_EVENT_START || el.getActivityType() == XPDLConstants.ACTIVITY_TYPE_EVENT_END) {
          if (el.getActivityType() == XPDLConstants.ACTIVITY_TYPE_EVENT_START) {
             if (inTrans.size() > 0) {
                XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
@@ -682,8 +670,7 @@ public class StandardPackageValidator implements XMLValidator {
 
       // Split type and no. of outgoing transitions
       Split split = XMLUtil.getSplit(el);
-      if ((split == null || split.getType().length() == 0)
-          && (outTrans.size() - XMLUtil.getExceptionalOutgoingTransitions(el).size()) > 1) {
+      if ((split == null || split.getType().length() == 0) && (outTrans.size() - XMLUtil.getExceptionalOutgoingTransitions(el).size()) > 1) {
          isValid = false;
          XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                           XMLValidationError.SUB_TYPE_LOGIC,
@@ -713,10 +700,7 @@ public class StandardPackageValidator implements XMLValidator {
          return;
       }
 
-      checkMultipleOtherwiseOrDefaultExceptionTransitions(el,
-                                                          outTrans,
-                                                          existingErrors,
-                                                          fullCheck);
+      checkMultipleOtherwiseOrDefaultExceptionTransitions(el, outTrans, existingErrors, fullCheck);
 
    }
 
@@ -746,12 +730,10 @@ public class StandardPackageValidator implements XMLValidator {
          }
       }
       if (isValid || fullCheck) {
-         isValid = checkGraphConnectionsForWpOrAs(el, existingErrors, fullCheck)
-                   || fullCheck;
+         isValid = checkGraphConnectionsForWpOrAs(el, existingErrors, fullCheck) || fullCheck;
       }
       if (isValid || fullCheck) {
-         isValid = checkGraphConformanceForWpOrAs(el, existingErrors, fullCheck)
-                   || fullCheck;
+         isValid = checkGraphConformanceForWpOrAs(el, existingErrors, fullCheck) || fullCheck;
       }
    }
 
@@ -813,9 +795,7 @@ public class StandardPackageValidator implements XMLValidator {
          return;
       }
 
-      boolean validateCondByType = properties.getProperty(StandardPackageValidator.VALIDATE_CONDITION_BY_TYPE,
-                                                          "false")
-         .equals("true");
+      boolean validateCondByType = properties.getProperty(StandardPackageValidator.VALIDATE_CONDITION_BY_TYPE, "false").equals("true");
       if (condType.equals(XPDLConstants.CONDITION_TYPE_DEFAULTEXCEPTION)) {
          if (validateCondByType && condExpr.length() > 0) {
             XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_WARNING,
@@ -868,21 +848,13 @@ public class StandardPackageValidator implements XMLValidator {
       }
 
       if ((existingErrors.size() == 0 || fullCheck)
-          && condExpr.length() > 0
-          && properties.getProperty(StandardPackageValidator.VALIDATE_CONDITION_EXPRESSIONS,
-                                    "false")
-             .equals("true")) {
+          && condExpr.length() > 0 && properties.getProperty(StandardPackageValidator.VALIDATE_CONDITION_EXPRESSIONS, "false").equals("true")) {
 
          boolean cbe = false;
          if (condExpr.toLowerCase().indexOf("true") >= 0
-             || condExpr.toLowerCase().indexOf("false") >= 0
-             || condExpr.toLowerCase().indexOf("boolean") >= 0
-             || condExpr.toLowerCase().indexOf("equals") >= 0
-             || condExpr.toLowerCase().indexOf(">") >= 0
-             || condExpr.toLowerCase().indexOf(">=") >= 0
-             || condExpr.toLowerCase().indexOf("<") >= 0
-             || condExpr.toLowerCase().indexOf("<=") >= 0
-             || condExpr.toLowerCase().indexOf("==") >= 0) {
+             || condExpr.toLowerCase().indexOf("false") >= 0 || condExpr.toLowerCase().indexOf("boolean") >= 0 || condExpr.toLowerCase().indexOf("equals") >= 0
+             || condExpr.toLowerCase().indexOf(">") >= 0 || condExpr.toLowerCase().indexOf(">=") >= 0 || condExpr.toLowerCase().indexOf("<") >= 0
+             || condExpr.toLowerCase().indexOf("<=") >= 0 || condExpr.toLowerCase().indexOf("==") >= 0) {
             cbe = true;
          }
 
@@ -909,9 +881,7 @@ public class StandardPackageValidator implements XMLValidator {
     */
    public void validateElement(DataField el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
-      boolean validateVariableUsage = properties.getProperty(StandardPackageValidator.VALIDATE_UNUSED_VARIABLES,
-                                                             "false")
-         .equals("true");
+      boolean validateVariableUsage = properties.getProperty(StandardPackageValidator.VALIDATE_UNUSED_VARIABLES, "false").equals("true");
       if (validateVariableUsage && (fullCheck || existingErrors.size() == 0)) {
          if (getNoOfReferences((XMLComplexElement) el.getParent().getParent(), el) == 0) {
             XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_WARNING,
@@ -935,13 +905,9 @@ public class StandardPackageValidator implements XMLValidator {
       validateStandard(el, existingErrors, fullCheck);
       String condExpr = el.toValue();
       if ((existingErrors.size() == 0 || fullCheck)
-          && condExpr.length() > 0
-          && properties.getProperty(StandardPackageValidator.VALIDATE_DEADLINE_EXPRESSIONS,
-                                    "false")
-             .equals("true")) {
+          && condExpr.length() > 0 && properties.getProperty(StandardPackageValidator.VALIDATE_DEADLINE_EXPRESSIONS, "false").equals("true")) {
          boolean cbe = false;
-         if (condExpr.toLowerCase().indexOf("date") >= 0
-             || condExpr.toLowerCase().indexOf("calendar") >= 0) {
+         if (condExpr.toLowerCase().indexOf("date") >= 0 || condExpr.toLowerCase().indexOf("calendar") >= 0) {
             cbe = true;
          }
          Map vars = getDeadlineConditionChoices(el);
@@ -1023,8 +989,7 @@ public class StandardPackageValidator implements XMLValidator {
             Transition t = (Transition) it.next();
             String cond = t.getCondition().toValue();
             String ctype = t.getCondition().getType();
-            if (ctype.equals(XPDLConstants.CONDITION_TYPE_DEFAULTEXCEPTION)
-                || cond.equals(en) || cond.length() == 0) {
+            if (ctype.equals(XPDLConstants.CONDITION_TYPE_DEFAULTEXCEPTION) || cond.equals(en) || cond.length() == 0) {
                return true;
             }
          }
@@ -1052,12 +1017,8 @@ public class StandardPackageValidator implements XMLValidator {
     */
    public void validateElement(FormalParameter el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
-      boolean validateVariableUsage = properties.getProperty(StandardPackageValidator.VALIDATE_UNUSED_VARIABLES,
-                                                             "false")
-         .equals("true");
-      if (validateVariableUsage
-          && el.getParent().getParent() instanceof WorkflowProcess
-          && (fullCheck || existingErrors.size() == 0)) {
+      boolean validateVariableUsage = properties.getProperty(StandardPackageValidator.VALIDATE_UNUSED_VARIABLES, "false").equals("true");
+      if (validateVariableUsage && el.getParent().getParent() instanceof WorkflowProcess && (fullCheck || existingErrors.size() == 0)) {
          if (getNoOfReferences((WorkflowProcess) el.getParent().getParent(), el) == 0) {
             XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_WARNING,
                                                              XMLValidationError.SUB_TYPE_LOGIC,
@@ -1077,13 +1038,8 @@ public class StandardPackageValidator implements XMLValidator {
     * @param fullCheck If false, validation will stop after the first error is found.
     */
    public void validateElement(InitialValue el, List existingErrors, boolean fullCheck) {
-      if (properties.getProperty(StandardPackageValidator.VALIDATE_INITIAL_VALUE_EXPRESSIONS,
-                                 "false")
-         .equals("true")) {
-         if ((el.getParent() instanceof FormalParameter && el.getParent()
-            .getParent()
-            .getParent()
-            .getParent() instanceof Application)) {
+      if (properties.getProperty(StandardPackageValidator.VALIDATE_INITIAL_VALUE_EXPRESSIONS, "false").equals("true")) {
+         if ((el.getParent() instanceof FormalParameter && el.getParent().getParent().getParent().getParent() instanceof Application)) {
             return;
          }
          String initialVal = el.toValue();
@@ -1099,15 +1055,13 @@ public class StandardPackageValidator implements XMLValidator {
             boolean evaluateToString = false;
             if (dType instanceof BasicType) {
                String dAT = ((BasicType) dType).getType();
-               if (dAT.equals(XPDLConstants.BASIC_TYPE_STRING)
-                   && !fpOrDf.get("IsArray").toValue().equals("true")) {
+               if (dAT.equals(XPDLConstants.BASIC_TYPE_STRING) && !fpOrDf.get("IsArray").toValue().equals("true")) {
                   evaluateToString = true;
                }
             }
             boolean cbe = canBeExpression(initialVal, vars, evaluateToString);
             if (!cbe) {
-               if (dType instanceof BasicType
-                   && !fpOrDf.get("IsArray").toValue().equals("true")) {
+               if (dType instanceof BasicType && !fpOrDf.get("IsArray").toValue().equals("true")) {
                   String fpAT = ((BasicType) dType).getType();
                   if (fpAT.equals(XPDLConstants.BASIC_TYPE_INTEGER)) {
                      try {
@@ -1115,8 +1069,7 @@ public class StandardPackageValidator implements XMLValidator {
                         cbe = true;
                      } catch (Exception ex) {
                         if (initialVal.toLowerCase().indexOf("short") >= 0
-                            || initialVal.toLowerCase().indexOf("integer") >= 0
-                            || initialVal.toLowerCase().indexOf("long") >= 0) {
+                            || initialVal.toLowerCase().indexOf("integer") >= 0 || initialVal.toLowerCase().indexOf("long") >= 0) {
                            cbe = true;
                         }
                      }
@@ -1126,32 +1079,25 @@ public class StandardPackageValidator implements XMLValidator {
                         cbe = true;
                      } catch (Exception ex) {
                         if (initialVal.toLowerCase().indexOf("short") >= 0
-                            || initialVal.toLowerCase().indexOf("integer") >= 0
-                            || initialVal.toLowerCase().indexOf("long") >= 0
-                            || initialVal.toLowerCase().indexOf("float") >= 0
-                            || initialVal.toLowerCase().indexOf("double") >= 0) {
+                            || initialVal.toLowerCase().indexOf("integer") >= 0 || initialVal.toLowerCase().indexOf("long") >= 0
+                            || initialVal.toLowerCase().indexOf("float") >= 0 || initialVal.toLowerCase().indexOf("double") >= 0) {
                            cbe = true;
                         }
                      }
                   } else if (fpAT.equals(XPDLConstants.BASIC_TYPE_BOOLEAN)) {
-                     if (initialVal.equals("false")
-                         || initialVal.equals("true")
-                         || initialVal.toLowerCase().indexOf("boolean") >= 0) {
+                     if (initialVal.equals("false") || initialVal.equals("true") || initialVal.toLowerCase().indexOf("boolean") >= 0) {
                         cbe = true;
                      }
                   } else if (fpAT.equals(XPDLConstants.BASIC_TYPE_DATE)
-                             || fpAT.equals(XPDLConstants.BASIC_TYPE_DATETIME)
-                             || fpAT.equals(XPDLConstants.BASIC_TYPE_TIME)) {
-                     if (initialVal.toLowerCase().indexOf("date") >= 0
-                         || initialVal.toLowerCase().indexOf("calendar") >= 0) {
+                             || fpAT.equals(XPDLConstants.BASIC_TYPE_DATETIME) || fpAT.equals(XPDLConstants.BASIC_TYPE_TIME)) {
+                     if (initialVal.toLowerCase().indexOf("date") >= 0 || initialVal.toLowerCase().indexOf("calendar") >= 0) {
                         cbe = true;
                      }
                   }
                }
             }
             String type = XMLValidationError.TYPE_WARNING;
-            if (!cbe
-                || !(type = additionalExpressionCheck(el, initialVal, vars)).equals("")) {
+            if (!cbe || !(type = additionalExpressionCheck(el, initialVal, vars)).equals("")) {
                XMLValidationError verr = new XMLValidationError(type,
                                                                 XMLValidationError.SUB_TYPE_LOGIC,
                                                                 XPDLValidationErrorIds.WARNING_INITIAL_VALUE_EXPRESSION_POSSIBLY_INVALID,
@@ -1164,6 +1110,18 @@ public class StandardPackageValidator implements XMLValidator {
       }
    }
 
+   /**
+    * Validates Limit element.
+    * 
+    * @param el Element to validate
+    * @param existingErrors List of existing errors.
+    * @param fullCheck If false, validation will stop after the first error is found.
+    */
+   public void validateElement(Limit el, List existingErrors, boolean fullCheck) {
+      _validateElement(el, existingErrors, fullCheck, false, XPDLValidationErrorIds.ERROR_LIMIT_INVALID_VALUE);
+   }
+
+   
    /**
     * Returns the number of references for the given element 'el' which parent Package or
     * WorkflowProcess element is 'parent'.
@@ -1184,9 +1142,7 @@ public class StandardPackageValidator implements XMLValidator {
     * @param existingErrors List of existing errors.
     * @param fullCheck If false, validation will stop after the first error is found.
     */
-   public void validateElement(org.enhydra.jxpdl.elements.Package el,
-                               List existingErrors,
-                               boolean fullCheck) {
+   public void validateElement(org.enhydra.jxpdl.elements.Package el, List existingErrors, boolean fullCheck) {
       validateAgainstXPDLSchema(el, existingErrors, fullCheck);
       if (existingErrors.size() == 0 || fullCheck) {
          validateStandard(el, existingErrors, fullCheck);
@@ -1215,8 +1171,7 @@ public class StandardPackageValidator implements XMLValidator {
       // if this is not an No or Tool activity, check peformer
       int actType = act.getActivityType();
       boolean toolOrNoAct = true;
-      if (actType != XPDLConstants.ACTIVITY_TYPE_NO
-          && actType != XPDLConstants.ACTIVITY_TYPE_TASK_APPLICATION) {
+      if (actType != XPDLConstants.ACTIVITY_TYPE_NO && actType != XPDLConstants.ACTIVITY_TYPE_TASK_APPLICATION) {
          toolOrNoAct = false;
       }
       if (!toolOrNoAct && performer.length() > 0) {
@@ -1227,20 +1182,14 @@ public class StandardPackageValidator implements XMLValidator {
                                                           el);
          existingErrors.add(verr);
       }
-      if (toolOrNoAct
-          && properties.getProperty(StandardPackageValidator.VALIDATE_PERFORMER_EXPRESSIONS,
-                                    "false")
-             .equals("true")) {
-         Participant p = XMLUtil.findParticipant(xmlInterface,
-                                                 XMLUtil.getWorkflowProcess(act),
-                                                 performer);
+      if (toolOrNoAct && properties.getProperty(StandardPackageValidator.VALIDATE_PERFORMER_EXPRESSIONS, "false").equals("true")) {
+         Participant p = XMLUtil.findParticipant(xmlInterface, XMLUtil.getWorkflowProcess(act), performer);
          if (p == null) {
             if (performer.length() > 0) {
                Map vars = getPerformerChoices(el);
                boolean cbe = canBeExpression(performer, vars, true);
                String type = XMLValidationError.TYPE_WARNING;
-               if (!cbe
-                   || !(type = additionalExpressionCheck(el, performer, vars)).equals("")) {
+               if (!cbe || !(type = additionalExpressionCheck(el, performer, vars)).equals("")) {
                   XMLValidationError verr = new XMLValidationError(type,
                                                                    XMLValidationError.SUB_TYPE_LOGIC,
                                                                    XPDLValidationErrorIds.WARNING_PERFORMER_EXPRESSION_POSSIBLY_INVALID,
@@ -1262,6 +1211,10 @@ public class StandardPackageValidator implements XMLValidator {
     * @param fullCheck If false, validation will stop after the first error is found.
     */
    public void validateElement(Priority el, List existingErrors, boolean fullCheck) {
+      _validateElement(el, existingErrors, fullCheck, false, XPDLValidationErrorIds.ERROR_PRIORITY_INVALID_VALUE);
+   }
+
+   protected void _validateElement(XMLElement el, List existingErrors, boolean fullCheck, boolean showOnlyWarning, String msgkey) {
       boolean notInt = false;
       try {
          if (el.toValue().trim().length() > 0) {
@@ -1271,9 +1224,9 @@ public class StandardPackageValidator implements XMLValidator {
          notInt = true;
       }
       if (notInt) {
-         XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
+         XMLValidationError verr = new XMLValidationError(showOnlyWarning ? XMLValidationError.TYPE_WARNING : XMLValidationError.TYPE_ERROR,
                                                           XMLValidationError.SUB_TYPE_LOGIC,
-                                                          XPDLValidationErrorIds.ERROR_PRIORITY_INVALID_VALUE,
+                                                          msgkey,
                                                           el.toValue(),
                                                           el);
          existingErrors.add(verr);
@@ -1319,17 +1272,13 @@ public class StandardPackageValidator implements XMLValidator {
    public void validateElement(SubFlow el, List existingErrors, boolean fullCheck) {
       validateStandard(el, existingErrors, fullCheck);
       if (existingErrors.size() == 0 || fullCheck) {
-         WorkflowProcess wp = XMLUtil.findWorkflowProcess(xmlInterface,
-                                                          XMLUtil.getPackage(el),
-                                                          el.getId());
+         WorkflowProcess wp = XMLUtil.findWorkflowProcess(xmlInterface, XMLUtil.getPackage(el), el.getId());
          if (wp != null) {
             ActualParameters aps = el.getActualParameters();
             checkParameterMatching(wp.getFormalParameters(),
                                    aps,
                                    existingErrors,
-                                   properties.getProperty(StandardPackageValidator.VALIDATE_ACTUAL_PARAMETER_EXPRESSIONS,
-                                                          "false")
-                                      .equals("true"),
+                                   properties.getProperty(StandardPackageValidator.VALIDATE_ACTUAL_PARAMETER_EXPRESSIONS, "false").equals("true"),
                                    fullCheck);
          }
       }
@@ -1355,9 +1304,7 @@ public class StandardPackageValidator implements XMLValidator {
                checkParameterMatching((FormalParameters) ch,
                                       aps,
                                       existingErrors,
-                                      properties.getProperty(StandardPackageValidator.VALIDATE_ACTUAL_PARAMETER_EXPRESSIONS,
-                                                             "false")
-                                         .equals("true"),
+                                      properties.getProperty(StandardPackageValidator.VALIDATE_ACTUAL_PARAMETER_EXPRESSIONS, "false").equals("true"),
                                       fullCheck);
             }
          }
@@ -1376,9 +1323,7 @@ public class StandardPackageValidator implements XMLValidator {
       Set outTrans = XMLUtil.getOutgoingTransitions(XMLUtil.getActivity(el));
       Split split = (Split) XMLUtil.getParentElement(Split.class, el);
       boolean isValid = true;
-      if ((el.size() != outTrans.size())
-          && outTrans.size() > 1
-          && !split.getType().equals(XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL)) {
+      if ((el.size() != outTrans.size()) && outTrans.size() > 1 && !split.getType().equals(XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL)) {
          isValid = false;
          XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                           XMLValidationError.SUB_TYPE_LOGIC,
@@ -1491,21 +1436,15 @@ public class StandardPackageValidator implements XMLValidator {
     * @param existingErrors List of existing errors.
     * @param fullCheck If false, validation will stop after the first error is found.
     */
-   protected void validateAgainstXPDLSchema(Package pkg,
-                                            List existingErrors,
-                                            boolean fullCheck) {
+   protected void validateAgainstXPDLSchema(Package pkg, List existingErrors, boolean fullCheck) {
       List schValidationErrors = (List) schemaValidationErrors.get(pkg);
-      if (schValidationErrors != null
-          && properties.getProperty(StandardPackageValidator.GET_EXISTING_SCHEMA_VALIDATION_ERRORS,
-                                    "false")
-             .equals("true")) {
+      if (schValidationErrors != null && properties.getProperty(StandardPackageValidator.GET_EXISTING_SCHEMA_VALIDATION_ERRORS, "false").equals("true")) {
          existingErrors.addAll(schValidationErrors);
          return;
       }
       List errorMessages = new ArrayList();
       try {
-         String encoding = properties.getProperty(StandardPackageValidator.ENCODING,
-                                                  "UTF-8");
+         String encoding = properties.getProperty(StandardPackageValidator.ENCODING, "UTF-8");
 
          Document document = null;
 
@@ -1540,8 +1479,7 @@ public class StandardPackageValidator implements XMLValidator {
                l = new Locale(locale);
             }
             parser.setLocale(l);
-            parser.setFeature("http://apache.org/xml/features/continue-after-fatal-error",
-                              true);
+            parser.setFeature("http://apache.org/xml/features/continue-after-fatal-error", true);
             ParsingErrors pErrors = new ParsingErrors();
             parser.setErrorHandler(pErrors);
             parser.setEntityResolver(new XPDLEntityResolver());
@@ -1558,21 +1496,15 @@ public class StandardPackageValidator implements XMLValidator {
          baos.close();
       } catch (Exception ex) {
          ex.printStackTrace();
-         errorMessages.add("Fatal error while validating schema for package "
-                           + pkg.getId() + " :" + ex.getMessage());
+         errorMessages.add("Fatal error while validating schema for package " + pkg.getId() + " :" + ex.getMessage());
       }
       schValidationErrors = new ArrayList();
       if (errorMessages.size() > 0) {
          Iterator it2 = errorMessages.iterator();
          while (it2.hasNext()) {
             String msg = (String) it2.next();
-            if (!(msg.contains("SubFlowIdRef.Package")
-                  || msg.contains("of attribute 'Id' on element 'SubFlow' is not valid with respect to its type, 'IdRef'") || (msg.contains("'http") && msg.contains("is not a valid value for 'NMTOKEN'")))) {
-               XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
-                                                                XMLValidationError.SUB_TYPE_SCHEMA,
-                                                                "",
-                                                                msg,
-                                                                pkg);
+            if (!(msg.contains("SubFlowIdRef.Package") || msg.contains("of attribute 'Id' on element 'SubFlow' is not valid with respect to its type, 'IdRef'") || (msg.contains("'http") && msg.contains("is not a valid value for 'NMTOKEN'")))) {
+               XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR, XMLValidationError.SUB_TYPE_SCHEMA, "", msg, pkg);
                schValidationErrors.add(verr);
             }
          }
@@ -1591,15 +1523,11 @@ public class StandardPackageValidator implements XMLValidator {
     * @param existingErrors List of existing errors.
     * @param fullCheck If false, validation will stop after the first error is found.
     */
-   protected void checkExternalPackages(Package pkg,
-                                        List existingErrors,
-                                        boolean fullCheck) {
-      if (properties.getProperty(StandardPackageValidator.CHECK_EXTERNAL_PACKAGES, "true")
-         .equals("false")) {
+   protected void checkExternalPackages(Package pkg, List existingErrors, boolean fullCheck) {
+      if (properties.getProperty(StandardPackageValidator.CHECK_EXTERNAL_PACKAGES, "true").equals("false")) {
          return;
       }
-      Iterator it = XMLUtil.getAllExternalPackageIds(xmlInterface, pkg, new HashSet())
-         .iterator();
+      Iterator it = XMLUtil.getAllExternalPackageIds(xmlInterface, pkg, new HashSet()).iterator();
       while (it.hasNext()) {
          Package p = xmlInterface.getPackageById((String) it.next());
          List epErrors = (List) epsValidationErrors.get(p);
@@ -1685,9 +1613,7 @@ public class StandardPackageValidator implements XMLValidator {
     * @return true if there is an WorkflowProcess definition within this or external
     *         packages with the Id given by the 'sbflwId' XMLAttribute.
     */
-   protected boolean checkSubFlowId(XMLAttribute sbflwId,
-                                    List existingErrors,
-                                    boolean fullCheck) {
+   protected boolean checkSubFlowId(XMLAttribute sbflwId, List existingErrors, boolean fullCheck) {
       XMLValidationError verr = null;
       String subflowId = sbflwId.toValue();
       if (subflowId.trim().equals("")) {
@@ -1703,10 +1629,7 @@ public class StandardPackageValidator implements XMLValidator {
       if (verr == null) {
          wp = XMLUtil.findWorkflowProcess(xmlInterface, pkg, subflowId);
          if (wp == null
-             && !isRemoteSubflowIdOK(subflowId)
-             && properties.getProperty(StandardPackageValidator.VALIDATE_SUBFLOW_REFERENCES,
-                                       "true")
-                .equals("true")) {
+             && !isRemoteSubflowIdOK(subflowId) && properties.getProperty(StandardPackageValidator.VALIDATE_SUBFLOW_REFERENCES, "true").equals("true")) {
             verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                           XMLValidationError.SUB_TYPE_LOGIC,
                                           XPDLValidationErrorIds.ERROR_NON_EXISTING_WORKFLOW_PROCESS_REFERENCE,
@@ -1729,9 +1652,7 @@ public class StandardPackageValidator implements XMLValidator {
     * @param existingErrors List of existing errors.
     * @param fullCheck If false, validation will stop after the first error is found.
     */
-   protected void checkTransitionRefId(XMLAttribute trfId,
-                                       List existingErrors,
-                                       boolean fullCheck) {
+   protected void checkTransitionRefId(XMLAttribute trfId, List existingErrors, boolean fullCheck) {
       Set outTrans = XMLUtil.getOutgoingTransitions(XMLUtil.getActivity(trfId));
       String transitionId = trfId.toValue();
       if (!containsTransitionWithId(outTrans, transitionId)) {
@@ -1786,10 +1707,7 @@ public class StandardPackageValidator implements XMLValidator {
     * @param existingErrors List of existing errors.
     * @param fullCheck If false, validation will stop after the first error is found.
     */
-   protected void checkMultipleOtherwiseOrDefaultExceptionTransitions(Activity act,
-                                                                      Set outTrans,
-                                                                      List existingErrors,
-                                                                      boolean fullCheck) {
+   protected void checkMultipleOtherwiseOrDefaultExceptionTransitions(Activity act, Set outTrans, List existingErrors, boolean fullCheck) {
       boolean foundOtherwise = false;
       boolean foundMultipleOtherwise = false;
       boolean foundDefaultException = false;
@@ -1915,9 +1833,7 @@ public class StandardPackageValidator implements XMLValidator {
     */
    protected void checkDeclaredTypeId(XMLAttribute dtId, List existingErrors) {
       String tdId = dtId.toValue();
-      TypeDeclaration td = XMLUtil.getTypeDeclaration(xmlInterface,
-                                                      XMLUtil.getPackage(dtId),
-                                                      tdId);
+      TypeDeclaration td = XMLUtil.getTypeDeclaration(xmlInterface, XMLUtil.getPackage(dtId), tdId);
       if (td == null) {
          XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                           XMLValidationError.SUB_TYPE_LOGIC,
@@ -2014,10 +1930,7 @@ public class StandardPackageValidator implements XMLValidator {
     */
    protected boolean checkActivityId(Activity newEl) {
       int idCnt = 0;
-      Iterator it = XMLUtil.getPackage(newEl)
-         .getWorkflowProcesses()
-         .toElements()
-         .iterator();
+      Iterator it = XMLUtil.getPackage(newEl).getWorkflowProcesses().toElements().iterator();
       while (it.hasNext()) {
          WorkflowProcess proc = (WorkflowProcess) it.next();
 
@@ -2119,9 +2032,7 @@ public class StandardPackageValidator implements XMLValidator {
     * @param fullCheck If false, validation will stop after the first error is found.
     * @return true if graph is conformant, false otherwise.
     */
-   protected boolean checkGraphConformanceForWpOrAs(XMLCollectionElement wpOrAs,
-                                                    List existingErrors,
-                                                    boolean fullCheck) {
+   protected boolean checkGraphConformanceForWpOrAs(XMLCollectionElement wpOrAs, List existingErrors, boolean fullCheck) {
 
       Package pkg = XMLUtil.getPackage(wpOrAs);
       String conformanceClass = pkg.getConformanceClass().getGraphConformance();
@@ -2201,8 +2112,7 @@ public class StandardPackageValidator implements XMLValidator {
             existingErrors.add(verr);
          }
          // check if there is more then one ending activity
-         if ((isGraphConformant || fullCheck)
-             && XMLUtil.getEndingActivities(wpOrAs).size() != 1) {
+         if ((isGraphConformant || fullCheck) && XMLUtil.getEndingActivities(wpOrAs).size() != 1) {
             isGraphConformant = false;
             XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                              XMLValidationError.SUB_TYPE_CONFORMANCE,
@@ -2236,8 +2146,7 @@ public class StandardPackageValidator implements XMLValidator {
 
          // check for split/join type mismatch
          if ((isGraphConformant || fullCheck) && !smerr) {
-            if (getNoOfANDSplitsOrJoins(splitActs, 0) != getNoOfANDSplitsOrJoins(joinActs,
-                                                                                 1)) {
+            if (getNoOfANDSplitsOrJoins(splitActs, 0) != getNoOfANDSplitsOrJoins(joinActs, 1)) {
                XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                                 XMLValidationError.SUB_TYPE_CONFORMANCE,
                                                                 XPDLValidationErrorIds.ERROR_SPLIT_JOIN_MISSMATCH_IN_FULL_BLOCKED_MODE_DIFFERENT_TYPES,
@@ -2355,8 +2264,7 @@ public class StandardPackageValidator implements XMLValidator {
                   // if the join is found and their types are different
                   // the graph is not conformant
                } else {
-                  if (XMLUtil.isANDTypeSplitOrJoin(act, 0) != XMLUtil.isANDTypeSplitOrJoin((Activity) activities.get(ji),
-                                                                                           1)) {
+                  if (XMLUtil.isANDTypeSplitOrJoin(act, 0) != XMLUtil.isANDTypeSplitOrJoin((Activity) activities.get(ji), 1)) {
                      isGraphConformant = false;
                      // noCorrespondingJoinError = true;
 
@@ -2506,9 +2414,7 @@ public class StandardPackageValidator implements XMLValidator {
     * @return true if graph connections for the given WorkflowProcess or ActivitySet
     *         element are correct.
     */
-   protected boolean checkGraphConnectionsForWpOrAs(XMLCollectionElement wpOrAs,
-                                                    List existingErrors,
-                                                    boolean fullCheck) {
+   protected boolean checkGraphConnectionsForWpOrAs(XMLCollectionElement wpOrAs, List existingErrors, boolean fullCheck) {
       if (wpOrAs == null)
          return false;
 
@@ -2523,11 +2429,8 @@ public class StandardPackageValidator implements XMLValidator {
       Set endActs = null;
       if (fullCheck || isWellConnected) {
          startActs = XMLUtil.getStartingActivities(wpOrAs);
-         boolean allowUndefinedStart = properties.getProperty(StandardPackageValidator.ALLOW_UNDEFINED_START,
-                                                              "true")
-            .equals("true");
-         if (startActs.size() == 0
-             && (!allowUndefinedStart || (wpOrAs instanceof ActivitySet))) {
+         boolean allowUndefinedStart = properties.getProperty(StandardPackageValidator.ALLOW_UNDEFINED_START, "true").equals("true");
+         if (startActs.size() == 0 && (!allowUndefinedStart || (wpOrAs instanceof ActivitySet))) {
             isWellConnected = false;
             XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                              XMLValidationError.SUB_TYPE_LOGIC,
@@ -2539,11 +2442,8 @@ public class StandardPackageValidator implements XMLValidator {
       }
       if (fullCheck || isWellConnected) {
          endActs = XMLUtil.getEndingActivities(wpOrAs);
-         boolean allowUndefinedEnd = properties.getProperty(StandardPackageValidator.ALLOW_UNDEFINED_END,
-                                                            "true")
-            .equals("true");
-         if (endActs.size() == 0
-             && (!allowUndefinedEnd || (wpOrAs instanceof ActivitySet))) {
+         boolean allowUndefinedEnd = properties.getProperty(StandardPackageValidator.ALLOW_UNDEFINED_END, "true").equals("true");
+         if (endActs.size() == 0 && (!allowUndefinedEnd || (wpOrAs instanceof ActivitySet))) {
             isWellConnected = false;
             XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                              XMLValidationError.SUB_TYPE_LOGIC,
@@ -2579,9 +2479,7 @@ public class StandardPackageValidator implements XMLValidator {
     * @return String describing the error, or empty string if there is no connection error
     *         for giving activity.
     */
-   protected boolean checkActivityConnection(Activity act,
-                                             List existingErrors,
-                                             boolean fullCheck) {
+   protected boolean checkActivityConnection(Activity act, List existingErrors, boolean fullCheck) {
       return true;
    }
 
@@ -2593,9 +2491,7 @@ public class StandardPackageValidator implements XMLValidator {
     * @param fullCheck If false, validation will stop after the first error is found.
     * @return true if graph connections for the artifact elements are correct.
     */
-   protected boolean checkGraphConnectionsForArtifacts(Package pkg,
-                                                       List existingErrors,
-                                                       boolean fullCheck) {
+   protected boolean checkGraphConnectionsForArtifacts(Package pkg, List existingErrors, boolean fullCheck) {
       if (pkg == null)
          return false;
 
@@ -2629,11 +2525,8 @@ public class StandardPackageValidator implements XMLValidator {
     * @param fullCheck If false, validation will stop after the first error is found.
     * @return true if given artifact is properly connected.
     */
-   protected boolean checkArtifactConnection(Artifact art,
-                                             List existingErrors,
-                                             boolean fullCheck) {
-      if (XMLUtil.getOutgoingAssociations(art).size() == 0
-          && XMLUtil.getIncomingAssociations(art).size() == 0) {
+   protected boolean checkArtifactConnection(Artifact art, List existingErrors, boolean fullCheck) {
+      if (XMLUtil.getOutgoingAssociations(art).size() == 0 && XMLUtil.getIncomingAssociations(art).size() == 0) {
          XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
                                                           XMLValidationError.SUB_TYPE_CONNECTION,
                                                           XPDLValidationErrorIds.ERROR_IMPROPERLY_CONNECTED_ARTIFACT_NO_ASSOCIATION,
@@ -2655,11 +2548,7 @@ public class StandardPackageValidator implements XMLValidator {
     *           formal parameter should be checked.
     * @param fullCheck If false, validation will stop after the first error is found.
     */
-   protected void checkParameterMatching(FormalParameters fps,
-                                         ActualParameters aps,
-                                         List existingErrors,
-                                         boolean checkExpression,
-                                         boolean fullCheck) {
+   protected void checkParameterMatching(FormalParameters fps, ActualParameters aps, List existingErrors, boolean checkExpression, boolean fullCheck) {
 
       if (fps.size() != aps.size()) {
          XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_ERROR,
@@ -2727,8 +2616,7 @@ public class StandardPackageValidator implements XMLValidator {
             // neccessary, because
             // that could be expression written in any scripting language
             Map vars = getActualParameterOrConditionChoices(aps);
-            boolean cbe = apWRD.equalsIgnoreCase("null")
-                          || canBeExpression(apWRD, vars, evaluateToString);
+            boolean cbe = apWRD.equalsIgnoreCase("null") || canBeExpression(apWRD, vars, evaluateToString);
 
             if (!cbe) {
                if (fpType instanceof BasicType && !fp.getIsArray()) {
@@ -2739,8 +2627,7 @@ public class StandardPackageValidator implements XMLValidator {
                         cbe = true;
                      } catch (Exception ex) {
                         if (apWRD.toLowerCase().indexOf("short") >= 0
-                            || apWRD.toLowerCase().indexOf("integer") >= 0
-                            || apWRD.toLowerCase().indexOf("long") >= 0) {
+                            || apWRD.toLowerCase().indexOf("integer") >= 0 || apWRD.toLowerCase().indexOf("long") >= 0) {
                            cbe = true;
                         }
                      }
@@ -2750,24 +2637,18 @@ public class StandardPackageValidator implements XMLValidator {
                         cbe = true;
                      } catch (Exception ex) {
                         if (apWRD.toLowerCase().indexOf("short") >= 0
-                            || apWRD.toLowerCase().indexOf("integer") >= 0
-                            || apWRD.toLowerCase().indexOf("long") >= 0
-                            || apWRD.toLowerCase().indexOf("float") >= 0
-                            || apWRD.toLowerCase().indexOf("double") >= 0) {
+                            || apWRD.toLowerCase().indexOf("integer") >= 0 || apWRD.toLowerCase().indexOf("long") >= 0
+                            || apWRD.toLowerCase().indexOf("float") >= 0 || apWRD.toLowerCase().indexOf("double") >= 0) {
                            cbe = true;
                         }
                      }
                   } else if (fpAT.equals(XPDLConstants.BASIC_TYPE_BOOLEAN)) {
-                     if (apWRD.equals("false")
-                         || apWRD.equals("true")
-                         || apWRD.toLowerCase().indexOf("boolean") >= 0) {
+                     if (apWRD.equals("false") || apWRD.equals("true") || apWRD.toLowerCase().indexOf("boolean") >= 0) {
                         cbe = true;
                      }
                   } else if (fpAT.equals(XPDLConstants.BASIC_TYPE_DATE)
-                             || fpAT.equals(XPDLConstants.BASIC_TYPE_DATETIME)
-                             || fpAT.equals(XPDLConstants.BASIC_TYPE_TIME)) {
-                     if (apWRD.toLowerCase().indexOf("date") >= 0
-                         || apWRD.toLowerCase().indexOf("calendar") >= 0) {
+                             || fpAT.equals(XPDLConstants.BASIC_TYPE_DATETIME) || fpAT.equals(XPDLConstants.BASIC_TYPE_TIME)) {
+                     if (apWRD.toLowerCase().indexOf("date") >= 0 || apWRD.toLowerCase().indexOf("calendar") >= 0) {
                         cbe = true;
                      }
                   }
@@ -2822,8 +2703,7 @@ public class StandardPackageValidator implements XMLValidator {
             }
             // if this is DeclaredType check if their IDs are the same
             else if (fpType instanceof DeclaredType) {
-               if (!((DeclaredType) fpType).getId()
-                  .equals(((DeclaredType) apType).getId())) {
+               if (!((DeclaredType) fpType).getId().equals(((DeclaredType) apType).getId())) {
                   invalidType = true;
                }
             }

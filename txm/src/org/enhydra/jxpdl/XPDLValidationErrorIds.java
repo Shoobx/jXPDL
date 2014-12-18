@@ -290,6 +290,9 @@ public final class XPDLValidationErrorIds {
    /** Constant representing error for invalid value for priority. */
    public static final String ERROR_PRIORITY_INVALID_VALUE = "ERROR_PRIORITY_INVALID_VALUE";
 
+   /** Constant representing error for invalid value for limit. */
+   public static final String ERROR_LIMIT_INVALID_VALUE = "ERROR_LIMIT_INVALID_VALUE";
+
    /** Constant representing error for the start event having incoming transition. */
    public static final String ERROR_CONNECTION_TO_START_EVENT_NOT_ALLOWED = "ERROR_CONNECTION_TO_START_EVENT_NOT_ALLOWED";
 
