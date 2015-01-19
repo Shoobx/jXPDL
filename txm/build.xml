@@ -391,7 +391,7 @@
     
    <!-- Builds Documentation                                                 -->
    <!-- ==================================================================== -->
-   <target name="buildDoc" unless="${use.shared}">
+   <target name="buildDoc" unless="${use.shared}" depends="init">
       <ant dir="${doc.dir}" />
    </target>
 
