@@ -1,0 +1,94 @@
+<!--
+    Together XPDL Model
+    Copyright (C) 2011 Together Teamsolutions Co., Ltd.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or 
+    (at your option) any later version.
+ 
+    This program is distributed in the hope that it will be useful, 
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+    GNU General Public License for more details.
+ 
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see http://www.gnu.org/licenses
+-->
+<project name="TXM-BIN" default="configure" basedir=".">
+
+   <!-- =================================================================== -->
+   <!-- Initiate TXM Configuration                                       -->
+   <!-- =================================================================== -->
+   <target name="init">
+
+      <replace dir="${basedir}" includes="configure.properties" token="\" value="/" />
+      <property file="configure.properties"/>
+
+      <condition property="os" value="unix">
+         <os family="unix"/>
+      </condition>
+      <property name="os" value="windows"/>
+        
+      <!-- Including external if task-->
+      <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" 
+            classpath="${basedir}/lib/antcontrib.jar"/>
+
+
+      <if>
+         <equals arg1="${os}" arg2="unix" />
+         <then>
+            <filterset id="replacements">
+               <filter token="JAVA_DIR" value="${jdk.dir}" />
+               <filter token="COMMENT" value="#"/>
+               <filter token="SEPARATOR" value="/"/>
+               <filter token="PARAM_SIGN" value="$"/>
+               <filter token="PATH_SEPARATOR" value=":"/>
+               <filter token="ECHO_EMPTY" value="echo"/>
+               <filter token="ECHO_OFF" value=""/>
+               <filter token="ECHO" value="echo "/>
+               <filter token="BIN_BASH" value="#!/bin/bash"/>
+            </filterset>
+            <property name="ext" value="sh"/>
+         </then>
+         <else>
+            <filterset id="replacements">
+               <filter token="JAVA_DIR" value="${jdk.dir}" />
+               <filter token="COMMENT" value="rem #"/>
+               <filter token="SEPARATOR" value="\"/>
+               <filter token="PARAM_SIGN" value="%"/>
+               <filter token="PATH_SEPARATOR" value=";"/>
+               <filter token="ECHO_EMPTY" value="@echo."/>
+               <filter token="ECHO_OFF" value="@echo off"/>
+               <filter token="ECHO" value="@echo"/>
+               <filter token="BIN_BASH" value=""/>
+            </filterset>
+            <property name="ext" value="bat"/>
+         </else>
+      </if>
+        
+                 
+   </target>
+
+
+   <target name="configure" depends="init" description="Binary Configuration Process">
+      <touch>
+         <fileset dir="${basedir}/dist" />
+      </touch>
+
+      <copy todir="${basedir}/tmp" overwrite="yes">
+         <filterset refid="replacements" />
+         <fileset dir="${basedir}/dist" />
+         <mapper type="glob" from="*.ext" to="*.${ext}"/>
+      </copy>
+
+      <copy todir="${basedir}/bin" overwrite="yes">
+         <fileset dir="${basedir}/tmp" />
+      </copy>
+
+      <delete dir="${basedir}/tmp" quiet="yes" />
+
+      <chmod dir="${basedir}/bin" perm="a=rwx" includes="*.sh" />
+   </target>
+    
+</project>
