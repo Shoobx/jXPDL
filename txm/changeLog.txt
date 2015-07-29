@@ -1,4 +1,8 @@
-###### TXM 1.9-1 RELEASED #####
+###### TXM 1.9-2 RELEASED #####
+2015-07-27 Sasa Bojanic <sasaboy@together.at>
+   # Not replacing LF character with CRLF in XPDL output (for XML schema attribute elements) any more (didn't have effect on emails in TXW)
+
+###### TXM 1.9-1 RELEASED (2015-02-17) #####
 2014-12-18 Sasa Bojanic <sasaboy@together.at>
    # Improved validation: now validating limits
 

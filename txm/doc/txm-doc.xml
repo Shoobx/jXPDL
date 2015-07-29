@@ -2264,6 +2264,18 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
     <title>Release Notes</title>
 
     <section>
+      <title>Release 1.9-2</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Not replacing LF character with CRLF in XPDL output (for XML
+          schema attribute elements) any more (didn't have effect on emails in
+          TXW)</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
       <title>Release 1.9-1</title>
 
       <itemizedlist>
