@@ -1,0 +1,825 @@
+<!--
+    Together XPDL Model
+    Copyright (C) 2011 Together Teamsolutions Co., Ltd.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or 
+    (at your option) any later version.
+ 
+    This program is distributed in the hope that it will be useful, 
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+    GNU General Public License for more details.
+ 
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see http://www.gnu.org/licenses
+-->
+<project name="TXM" default="help" basedir=".">
+
+
+   <replace>
+      <fileset dir="${basedir}">
+         <include name="build.properties" />
+      </fileset>
+      <replacefilter token="\" value="/" />
+   </replace>
+
+   <property file="build.properties"/>
+   <property file="version.properties"/>
+  <property file="sign.properties" />
+  <property name="sign.alias" value=""/>
+
+   <!-- Project constants -->
+   <property name="targetVM" value="1.7" />
+   <property name="app.name" value="txm"/>
+   <property name="project.name" value="Together XPDL Model" />
+
+   <property name="jar.name"         value="jxpdl"/>
+   <property name="classes.dir"      location="${basedir}/classes" />
+   <property name="input.dir"        location="${basedir}/input"/>
+   <property name="share.dir"       location="${basedir}/shared"/>
+   <property name="output.dir"       location="${basedir}/output"/>
+   <property name="build.dir"        location="${output.dir}/${app.name}-${version}-${release}"/>
+   <property name="output.lib.dir"   location="${build.dir}/lib"/>
+   <property name="output.doc.dir"   location="${build.dir}/doc"/>
+   <property name="tools.dir"        location="${basedir}/tools"/>
+   <property name="input.dir"        location="${basedir}/input"/>
+   <property name="licenses.dir"     location="${basedir}/licenses"/>
+
+   <property name="doc.dir" location="${basedir}/doc" />
+
+   <typedef resource="net/sf/antcontrib/antlib.xml">
+      <classpath>
+         <fileset dir="${basedir}/tools/antcontrib">
+            <include name="*.jar" />
+         </fileset>
+      </classpath>
+   </typedef>
+   
+   <!-- Including external if task-->
+   <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" 
+         classpath="${tools.dir}/antcontrib/antcontrib.jar"/>
+
+   <condition property="os" value="windows">
+     <os family="windows" />
+   </condition>
+   <condition property="os" value="unix">
+     <os family="unix" />
+   </condition>
+   <!-- Windows/Linux specific target definitions -->        
+   <condition property="os.prepare.target" value="prepareForLinux">
+      <os family="unix"/>
+   </condition>
+   <property name="os.prepare.target" value="prepareForWindows"/>
+
+   <condition property="os.buildSrc.target" value="buildSrcForLinux">
+      <os family="unix"/>
+   </condition>
+   <property name="os.buildSrc.target" value="buildSrcForWindows"/>
+
+   <condition property="os.buildBin.target" value="buildBinForLinux">
+      <os family="unix"/>
+   </condition>
+   <property name="os.buildBin.target" value="buildBinForWindows"/>
+
+   <!-- If install.dir is set the install target should be available -->
+   <condition property="install.exist" value="true">
+      <not>
+         <equals arg1="${install.dir}X" arg2="X"/>
+      </not>
+   </condition>
+	
+	<condition property="use.shared" value="true">
+		<and>
+			<os family="unix"/>
+			<available type="file" file="${share.dir}/${app.name}-${version}-${release}.zip" />
+		</and>
+	</condition>
+	<property name="use.shared" value="false"/>
+
+   <if>
+      <not>
+         <isset property="sign.timestamp.urls" />
+      </not>
+      <then>
+         <property name="sign.timestamp.urls" value="http://timestamp.globalsign.com/scripts/timestamp.dll http://www.trustcenter.de/codesigning/timestamp http://timestamp.digicert.com http://tsa.starfieldtech.com" />
+      </then>
+   </if>
+
+   <!-- begin set signing parameters -->
+   <if>
+      <and>
+         <available type="file" file="${sign.tool}" />
+         <not>
+            <isset property="sign.all.flag" />
+         </not>
+      </and>
+      <then>
+         <property name="sign.all.flag" value="true" />
+         <property name="sign.jar.flag" value="true" />
+         <property name="sign.setup.flag" value="true" />
+      </then>
+   </if>
+
+   <if>
+      <not>
+         <isset property="sign.jar.timestamp" />
+      </not>
+      <then>
+         <property name="sign.jar.timestamp" value="true" />
+      </then>
+   </if>
+
+   <if>
+      <not>
+         <isset property="sign.setup.timestamp" />
+      </not>
+      <then>
+         <property name="sign.setup.timestamp" value="true" />
+      </then>
+   </if>
+
+   <property name="sign.digestalg" value="SHA1" />
+   <property name="sign.sigalg" value="SHA1withRSA" />
+   <!-- end set signing parameters -->
+   
+   
+   <!-- =================================================================== -->
+   <!-- Prepare TXM module                                                  -->
+   <!-- =================================================================== -->
+   <target name="prepare">
+   	
+   	  <if>
+   	     <available type="file" file="${share.dir}/${app.name}-${version}-${release}.zip" />
+   	     <then>
+   	        <unzip src="${share.dir}/${app.name}-${version}-${release}.zip" dest="${output.dir}" />
+   	     </then>
+   	  </if>
+      <!-- create directory structure -->
+      <mkdir dir="${output.lib.dir}"/>
+      <mkdir dir="${build.dir}/dist"/>
+      <mkdir dir="${build.dir}/examples"/>
+
+      <copy todir="${build.dir}">
+         <fileset dir="${input.dir}" includes="build.xml"/>
+      </copy>
+
+      <copy todir="${build.dir}/dist">
+         <fileset dir="${input.dir}/bin"/>
+      </copy>
+      
+      <!-- copy everything from lib directory -->
+      <copy todir="${output.lib.dir}">
+         <fileset dir="${tools.dir}/xerces" includes="*.jar"/>
+         <fileset dir="${tools.dir}/xml-commons" includes="*.jar"/>
+         <fileset dir="${tools.dir}/ant" includes="*.jar"/>
+         <fileset dir="${tools.dir}/antcontrib" includes="*.jar"/>
+      </copy>
+
+      <!-- copy everything from examples directory -->
+      <copy todir="${build.dir}/examples">
+         <fileset dir="${basedir}/examples"/>
+      </copy>
+
+      <copy todir="${build.dir}/licenses">
+         <fileset dir="${licenses.dir}" includes="*.*" excludes="${app.name}-includes*,MIT-DocBook.txt" />
+      </copy>
+      <copy todir="${build.dir}/licenses">
+         <fileset dir="${licenses.dir}" includes="*.*" />
+         <mapper type="regexp" from="${app.name}-includes.csv" to="${app.name}-${version}-${release}.includes.csv" />
+      </copy>
+      <if>
+         <available type="file" file="${basedir}/licenses/${app.name}-patches.csv" />
+         <then>
+            <copy todir="${build.dir}/licenses">
+               <fileset file="${basedir}/licenses/${app.name}-patches.csv" />
+               <globmapper from="${app.name}-patches.csv" to="${app.name}-${version}-${release}.patches.csv" />
+            </copy>
+         </then>
+      </if>
+      <if>
+         <available type="file" file="${basedir}/licenses/${app.name}-restrictions.csv" />
+         <then>
+            <copy todir="${build.dir}/licenses">
+               <fileset file="${basedir}/licenses/${app.name}-restrictions.csv" />
+               <globmapper from="${app.name}-restrictions.csv" to="${app.name}-${version}-${release}.restrictions.csv" />
+            </copy>
+         </then>
+      </if>
+      
+      <!-- runs specific, windows or linux prepare statements via apropriate target -->
+      <antcall target ="${os.prepare.target}"/>
+
+   </target>
+    
+    
+   <!-- =================================================================== -->
+   <!-- Prepare TXM module - Linux Part                                     -->
+   <!-- =================================================================== -->
+   <target name="prepareForLinux">
+      <delete>
+    	<fileset dir="${build.dir}">
+    	    <include name="configure.*"/>
+    	</fileset>
+      </delete>
+
+      <!-- create Linux specific oyster root file -->
+      <copy todir="${build.dir}" includeEmptyDirs="false" overwrite="yes">
+         <fileset dir="${input.dir}">
+            <include name="configure.sh"/>
+         </fileset>
+      </copy>
+      <chmod perm="a=rwx">
+         <fileset dir="${build.dir}">
+            <include name="configure.sh"/>
+         </fileset>
+      </chmod>
+
+      <!-- changing examples comand files from Windows to Linux sintax -->
+      <fixcrlf srcdir="${build.dir}/dist" includes="*.ext" eol="lf"/>
+   </target>
+
+
+   <!-- =================================================================== -->
+   <!-- Prepare TXM module - Windows Part                                   -->
+   <!-- =================================================================== -->
+   <target name="prepareForWindows">
+   	  <delete>
+   	     <fileset dir="${build.dir}">
+   	        <include name="configure.*"/>
+   	     </fileset>
+   	  </delete>
+      <!-- create Windows specific oyster root files -->
+      <copy todir="${build.dir}" includeEmptyDirs="false" overwrite="yes">
+         <fileset dir="${input.dir}">
+            <include name="configure.bat"/>
+         </fileset>
+      </copy>
+
+      <!-- changing examples comand files from Linux to Windows sintax -->
+      <fixcrlf srcdir="${build.dir}/dist" includes="*.ext" eol="crlf"/>
+
+   </target>
+
+        
+   <!-- =================================================================== -->
+   <!-- Compile Generator module                                            -->
+   <!-- =================================================================== -->
+   <target name="compile" depends="updateVersion" unless="${use.shared}">
+      <mkdir dir="${classes.dir}"/>
+      <copy todir="${classes.dir}">
+         <fileset dir="${basedir}/src"
+                  includes="**/resources/*"/>
+      </copy>
+      <javac target="${targetVM}" source="${targetVM}"
+            srcdir="${basedir}/src" 
+            destdir="${classes.dir}" 
+            nowarn="yes"
+            debug="${build.debug}"
+            encoding="ISO-8859-1"
+            includeAntRuntime="false">
+         <classpath>
+            <fileset dir="${tools.dir}/xerces">
+               <include name="*.jar" />
+            </fileset>
+         </classpath>
+      </javac>
+      <copy todir="${classes.dir}/org/enhydra/jxpdl">
+         <fileset dir="${licenses.dir}" includes="License.txt"/>
+      </copy>
+
+   </target>
+
+   <!-- ==================================================================== -->
+   <!-- Configure scripts                                                    -->
+   <!-- ==================================================================== -->
+   <target name="configure" depends="prepare,compile">
+      <echo message="Configuring TXM ..." />
+      <ant dir="${build.dir}" inheritAll="false" inheritRefs="false">
+         <property name="jdk.dir" value="${jdk.dir}" />
+      </ant>
+      <copy todir="${build.dir}" overwrite="yes">
+         <fileset dir="${input.dir}">
+            <include name="configure.properties"/>
+         </fileset>
+         <filterset>
+            <filter token="JAVA_DIR" value="${jdk.dir}" />
+         </filterset>
+      </copy>
+   </target>
+
+   <target name="init">
+      <if>
+         <equals arg1="${buildid}" arg2="" />
+         <then>
+            <tstamp>
+               <format property="build.timestamp" pattern="yyyyMMdd-HHmm" locale="en,UK" />
+            </tstamp>
+         </then>
+         <else>
+            <property name="build.timestamp" value="${buildid}" />
+         </else>
+      </if>
+   </target>
+   
+   <target name="_versionUp2date" depends="init">
+      <echo file="${build.dir}/BuildID.txt" message="${build.timestamp}" />        
+      <uptodate property="versionUp2date" targetfile="${basedir}/src/org/enhydra/jxpdl/resources/version.properties" >
+         <srcfiles dir= "${basedir}/src" includes="**/*.java"/>
+      </uptodate>
+   </target>
+
+   <target name="updateVersion" depends="_versionUp2date" unless="versionUp2date">
+      <propertyfile file="${basedir}/src/org/enhydra/jxpdl/resources/version.properties">
+         <entry key="udate" type="date" value="now" pattern="yyyy/MM/dd HH:mm:ss" />
+         <entry key="count" type="int" operation="+" default="1" pattern="00000" />
+      </propertyfile>
+   </target>
+
+   <target name="setDebug">
+      <property name="build.debug" value="on" />
+   </target>
+   
+   <!-- =================================================================== -->
+   <!-- Making jxpdl.jar                                                    -->
+   <!-- =================================================================== -->
+   <target name="jar" depends="compile" unless="${use.shared}">
+      <echo message=""/>
+      <echo message="******************************************"/>
+      <echo message="Building TXM jar libraries ..."/>
+      <echo message="******************************************"/>
+      <echo message=""/>
+      <if>
+         <equals arg1="${build.debug}" arg2="on" />
+         <then>
+            <property name="build.type" value="debug"/>
+         </then>
+         <else>
+            <property name="build.type" value="release"/>         
+         </else>
+      </if>
+      
+      <jar jarfile="${output.lib.dir}/${jar.name}.jar"
+            basedir="${classes.dir}"
+            compress="false">
+         <manifest>
+            <attribute name="Vendor" value="Together Teamsolutions Co., Ltd." />
+            <attribute name="Title" value="Together XPDL Model" />
+            <attribute name="Version" value="${version}-${release}" />
+            <attribute name="Build-Id" value="${build.timestamp}" />
+            <attribute name="Build-Type" value="${build.type}" />
+            <attribute name="Project-URL" value="http://sourceforge.net/projects/jxpdl" />
+         </manifest>
+      </jar>
+
+   </target>
+   
+   <target name="_debug" depends="cleanClasses, setDebug, jar, signJar"/>
+
+   <target name="debug" depends="clean, _debug"/>
+   
+   <!-- =================================================================== -->
+   <!-- Building all                                                        -->
+   <!-- =================================================================== -->
+   <target name="buildAll" depends="jar, configure, buildDoc"/>
+
+   <!-- =================================================================== -->
+   <!-- Building without documentation                                      -->
+   <!-- =================================================================== -->
+   <target name="buildNoDoc" depends="jar, configure"/>
+    
+   <!-- Builds Documentation                                                 -->
+   <!-- ==================================================================== -->
+   <target name="buildDoc" unless="${use.shared}" depends="init">
+      <ant dir="${doc.dir}" />
+   </target>
+
+   <target name="initDist" depends="init">
+      <!-- Distribution directories -->
+      <property name="dist.dir" location="${basedir}/distribution/${app.name}-${version}-${release}_${build.timestamp}" />
+      <property name="dist.file.name" value="${app.name}-${version}-${release}" />
+
+      <!-- Set the directories -->
+      <property name="dist.community.dir" location="${dist.dir}/community" />
+      <property name="dist.debug.dir" location="${dist.dir}/debug" />
+      <property name="dist.internal.dir" location="${dist.dir}/internal" />
+
+      <mkdir dir="${dist.community.dir}" />
+      <if>
+         <equals arg1="${os}" arg2="windows" />
+         <then>
+            <mkdir dir="${dist.debug.dir}" />
+            <mkdir dir="${dist.internal.dir}" />
+         </then>
+      </if>
+   </target>
+   
+   <!-- =================================================================== -->
+   <!-- Build distribution                                                  -->
+   <!-- =================================================================== -->
+   <target name="distributions" depends="clean, prepare, initDist">
+      <antcall target="${os.buildSrc.target}"/>
+      <if>
+         <equals arg1="${os}" arg2="windows" />
+         <then>
+            <antcall target="buildSrcForLinux"/>
+         </then>
+      </if>
+
+      <antcall target="jar"/>
+      <antcall target="signJar"/>
+      <antcall target="buildDoc"/>
+      <if>
+         <equals arg1="${os}" arg2="windows" />
+         <then>
+            <antcall target="prepareForLinux"/>
+            <antcall target="buildBinForLinux"/>
+            <antcall target="prepareForWindows"/>
+            <antcall target="buildBinForWindows"/>
+            <antcall target="create.components"/>
+            <ant target="distOther"/>            
+         </then>
+         <else>
+            <antcall target="buildBinForLinux"/>
+         </else>
+      </if>
+
+      <echo message="Distribution of ${app.name}-${version}-${release} with complete documentation has been built!"/>
+   </target>
+
+
+   <!-- =================================================================== -->
+   <!-- Build binary for Linux                                              -->
+   <!-- =================================================================== -->
+   <target name="buildBinForLinux">
+      <echo message=""/>
+      <echo message="******************************************"/>
+      <echo message="Creating ${dist.file.name}.tar.gz binary arhive, please wait ..."/>
+      <echo message="******************************************"/>
+      <echo message=""/>
+
+      <tar destfile="${dist.community.dir}/${dist.file.name}.tar" longfile="gnu">
+         <tarfileset dir="${output.dir}" mode="666" excludes="**/doc/api/**, **/doc/${app.name}-${version}-${release}.test.pdf, **/doc/${app.name}-current.test.pdf" >
+         </tarfileset>
+      </tar>
+      <gzip src="${dist.community.dir}/${dist.file.name}.tar"
+            zipfile="${dist.community.dir}/${dist.file.name}.tar.gz"/>
+      <delete file="${dist.community.dir}/${dist.file.name}.tar" quiet="true"/>
+      <chmod file="${dist.community.dir}/${dist.file.name}.tar.gz" perm="ugo+rw"/>
+   </target>
+    
+    
+   <!-- =================================================================== -->
+   <!-- Build binary for Windows                                            -->
+   <!-- =================================================================== -->
+   <target name="buildBinForWindows">
+      <echo message=""/>
+      <echo message="******************************************"/>
+      <echo message="Creating ${dist.file.name}.zip binary arhive, please wait ..."/>
+      <echo message="******************************************"/>
+      <echo message=""/>
+
+      <zip destfile="${dist.community.dir}/${dist.file.name}.zip" update="true" >
+         <zipfileset dir="${output.dir}" excludes="**/doc/api/**, **/doc/${app.name}-${version}-${release}.test.pdf, **/doc/${app.name}-current.test.pdf" />
+      </zip>
+   </target>
+
+
+   <!-- =================================================================== -->
+   <!-- Build source for Linux                                              -->
+   <!-- =================================================================== -->
+   <target name="buildSrcForLinux">
+      <echo message=""/>
+      <echo message="******************************************"/>
+      <echo message="Creating ${dist.file.name}.src.tar.gz source arhive, please wait ..."/>
+      <echo message="******************************************"/>
+      <echo message=""/>
+
+      <tar destfile="${dist.community.dir}/${dist.file.name}.src.tar" longfile="gnu">
+         <tarfileset dir="${basedir}" prefix="${dist.file.name}.src" mode="666">
+            <exclude name="distribution/**" />
+            <exclude name="output/**" />
+            <exclude name="bin/**" />
+         	<exclude name="shared/**"/>
+            <exclude name="**/classes/**" />
+            <exclude name="doc/tmp/**"/>
+            <exclude name="doc/docbook/**"/>
+            <exclude name="sign.properties" />
+            <exclude name="build.properties" />
+            <exclude name="Makefile" />
+         </tarfileset>
+      </tar>
+
+      <gzip src="${dist.community.dir}/${dist.file.name}.src.tar" 
+         zipfile="${dist.community.dir}/${dist.file.name}.src.tar.gz"/>
+      <delete file="${dist.community.dir}/${dist.file.name}.src.tar" quiet="true"/>
+      <chmod file="${dist.community.dir}/${dist.file.name}.src.tar.gz" perm="ugo+rw"/>
+   </target>
+
+
+   <!-- =================================================================== -->
+   <!-- Build source for Windows                                            -->
+   <!-- =================================================================== -->
+   <target name="buildSrcForWindows">
+      <echo message=""/>
+      <echo message="******************************************"/>
+      <echo message="Creating ${dist.file.name}.src.zip source arhive, please wait ..."/>
+      <echo message="******************************************"/>
+      <echo message=""/>
+
+      <zip destfile="${dist.community.dir}/${dist.file.name}.src.zip" update="true" >
+         <zipfileset dir="${basedir}" prefix="${dist.file.name}.src"> 
+            <exclude name="distribution/**"/>
+            <exclude name="output/**"/>
+            <exclude name="bin/**"/>
+         	<exclude name="shared/**"/>
+            <exclude name="**/classes/**"/>
+            <exclude name="doc/tmp/**"/>
+            <exclude name="doc/docbook/**"/>
+            <exclude name="sign.properties" />
+            <exclude name="build.properties"/>
+            <exclude name="Makefile"/>
+         </zipfileset>
+      </zip>
+   </target>
+
+   <target name="distOther">
+      <copy file="${output.doc.dir}/${app.name}-current.doc.pdf" tofile="${output.doc.dir}/${app.name}-${version}-${release}.doc.pdf"/>
+      <copy file="${output.doc.dir}/${app.name}-current.doc.html" tofile="${output.doc.dir}/${app.name}-${version}-${release}.doc.html"/>
+      <zip destfile="${dist.community.dir}/${app.name}-${version}-${release}.doc.zip" update="true">
+         <zipfileset dir="${output.doc.dir}" excludes="${app.name}-current.doc.*,${app.name}-current.test.*,${app.name}-${version}-${release}.test.pdf"/>
+         <zipfileset dir="${basedir}/src/org/enhydra/jxpdl/resources" includes="*.xsd"/>
+      </zip>
+      <copy todir="${dist.community.dir}">
+         <fileset dir="${output.doc.dir}" includes="${app.name}-current.doc.pdf" />
+      </copy>      
+      <delete quiet="true">
+         <fileset dir="${output.doc.dir}" includes="${app.name}-${version}-${release}.doc.*" />
+      </delete>
+   	<copy file="${output.doc.dir}/${app.name}-current.test.pdf" tofile="${dist.internal.dir}/${app.name}-${version}-${release}.test.pdf" />	
+      
+   	<copy todir="${dist.internal.dir}">
+         <fileset dir="${licenses.dir}" includes="${app.name}-includes.csv" />
+         <mapper type="regexp" from="${app.name}-includes.csv" to="${app.name}-${version}-${release}.includes.csv" />
+      </copy>
+      <if>
+         <available type="file" file="${basedir}/licenses/${app.name}-patches.csv" />
+         <then>
+            <copy todir="${dist.internal.dir}">
+               <fileset file="${basedir}/licenses/${app.name}-patches.csv" />
+               <globmapper from="${app.name}-patches.csv" to="${app.name}-${version}-${release}.patches.csv" />
+            </copy>
+         </then>
+      </if>
+      <if>
+         <available type="file" file="${basedir}/licenses/${app.name}-restrictions.csv" />
+         <then>
+            <copy todir="${dist.internal.dir}">
+               <fileset file="${basedir}/licenses/${app.name}-restrictions.csv" />
+               <globmapper from="${app.name}-restrictions.csv" to="${app.name}-${version}-${release}.restrictions.csv" />
+            </copy>
+         </then>
+      </if>
+      <copy todir="${dist.internal.dir}">
+         <fileset dir="${build.dir}" includes="BuildID.txt" />
+      </copy>
+      <antcall target="_debug"/>
+      <zip destfile="${dist.debug.dir}/${dist.file.name}.debug.zip" update="true" >
+         <zipfileset dir="${output.dir}" includes="**/lib/${jar.name}.jar" />
+      </zip>
+   </target>
+
+   <target name="create.components">
+      <property name="dist.component.dir" location="${dist.dir}/components"/>
+      <property name="component.dir" location="${basedir}/components"/>
+      <property name="tmp.component.dir" location="${component.dir}/tmp"/>
+      <mkdir dir="${tmp.component.dir}"/>
+      <copy todir="${tmp.component.dir}/${app.name}">
+         <fileset dir="${output.lib.dir}" includes="${jar.name}.jar" />
+      </copy>
+      <copy todir="${tmp.component.dir}/${app.name}">
+         <fileset dir="${component.dir}" includes="Component.properties" />  
+         <fileset dir="${licenses.dir}" includes="GPL-3.0.txt" />  
+      </copy>
+      <replace file="${tmp.component.dir}/${app.name}/Component.properties" value="">
+         <replacefilter token="@COMPONENTNAME@" value="${app.name}-(${project.name})" />
+         <replacefilter token="@VERSION@" value="${version}-${release}" />
+         <replacefilter token="@TIMESTAMP@" value="${build.timestamp}" />
+      </replace>
+      <copy todir="${tmp.component.dir}">
+         <fileset dir="${tools.dir}">
+            <include name="xerces/**" />
+            <include name="xml-commons/**" />
+         </fileset>
+      </copy>   
+      <zip destfile="${dist.component.dir}/${app.name}-${version}-${release}.comp.zip" update="true">
+         <zipfileset dir="${tmp.component.dir}"/>
+      </zip>
+      <delete dir="${tmp.component.dir}"/>
+      
+   </target>
+
+   <!-- =================================================================== -->
+   <!-- Cleans everything                                                   -->
+   <!-- =================================================================== -->
+   <target name="clean">
+      <ant antfile="build.xml" dir="doc" target="clean" inheritAll="true"/>
+      <delete dir="${classes.dir}"/>
+      <delete dir="${output.dir}"/>
+      <delete dir="${basedir}/distribution" />
+   </target>
+
+   <target name="cleanClasses">
+      <delete dir="${classes.dir}"/>
+   </target>
+   
+   <!-- =================================================================== -->
+   <!-- Installation                                                        -->
+   <!-- =================================================================== -->
+   <target name="install" if="install.exist" depends="prepare">
+      <!-- copy everything from output directory to install.dir -->
+      <if>
+         <equals arg1="${install.dir}" arg2="" />
+         <then>
+            <echo message="Please, define installation directory" />
+         </then>
+         <else>
+            <copy todir="${install.dir}" overwrite="yes">
+               <fileset dir="${build.dir}"/>
+            </copy>
+            <echo message="Instalation of ${app.name}-${version}-${release} was successful!"/>
+         </else>
+      </if>
+
+   </target>
+
+   <!-- ==================================================================== -->
+   <!-- Help - default target                                                -->
+   <!-- ==================================================================== -->
+   <target name="help">
+      <echo>
+make                     - Displays Help screen
+make help                - Displays Help screen
+make buildAll            - Builds and configures TXM with documentation
+make buildNoDoc          - Builds and configures TXM without documentation
+make buildDoc            - Builds documentation only
+make debug               - Builds TXM JAR file with included debug information
+make install             - Installs and configures TXM into directory defined by parameter install.dir in build.properties file. 
+                           You can set this parameter value by using command: configure -instdir PATH_TO_DIR.
+                           It should be called only after make buildAll target is executed!
+make clean               - Removes the output and distribution folder (in order to start a new compilation from scratch)
+make distributions       - Builds and configures TXM with all documentations and creates distribution package
+      </echo>
+   </target>
+
+   <target name="check.timestamp.server">
+      <propertyregex property="sign.timestamp.url.temp" input="${sign.timestamp.url}" regexp="([h|H][t|T]{2}[p|P][s|S]?\:[/][/])([[\w]*[.]{0,1}[\w]*]*)([:]?)([\d]*)([[/]*[\w]]*)" select="\2" casesensitive="true" />
+      <propertyregex property="sign.timestamp.port.temp" input="${sign.timestamp.url}" regexp="([h|H][t|T]{2}[p|P][s|S]?\:[/][/])([[\w]*[.]{0,1}[\w]*]*)([:]?)([\d]*)([[/]*[\w]]*)" select="\4" casesensitive="true" />
+      <antcall target="get-current-time" />
+      <var name="server.timeout" unset="true" />
+      <if>
+         <and>
+            <isset property="sign.timestamp.url.temp" />
+            <isset property="sign.timestamp.port.temp" />
+            <not>
+               <equals arg1="${sign.timestamp.port.temp}" arg2="" trim="true" />
+            </not>
+         </and>
+         <then>
+            <waitfor maxwait="3" maxwaitunit="minute" checkevery="10000" timeoutproperty="server.timeout">
+               <socket server="${sign.timestamp.url.temp}" port="${sign.timestamp.port.temp}" />
+            </waitfor>
+         </then>
+         <elseif>
+            <isset property="sign.timestamp.url.temp" />
+            <then>
+               <waitfor maxwait="3" maxwaitunit="minute" checkevery="10000" timeoutproperty="server.timeout">
+                  <socket server="${sign.timestamp.url.temp}" port="80" />
+               </waitfor>
+            </then>
+         </elseif>
+         <else>
+            <echo message="Invalid URL : @{sign.timestamp.url}" />
+         </else>
+      </if>
+      <var name="sign.timestamp.url.temp" unset="true" />
+      <antcall target="get-current-time" />
+   </target>
+
+   <target name="get-current-time">
+      <tstamp>
+         <format property="current.time" pattern="HH:mm:ss" locale="en,UK" />
+      </tstamp>
+      <echo message="time : ${current.time}" />
+   </target>
+   
+   <target name="signjars.with.timestamp" if="${sign.jar.timestamp}">
+      <echo message="Signing with Together certificate" />
+
+      <var name="count.error.timestamp" value="0" />
+
+      <for list="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50" param="sign.timestamp.index.item" delimiter="," trim="true">
+         <sequential>
+            <if>
+               <not>
+                  <equals arg1="${exe.return.code}" arg2="0" trim="true" />
+               </not>
+               <then>
+                  <for list="${sign.timestamp.urls}" param="sign.timestamp.url" delimiter=" " trim="true">
+                     <sequential>
+                        <antcall target="get-current-time" />
+                        <if>
+                           <not>
+                              <equals arg1="${exe.return.code}" arg2="0" trim="true" />
+                           </not>
+                           <then>
+
+                              <echo message="Signing with '@{sign.timestamp.url}'" />
+                              <antcallback target="check.timestamp.server" return="server.timeout">
+                                 <property name="sign.timestamp.url" value="@{sign.timestamp.url}" />
+                              </antcallback>
+                              <if>
+                                 <istrue value="${server.timeout}" />
+                                 <then>
+                                    <echo message="server.timeout = ${server.timeout}" />
+                                 </then>
+                              </if>
+
+                              <var name="exe.return.code" unset="true" />
+
+                              <trycatch>
+                                 <try>
+                                    <signjar alias="${sign.alias}" storepass="${sign.pwd}" keystore="${sign.privatekey}" storetype="pkcs12" digestalg="${sign.digestalg}" sigalg="${sign.sigalg}" tsaurl="@{sign.timestamp.url}">
+                                       <fileset dir="${output.lib.dir}" includes="${jar.name}.jar" />
+                                    </signjar>
+                                    <var name="exe.return.code" value="0" />
+                                 </try>
+                                 <catch>
+                                    <var name="exe.return.code" value="1" />
+                                 </catch>
+                              </trycatch>
+
+                           </then>
+                        </if>
+
+                        <if>
+                           <not>
+                              <equals arg1="${exe.return.code}" arg2="0" trim="true" />
+                           </not>
+                           <then>
+                              <math result="count.error.timestamp" datatype="int" operation="add" operand1="${count.error.timestamp}" operand2="1" />
+                              <sleep seconds="2" />
+                           </then>
+                        </if>
+
+                     </sequential>
+                  </for>
+
+               </then>
+            </if>
+         </sequential>
+      </for>
+
+      <if>
+         <not>
+            <equals arg1="${exe.return.code}" arg2="0" trim="true" />
+         </not>
+         <then>
+            <fail message="jarsigner return code ${exe.return.code}. There were ${count.error.timestamp} timestamping errors." />
+         </then>
+         <else>
+            <echo message="jarsigner return code ${exe.return.code}. There were ${count.error.timestamp} timestamping errors." />
+         </else>
+      </if>
+
+   </target>
+
+   <target name="signjars.without.timestamp" unless="${sign.jar.timestamp}">
+      <echo message="Signing with Together certificate" />
+      <signjar alias="${sign.alias}" storepass="${sign.pwd}" keystore="${sign.privatekey}" storetype="pkcs12" digestalg="${sign.digestalg}" sigalg="${sign.sigalg}">
+         <fileset dir="${output.lib.dir}" includes="${jar.name}.jar" />
+      </signjar>
+   </target>
+      
+   <target name="signJar">
+<!--      
+      <if>
+         <and>
+            <isset property="sign.alias" />
+            <not>
+               <equals arg1="${sign.alias}" arg2="" trim="true" />
+            </not>
+            <istrue value="${sign.all.flag}" />
+            <istrue value="${sign.jar.flag}" />
+         </and>
+         <then>
+            <antcall target="signjars.with.timestamp" />
+            <antcall target="signjars.without.timestamp" />
+         </then>
+      </if>   
+-->      
+   </target>
+   
+   
+</project>
