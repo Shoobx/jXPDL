@@ -140,6 +140,18 @@ public class StandardPackageValidator implements XMLValidator {
    public static final String VALIDATE_UNUSED_VARIABLES = "ValidateUnusedVariables";
 
    /**
+    * Constant for the property setting name that defines if unused applications will be
+    * validated.
+    */
+   public static final String VALIDATE_UNUSED_APPLICATIONS = "ValidateUnusedApplications";
+
+   /**
+    * Constant for the property setting name that defines if unused participants will be
+    * validated.
+    */
+   public static final String VALIDATE_UNUSED_PARTICIPANTS = "ValidateUnusedParticipants";
+
+   /**
     * Constant for the property setting name that defines if (transition) condition will
     * be validated by type.
     */
@@ -738,6 +750,28 @@ public class StandardPackageValidator implements XMLValidator {
    }
 
    /**
+    * Validates Application element.
+    * 
+    * @param el Element to validate
+    * @param existingErrors List of existing errors.
+    * @param fullCheck If false, validation will stop after the first error is found.
+    */
+   public void validateElement(Application el, List existingErrors, boolean fullCheck) {
+      validateStandard(el, existingErrors, fullCheck);
+      boolean validateApplicationUsage = properties.getProperty(StandardPackageValidator.VALIDATE_UNUSED_APPLICATIONS, "false").equals("true");
+      if (validateApplicationUsage && (fullCheck || existingErrors.size() == 0)) {
+         if (getNoOfReferences((XMLComplexElement) el.getParent().getParent(), el) == 0) {
+            XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_WARNING,
+                                                             XMLValidationError.SUB_TYPE_LOGIC,
+                                                             XPDLValidationErrorIds.WARNING_UNUSED_APPLICATION,
+                                                             el.getId(),
+                                                             el);
+            existingErrors.add(verr);
+         }
+      }
+   }
+
+   /**
     * Validates Associations element.
     * 
     * @param el Element to validate
@@ -1121,7 +1155,6 @@ public class StandardPackageValidator implements XMLValidator {
       _validateElement(el, existingErrors, fullCheck, false, XPDLValidationErrorIds.ERROR_LIMIT_INVALID_VALUE);
    }
 
-   
    /**
     * Returns the number of references for the given element 'el' which parent Package or
     * WorkflowProcess element is 'parent'.
@@ -1152,6 +1185,28 @@ public class StandardPackageValidator implements XMLValidator {
       }
       if (existingErrors.size() == 0 || fullCheck) {
          checkGraphConnectionsForArtifacts(el, existingErrors, fullCheck);
+      }
+   }
+
+   /**
+    * Validates Participant element.
+    * 
+    * @param el Element to validate
+    * @param existingErrors List of existing errors.
+    * @param fullCheck If false, validation will stop after the first error is found.
+    */
+   public void validateElement(Participant el, List existingErrors, boolean fullCheck) {
+      validateStandard(el, existingErrors, fullCheck);
+      boolean validateParticipantUsage = properties.getProperty(StandardPackageValidator.VALIDATE_UNUSED_PARTICIPANTS, "false").equals("true");
+      if (validateParticipantUsage && (fullCheck || existingErrors.size() == 0)) {
+         if (getNoOfReferences((XMLComplexElement) el.getParent().getParent(), el) == 0) {
+            XMLValidationError verr = new XMLValidationError(XMLValidationError.TYPE_WARNING,
+                                                             XMLValidationError.SUB_TYPE_LOGIC,
+                                                             XPDLValidationErrorIds.WARNING_UNUSED_PARTICIPANT,
+                                                             el.getId(),
+                                                             el);
+            existingErrors.add(verr);
+         }
       }
    }
 

@@ -155,6 +155,12 @@ public final class XPDLValidationErrorIds {
    /** Constant representing warning for unused variable. */
    public static final String WARNING_UNUSED_VARIABLE = "WARNING_UNUSED_VARIABLE";
 
+   /** Constant representing warning for unused application. */
+   public static final String WARNING_UNUSED_APPLICATION = "WARNING_UNUSED_APPLICATION";
+
+   /** Constant representing warning for unused participant. */
+   public static final String WARNING_UNUSED_PARTICIPANT = "WARNING_UNUSED_PARTICIPANT";
+
    /** Constant representing error for actual/formal parameter number miss-match. */
    public static final String ERROR_FORMAL_AND_ACTUAL_PARAMETERS_NUMBER_MISSMATCH = "ERROR_FORMAL_AND_ACTUAL_PARAMETERS_NUMBER_MISSMATCH";
 

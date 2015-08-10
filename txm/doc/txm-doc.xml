@@ -2272,6 +2272,10 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
           schema attribute elements) any more (didn't have effect on emails in
           TXW)</para>
         </listitem>
+
+        <listitem>
+          <para>Now validating unused applications and participants</para>
+        </listitem>
       </itemizedlist>
     </section>
 
