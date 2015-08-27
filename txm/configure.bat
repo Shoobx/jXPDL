@@ -1,24 +1,28 @@
+::Copyright (C) 2011 Together Teamsolutions Co., Ltd. 
+::
+::This program is free software: you can redistribute it and/or modify
+::it under the terms of the GNU General Public License as published by
+::the Free Software Foundation, either version 3 of the License, or
+::(at your option) any later version.
+::
+::This program is distributed in the hope that it will be useful,
+::but WITHOUT ANY WARRANTY; without even the implied warranty of
+::MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+::GNU General Public License for more details.
+::
+::You should have received a copy of the GNU General Public License
+::along with this program. If not, see http://www.gnu.org/licenses
+::
 @echo off
-rem #    Together XPDL Model
-rem #    Copyright (C) 2011 Together Teamsolutions Co., Ltd.
-rem #
-rem #    This program is free software: you can redistribute it and/or modify
-rem #    it under the terms of the GNU General Public License as published by
-rem #    the Free Software Foundation, either version 3 of the License, or 
-rem #    (at your option) any later version.
-rem #
-rem #    This program is distributed in the hope that it will be useful, 
-rem #    but WITHOUT ANY WARRANTY; without even the implied warranty of
-rem #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
-rem #    GNU General Public License for more details.
-rem # 
-rem #    You should have received a copy of the GNU General Public License
-rem #    along with this program. If not, see http://www.gnu.org/licenses
-rem #-----------------------------------------------------------------------
 cls
 rem *********************************************
 rem *  Initialize environment variables
 rem *********************************************
+rem **** initail data ****
+SET APP_NAME=X
+SET APP_FULL_NAME=X
+SET VERSION=1.0
+SET RELEASE=1
 
 SET SET_VERSION=off
 SET SET_RELEASE=off
@@ -29,6 +33,8 @@ SET SET_REBRANDING=off
 SET SET_LANGUAGE=off
 
 SET BUILDID=
+SET SET_APP_NAME=off
+SET SET_APP_FULL_NAME=off
 SET INSTALLDIR=
 SET REBRANDING=false
 SET LANGUAGE=English
@@ -49,6 +55,16 @@ find "release=" < version.properties > release.txt
 for /F "tokens=1,2* delims==" %%i in (release.txt) do SET RELEASE=%%j
 del release.txt>nul
 
+:initAppName
+find "app.name=" < project.properties > appname.txt
+for /F "tokens=1,2* delims==" %%i in (appname.txt) do SET APP_NAME=%%j
+del appname.txt>nul
+
+:initAppFullName
+find "app.full.name=" < project.properties > appfullname.txt
+for /F "tokens=1,2* delims==" %%i in (appfullname.txt) do SET APP_FULL_NAME=%%j
+del appfullname.txt>nul
+
 if exist build.properties goto init
 goto default
 
@@ -64,6 +80,8 @@ if %~1==-jdkhome goto jdkhome
 if %~1==-instdir goto instdir
 if %~1==-rebranding goto rebranding
 if %~1==-language goto language
+if %~1==-appname goto appname
+if %~1==-appfullname goto appfullname
 goto error
 
 :default
@@ -121,11 +139,33 @@ echo install.dir=%INSTALLDIR%>>build.properties
 echo rebranding=%REBRANDING%>>build.properties
 echo language=%LANGUAGE%>>build.properties
 
+if %SET_VERSION%==off if %SET_RELEASE%==off goto makeProjectProprties
 if exist version.properties del version.properties
 echo #####################>>version.properties
 echo version=^%VERSION%>>version.properties
 echo release=^%RELEASE%>>version.properties
-echo #####################>>version.properties
+
+:makeProjectProprties
+if %SET_APP_NAME%==off if %SET_APP_FULL_NAME%==off goto end
+if exist project.properties del project.properties
+echo # Copyright (C) 2011 Together Teamsolutions Co., Ltd. >project.properties
+echo # >>project.properties
+echo # This program is free software: you can redistribute it and/or modify >>project.properties
+echo # it under the terms of the GNU General Public License as published by >>project.properties
+echo # the Free Software Foundation, either version 3 of the License, or >>project.properties
+echo # (at your option) any later version. >>project.properties
+echo # >>project.properties
+echo # This program is distributed in the hope that it will be useful, >>project.properties
+echo # but WITHOUT ANY WARRANTY; without even the implied warranty of >>project.properties
+echo # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the >>project.properties
+echo # GNU General Public License for more details. >>project.properties
+echo # >>project.properties
+echo # You should have received a copy of the GNU General Public License >>project.properties
+echo # along with this program. If not, see http://www.gnu.org/licenses >>project.properties
+echo # >>project.properties
+echo app.name=^%APP_NAME%>>project.properties
+echo app.full.name=^%APP_FULL_NAME%>>project.properties
+
 goto end
 
 
@@ -164,7 +204,7 @@ echo.
 echo.
 echo Example:
 echo.
-echo configure -version 1.4 -release 1 -buildid 20120301-0808 -jdkhome C:/jdk1.7 -instdir C:/TXM
+echo configure -version 1.4 -release 1 -buildid 20120301-0808 -jdkhome C:/jdk1.7 -instdir C:/%APP_NAME%
 echo.
 goto end
 
@@ -263,6 +303,35 @@ SET SET_LANGUAGE=on
 shift
 if "X%~1"=="X" goto make
 goto start
+
+rem *********************************************************
+rem *********************************************************
+rem *********************************************************
+rem *  Set APP_NAME parameter value
+rem *********************************************************
+:appname
+if %SET_APP_NAME%==on goto error
+shift
+if "X%~1"=="X" goto error
+SET APP_NAME=%~1
+SET SET_APP_NAME=on
+shift
+if "X%~1"=="X" goto make
+goto start
+
+rem *********************************************************
+rem *  Set APP_FULL_NAME parameter value
+rem *********************************************************
+:appfullname
+if %SET_APP_FULL_NAME%==on goto error
+shift
+if "X%~1"=="X" goto error
+SET APP_FULL_NAME=%~1
+SET SET_APP_FULL_NAME=on
+shift
+if "X%~1"=="X" goto make
+goto start
+
 
 rem *********************************************************
 rem *  Reset evironment variables

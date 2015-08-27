@@ -26,14 +26,15 @@
    </replace>
 
    <property file="build.properties"/>
+	<property file="project.properties"/>
    <property file="version.properties"/>
   <property file="sign.properties" />
   <property name="sign.alias" value=""/>
 
    <!-- Project constants -->
    <property name="targetVM" value="1.7" />
-   <property name="app.name" value="txm"/>
-   <property name="project.name" value="Together XPDL Model" />
+   <!--property name="app.name" value="txm"/-->
+   <property name="project.name" value="${app.full.name}" />
 
    <property name="jar.name"         value="jxpdl"/>
    <property name="classes.dir"      location="${basedir}/classes" />
@@ -57,9 +58,9 @@
       </classpath>
    </typedef>
    
-   <!-- Including external if task-->
+   <!-- Including external if task>
    <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" 
-         classpath="${tools.dir}/antcontrib/antcontrib.jar"/>
+         classpath="${tools.dir}/antcontrib/antcontrib.jar"/-->
 
    <condition property="os" value="windows">
      <os family="windows" />
@@ -183,13 +184,21 @@
       </copy>
 
       <copy todir="${build.dir}/licenses">
-         <fileset dir="${licenses.dir}" includes="*.*" excludes="${app.name}-includes*,MIT-DocBook.txt" />
+         <fileset dir="${licenses.dir}" includes="*.*" excludes="*.csv, MIT-DocBook.txt" />
       </copy>
       <copy todir="${build.dir}/licenses">
-         <fileset dir="${licenses.dir}" includes="*.*" />
-         <mapper type="regexp" from="${app.name}-includes.csv" to="${app.name}-${version}-${release}.includes.csv" />
+         <fileset dir="${licenses.dir}" includes="*-includes.csv" />
+         <mapper type="glob" from="*.csv" to="${app.name}-${version}-${release}.includes.csv" />
       </copy>
-      <if>
+	   	<copy todir="${build.dir}/licenses">
+	   		<fileset dir="${licenses.dir}" includes="*-restrictions.csv" />
+	   	    <mapper type="glob" from="*.csv" to="${app.name}-${version}-${release}.restrictions.csv" />
+	   	</copy>
+   		<copy todir="${build.dir}/licenses">
+   	         <fileset dir="${licenses.dir}" includes="*-patches.csv" />
+   	         <mapper type="glob" from="*.csv" to="${app.name}-${version}-${release}.patches.csv" />
+   	    </copy>
+      <!--if>
          <available type="file" file="${basedir}/licenses/${app.name}-patches.csv" />
          <then>
             <copy todir="${build.dir}/licenses">
@@ -206,7 +215,7 @@
                <globmapper from="${app.name}-restrictions.csv" to="${app.name}-${version}-${release}.restrictions.csv" />
             </copy>
          </then>
-      </if>
+      </if-->
       
       <!-- runs specific, windows or linux prepare statements via apropriate target -->
       <antcall target ="${os.prepare.target}"/>
@@ -560,10 +569,10 @@
    	<copy file="${output.doc.dir}/${app.name}-current.test.pdf" tofile="${dist.internal.dir}/${app.name}-${version}-${release}.test.pdf" />	
       
    	<copy todir="${dist.internal.dir}">
-         <fileset dir="${licenses.dir}" includes="${app.name}-includes.csv" />
-         <mapper type="regexp" from="${app.name}-includes.csv" to="${app.name}-${version}-${release}.includes.csv" />
+         <fileset dir="${build.dir}/licenses" includes="*.csv" />
+         <!--mapper type="regexp" from="${app.name}-includes.csv" to="${app.name}-${version}-${release}.includes.csv" /-->
       </copy>
-      <if>
+      <!--if>
          <available type="file" file="${basedir}/licenses/${app.name}-patches.csv" />
          <then>
             <copy todir="${dist.internal.dir}">
@@ -580,7 +589,7 @@
                <globmapper from="${app.name}-restrictions.csv" to="${app.name}-${version}-${release}.restrictions.csv" />
             </copy>
          </then>
-      </if>
+      </if-->
       <copy todir="${dist.internal.dir}">
          <fileset dir="${build.dir}" includes="BuildID.txt" />
       </copy>

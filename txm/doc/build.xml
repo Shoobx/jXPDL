@@ -26,14 +26,14 @@
 	<target name="init">
 
 		<!--Set the global variables-->
-		<property name="docbook.name" value="txm-doc" />
-		<property name="testcase.name" value="txm-testcases-doc" />
-		<property name="doc.title" value="Together XPDL Model" />
+		<property name="docbook.name" value="${app.name}-doc" />
+		<property name="testcase.name" value="${app.name}-testcases-doc" />
+		<property name="doc.title" value="${app.full.name}" />
 		<property name="version" value="1.0" />
 		<property name="release" value="1" />
 
 		<property name="project.name" value="TXM" />
-		<property name="app.name" value="txm" />
+		<!--property name="app.name" value="txm" /-->
 
 		<!-- Operating system  -->
 		<condition property="os" value="windows">
@@ -144,8 +144,16 @@
 		<copy todir="${tmp.dir}/images/templates">
 			<fileset dir="${tools.dir}/tds" includes="*.jpg" />
 		</copy>
-		<copy file="${doc.dir}/${docbook.name}.xml" tofile="${tmp.dir}/${docbook.name}.xml" />
-		<copy file="${doc.dir}/${testcase.name}.xml" tofile="${tmp.dir}/${testcase.name}.xml" />
+		<copy todir="${tmp.dir}">
+			<fileset dir="" includes="*-doc.xml" excludes="*-testcases-doc.xml" />
+			<mapper type="glob" from="*.xml" to="${docbook.name}.xml"/>
+		</copy>
+		<copy todir="${tmp.dir}">
+			<fileset dir="" includes="*-testcases-doc.xml" />
+			<mapper type="glob" from="*.xml" to="${testcase.name}.xml"/>
+		</copy>
+		<!--copy file="${doc.dir}/${testcase.name}.xml" tofile="${tmp.dir}/${testcase.name}.xml" /-->
+		
 		<replace file="${tmp.dir}/${docbook.name}.xml" encoding="utf-8" token="../tools/docbook-dtd/dtd/docbook.dtd" value="../../tools/docbook-dtd/dtd/docbook.dtd" />
 		<replace file="${tmp.dir}/${testcase.name}.xml" encoding="utf-8" token="../tools/docbook-dtd/dtd/docbook.dtd" value="../../tools/docbook-dtd/dtd/docbook.dtd" />
 	</target>
