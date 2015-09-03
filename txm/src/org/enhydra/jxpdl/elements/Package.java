@@ -131,7 +131,7 @@ public class Package extends XMLComplexElement {
       this.internalVersion = internalVersion;
    }
 
-   /** Adds new mapping for an external package (reference->Id). */
+   /** Adds new mapping for an external package (reference to Id). */
    public void addExternalPackageMapping(String epRef, String epId) {
       extPkgRefsToIds.put(epRef, epId);
    }

@@ -1,5 +1,6 @@
 ###### TXM 2.0-1 RELEASED #####
 2015-09-03 Sasa Bojanic <sasaboy@together.at>
+   # Java 8 support
    # Manually propagated TAB components
    # Corrected test for creating new XPDL document (added xpdl namespace)
 

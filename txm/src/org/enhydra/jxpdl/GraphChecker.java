@@ -26,7 +26,7 @@ import java.util.Vector;
  * have to pass it the incidence matrix, which has to be the two-dimensional array of
  * booleans, where the rows and column indexes represents the graph node indexes, and
  * values represents if there is a connection between these nodes. If there is connection
- * from node <b>i</b> to the node <b>j</b> it is represented by putting <b>true</true>
+ * from node <b>i</b> to the node <b>j</b> it is represented by putting <b>true</b>
  * into j'th column of the i'th row.
  * 
  * @author Predrag Djojic

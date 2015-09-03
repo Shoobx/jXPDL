@@ -2381,7 +2381,7 @@ public class StandardPackageValidator implements XMLValidator {
     * on second parameter.
     * 
     * @param acts The set of activities that are searched for split or join
-    * @param sOrJ 0 -> searching for split, otherwise, searching for join
+    * @param sOrJ 0 - searching for split, otherwise, searching for join
     * @return The number of activities in the given set that have split or join, depending
     *         on second parameter.
     */

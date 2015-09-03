@@ -628,8 +628,8 @@ public abstract class XMLCollection extends XMLBaseForCollectionAndComplex {
    /**
     * Corrects repositioning and sends the change information to the listeners.
     * 
-    * @param oldEls The ordered map of elements with their old positions (keys-original element's hash code as retrieved by calling the method getOriginalElementHashCode(), values->XMLElement instances).
-    * @param newEls The ordered map of elements with their new positions (keys-original element's hash code as retrieved by calling the method getOriginalElementHashCode(), values->XMLElement instances)
+    * @param oldEls The ordered map of elements with their old positions (keys-original element's hash code as retrieved by calling the method getOriginalElementHashCode(), values-XMLElement instances).
+    * @param newEls The ordered map of elements with their new positions (keys-original element's hash code as retrieved by calling the method getOriginalElementHashCode(), values-XMLElement instances)
     */
    protected void checkRepositioning(SequencedHashMap oldEls, SequencedHashMap newEls) {
       // System.err.println("CHECKREPFOR "+this);

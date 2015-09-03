@@ -2283,6 +2283,10 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
           <para>Corrected test for creating new XPDL document (added xpdl
           namespace)</para>
         </listitem>
+
+        <listitem>
+          <para>Java8 support</para>
+        </listitem>
       </itemizedlist>
     </section>
 
