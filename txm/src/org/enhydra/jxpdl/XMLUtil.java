@@ -83,6 +83,8 @@ import org.enhydra.jxpdl.elements.Lane;
 import org.enhydra.jxpdl.elements.Lanes;
 import org.enhydra.jxpdl.elements.ListType;
 import org.enhydra.jxpdl.elements.Member;
+import org.enhydra.jxpdl.elements.Namespace;
+import org.enhydra.jxpdl.elements.Namespaces;
 import org.enhydra.jxpdl.elements.NestedLane;
 import org.enhydra.jxpdl.elements.NestedLanes;
 import org.enhydra.jxpdl.elements.NodeGraphicsInfo;
@@ -2876,6 +2878,12 @@ public class XMLUtil {
 
       System.out.println("...creating Package [Id=" + id + ",Name=" + name + ",Script-type=text/javascript]");
       Package pkg = new Package();
+      Namespaces nss = pkg.getNamespaces();
+      Namespace ns = (Namespace) nss.generateNewElement();
+      ns.setName("xpdl");
+      ns.setLocation(XMLUtil.XMLNS_XPDL);
+      nss.add(ns);
+
       pkg.setId(id);
       pkg.setName(name);
       pkg.getPackageHeader().setXPDLVersion("2.1");
