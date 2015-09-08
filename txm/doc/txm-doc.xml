@@ -125,7 +125,7 @@
       <title>Prerequisites</title>
 
       <para>The only prerequisite to be able to use TXM on Windows or Linux
-      system is Java JRE 1.7 installed on the machine.</para>
+      system is Java JRE 1.8 installed on the machine.</para>
     </sect1>
 
     <sect1>
@@ -139,7 +139,7 @@
       be executed without parameters, otherwise it should be called with a
       parameter specifying JAVA_HOME value, e.g.:</para>
 
-      <programlisting>configure -jdkhome c:\jdk1.7.0_03</programlisting>
+      <programlisting>configure -jdkhome c:\jdk1.8.0_20</programlisting>
 
       <para>This will prepare different <emphasis
       role="bold">.bat/.sh</emphasis> scripts in examples directory.</para>
@@ -2103,7 +2103,7 @@ pkg.getParticipants().add(p3);
 
           <itemizedlist>
             <listitem>
-              <para>Java Development Kit (JDK) version 7 or later</para>
+              <para>Java Development Kit (JDK) version 8 or later</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -2125,7 +2125,7 @@ pkg.getParticipants().add(p3);
             </listitem>
 
             <listitem>
-              <para>Java Development Kit (JDK) version 7 or later</para>
+              <para>Java Development Kit (JDK) version 8 or later</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -2181,7 +2181,7 @@ Multiple parameters can be specified at once.
 
 Example:
 
-configure -version 1.4 -release 1 -buildid 20120301-0808 -jdkhome C:/jdk1.7 -instdir C:/JXPDL</programlisting>
+configure -version 1.4 -release 1 -buildid 20120301-0808 -jdkhome C:/jdk1.8 -instdir C:/JXPDL</programlisting>
 
       <para>The configure script will create/change the <emphasis
       role="bold">build.properties</emphasis> file based on the parameters

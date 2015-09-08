@@ -207,11 +207,11 @@
                     <entry>configure -jdkhome</entry>
 
                     <entry>configure -jdkhome C:/Program
-                    Files/Java/jdk1.7.0_11</entry>
+                    Files/Java/jdk1.8.0_20</entry>
 
                     <entry>Sets the "JAVA HOME" location of Java to be used to
                     compile the project. ( In the build.properties &gt;&gt;
-                    jdk.dir = C:/Program Files/Java/jdk1.7.0_11 )</entry>
+                    jdk.dir = C:/Program Files/Java/jdk1.8.0_20 )</entry>
                   </row>
 
                   <row>

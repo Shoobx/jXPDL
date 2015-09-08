@@ -204,7 +204,7 @@ echo.
 echo.
 echo Example:
 echo.
-echo configure -version 1.4 -release 1 -buildid 20120301-0808 -jdkhome C:/jdk1.7 -instdir C:/%APP_NAME%
+echo configure -version 1.4 -release 1 -buildid 20120301-0808 -jdkhome C:/jdk1.8 -instdir C:/%APP_NAME%
 echo.
 goto end
 

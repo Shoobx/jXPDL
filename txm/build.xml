@@ -32,7 +32,7 @@
   <property name="sign.alias" value=""/>
 
    <!-- Project constants -->
-   <property name="targetVM" value="1.7" />
+   <property name="targetVM" value="1.8" />
    <!--property name="app.name" value="txm"/-->
    <property name="project.name" value="${app.full.name}" />
 
