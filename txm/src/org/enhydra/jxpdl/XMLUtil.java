@@ -2431,16 +2431,16 @@ public class XMLUtil {
    /**
     * Returns a map of the workflow processes (keys are strings representing workflow
     * process Id, values are {@link WorkflowProcess} objects) accessible to be referenced
-    * by any sub-flow activity inside given {@link Package} element.
+    * as a sub-flows for a given {@link SubFlow} element.
     * 
-    * @param pkg {@link Package} instance.
+    * @param sbflw {@link SubFlow} instance.
     * @param xmlInterface {@link XMLInterface} instance.
     * @return Map where keys are strings representing data workflow process Id, and values
     *         are {@link WorkflowProcess} instances.
     */
-   public static SequencedHashMap getPossibleSubflowProcesses(Package pkg, XMLInterface xmlInterface) {
+   public static SequencedHashMap getPossibleSubflowProcesses(SubFlow sbflw, XMLInterface xmlInterface) {
       SequencedHashMap wps = new SequencedHashMap();
-      List l = XMLUtil.getAllExternalPackageIds(xmlInterface, pkg, new HashSet());
+      List l = XMLUtil.getAllExternalPackageIds(xmlInterface, XMLUtil.getPackage(sbflw), new HashSet());
       Iterator itpkg = l.iterator();
       while (itpkg.hasNext()) {
          Package p = xmlInterface.getPackageById((String) itpkg.next());
@@ -2452,7 +2452,7 @@ public class XMLUtil {
             }
          }
       }
-      Iterator it = pkg.getWorkflowProcesses().toElements().iterator();
+      Iterator it = ((WorkflowProcesses) XMLUtil.getParentElement(WorkflowProcesses.class, sbflw)).toElements().iterator();
       while (it.hasNext()) {
          WorkflowProcess wp = (WorkflowProcess) it.next();
          wps.put(wp.getId(), wp);
