@@ -9,6 +9,8 @@ tec,docbook-dtd
 tec,docbook-xsl
 tds,docbook-xsl-fo
 tec,fop
+tec,nsis
+tec,signtool
 tds,tds
 tec,xalan
 tec,xerces

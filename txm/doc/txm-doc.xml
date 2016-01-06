@@ -124,25 +124,176 @@
     <sect1>
       <title>Prerequisites</title>
 
-      <para>The only prerequisite to be able to use TXM on Windows or Linux
-      system is Java JRE 1.8 installed on the machine.</para>
+      <itemizedlist>
+        <listitem>
+          <para>Java JRE 1.8</para>
+        </listitem>
+
+        <listitem>
+          <para><link
+          xlink:href="http://www.oracle.com/technetwork/java/javase/downloads/index.html"
+          xmlns:xlink="http://www.w3.org/1999/xlink">Java Development Kit
+          (JDK)</link> version 8 for Windows x64</para>
+        </listitem>
+      </itemizedlist>
     </sect1>
 
     <sect1>
-      <title>Installation</title>
+      <title>Installation by the setup wizard</title>
 
-      <para>Unpack <emphasis role="bold">txm-x.y-z.zip</emphasis> or <emphasis
-      role="bold">txm-x.y-z.tar.gz</emphasis> package on Windows/Linux. In
-      order to use TXM examples, <emphasis role="bold">configure</emphasis>
-      script from the root folder has to be executed. If JAVA_HOME environment
-      variable exists, <emphasis role="bold">configure</emphasis> script can
-      be executed without parameters, otherwise it should be called with a
-      parameter specifying JAVA_HOME value, e.g.:</para>
+      <orderedlist>
+        <listitem>
+          <para>Double click on the setup file for start the
+          installtion.</para>
+        </listitem>
 
-      <programlisting>configure -jdkhome c:\jdk1.8.0_20</programlisting>
+        <listitem>
+          <para>First screen show the setup Wizard screen and click "Next"
+          button.</para>
 
-      <para>This will prepare different <emphasis
-      role="bold">.bat/.sh</emphasis> scripts in examples directory.</para>
+          <?keepwith ?>
+
+          <figure>
+            <title>Welcome setup wizard</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" contentdepth="100%"
+                           fileref="images/manual/setup_welcome_page.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>License Agreement. Please read the license terms before and
+          checked to accept this license then click Next button to the next
+          page.</para>
+
+          <?keepwith ?>
+
+          <figure>
+            <title>License agreement</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" contentdepth="100%"
+                           fileref="images/manual/setup_license_agree_page.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Choose Java virtual machine. Choose the existing path of Java
+          virtual machine then click Next button to the next page.</para>
+
+          <?keepwith ?>
+
+          <figure>
+            <title>License agreement</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" contentdepth="100%"
+                           fileref="images/manual/setup_choose_java_page.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Choose Install Location. Choose the destination folder path
+          for install the application and click next button to next
+          step.</para>
+
+          <?keepwith ?>
+
+          <figure>
+            <title>Choose Install location</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" contentdepth="100%"
+                           fileref="images/manual/setup_install_location_page.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Choose Start options. Choose from the following options to
+          configure your application start options. Click Install
+          button.</para>
+
+          <?keepwith ?>
+
+          <figure>
+            <title>Choose Start Options</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" contentdepth="100%"
+                           fileref="images/manual/setup_start_options_page.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Installation Complete, The installation is completed
+          successfully. Click next button to last page.</para>
+
+          <?keepwith ?>
+
+          <figure>
+            <title>Installation Complete</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" contentdepth="100%"
+                           fileref="images/manual/setup_installation_page.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Completing the Setup Wizard. You can check on show document to
+          read the manual document. Click on the Finish button to successful
+          installation.</para>
+
+          <?keepwith ?>
+
+          <figure>
+            <title>Setup Completed</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" contentdepth="100%"
+                           fileref="images/manual/setup_finish_page.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+
+          <note>
+            <para>If you use Adobe Reader version 10.0 or later when you check
+            on "Show Documentation". The document cannot open by the installer
+            if Adobe Reader has enabled "Protected Mode". If you want to open
+            the document after the installation. Please disable "Protected
+            Mode". For more details, please see <link
+            xlink:href="https://www.adobe.com/devnet-docs/acrobatetk/tools/AppSec/protectedmode.html"
+            xmlns:xlink="http://www.w3.org/1999/xlink">https://www.adobe.com/devnet-docs/acrobatetk/tools/AppSec/protectedmode.html</link>.</para>
+          </note>
+        </listitem>
+      </orderedlist>
     </sect1>
   </chapter>
 
@@ -2270,7 +2421,7 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
 
       <itemizedlist>
         <listitem>
-          <para/>
+          <para>Now producing setup EXE distribution</para>
         </listitem>
       </itemizedlist>
     </section>
