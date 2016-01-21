@@ -1,0 +1,3297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V5.0//EN"
+"../tools/docbook-dtd/dtd/docbook.dtd">
+<!--
+	Together XPDL Model
+	Copyright (C) 2011 Together Teamsolutions Co., Ltd.
+	
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see http://www.gnu.org/licenses
+-->
+<book status="work in progress" version="5.0" xml:id="txmug" xml:lang="en"
+      xmlns="http://docbook.org/ns/docbook">
+  <title><inlinemediaobject>
+      <imageobject>
+        <imagedata contentdepth="100%" fileref="images/logo.jpg" scalefit="1"
+                   valign="middle" width="100%"/>
+      </imageobject>
+    </inlinemediaobject> <replaceable><?coverdetail ?></replaceable></title>
+
+  <titleabbrev>Together XPDL Model</titleabbrev>
+
+  <info>
+    <title>Together XPDL Model</title>
+
+    <subtitle>User Manual</subtitle>
+
+    <authorgroup>
+      <author>
+        <personname><firstname>Together Teamsolutions Co.,
+        Ltd.</firstname></personname>
+      </author>
+    </authorgroup>
+
+    <copyright>
+      <year>2015</year>
+
+      <holder>Together Teamsolutions Co., Ltd.</holder>
+    </copyright>
+
+    <legalnotice>
+      <para>Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License, Version
+      1.3 or any later version published by the Free Software Foundation; with
+      the invariant sections being "Introduction", "XPDL Meta-Model",
+      "Programming Samples", "Examples", "Build Guide", "Release Notes",
+      "Appendix A. GNU Free Documentation License", the front-cover and
+      back-cover texts. A copy of the license is included in the section
+      entitled "GNU Free Documentation License".</para>
+
+      <para>Together Teamsolutions Co., Ltd. DISCLAIMS ALL WARRANTIES, EXPRESS
+      OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF
+      THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED
+      WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR
+      PURPOSE.</para>
+
+      <para>While every precaution has been taken in the preparation of this
+      document, the publisher assumes no responsibility for errors or
+      omissions, or for damages resulting from the use of the information
+      contained in this document.</para>
+
+      <para>The Together logos are registered trademarks of GrECo
+      International Holding AG.</para>
+    </legalnotice>
+  </info>
+
+  <toc/>
+
+  <chapter xml:id="introduction">
+    <title>Introduction</title>
+
+    <para>Together XPDL Model (TXM) is a library that provides capability to
+    handle XPDL 2.1 model based on XPDL schema. Using TXM, it is possible to
+    read any file that conforms to XPDL specification, as well as to edit to
+    produce the new one.</para>
+
+    <para>TXM has validation mechanism, both schema-based validation, and
+    logical validation based on XPDL specification.</para>
+
+    <para>Automatic transformation of XPDL 1 to XPDL 2.1 document is also the
+    part of TXM implementation. During the import of XPDL 1.0 document, it
+    will be automatically transformed into corresponding XPDL 2.1 document,
+    deprecated elements from XPDL 1.0 schema will be transformed to XPDL 2.1
+    elements (e.g. the deprecated Tool elements will be transformed to new
+    TaskApplication elements and when activity has more than one Tools
+    defined, several new activities will be created in the model, and
+    connected with the transitions), the uniqueness of Ids of activities will
+    be Package based, etc.</para>
+
+    <para>TXM source code was taken out from <link
+    xlink:href="http://www.together.at/prod/workflow/tws"
+    xmlns:xlink="http://www.w3.org/1999/xlink">Together Workflow Server</link>
+    project and a separate project is made out of it. The reason was to have
+    the common XPDL model used by both <link
+    xlink:href="http://www.together.at/prod/workflow/twe"
+    xmlns:xlink="http://www.w3.org/1999/xlink">Together Workflow
+    Editor</link>, and by <link
+    xlink:href="http://www.together.at/prod/workflow/tws"
+    xmlns:xlink="http://www.w3.org/1999/xlink">Together Workflow Server</link>
+    projects.</para>
+  </chapter>
+
+  <chapter xml:id="installationguide">
+    <title>Installation guide</title>
+
+    <sect1>
+      <title>Getting the binaries</title>
+
+      <para>The latest binary packages of Together XPDL Model can be
+      downloaded from <link
+      xlink:href="http://sourceforge.net/projects/jxpdl/files"
+      xmlns:xlink="http://www.w3.org/1999/xlink">SourceForge</link></para>
+    </sect1>
+
+    <sect1>
+      <title>Prerequisites</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Java JRE 1.8</para>
+        </listitem>
+
+        <listitem>
+          <para><link
+          xlink:href="http://www.oracle.com/technetwork/java/javase/downloads/index.html"
+          xmlns:xlink="http://www.w3.org/1999/xlink">Java Development Kit
+          (JDK)</link> version 8 for Windows x64</para>
+        </listitem>
+      </itemizedlist>
+    </sect1>
+
+    <sect1>
+      <title>Installation by the setup wizard</title>
+
+      <orderedlist>
+        <listitem>
+          <para>Double click on the setup file for start the
+          installtion.</para>
+        </listitem>
+
+        <listitem>
+          <para>First screen show the setup Wizard screen and click "Next"
+          button.</para>
+
+          <?keepwith ?>
+
+          <figure>
+            <title>Welcome setup wizard</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" contentdepth="100%"
+                           fileref="images/manual/setup_welcome_page.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>License Agreement. Please read the license terms before and
+          checked to accept this license then click Next button to the next
+          page.</para>
+
+          <?keepwith ?>
+
+          <figure>
+            <title>License agreement</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" contentdepth="100%"
+                           fileref="images/manual/setup_license_agree_page.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Choose Java virtual machine. Choose the existing path of Java
+          virtual machine then click Next button to the next page.</para>
+
+          <?keepwith ?>
+
+          <figure>
+            <title>License agreement</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" contentdepth="100%"
+                           fileref="images/manual/setup_choose_java_page.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Choose Install Location. Choose the destination folder path
+          for install the application and click next button to next
+          step.</para>
+
+          <?keepwith ?>
+
+          <figure>
+            <title>Choose Install location</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" contentdepth="100%"
+                           fileref="images/manual/setup_install_location_page.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Choose Start options. Choose from the following options to
+          configure your application start options. Click Install
+          button.</para>
+
+          <?keepwith ?>
+
+          <figure>
+            <title>Choose Start Options</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" contentdepth="100%"
+                           fileref="images/manual/setup_start_options_page.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Installation Complete, The installation is completed
+          successfully. Click next button to last page.</para>
+
+          <?keepwith ?>
+
+          <figure>
+            <title>Installation Complete</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" contentdepth="100%"
+                           fileref="images/manual/setup_installation_page.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Completing the Setup Wizard. You can check on show document to
+          read the manual document. Click on the Finish button to successful
+          installation.</para>
+
+          <?keepwith ?>
+
+          <figure>
+            <title>Setup Completed</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata align="center" contentdepth="100%"
+                           fileref="images/manual/setup_finish_page.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+
+          <note>
+            <para>If you use Adobe Reader version 10.0 or later when you check
+            on "Show Documentation". The document cannot open by the installer
+            if Adobe Reader has enabled "Protected Mode". If you want to open
+            the document after the installation. Please disable "Protected
+            Mode". For more details, please see <link
+            xlink:href="https://www.adobe.com/devnet-docs/acrobatetk/tools/AppSec/protectedmode.html"
+            xmlns:xlink="http://www.w3.org/1999/xlink">https://www.adobe.com/devnet-docs/acrobatetk/tools/AppSec/protectedmode.html</link>.</para>
+          </note>
+        </listitem>
+      </orderedlist>
+    </sect1>
+  </chapter>
+
+  <chapter xml:id="xpdl_meta_model">
+    <title>XPDL Meta-Model</title>
+
+    <para>WfMC provides an interface for workflow process definition. The
+    interface defines a common meta-model for describing the process
+    definition and XML schema for interchange of process definitions -
+    <acronym>XPDL</acronym> (XML Process Definition Language).</para>
+
+    <para>TXM is a java library which provides classes that allows one to
+    handle XPDL model. The final output of such java model can be an XPDL
+    output file, which can be interpreted at runtime by the workflow
+    engine(s). TXM is accomplishing two goals:<itemizedlist>
+        <listitem>
+          <para>Export of process definitions to XPDL</para>
+        </listitem>
+
+        <listitem>
+          <para>Import of any valid XPDL definition</para>
+        </listitem>
+      </itemizedlist></para>
+
+    <para>The workflow process definition interface defines a common
+    interchange format, which supports the transfer of workflow process
+    definitions between different products. A workflow process definition,
+    generated by TXM, is capable of interpretation in different workflow
+    run-time products. The principles of <emphasis>Process Definition
+    Interchange</emphasis> are based on Meta-Model framework. This meta-data
+    model identifies commonly used entities within a process definition, their
+    relationships and attributes. A variety of attributes describe the
+    characteristics of this limited set of entities. Using this Meta-Model,
+    TXM can transfer models using an XPDL as a common exchange format.</para>
+
+    <para>There is a mandatory minimum set of objects, which must be supported
+    within XPDL. This "minimum meta-data model" identifies those commonly used
+    entities within a process definition and describes their usage semantics.
+    Extensibility is provided by the facility to encompass additional object
+    attributes ("extended attributes") which can be included as extensions to
+    the basic Meta-Model to meet the specific needs of an individual product
+    or workflow system.</para>
+
+    <para>This chapter gives overview of Meta-Model entities
+    (<emphasis>Meta-Model framework</emphasis>).</para>
+
+    <sect1 xml:id="Meta_Model">
+      <title>Package Meta-Model</title>
+
+      <para>The meta-model identifies the basic set of entities and attributes
+      for the exchange of process definitions.</para>
+
+      <figure>
+        <title>Package Meta-Model</title>
+
+        <mediaobject condition="demo-details">
+          <imageobject>
+            <imagedata contentdepth="100%"
+                       fileref="images/package_meta_model.jpg" scalefit="1"
+                       width="100%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>For each of the above entities, there is an associated set of
+      attributes (some mandatory and others optional) which describe the
+      characteristics of the entity. If there is a need of using an additional
+      characteristics, "extended attributes" for various entities may be
+      defined to allow extension of the scope of the Meta-Model in a
+      controlled manner.</para>
+
+      <para>All those entities except "Message Flow" and "Group" type
+      artifacts are supported by TXM. The current version of TXM is written as
+      an XPDL 1 extension towards XPDL 2, and still does not support the whole
+      XPDL 2 Meta-Model but only the parts necessary to support simple BPMN
+      conformance, and still to allow workflow engines to execute XPDL 1
+      "migrated" process definitions.</para>
+
+      <para>"Resource Repository " is external to the workflow process
+      definitions. In some complex processes, participant declaration may
+      refer to a resource repository, which may be on Organisational Model
+      (OM). WfMC Meta-Model specification defines a simple in-built (Minimal)
+      Organisational Model or permits access to an externally defined OM. Note
+      that XPDL specification does not define or require a resource
+      repository.</para>
+
+      <para>As it is shown in the previous picture, minimal process model
+      includes various entities whose scope may be wider than a single process
+      definition. In particular the definitions of participants, applications
+      and workflow relevant data may be referenced from a number of process
+      definitions. The Meta-Model assumes the use of a common process
+      definition <emphasis>Resource Repository</emphasis>. Repository holds
+      the various entity types comprising the process definition. Within the
+      repository itself and to support the efficient transfer of process
+      definition data to/from the repository, the concept of a PACKAGE is
+      introduced, which acts as a <emphasis>container</emphasis> for the
+      grouping of common data entities from a number of different process
+      definitions, to avoid redefinition within each individual process
+      definition. Each process definition contained within the package will
+      automatically inherit any common attribute from the process model
+      container, unless they are separately re-specified locally within the
+      process definition.</para>
+    </sect1>
+
+    <sect1 xml:id="Package">
+      <title>Package</title>
+
+      <para>It is possible to define several processes within one package,
+      which may share the same tools (applications) and participants.</para>
+
+      <para>The Package acts as a container for grouping together a number of
+      individual process definitions and associated entity data, which is
+      applicable to all the contained process definitions.</para>
+
+      <para>You can chose to create one package per workflow process, which
+      should contain all the necessary workflow processes as well as all the
+      associated tools (workflow applications) and workflow participants.
+      Another approach is to define just parts of one process definition or
+      common parts of several processes within one package (e.g. a workflow
+      participant list or a workflow application list), and then to reference
+      it from other packages. Within a package, the scope of the definitions
+      of some entities is global and these entities can be referenced from all
+      workflow process definitions contained within the package. Those
+      entities are:<itemizedlist>
+          <listitem>
+            <para>Workflow Process Definition,</para>
+          </listitem>
+
+          <listitem>
+            <para>Workflow Participant Specification,</para>
+          </listitem>
+
+          <listitem>
+            <para>Workflow Application Declaration and</para>
+          </listitem>
+
+          <listitem>
+            <para>Workflow Relevant Data</para>
+          </listitem>
+        </itemizedlist></para>
+
+      <para>TXM provides a way to manage above listed entities (within one
+      package).</para>
+
+      <sect2 xml:id="Package_Attributes">
+        <title>Package Attributes</title>
+
+        <table frame="all">
+          <title>General attributes</title>
+
+          <tgroup align="left" cols="3" colsep="1" rowsep="1">
+            <colspec align="center" colnum="2" colwidth="1.00*"/>
+
+            <thead>
+              <row>
+                <entry>Name</entry>
+
+                <entry align="center">M/O</entry>
+
+                <entry>Description</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry>Id</entry>
+
+                <entry align="center">M (mandatory)</entry>
+
+                <entry>Used to identify the package.</entry>
+              </row>
+
+              <row>
+                <entry>Name</entry>
+
+                <entry align="center">O (optional)</entry>
+
+                <entry>Name of the package.</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+
+        <para>Those are the main attributes used to give a unique reference to
+        a package, and to describe it by optionally setting the name.</para>
+
+        <table frame="all">
+          <title>Conformance Class</title>
+
+          <tgroup align="left" cols="3" colsep="1" rowsep="1">
+            <colspec align="center" colnum="2"/>
+
+            <thead>
+              <row>
+                <entry>Name</entry>
+
+                <entry>M/O</entry>
+
+                <entry>Description</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry>Conformance Class</entry>
+
+                <entry>O</entry>
+
+                <entry>Describes the Conformance Class to which the
+                definitions in this package are restricted to. Possible values
+                are:<itemizedlist>
+                    <listitem>
+                      <para>FULL-BLOCKED the network structure is restricted
+                      to proper nesting of SPLIT/JOIN and LOOP.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>LOOP-BLOCKED the network structure is restricted
+                      to proper nesting of LOOP.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>NON-BLOCKED there is no restriction on the network
+                      structure. This is the default.</para>
+                    </listitem>
+                  </itemizedlist></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+
+        <para>The conformance class declaration allows description of the
+        conformance class to which the definitions in this package definition
+        are restricted to. The specified class applies to all the contained
+        process definitions.</para>
+
+        <table condition="demo-details" frame="all">
+          <title>Script element</title>
+
+          <tgroup align="left" cols="3" colsep="1" rowsep="1">
+            <colspec align="left" colnum="2" colwidth="1.00*"/>
+
+            <thead>
+              <row>
+                <entry>Name</entry>
+
+                <entry>M/O</entry>
+
+                <entry>Description</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry>Type</entry>
+
+                <entry>M</entry>
+
+                <entry>Identifies the scripting language used in expressions.
+                It is recommended that the Type will be selected from the
+                following strings: text/javascript, text/vbscript, text/tcl,
+                text/ecmascript, text/xml. This</entry>
+              </row>
+
+              <row>
+                <entry>Version</entry>
+
+                <entry>O</entry>
+
+                <entry>This is the version of the scripting language.</entry>
+              </row>
+
+              <row>
+                <entry>Grammar</entry>
+
+                <entry>O</entry>
+
+                <entry>This is a reference to a document that specifies the
+                grammar of the language. It could be, for example, an XML
+                schema, a DTD, or a BNF.</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+
+        <para condition="demo-emptytext">The Script element identifies the
+        scripting language used in XPDL expressions. In the runtime, workflow
+        engine should consider the type specified, and interpret all
+        expressions using appropriate scripting language interpreter. So,
+        after specifying the scripting language type, make sure you are
+        writing all the expressions (for transition conditions, actual
+        parameters, deadline conditions, etc.) according to the language
+        syntax.</para>
+
+        <para condition="demo-emptytext">To programmatically create a new
+        Package in TXM and set the Id and Name, you simply write something
+        like:</para>
+
+        <programlisting>Package pkg = new Package();
+pkg.setId("my_package_id");
+pkg.setName("My package name");
+</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Package Contained Elements</title>
+
+        <para>Package object contains a lot of different data about the main
+        XPDL element - Package. Actually, you are able to access any XPDL
+        element by navigating through the Package object. Those Package
+        sub-elements are some general package attributes and data (like Id,
+        Name, ExtendedAttributes, etc.), PackageHeader, RedefinableHeader,
+        ExternalPackages, TypeDeclarations, Participants, Applications,
+        DataFields (Workflow variables), Pools, Associations, Artifacts,
+        WorkflowProcesses and Namespaces, with their own sub-elements that you
+        can easily navigate to.</para>
+
+        <sect3>
+          <title>General Package Attributes and Data</title>
+
+          <para>Here is a code sample that creates new Package object, and
+          sets some general package attributes and data:</para>
+
+          <programlisting>Package pkg = new Package();
+pkg.setId("my_id");
+pkg.setName("My name");
+
+ConformanceClass cc = pkg.getConformanceClass();
+cc.setValue(XPDLConstants.GRAPH_CONFORMANCE_FULL_BLOCKED);
+
+Script sc = pkg.getScript();
+sc.setType("text/javascript");
+
+ExtendedAttributes eas = pkg.getExtendedAttributes();
+ExtendedAttribute ea = (ExtendedAttribute)eas.generateNewElement();
+ea.setName("MY_EXT_ATTRIB");
+ea.setValue("Some value");
+eas.add(ea);</programlisting>
+        </sect3>
+
+        <sect3>
+          <title>Package Header</title>
+
+          <para>The Package Header keeps all information central to a
+          package.</para>
+
+          <table frame="all">
+            <title>Package Header</title>
+
+            <tgroup align="left" cols="3" colsep="1" rowsep="1">
+              <colspec align="center" colnum="2"/>
+
+              <thead>
+                <row>
+                  <entry>Name</entry>
+
+                  <entry>M/O</entry>
+
+                  <entry>Description</entry>
+                </row>
+              </thead>
+
+              <tbody>
+                <row>
+                  <entry>XPDL Version</entry>
+
+                  <entry>M</entry>
+
+                  <entry>Version of XPDL.</entry>
+                </row>
+
+                <row>
+                  <entry>Vendor</entry>
+
+                  <entry>M</entry>
+
+                  <entry>Defines the origin of this package definition and
+                  contains vendor's name, vendor's product name and product's
+                  release number.</entry>
+                </row>
+
+                <row>
+                  <entry>Created</entry>
+
+                  <entry>M</entry>
+
+                  <entry>Creation date of workflow package.</entry>
+                </row>
+
+                <row>
+                  <entry>Description</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Short textual description of the workflow
+                  package.</entry>
+                </row>
+
+                <row>
+                  <entry>Documentation</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Operating System specific path- and filename of help
+                  file/description file.</entry>
+                </row>
+
+                <row>
+                  <entry>Priority Unit</entry>
+
+                  <entry>O</entry>
+
+                  <entry>A text string with user defined semantics.</entry>
+                </row>
+
+                <row>
+                  <entry>Cost Unit</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Units used in Simulation Data (usually expressed in
+                  terms of a currency).</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+
+          <para>The following code sample shows how to manipulate
+          PackageHeader attributes and data:</para>
+
+          <programlisting>PackageHeader ph = pkg.getPackageHeader();
+ph.setXPDLVersion("2.1");
+ph.setVendor("(c) Together Teamsolutions Co., Ltd.");
+ph.setCreated(XMLUtil.getCurrentDateAndTime());
+ph.setDescription("Sample package");
+ph.setCostUnit("$");</programlisting>
+        </sect3>
+
+        <sect3>
+          <title>Redefinable Header</title>
+
+          <para>The redefinable header covers those header attributes that may
+          be defined at the package definition header and may be redefined in
+          the header of any process definition.</para>
+
+          <table frame="all">
+            <title>Redefinable Header</title>
+
+            <tgroup align="left" cols="3" colsep="1" rowsep="1">
+              <colspec align="center" colnum="2"/>
+
+              <thead>
+                <row>
+                  <entry>Name</entry>
+
+                  <entry>M/O</entry>
+
+                  <entry>Description</entry>
+                </row>
+              </thead>
+
+              <tbody>
+                <row>
+                  <entry>Author</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Name of the author of this package.</entry>
+                </row>
+
+                <row>
+                  <entry>Version</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Version of this package.</entry>
+                </row>
+
+                <row>
+                  <entry>Code page</entry>
+
+                  <entry>O</entry>
+
+                  <entry>The code page used for the text parts.</entry>
+                </row>
+
+                <row>
+                  <entry>Country key</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Country code based on ISO 3166. It could be either
+                  the three digits country code number, or the two alpha
+                  characters country codes.</entry>
+                </row>
+
+                <row>
+                  <entry>Responsible(s)</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Workflow participants, that is responsible for this
+                  workflow package; the supervisors during run time (usually
+                  an Organisational Unit or a Human). It is assumed that the
+                  supervisors are responsible during run time.</entry>
+                </row>
+
+                <row>
+                  <entry>Publication Status</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Status of the Package. Possible values are:
+                  <itemizedlist>
+                      <listitem>
+                        <para>UNDER_REVISION</para>
+                      </listitem>
+
+                      <listitem>
+                        <para>RELEASED</para>
+                      </listitem>
+
+                      <listitem>
+                        <para>UNDER_TEST</para>
+                      </listitem>
+                    </itemizedlist></entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+
+          <para>This is how to manipulate RedefinableHeader:</para>
+
+          <programlisting>RedefinableHeader rh = pkg.getRedefinableHeader();
+rh.setAuthor("John Doe");
+rh.setCodepage("1252");
+rh.setCountrykey("at");
+rh.setPublicationStatusUNDER_TEST();
+rh.setVersion("1.1");
+Responsibles rs = rh.getResponsibles();
+Responsible r = (Responsible)rs.generateNewElement();
+r.setValue("john_doe");
+rs.add(r);
+</programlisting>
+
+          <para>The value of the Responsible object should be the Id of any
+          participants known to this package.</para>
+        </sect3>
+
+        <sect3>
+          <title>Type Declarations</title>
+
+          <para>WfMC assumes a number of standard data types (string,
+          reference, integer, float, date/time, etc.); such data types are
+          relevant to workflow relevant data, system or environmental data or
+          participant data. Expressions may be formed using such data types to
+          support conditional evaluations.</para>
+
+          <para>Sometimes set of data types that XPDL provides won't be
+          enough, or you want to represent some data type with a special name
+          to easily use it when defining Formal/Actual parameters. This XPDL
+          feature allows you to declare new data type.</para>
+
+          <para>Type declaration is described with <emphasis>Id</emphasis>,
+          <emphasis>Name</emphasis> (optional), Description (optional) and
+          <emphasis>data type</emphasis>.</para>
+
+          <para>The following code shows how to add new type
+          declaration:</para>
+
+          <programlisting>TypeDeclarations tds = pkg.getTypeDeclarations();
+TypeDeclaration td = (TypeDeclaration)tds.generateNewElement();
+td.setId("my_type_declaration");
+td.setName("My type declaration");
+td.getDataTypes().setBasicType();
+td.getDataTypes().getBasicType().setTypeINTEGER();
+tds.add(td);</programlisting>
+        </sect3>
+
+        <sect3>
+          <title>Participants</title>
+
+          <para>WfMC Meta-Model specification defines a simple in-built
+          (Minimal) Organisational Model or permits access to an externally
+          defined OM. Participants in TWE are just part of an Organisational
+          Model - Minimal OM. The connection with the Organisational Model is
+          used in Activity Definition (performer of an activity) and in the
+          Process Definition (responsible of a process).</para>
+
+          <para>Workflow Participants have a scope and visibility equivalent
+          to extended attributes. All referenced Workflow Participants have to
+          be defined in the scope where they are used, at least in the same
+          package.</para>
+
+          <para>The Workflow Participant is defined by a type and related
+          information, which is a set of type specific attributes. This
+          definition contains a basic set of 6 Workflow Participant types:
+          <emphasis>resource set, resource, organizational unit, role,
+          human,</emphasis> or <emphasis>system</emphasis>. A role and a
+          resource are used in the sense of abstract actors. This definition
+          is an abstraction level between the real performer and the activity,
+          which has to be performed. During run time these abstract
+          definitions are evaluated and assigned to concrete human(s) and/or
+          program(s).</para>
+
+          <para>Participant is described with <emphasis>Id</emphasis>,
+          <emphasis>Name</emphasis> (optional value), Description (optional
+          value) and <emphasis>participant type</emphasis>.</para>
+
+          <para>To define new participant in the model, the following should
+          be done:</para>
+
+          <programlisting>Participants pars = pkg.getParticipants();
+Participant par =(Participant)pars.generateNewElement();
+par.setId("secretary");
+par.setName("Secretary");
+par.setDescription("The participant representing secretary role");
+par.getParticipantType().setTypeROLE();
+pars.add(par);</programlisting>
+        </sect3>
+
+        <sect3>
+          <title>Applications</title>
+
+          <para>It is a collection of all the Application objects in the
+          model. Application represents the description of the real "program"
+          that will be executed by the engine in the runtime.</para>
+
+          <para>To define new application in the model, do something like
+          following:</para>
+
+          <programlisting>Applications apps = pkg.getApplications();
+Application app = (Application)apps.generateNewElement();
+app.setId("calculator");
+app.setName("Calculator");
+app.setDescription("Performs mathematical operation");
+app.getApplicationTypes().setFormalParameters();
+FormalParameters fps = app.getApplicationTypes().getFormalParameters();
+FormalParameter op = (FormalParameter)fps.generateNewElement();
+op.setId("operation");
+op.setModeIN();
+op.getDataType().getDataTypes().setBasicType();
+op.getDataType().getDataTypes().getBasicType().setTypeSTRING();
+FormalParameter a = (FormalParameter)fps.generateNewElement();
+op.setId("a");
+op.setModeIN();
+op.getDataType().getDataTypes().setBasicType();
+op.getDataType().getDataTypes().getBasicType().setTypeINTEGER();
+FormalParameter b = (FormalParameter)fps.generateNewElement();
+op.setId("b");
+op.setModeIN();
+op.getDataType().getDataTypes().setBasicType();
+op.getDataType().getDataTypes().getBasicType().setTypeINTEGER();
+FormalParameter r = (FormalParameter)fps.generateNewElement();
+op.setId("r");
+op.setModeOUT();
+op.getDataType().getDataTypes().setBasicType();
+op.getDataType().getDataTypes().getBasicType().setTypeINTEGER();
+fps.add(op);
+fps.add(a);
+fps.add(b);
+fps.add(r);
+apps.add(app);</programlisting>
+        </sect3>
+
+        <sect3>
+          <title>DataFields (Workflow Variables)</title>
+
+          <para>DataField represent the variables of a Process Definition or
+          Package Definition. They are typically used to maintain decision
+          data (used in conditions) or reference data values (parameters),
+          which are passed between activities or sub-processes. The workflow
+          relevant data list defines all data objects, which can be used
+          within the workflow process. The attribute <literal>TYPE</literal>
+          explicitly specifies all information needed for a workflow
+          management system to define an appropriate data object for storing
+          data, which is to be handled, by an active instance of the workflow
+          process.</para>
+
+          <para>Following table shows the DataField structure:</para>
+
+          <table condition="demo-emptytext" frame="all">
+            <title>Data Field</title>
+
+            <tgroup cols="3">
+              <colspec colname="col01" colnum="1" colwidth="2.00*"/>
+
+              <colspec colname="col1" colnum="2" colwidth="1*"/>
+
+              <colspec colname="col03" colnum="3" colwidth="2.00*"/>
+
+              <thead>
+                <row>
+                  <entry>Name</entry>
+
+                  <entry align="center">M/O</entry>
+
+                  <entry>Description</entry>
+                </row>
+              </thead>
+
+              <tbody>
+                <row>
+                  <entry colname="col01">Id</entry>
+
+                  <entry align="center" colname="col1">M</entry>
+
+                  <entry colname="col03">Used to identify the workflow
+                  relevant data.</entry>
+                </row>
+
+                <row>
+                  <entry>Data Type(s)</entry>
+
+                  <entry align="center">M</entry>
+
+                  <entry>Data Type.</entry>
+                </row>
+
+                <row>
+                  <entry>Name</entry>
+
+                  <entry align="center">O</entry>
+
+                  <entry>Text used to identify the workflow relevant
+                  data.</entry>
+                </row>
+
+                <row>
+                  <entry>Is Array</entry>
+
+                  <entry align="center">O</entry>
+
+                  <entry>Indicates if it is an array.</entry>
+                </row>
+
+                <row>
+                  <entry>Initial Value</entry>
+
+                  <entry align="center">O</entry>
+
+                  <entry>Pre-assignment of data for run time.</entry>
+                </row>
+
+                <row>
+                  <entry>Length</entry>
+
+                  <entry align="center">O</entry>
+
+                  <entry>The length of the data.</entry>
+                </row>
+
+                <row>
+                  <entry>Description</entry>
+
+                  <entry align="center">O</entry>
+
+                  <entry>Short textual description of the defined
+                  data.</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+
+          <para>The following code defines new DataField (variable) within the
+          package:</para>
+
+          <programlisting>DataFields dfs = pkg.getDataFields();
+DataField df = (DataField)dfs.generateNewElement();
+df.setId("approved");
+df.setName("Is approved?");
+df.setDescription("Holds the decision of the supervisor");
+df.setInitialValue("true");
+df.getDataType().getDataTypes().setBasicType();
+df.getDataType().getDataTypes().getBasicType().setTypeBOOLEAN();
+dfs.add(df);</programlisting>
+        </sect3>
+
+        <sect3>
+          <title>Associations</title>
+
+          <para>Link between activity and artifact is established by
+          association. An Association does not have a specific mapping to an
+          execution language element. These objects and the Artifacts they
+          connect to provide additional information for the reader of the BPMN
+          Diagram, but do not directly affect the execution of the
+          Process.</para>
+
+          <para>To define new association between existing artifact and the
+          activity, the following should be done:</para>
+
+          <programlisting>Associations asocs = pkg.getAssociations();
+Association asoc = (Association)asocs.generateNewElement();
+asoc.setId("assoc1");
+asoc.setName("My association");
+asoc.setAssociationDirectionFROM();
+asoc.setSource("artifact1");
+asoc.setTarget("activity1");
+asocs.add(asoc);</programlisting>
+        </sect3>
+
+        <sect3>
+          <title>Artifacts</title>
+
+          <para>To satisfy additional modeling concepts that are not part of
+          the basic set of flow elements (activities and transitions), BPMN
+          provides the concept of Artifacts that can be linked to the existing
+          Activity object through Associations. Thus, Artifacts do <emphasis
+          role="bold">not</emphasis> affect the basic sequence flow, nor do
+          they affect mappings to execution languages. Artifacts are used to
+          show additional information about a Process that is not directly
+          related to its sequence flow.</para>
+
+          <para>At this point, BPMN provides three standard Artifacts: A Data
+          Object, a Group, and an Annotation. TWE currently allows you to use
+          the first two types of artifacts.</para>
+
+          <para>An Artifact is a graphical object that provides supporting
+          information about the Process or elements within the Process.
+          However, as mentioned, it does <emphasis role="bold">not</emphasis>
+          directly affect the flow of the Process.</para>
+
+          <para>The following defines new artifact:</para>
+
+          <programlisting>Artifacts arts = pkg.getArtifacts();
+Artifact art = (Artifact)arts.generateNewElement();
+art.setId("myart");
+art.setName("Comment for sub-flow");
+art.setArtifactTypeAnnotation();
+art.setTextAnnotation("Improve this sub-process");
+NodeGraphicsInfos ngis = art.getNodeGraphicsInfos();
+NodeGraphicsInfo ngi = (NodeGraphicsInfo)ngis.generateNewElement();
+ngi.setFillColor("255,128,128");
+ngi.setHeight(40);
+ngi.setWidth(30);
+ngi.setLaneId("mylane");
+ngi.getCoordinates().setXCoordinate("125");
+ngi.getCoordinates().setYCoordinate("50");
+ngis.add(ngi);
+arts.add(art);</programlisting>
+        </sect3>
+
+        <sect3>
+          <title>Workflow Processes</title>
+
+          <para>It contains information about all package's workflow
+          processes.</para>
+
+          <para>To define new WorkflowProcess and just fill the basic data, do
+          something like following:</para>
+
+          <programlisting>WorkflowProcesses wps = pkg.getWorkflowProcesses();
+WorkflowProcess wp = (WorkflowProcess)wps.generateNewElement();
+wp.setId("test_process");
+wp.setName("Test process");
+wp.setAccessLevelPUBLIC();</programlisting>
+        </sect3>
+
+        <sect3>
+          <title>Pools</title>
+
+          <para>Swimlanes are used to facilitate the graphical layout of a
+          collection of processes and the activities they contain. They may
+          designate participant information at the process level and performer
+          information at the activity level. The Swimlane structure is
+          depicted by a collection of non-overlapping rectangles called Pools.
+          Each Pool may be further subdivided into a number of Lanes.</para>
+
+          <para>A Pool acts as the container for flow objects (activities and
+          artifacts) and Sequence Flow (transitions and associations) between
+          them.</para>
+
+          <para>Lanes are used to subdivide a Pool. All the activities within
+          a Lane may inherit one or more properties from the Lane. A typical
+          use of this is to give the Lanes "role names" and have the
+          Activities inherit these role names as "Participant
+          assignment/Performer expressions".</para>
+
+          <para>The Pool is described with <emphasis>id</emphasis>,
+          <emphasis>name</emphasis> (optional value), orientation, process (a
+          reference to the process or activity set) and
+          <emphasis>Lanes</emphasis>.</para>
+
+          <para>To define a Pool with one Lane do something like
+          following:</para>
+
+          <programlisting>Pool p = (Pool) pkg.getPools().generateNewElement();
+p.setId("pool1");
+p.setName("My pool");
+p.setProcess("proc1");
+Lane l1 = (Lane) p.getLanes().generateNewElement();
+l1.setId("lane1");
+l1.setName("Manager");
+Performer perf1 = (Performer) l1.getPerformers().generateNewElement();
+perf1.setValue("manager");
+l1.getPerformers().add(perf1);
+p.getLanes().add(l1);
+pkg.getPools.add(p);
+</programlisting>
+        </sect3>
+      </sect2>
+    </sect1>
+
+    <sect1 xml:id="Package_ExtendedAttributes">
+      <title>Extended Attributes</title>
+
+      <para>XPDL contains most of the entities, which are likely to be
+      required in the process definition modeling. Sometimes, there is a need
+      for some additional information (user or vendor specific). Extended
+      Attributes are the primary method to support such extensions. These are
+      attributes defined by the user or vendor, where necessary, to express
+      any additional entity characteristics.</para>
+    </sect1>
+
+    <sect1 xml:id="Process_ProcessDefinition">
+      <title>Workflow Process</title>
+
+      <para>The Process Definition entity provides contextual information that
+      applies to other entities within the process. This describes the process
+      itself. It is a container for the process itself and provides
+      information associated with administration (creation date, author, etc.)
+      or to be used during process execution (initiation parameters to be
+      used, execution priority, time limits to be checked, person to be
+      notified, simulation information, etc.). Definition entity thus provides
+      header information for the process definition and is therefore related
+      to all other entities in that process.</para>
+
+      <figure>
+        <title>Workflow Process Meta-Model</title>
+
+        <mediaobject condition="demo-details">
+          <imageobject>
+            <imagedata contentdepth="100%"
+                       fileref="images/process_meta_model.jpg" scalefit="1"
+                       width="100%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para condition="demo-emptytext">The Workflow Process Definition defines
+      the elements that make a workflow. It contains definitions or
+      declarations, respectively, for Activity and, optionally, for
+      Transition, Application, and Process Relevant Data entities.</para>
+
+      <para condition="demo-emptytext">A Workflow Process may run as an
+      implementation of an activity of type subflow; in this case parameters
+      may be defined as attributes of the process.</para>
+
+      <para condition="demo-emptytext">TXM provides an easy way to manage
+      process definition entities.</para>
+
+      <para condition="demo-emptytext">If you create (override) some process
+      with the same Id as the one from the external package, only the one from
+      the current package can be used as the implementation process of sublfow
+      activity.</para>
+
+      <sect2 condition="demo-emptytext">
+        <title>General Workflow Process Attributes and Data</title>
+
+        <para>WorkflowProcess attributes can be divided in few logical
+        parts:</para>
+
+        <table>
+          <title>General Attributes</title>
+
+          <tgroup cols="3" colsep="1" rowsep="1">
+            <colspec align="center" colnum="2"/>
+
+            <thead>
+              <row>
+                <entry>Name</entry>
+
+                <entry>M/O</entry>
+
+                <entry>Description</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry>Id</entry>
+
+                <entry>M</entry>
+
+                <entry>Used to identify the workflow process (Read
+                Only).</entry>
+              </row>
+
+              <row>
+                <entry>Name</entry>
+
+                <entry>O</entry>
+
+                <entry>Name of the model, used to identify the workflow
+                process.</entry>
+              </row>
+
+              <row>
+                <entry>AccessLevel</entry>
+
+                <entry>O</entry>
+
+                <entry>The Access level of a process may be either PUBLIC or
+                PRIVATE. If PUBLIC, the process may be invoked by an external
+                system or application. A process with private access may only
+                be invoked from a SubFlow Activity.</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+
+        <table>
+          <title>Process Header</title>
+
+          <tgroup cols="3" colsep="1" rowsep="1">
+            <colspec align="center" colnum="2"/>
+
+            <thead>
+              <row>
+                <entry>Name</entry>
+
+                <entry>M/O</entry>
+
+                <entry>Description</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry>Duration Unit</entry>
+
+                <entry>M</entry>
+
+                <entry>Describes the default unit to be applied to an integer
+                duration value that has no unit tag. Possible units
+                are:<simplelist columns="1">
+                    <member>Y - year</member>
+
+                    <member>M - month</member>
+
+                    <member>D - day</member>
+
+                    <member>H - hour</member>
+
+                    <member>m - minute</member>
+
+                    <member>s - second</member>
+                  </simplelist></entry>
+              </row>
+
+              <row>
+                <entry>Created</entry>
+
+                <entry>O</entry>
+
+                <entry>Creation date of workflow process definition.</entry>
+              </row>
+
+              <row>
+                <entry>Description</entry>
+
+                <entry>O</entry>
+
+                <entry>Short textual description of the process.</entry>
+              </row>
+
+              <row>
+                <entry>Priority</entry>
+
+                <entry>O</entry>
+
+                <entry>The priority of the process type. Default: Inherited
+                from Model Definition.</entry>
+              </row>
+
+              <row>
+                <entry>Limit</entry>
+
+                <entry>O</entry>
+
+                <entry>Expected duration for time management purposes (e.g.
+                starting an escalation procedure etc.) in units of
+                DurationUnit. It is counted from the starting date/time of the
+                Process. The consequences of reaching the limit value are not
+                defined in this document (i.e. vendor specific). It is assumed
+                that in this case at least the Responsible of the current
+                process is notified of this situation.</entry>
+              </row>
+
+              <row>
+                <entry>Valid From</entry>
+
+                <entry>O</entry>
+
+                <entry>The date that the workflow process definition is active
+                from. Empty string means system date. Default: Inherited from
+                Model Definition.</entry>
+              </row>
+
+              <row>
+                <entry>Valid To</entry>
+
+                <entry>O</entry>
+
+                <entry>The date at which the process definition becomes valid.
+                Empty string means unlimited validity. Default: Inherited from
+                Model Definition.</entry>
+              </row>
+
+              <row>
+                <entry>Waiting Time</entry>
+
+                <entry>O</entry>
+
+                <entry>Describes the amount of time, which is needed to
+                prepare the performance of the task (time estimation) (waiting
+                time is provided by the analysis environment and may be
+                updated by the runtime environment) in units of
+                DurationUnit.</entry>
+              </row>
+
+              <row>
+                <entry>Working Time</entry>
+
+                <entry>O</entry>
+
+                <entry>Describes the amount of time the performer of the
+                activity needs to perform the task (time estimation) (working
+                time is needed for analysis purposes and is provided by the
+                evaluation of runtime parameters) in units of
+                DurationUnit.</entry>
+              </row>
+
+              <row>
+                <entry>Duration</entry>
+
+                <entry>O</entry>
+
+                <entry>Expected duration time to perform a task in units of
+                DurationUnit.</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+
+        <para>In Process Header Tab there is Time Estimation group where we
+        define Waiting Time, Working Time and Duration. This is used for
+        simulation purposes.</para>
+
+        <table>
+          <title>Redefinable Header</title>
+
+          <tgroup cols="3" colsep="1" rowsep="1">
+            <colspec align="center" colnum="2"/>
+
+            <thead>
+              <row>
+                <entry>Name</entry>
+
+                <entry>M/O</entry>
+
+                <entry>Description</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry>Publication Status</entry>
+
+                <entry>O</entry>
+
+                <entry>Status of the Workflow Process Definition. Default:
+                Inherited from Model Definition.<simplelist columns="1">
+                    <member>UNDER_REVISION</member>
+
+                    <member>RELEASED</member>
+
+                    <member>UNDER_TEST</member>
+                  </simplelist></entry>
+              </row>
+
+              <row>
+                <entry>Author</entry>
+
+                <entry>O</entry>
+
+                <entry>Name of the author of this workflow process definition.
+                (the one who puts it into the package)</entry>
+              </row>
+
+              <row>
+                <entry>Version</entry>
+
+                <entry>O</entry>
+
+                <entry>Version of this workflow process definition.</entry>
+              </row>
+
+              <row>
+                <entry>Codepage</entry>
+
+                <entry>O</entry>
+
+                <entry>The codepage used for the text parts. Default:
+                Inherited from Model Definition.</entry>
+              </row>
+
+              <row>
+                <entry>Country key</entry>
+
+                <entry>O</entry>
+
+                <entry>Country code based on ISO 3166. It could be either the
+                three digits country code number, or the two alpha characters
+                country codes. Default: Inherited from Model
+                Definition.</entry>
+              </row>
+
+              <row>
+                <entry>Responsible(s)</entry>
+
+                <entry>O</entry>
+
+                <entry>Workflow participant, who is responsible for this
+                workflow process (usually an Organisational Unit or a Human).
+                It is assumed that the supervisor is responsible during
+                execution of the process. Default: Inherited from Model
+                Definition.</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+
+        <para>The responsibles for Process are added in the same way as it is
+        at Package level, which is explained earlier in text.</para>
+
+        <para>As shown in the process meta-model, the process can contain
+        Participants, Applications, DataFields, FormalParameters, Activities,
+        Transitions, ActivitySets, etc.</para>
+
+        <para>To programmatically create the parts of the process, the
+        procedure is the similar like given in the samples for the
+        package.</para>
+      </sect2>
+
+      <sect2>
+        <title>Workflow Process Contained Elements</title>
+
+        <para>Workflow Process object contains a lot of different data about
+        this element. Those Workflow Process sub-elements are some general
+        workflow process attributes and data (like Id, Name,
+        ExtendedAttributes, etc.), ProcessHeader, FormalParameters,
+        Participants, Applications, DataFields (Workflow variables),
+        ActivitySets, Activities and Transitions, with their own sub-elements
+        that you can easily navigate to.</para>
+
+        <sect3>
+          <title>Formal Parameters</title>
+
+          <para>Formal Parameters are parameters that are interchanged with
+          the application via the invocation interface. They are passed during
+          invocation and return of control (e.g. an invoked application or
+          invoked sub-process).</para>
+
+          <para>The attributes that define Formal Parameter are:</para>
+
+          <table condition="demo-emptytext" frame="all">
+            <title>Formal Parameter</title>
+
+            <tgroup cols="3">
+              <thead>
+                <row>
+                  <entry>Name</entry>
+
+                  <entry align="center">M/O</entry>
+
+                  <entry>Description</entry>
+                </row>
+              </thead>
+
+              <tbody>
+                <row>
+                  <entry>Id</entry>
+
+                  <entry>M</entry>
+
+                  <entry>Identifier for the parameter</entry>
+                </row>
+
+                <row>
+                  <entry>Mode</entry>
+
+                  <entry>M</entry>
+
+                  <entry><itemizedlist>
+                      <listitem>
+                        <para>IN Input Parameters</para>
+                      </listitem>
+
+                      <listitem>
+                        <para>OUT Output Parameters</para>
+                      </listitem>
+
+                      <listitem>
+                        <para>INOUT Parameters used as input and output</para>
+                      </listitem>
+                    </itemizedlist></entry>
+                </row>
+
+                <row>
+                  <entry>Name</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Name of the parameter</entry>
+                </row>
+
+                <row>
+                  <entry>Is Array</entry>
+
+                  <entry>O</entry>
+
+                  <entry>If it is an array type</entry>
+                </row>
+
+                <row>
+                  <entry>Data Type</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Data type of the formal parameter</entry>
+                </row>
+
+                <row>
+                  <entry>Initial value</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Initial value for parameter</entry>
+                </row>
+
+                <row>
+                  <entry>Description</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Textual description of the formal parameter</entry>
+                </row>
+
+                <row>
+                  <entry>Length</entry>
+
+                  <entry align="center">O</entry>
+
+                  <entry>The length of the data.</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+        </sect3>
+
+        <sect3>
+          <title>Activity Sets</title>
+
+          <para condition="demo-details">An activity set is a self-contained
+          set of activities and transitions. Transitions in the set should
+          refer only to activities in the same set and there should be no
+          transitions into or out of the set. Activity sets can be executed by
+          block activities.</para>
+        </sect3>
+
+        <sect3 xml:id="Process_Activity">
+          <title>Activities</title>
+
+          <para>Generally, any process comprises a number of steps, which lead
+          towards the overall goal. Workflow process consists of a number of
+          workflow activities. The workflow activity is a piece of work that
+          will be done by combination of resources and computer
+          applications.</para>
+
+          <table>
+            <title>Activity attributes</title>
+
+            <tgroup cols="3" colsep="1" rowsep="1">
+              <colspec align="center" colname="col0" colnum="1"
+                       colwidth="2.33*"/>
+
+              <colspec colname="col02" colnum="2" colwidth="1.00*"/>
+
+              <colspec colname="col2" colnum="3" colwidth="6.04*"/>
+
+              <thead>
+                <row>
+                  <entry>Name</entry>
+
+                  <entry align="center" colname="col02">M/O</entry>
+
+                  <entry colname="col2">Description</entry>
+                </row>
+              </thead>
+
+              <tbody>
+                <row>
+                  <entry>Name</entry>
+
+                  <entry align="center" colname="col02">O</entry>
+
+                  <entry colname="col2">Text used to identify process
+                  activity.</entry>
+                </row>
+
+                <row>
+                  <entry colname="col0">Performers</entry>
+
+                  <entry align="center" colname="col02">O</entry>
+
+                  <entry colname="col2">Link to entity workflow participant.
+                  May be an expression. Default: Any Participant.</entry>
+                </row>
+
+                <row>
+                  <entry colname="col0">Start mode</entry>
+
+                  <entry align="center" colname="col02">O</entry>
+
+                  <entry colname="col2">Describes how the execution of an
+                  Activity is triggered.</entry>
+                </row>
+
+                <row>
+                  <entry colname="col0">Finish mode</entry>
+
+                  <entry align="center" colname="col02">O</entry>
+
+                  <entry colname="col2">Describes how the system operates at
+                  the end of the Activity.</entry>
+                </row>
+
+                <row>
+                  <entry colname="col0">Deadline</entry>
+
+                  <entry align="center" colname="col02">O</entry>
+
+                  <entry colname="col2">Specification of a deadline and action
+                  to be taken if it is reached.</entry>
+                </row>
+
+                <row>
+                  <entry colname="col0">Priority</entry>
+
+                  <entry align="center" colname="col02">O</entry>
+
+                  <entry colname="col2">A value that describes the initial
+                  priority of this activity when the execution starts. If this
+                  attribute is not defined but a priority is defined in the
+                  Process definition then that is used. By default it is
+                  assumed that the priority levels are the natural numbers
+                  starting with zero, and that the higher the value the higher
+                  the priority (e.g.: 0, 1, ...).</entry>
+                </row>
+
+                <row>
+                  <entry colname="col0">Limit</entry>
+
+                  <entry align="center" colname="col02">O</entry>
+
+                  <entry colname="col2">Expected duration for time management
+                  purposes (e.g. starting an escalation procedure etc.) in
+                  units of DurationUnit. It is counted from the starting
+                  date/time of the Process. The consequences of reaching the
+                  limit value are not defined in this document (e.g. vendor
+                  specific).</entry>
+                </row>
+
+                <row>
+                  <entry colname="col0">Icon</entry>
+
+                  <entry align="center" colname="col02">O</entry>
+
+                  <entry colname="col2">Address (path- and filename) for an
+                  icon to represent the activity.</entry>
+                </row>
+
+                <row>
+                  <entry colname="col0">Documentation</entry>
+
+                  <entry align="center" colname="col02">O</entry>
+
+                  <entry colname="col2">The address (e.g. path - and filename)
+                  for a help file or a description file of the
+                  activity.</entry>
+                </row>
+
+                <row>
+                  <entry>Description</entry>
+
+                  <entry align="center" colname="col02">O</entry>
+
+                  <entry colname="col2">Textual description of the
+                  activity.</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+
+          <para>Activities are associated with their performers (which are
+          workflow participants), and application assignments. Optional
+          information about activity may be associated with: starting and
+          stopping manner, usage of specific workflow relevant data,
+          preconditions for starting and postconditions for finishing the
+          activity.</para>
+
+          <para>The following diagram illustrates the generic structure of
+          activities:</para>
+
+          <figure>
+            <title>Generic Structure of Activities</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata contentdepth="100%"
+                           fileref="images/process_activity_structures.jpg"
+                           scalefit="1" width="100%"/>
+              </imageobject>
+            </mediaobject>
+          </figure>
+
+          <para>There are different type of activities. Currently not all of
+          them are supported by TXM.</para>
+
+          <para>The supported activity types are: Start and End Events, Manual
+          (NO Implementation activity), Task-Application activity, Sub-Flow
+          activity, Block activity and Route (dummy) activity in the forms of
+          Exclusive and Parallel gateway.</para>
+
+          <para>Activity is described by its Id, Name, Description, Start and
+          End mode, Priority, Limit, Type, Deadline collection, etc.</para>
+        </sect3>
+
+        <sect3 xml:id="Process_Transitions">
+          <title>Transitions</title>
+
+          <para condition="demo-details">Link between two activities is
+          established by transitions. Transitions are more than just the links
+          between activities. They also describe the condition that must be
+          satisfied in order to get from the source to the target activity
+          (This condition is evaluated during workflow execution).</para>
+
+          <para condition="demo-emptytext">There are different types of
+          transitions: unconditional, conditional, otherwise, exception and
+          default exception.</para>
+
+          <para condition="demo-emptytext">Here is the table of transition
+          attributes:</para>
+
+          <table condition="demo-emptytext">
+            <title>Transition</title>
+
+            <tgroup cols="3" colsep="1" rowsep="1">
+              <colspec align="center" colnum="2"/>
+
+              <thead>
+                <row>
+                  <entry>Name</entry>
+
+                  <entry>M/O</entry>
+
+                  <entry>Description</entry>
+                </row>
+              </thead>
+
+              <tbody>
+                <row>
+                  <entry>Condition</entry>
+
+                  <entry>O</entry>
+
+                  <entry>A Transition condition expression based on workflow
+                  relevant data.</entry>
+                </row>
+
+                <row>
+                  <entry>Description</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Short textual description of the Transition.</entry>
+                </row>
+
+                <row>
+                  <entry>Extended Attributes</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Optional extensions to meet individual implementation
+                  needs.</entry>
+                </row>
+
+                <row>
+                  <entry>Id</entry>
+
+                  <entry>M</entry>
+
+                  <entry>Used to identify the Transition.</entry>
+                </row>
+
+                <row>
+                  <entry>From</entry>
+
+                  <entry>M</entry>
+
+                  <entry>Determines the FROM source of a Transition (Activity
+                  Identifier).</entry>
+                </row>
+
+                <row>
+                  <entry>To</entry>
+
+                  <entry>M</entry>
+
+                  <entry>Determines the TO target of a Transition (Activity
+                  Identifier).</entry>
+                </row>
+
+                <row>
+                  <entry>Name</entry>
+
+                  <entry>O</entry>
+
+                  <entry>Text used to identify the Transition.</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+        </sect3>
+      </sect2>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Programming Samples</title>
+
+    <para>The following program sample uses TXM to create an object model from
+    an XPDL file, and then validates it:</para>
+
+    <programlisting>String inputFile = "c:\test.xpdl";
+
+XMLInterface xmli = new XMLInterfaceForJDK13();
+
+File f = new File(inputFile);
+inputFile = f.getCanonicalPath();
+
+Package pkg = xmli.openPackage(inputFile, readExt);
+
+StandardPackageValidator pv = new StandardPackageValidator();
+pv.init(new Properties(), xmli);
+List verrs = new ArrayList();
+pv.validateElement(pkg, verrs, true);
+if (verrs.size() &gt; 0) {
+   if (pv.hasErrors(verrs)) {
+      System.out.println("...XPDL is NOT valid");
+      System.out.println("...errors=" + verrs);
+   } else {
+      System.out.println("...XPDL is valid ");
+      System.out.println("...There are following warnings:" + verrs);
+   }
+} else {
+   System.out.println("...XPDL is valid");
+}</programlisting>
+
+    <para>The following program sample creates main XPDL object Package, sets
+    its attributes, creates several Participant objects, creates a Pool with
+    several Lane objects, a WorkflowProcess with several activities and
+    transitions, as well as an artifact with an association to the activity
+    from the WorkflowProcess:</para>
+
+    <programlisting>String id = "testing";
+String name = "Testing";
+
+Package pkg = new Package();
+pkg.setId(id);
+pkg.setName(name);
+pkg.getPackageHeader().setXPDLVersion("2.1");
+pkg.getPackageHeader().setVendor("(c) Together Teamsolutions Co., Ltd.");
+pkg.getPackageHeader().setCreated(XMLUtil.getCurrentDateAndTime());
+
+pkg.getScript().setType("text/javascript");
+
+Participant p1 = (Participant) pkg.getParticipants().generateNewElement();
+p1.setId("manager");
+p1.setName("Manager");
+p1.getParticipantType().setTypeROLE();
+Participant p2 = (Participant) pkg.getParticipants().generateNewElement();
+p2.setId("programmer");
+p2.setName("Programmer");
+p2.getParticipantType().setTypeROLE();
+Participant p3 = (Participant) pkg.getParticipants().generateNewElement();
+p3.setId("secretary");
+p3.setName("Secretary");
+p3.getParticipantType().setTypeROLE();
+
+Pool p = (Pool) pkg.getPools().generateNewElement();
+p.setId(id);
+p.setName(name);
+p.setProcess(id);
+
+Lane l1 = (Lane) p.getLanes().generateNewElement();
+l1.setId("lane1");
+l1.setName("Manager");
+Performer perf1 = (Performer) l1.getPerformers().generateNewElement();
+perf1.setValue("manager");
+l1.getPerformers().add(perf1);
+
+Lane l2 = (Lane) p.getLanes().generateNewElement();
+l2.setId("lane2");
+l2.setName("Programmer");
+Performer perf2 = (Performer) l2.getPerformers().generateNewElement();
+perf2.setValue("programmer");
+l2.getPerformers().add(perf2);
+
+Lane l3 = (Lane) p.getLanes().generateNewElement();
+l3.setId("lane3");
+l3.setName("Secretary");
+Performer perf3 = (Performer) l3.getPerformers().generateNewElement();
+perf3.setValue("secretary");
+l3.getPerformers().add(perf3);
+
+p.getLanes().add(l1);
+p.getLanes().add(l2);
+p.getLanes().add(l3);
+
+Artifact art = (Artifact) pkg.getArtifacts().generateNewElement();
+art.setId("comment");
+art.setName("Second activity comment");
+art.setArtifactTypeAnnotation();
+art.setTextAnnotation("This is a comment for 2nd activity");
+NodeGraphicsInfo ngia = (NodeGraphicsInfo) art.getNodeGraphicsInfos()
+   .generateNewElement();
+ngia.setLaneId("lane2");
+ngia.setWidth(95);
+ngia.setHeight(40);
+ngia.getCoordinates().setXCoordinate("50");
+ngia.getCoordinates().setYCoordinate("60");
+art.getNodeGraphicsInfos().add(ngia);
+pkg.getArtifacts().add(art);
+
+WorkflowProcess wp = (WorkflowProcess) pkg.getWorkflowProcesses()
+   .generateNewElement();
+wp.setId(id);
+wp.setName(name);
+
+DataField df = (DataField) wp.getDataFields().generateNewElement();
+df.setId("decision");
+df.setName("Decision");
+df.getDataType().getDataTypes().getBasicType().setTypeBOOLEAN();
+wp.getDataFields().add(df);
+
+Activity act1 = (Activity) wp.getActivities().generateNewElement();
+act1.setId("act1");
+act1.setName("First");
+act1.getActivityTypes().setImplementation();
+act1.getActivityTypes().getImplementation().getImplementationTypes().setNo();
+act1.setFirstPerformer("manager");
+NodeGraphicsInfo ngi1 = (NodeGraphicsInfo) act1.getNodeGraphicsInfos()
+   .generateNewElement();
+ngi1.setLaneId("lane1");
+ngi1.setWidth(90);
+ngi1.setHeight(60);
+ngi1.getCoordinates().setXCoordinate("50");
+ngi1.getCoordinates().setYCoordinate("50");
+act1.getNodeGraphicsInfos().add(ngi1);
+
+Activity actd = (Activity) wp.getActivities().generateNewElement();
+actd.setId("actd");
+actd.setName("Decision");
+actd.getActivityTypes().setRoute();
+TransitionRestriction tre = (TransitionRestriction) act1.getTransitionRestrictions()
+   .generateNewElement();
+TransitionRef tref1 = (TransitionRef) tre.getSplit()
+   .getTransitionRefs()
+   .generateNewElement();
+tref1.setId("tra2");
+TransitionRef tref2 = (TransitionRef) tre.getSplit()
+   .getTransitionRefs()
+   .generateNewElement();
+tref2.setId("tra3");
+tre.getSplit().getTransitionRefs().add(tref1);
+tre.getSplit().getTransitionRefs().add(tref2);
+tre.getSplit().setTypeExclusive();
+actd.getTransitionRestrictions().add(tre);
+NodeGraphicsInfo ngid = (NodeGraphicsInfo) actd.getNodeGraphicsInfos()
+   .generateNewElement();
+ngid.setLaneId("lane1");
+ngid.setWidth(40);
+ngid.setHeight(40);
+ngid.getCoordinates().setXCoordinate("200");
+ngid.getCoordinates().setYCoordinate("60");
+actd.getNodeGraphicsInfos().add(ngid);
+
+Activity act2 = (Activity) wp.getActivities().generateNewElement();
+act2.setId("act2");
+act2.setName("Second");
+act2.getActivityTypes().setImplementation();
+act2.getActivityTypes().getImplementation().getImplementationTypes().setNo();
+act2.setFirstPerformer("programmer");
+NodeGraphicsInfo ngi2 = (NodeGraphicsInfo) act2.getNodeGraphicsInfos()
+   .generateNewElement();
+ngi2.setLaneId("lane2");
+ngi2.setWidth(90);
+ngi2.setHeight(60);
+ngi2.getCoordinates().setXCoordinate("350");
+ngi2.getCoordinates().setYCoordinate("50");
+act2.getNodeGraphicsInfos().add(ngi2);
+
+Activity act3 = (Activity) wp.getActivities().generateNewElement();
+act3.setId("act3");
+act3.setName("Third");
+act3.getActivityTypes().setImplementation();
+act3.getActivityTypes().getImplementation().getImplementationTypes().setNo();
+act3.setFirstPerformer("secretary");
+NodeGraphicsInfo ngi3 = (NodeGraphicsInfo) act3.getNodeGraphicsInfos()
+   .generateNewElement();
+ngi3.setLaneId("lane3");
+ngi3.setWidth(90);
+ngi3.setHeight(60);
+ngi3.getCoordinates().setXCoordinate("350");
+ngi3.getCoordinates().setYCoordinate("50");
+act3.getNodeGraphicsInfos().add(ngi3);
+
+Transition tra1 = (Transition) wp.getTransitions().generateNewElement();
+tra1.setId("tra1");
+tra1.setFrom("act1");
+tra1.setTo("actd");
+tra1.getCondition().setTypeNONE();
+Transition tra2 = (Transition) wp.getTransitions().generateNewElement();
+tra2.setId("tra2");
+tra2.setFrom("actd");
+tra2.setTo("act2");
+tra2.getCondition().setTypeCONDITION();
+tra2.getCondition().setValue("decision");
+Transition tra3 = (Transition) wp.getTransitions().generateNewElement();
+tra3.setId("tra3");
+tra3.setFrom("actd");
+tra3.setTo("act3");
+tra3.getCondition().setTypeOTHERWISE();
+
+wp.getActivities().add(act1);
+wp.getActivities().add(actd);
+wp.getActivities().add(act2);
+wp.getActivities().add(act3);
+wp.getTransitions().add(tra1);
+wp.getTransitions().add(tra2);
+wp.getTransitions().add(tra3);
+
+Association asoc = (Association) pkg.getAssociations().generateNewElement();
+asoc.setId("c2a");
+asoc.setName("Connection1");
+asoc.setSource("comment");
+asoc.setTarget("act2");
+asoc.setAssociationDirectionNONE();
+pkg.getAssociations().add(asoc);
+
+pkg.getWorkflowProcesses().add(wp);
+pkg.getPools().add(p);
+pkg.getParticipants().add(p1);
+pkg.getParticipants().add(p2);
+pkg.getParticipants().add(p3);
+</programlisting>
+  </chapter>
+
+  <chapter xml:id="examples">
+    <title>Examples</title>
+
+    <para>As mentioned in <xref linkend="introduction"/>, TXM's main purpose
+    is to act as a common library for <link
+    xlink:href="http://www.together.at/prod/workflow/twe"
+    xmlns:xlink="http://www.w3.org/1999/xlink">Together Workflow Editor</link>
+    and by <link xlink:href="http://www.together.at/prod/workflow/tws"
+    xmlns:xlink="http://www.w3.org/1999/xlink">Together Workflow Server</link>
+    projects.</para>
+
+    <para>Nevertheless, the TXM project has two samples which will be
+    described in this chapter. This samples are actually utilizing the code
+    described in the previous chapter.</para>
+
+    <section>
+      <title>XPDL 1.0 to XPDL 2.1 Conversion</title>
+
+      <para>In the %TXM_HOME%/examples folder there is a single XPDL 1.0 file
+      - <emphasis role="bold">leave_request_xpdl1.xpdl</emphasis>. By running
+      <emphasis role="bold">runConvert</emphasis> script from %TXM_HOME%/bin
+      folder, this XPDL 1.0 sample will be converted into XPDL 2.1 file
+      (within the same folder) with a name <emphasis
+      role="bold">leave_request_xpdl1-out.xpdl</emphasis>.</para>
+
+      <para>The following is console output with the execution log:</para>
+
+      <figure>
+        <title>XPDL 1.0 to XPDL 2.1 Conversion - Console Output</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata align="center" contentdepth="100%"
+                       fileref="images/runconvert.jpg" scalefit="1"
+                       width="100%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </section>
+
+    <section>
+      <title>XPDL 2.1 Creation</title>
+
+      <para>When <emphasis role="bold">runCreate</emphasis> script from
+      %TXM_HOME%/bin folder is executed, new XPDL 2.1 <emphasis
+      role="bold">test.xpdl</emphasis> file is created in %TXM_HOME%/examples
+      folder.</para>
+
+      <para>The following is console output with the execution log:</para>
+
+      <figure>
+        <title>XPDL 2.1 Creation - Console Output</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata align="center" contentdepth="100%"
+                       fileref="images/runcreate.jpg" scalefit="1"
+                       width="100%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </section>
+  </chapter>
+
+  <chapter xml:id="buildguide">
+    <title>Build Guide</title>
+
+    <sect1>
+      <title>Getting the source code</title>
+
+      <para>The source code of the project can be obtained either via SVN
+      (please read instructions how to check out sources at <link
+      xlink:href="http://sourceforge.net/projects/jxpdl/develop"
+      xmlns:xlink="http://www.w3.org/1999/xlink">SourceForge</link>) or by
+      downloading the latest <emphasis
+      role="bold">txm-x.y-z.src.zip</emphasis>/<emphasis
+      role="bold">txm-x.y-z.src.tar.gz</emphasis> package from <link
+      xlink:href="http://sourceforge.net/projects/jxpdl/files"
+      xmlns:xlink="http://www.w3.org/1999/xlink">SourceForge</link>.</para>
+    </sect1>
+
+    <sect1>
+      <title>Prerequisites</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Windows</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Java Development Kit (JDK) version 8 or later</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>Fedora (Linux)</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>bash</para>
+            </listitem>
+
+            <listitem>
+              <para>tar</para>
+            </listitem>
+
+            <listitem>
+              <para>make</para>
+            </listitem>
+
+            <listitem>
+              <para>Java Development Kit (JDK) version 8 or later</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+    </sect1>
+
+    <sect1>
+      <title>Preparing the build environment</title>
+
+      <para>Execute the <emphasis role="bold">configure</emphasis> script from
+      the root directory of the project source. Specific JAVA version can be
+      set for building (different from the one registered with your system) by
+      executing:</para>
+
+      <para><itemizedlist>
+          <listitem>
+            <para>Windows</para>
+
+            <para>configure -jdkhome %JAVA_HOME%</para>
+          </listitem>
+
+          <listitem>
+            <para>Fedora (Linux)</para>
+
+            <para>./configure -jdkhome %JAVA_HOME%</para>
+          </listitem>
+        </itemizedlist>(Where JAVA_HOME is the path to your JDK
+      installation)</para>
+
+      <para>Possible parameters for the <emphasis
+      role="bold">configure</emphasis> script are:</para>
+
+      <programlisting>configure              - Creates build.properties file with default values
+                         for all possible parameters. It can work only if 
+                         there is a default JAVA registered with the system.
+configure -help        - Displays Help screen
+configure -appname     - Sets the short name for the project.
+configure -appfullname - Sets the full name for the project.
+configure -version     - Sets the version number for the project.
+configure -release     - Sets the release number for the project.
+configure -buildid     - Sets the build id for the project.
+configure -jdkhome     - Sets the "JAVA HOME" location of Java to be used 
+                         to compile the project.
+configure -instdir     - Sets the location of the installation dir used when
+                         executing make script with install target specified.
+configure -rebranding  - Flag that determines if the project 
+                         will be "rebranded" with the context of branding folder. 
+                         Possible values [true/false].
+configure -language    - Language to be used for rebranding.
+
+Multiple parameters can be specified at once.
+
+
+Example:
+
+configure -version 1.4 -release 1 -buildid 20120301-0808 -jdkhome C:/jdk1.8 -instdir C:/JXPDL</programlisting>
+
+      <para>The configure script will create/change the <emphasis
+      role="bold">build.properties</emphasis> file based on the parameters
+      provided. This file can also be manually changed to adjust your
+      environment/parameters for building the project from the sources.</para>
+    </sect1>
+
+    <sect1>
+      <title>Compiling and building</title>
+
+      <para>Execute the <emphasis role="bold">make</emphasis> script with the
+      <emphasis role="bold">buildAll</emphasis> target from the root directory
+      of the project source. When the building process finishes, the project
+      binaries will be in <emphasis role="bold">output/txm-x.y-z</emphasis>
+      folder.</para>
+
+      <para>Possible build targets for the make script are:</para>
+
+      <para><programlisting>make help            - Displays Help screen
+make buildAll        - Builds and configures TXM with documentation
+make buildNoDoc      - Builds and configures TXM without documentation
+make buildDoc        - Builds documentation only
+make debug           - Builds TXM JAR file with included debug information
+make install         - Installs and configures TXM into directory defined 
+                       by parameter install.dir in build.properties file. 
+                       This parameter can be set by using command: 
+                       configure -instdir PATH_TO_DIR.
+                       It should be called only after make buildAll target 
+                       is executed!
+make clean           - Removes the output and distribution folder (in order 
+                       to start a new compilation from scratch)
+make distributions   - Builds and configures TXM with all documentations 
+                       and creates distribution package
+</programlisting></para>
+    </sect1>
+
+    <sect1>
+      <title>Packaging distributions</title>
+
+      <para>Assuming that the environment is already configured as described
+      previously, to create the project distribution packages, execute:</para>
+
+      <programlisting>make distributions</programlisting>
+
+      <para>When the building process finishes, the <emphasis
+      role="bold"><emphasis role="bold">distribution</emphasis></emphasis>
+      folder will be created in the root directory of the project source
+      containing the appropriate OS specific binary distributions.</para>
+
+      <!--
+      <para>On Windows, to have the resulting JAR file automatically signed,
+      the file called <emphasis role="bold">sign.properties</emphasis> should
+      be placed in the root directory of the projects source with the
+      following properties:</para>
+
+      <para><programlisting>sign.tool       - absolute path to the sign tool executable file
+sign.privatekey - absolute path to the private key used for signing
+sign.pwd        - password for signing
+sign.alias      - sign alias</programlisting>example sign.properties
+      file:</para>
+
+      <para><programlisting>sign.tool=D:/signtool/signtool.exe
+sign.privatekey=D:/signtool/privatekey.pfx
+sign.pwd=agles87t24e25NDwas
+sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
+      alias can be produced by the usage of Java's keytool by executing the
+      command:</para>
+
+      <para><emphasis role="bold">keytool -v -list -storetype pkcs12
+      -storepass PRIVATE-KEY-PASSWORD -keystore
+      PATH-TO-PRIVATE-KEY</emphasis></para>
+
+      <para>where PRIVATE-KEY-PASSWORD is the same as the property sign.pwd
+      from sign.properties file described above, and PATH-TO-PRIVATE-KEY is
+      the same as the property sign.privatekey from this properties
+      file.</para>
+-->
+    </sect1>
+  </chapter>
+
+  <chapter xml:id="releasenotes">
+    <title>Release Notes</title>
+
+    <section>
+      <title>Release 2.1-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Now producing setup EXE distribution</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Release 2.0-2</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>The implementation of XMLUtil.getPossibleSubflowProcesses()
+          made more generic</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Release 2.0-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Not replacing LF character with CRLF in XPDL output (for XML
+          schema attribute elements) any more (didn't have effect on emails in
+          TXW)</para>
+        </listitem>
+
+        <listitem>
+          <para>Now validating unused applications and participants</para>
+        </listitem>
+
+        <listitem>
+          <para>Corrected test for creating new XPDL document (added xpdl
+          namespace)</para>
+        </listitem>
+
+        <listitem>
+          <para>Java8 support</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Release 1.9-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Linux tar.gz distributions now built under windows</para>
+        </listitem>
+
+        <listitem>
+          <para>XPDL2 and XPDL1 schemas are now part of documentation
+          distribution package</para>
+        </listitem>
+
+        <listitem>
+          <para>Improved implementation of XMLUtil.getUsingPositions() method
+          to properly recognize text in expressions</para>
+        </listitem>
+
+        <listitem>
+          <para>Improved validation: now validating limits</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Release 1.8-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Refactored code in StandardPackageValidator regarding
+          validation of deadlines</para>
+        </listitem>
+
+        <listitem>
+          <para>Improved validation: now also validating InitialValue
+          expressions</para>
+        </listitem>
+
+        <listitem>
+          <para>Fixed implementation of XMLUtil.getVariableReferences() method
+          to properly detect usage of variables inside deadline
+          expressions</para>
+        </listitem>
+
+        <listitem>
+          <para>Extended implementation of XMLUtil.getVariableReferences()
+          method to recognize usage of variables inside InitialValue
+          expressions</para>
+        </listitem>
+
+        <listitem>
+          <para>Improved implementation of XMLUtil.getUsingPositions() method
+          to properly recognize text and to properly return using
+          positions</para>
+        </listitem>
+
+        <listitem>
+          <para>Improved implementation of XMLUtil.tokenize() method</para>
+        </listitem>
+
+        <listitem>
+          <para>New way of signing with timestamping implemented (different
+          servers possible for timestamping)</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Release 1.7-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>TRR updated to version 1.5-1</para>
+        </listitem>
+
+        <listitem>
+          <para>New static method to return all the positions of one string
+          within another string added to XMLUtil class</para>
+        </listitem>
+
+        <listitem>
+          <para>New static method to get document node from XML file at a
+          given location added to XMLUtil class.</para>
+        </listitem>
+
+        <listitem>
+          <para>Improved validation for Formal/Actual parameter matching (now
+          for INOUT/OUT formal parameters we can use ONLY defined
+          variables)</para>
+        </listitem>
+
+        <listitem>
+          <para>Fix: Now properly handling persistence of Artifact's
+          DataObjects' DataField collection</para>
+        </listitem>
+
+        <listitem>
+          <para>Supported BasicType DATE and TIME data types, corresponding
+          Java type properties set to java.sql.Date and java.sql.Time
+          respectively</para>
+        </listitem>
+
+        <listitem>
+          <para>Java type value for DATETIME type changed from java.util.Date
+          to java.sql.Timestamp</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Release 1.6-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>TRR updated to version 1.4-1</para>
+        </listitem>
+
+        <listitem>
+          <para>Ant library updated to version 1.8.4</para>
+        </listitem>
+
+        <listitem>
+          <para>Common I/O library updated to version 2.4</para>
+        </listitem>
+
+        <listitem>
+          <para>docbook-xsl library updated to version 1.77.1</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Release 1.5-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>TRR updated to version 1.3-1</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Release 1.4-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Fixed bug in XMLUtil class when returning Participant
+          references (some Lane references could have been omitted)</para>
+        </listitem>
+
+        <listitem>
+          <para>Java 7 is now prerequisite</para>
+        </listitem>
+
+        <listitem>
+          <para>Changes in project builds/structure according to the
+          standards</para>
+        </listitem>
+
+        <listitem>
+          <para>TRR updated to version 1.2-1</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Release 1.3-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Updated commons-io library to version 2.1</para>
+        </listitem>
+
+        <listitem>
+          <para>Updated DOCBOOK DTD to version 5.0</para>
+        </listitem>
+
+        <listitem>
+          <para>Updated 3-line titlepage of documentation (PDF)</para>
+        </listitem>
+
+        <listitem>
+          <para>Replacing LF character with CRLF in XPDL output (for XML
+          schema attribute elements).</para>
+        </listitem>
+
+        <listitem>
+          <para>Project structure changed according to the new standard (no
+          dependency output anymore, components output instead).</para>
+        </listitem>
+
+        <listitem>
+          <para>New method for XPDL validation to validate length...dummy
+          implementation which can be overriden in JaWE and Shark
+          projects</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Release 1.2-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>The validation of actual/formal parameter's by type now
+          considers "isArray" attribute of formal parameter/variable
+          referenced by actual parameter</para>
+        </listitem>
+
+        <listitem>
+          <para>Build process changed (preparations for new TAB based
+          release):</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>now possible to manualy specify "buildid" configuration
+              parameter (e.g. configure -buildid 20110721-0808)</para>
+            </listitem>
+
+            <listitem>
+              <para>build scripts corrected so the sources can be built if
+              they are in the folder which contains spaces in the path</para>
+            </listitem>
+
+            <listitem>
+              <para>try/catch blocks removed from documentation build.xml
+              file</para>
+            </listitem>
+
+            <listitem>
+              <para>components folder in the distribution output/components
+              files in the sources (TAB support)</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Release 1.1-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>Apache Ant libraries updated to version 1.8.2 (ant.jar and
+          ant-launcher.jar)</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Removed nodeps.jar</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>Xerces library updated to version 2.11.0
+          (xercesImpl.jar)</para>
+        </listitem>
+
+        <listitem>
+          <para>Apache Common I/O library updated to version 2.0.1
+          (commons-io.jar)</para>
+        </listitem>
+
+        <listitem>
+          <para>Updated build script to support building of debug version and
+          added "debug" folder to output.</para>
+        </listitem>
+
+        <listitem>
+          <para>XMLInterfaceForJDK13 class renamed to XMLInterfaceImpl</para>
+        </listitem>
+
+        <listitem>
+          <para>Added support for TaskScript element from XPDL 2.</para>
+        </listitem>
+
+        <listitem>
+          <para>ActualParameter, InitialValue updated to XPDL 2. Now extending
+          ExpressionType element and have ability to define custom script
+          language description.</para>
+        </listitem>
+
+        <listitem>
+          <para>Condition element updated to XPDL 2 - now possible to define
+          custom script language.</para>
+        </listitem>
+
+        <listitem>
+          <para>StandardPackageValidator extended to add support for
+          ExpressionType element validation.</para>
+        </listitem>
+
+        <listitem>
+          <para>XMLUtil improved and extended with more utility
+          methods.</para>
+        </listitem>
+
+        <listitem>
+          <para>Updated JAVA API documentation.</para>
+        </listitem>
+
+        <listitem>
+          <para>Added fix for migrating from XPDL 1: proper handling of
+          circular transition for the activity in the case activity has to be
+          splitted into several activities (e.g. multiple tools activity, or
+          activity with improper split/join types which are splitted by adding
+          additional Route activities)</para>
+        </listitem>
+
+        <listitem>
+          <para>Added fix for migrating from XPDL 1: proper handling of Tool
+          activity that has many tools and different Start/Finish modes</para>
+        </listitem>
+
+        <listitem>
+          <para>Updated JAR's MANIFEST information</para>
+        </listitem>
+
+        <listitem>
+          <para>Added Together Read Registry (TRR) library version
+          1.0-1</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Removed readregistry.nsi</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>Project restructured, build scripts changed (all libraries now
+          in tools sub-folders)</para>
+        </listitem>
+
+        <listitem>
+          <para>Standardized the project sources:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Updated build procedures and directory structure.</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>Updated dependencies. Now only making dependencies for TWE
+          (TWS gets TXM through TWE)</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Release 1.0-1</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>The initial project release.</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </chapter>
+
+  <appendix>
+    <title>GNU Free Documentation License</title>
+
+    <para><programlisting>                GNU Free Documentation License
+                 Version 1.3, 3 November 2008
+
+
+ Copyright (C) 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.
+     &lt;http://fsf.org/&gt;
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
+
+0. PREAMBLE
+
+The purpose of this License is to make a manual, textbook, or other
+functional and useful document "free" in the sense of freedom: to
+assure everyone the effective freedom to copy and redistribute it,
+with or without modifying it, either commercially or noncommercially.
+Secondarily, this License preserves for the author and publisher a way
+to get credit for their work, while not being considered responsible
+for modifications made by others.
+
+This License is a kind of "copyleft", which means that derivative
+works of the document must themselves be free in the same sense.  It
+complements the GNU General Public License, which is a copyleft
+license designed for free software.
+
+We have designed this License in order to use it for manuals for free
+software, because free software needs free documentation: a free
+program should come with manuals providing the same freedoms that the
+software does.  But this License is not limited to software manuals;
+it can be used for any textual work, regardless of subject matter or
+whether it is published as a printed book.  We recommend this License
+principally for works whose purpose is instruction or reference.
+
+
+1. APPLICABILITY AND DEFINITIONS
+
+This License applies to any manual or other work, in any medium, that
+contains a notice placed by the copyright holder saying it can be
+distributed under the terms of this License.  Such a notice grants a
+world-wide, royalty-free license, unlimited in duration, to use that
+work under the conditions stated herein.  The "Document", below,
+refers to any such manual or work.  Any member of the public is a
+licensee, and is addressed as "you".  You accept the license if you
+copy, modify or distribute the work in a way requiring permission
+under copyright law.
+
+A "Modified Version" of the Document means any work containing the
+Document or a portion of it, either copied verbatim, or with
+modifications and/or translated into another language.
+
+A "Secondary Section" is a named appendix or a front-matter section of
+the Document that deals exclusively with the relationship of the
+publishers or authors of the Document to the Document's overall
+subject (or to related matters) and contains nothing that could fall
+directly within that overall subject.  (Thus, if the Document is in
+part a textbook of mathematics, a Secondary Section may not explain
+any mathematics.)  The relationship could be a matter of historical
+connection with the subject or with related matters, or of legal,
+commercial, philosophical, ethical or political position regarding
+them.
+
+The "Invariant Sections" are certain Secondary Sections whose titles
+are designated, as being those of Invariant Sections, in the notice
+that says that the Document is released under this License.  If a
+section does not fit the above definition of Secondary then it is not
+allowed to be designated as Invariant.  The Document may contain zero
+Invariant Sections.  If the Document does not identify any Invariant
+Sections then there are none.
+
+The "Cover Texts" are certain short passages of text that are listed,
+as Front-Cover Texts or Back-Cover Texts, in the notice that says that
+the Document is released under this License.  A Front-Cover Text may
+be at most 5 words, and a Back-Cover Text may be at most 25 words.
+
+A "Transparent" copy of the Document means a machine-readable copy,
+represented in a format whose specification is available to the
+general public, that is suitable for revising the document
+straightforwardly with generic text editors or (for images composed of
+pixels) generic paint programs or (for drawings) some widely available
+drawing editor, and that is suitable for input to text formatters or
+for automatic translation to a variety of formats suitable for input
+to text formatters.  A copy made in an otherwise Transparent file
+format whose markup, or absence of markup, has been arranged to thwart
+or discourage subsequent modification by readers is not Transparent.
+An image format is not Transparent if used for any substantial amount
+of text.  A copy that is not "Transparent" is called "Opaque".
+
+Examples of suitable formats for Transparent copies include plain
+ASCII without markup, Texinfo input format, LaTeX input format, SGML
+or XML using a publicly available DTD, and standard-conforming simple
+HTML, PostScript or PDF designed for human modification.  Examples of
+transparent image formats include PNG, XCF and JPG.  Opaque formats
+include proprietary formats that can be read and edited only by
+proprietary word processors, SGML or XML for which the DTD and/or
+processing tools are not generally available, and the
+machine-generated HTML, PostScript or PDF produced by some word
+processors for output purposes only.
+
+The "Title Page" means, for a printed book, the title page itself,
+plus such following pages as are needed to hold, legibly, the material
+this License requires to appear in the title page.  For works in
+formats which do not have any title page as such, "Title Page" means
+the text near the most prominent appearance of the work's title,
+preceding the beginning of the body of the text.
+
+The "publisher" means any person or entity that distributes copies of
+the Document to the public.
+
+A section "Entitled XYZ" means a named subunit of the Document whose
+title either is precisely XYZ or contains XYZ in parentheses following
+text that translates XYZ in another language.  (Here XYZ stands for a
+specific section name mentioned below, such as "Acknowledgements",
+"Dedications", "Endorsements", or "History".)  To "Preserve the Title"
+of such a section when you modify the Document means that it remains a
+section "Entitled XYZ" according to this definition.
+
+The Document may include Warranty Disclaimers next to the notice which
+states that this License applies to the Document.  These Warranty
+Disclaimers are considered to be included by reference in this
+License, but only as regards disclaiming warranties: any other
+implication that these Warranty Disclaimers may have is void and has
+no effect on the meaning of this License.
+
+2. VERBATIM COPYING
+
+You may copy and distribute the Document in any medium, either
+commercially or noncommercially, provided that this License, the
+copyright notices, and the license notice saying this License applies
+to the Document are reproduced in all copies, and that you add no
+other conditions whatsoever to those of this License.  You may not use
+technical measures to obstruct or control the reading or further
+copying of the copies you make or distribute.  However, you may accept
+compensation in exchange for copies.  If you distribute a large enough
+number of copies you must also follow the conditions in section 3.
+
+You may also lend copies, under the same conditions stated above, and
+you may publicly display copies.
+
+
+3. COPYING IN QUANTITY
+
+If you publish printed copies (or copies in media that commonly have
+printed covers) of the Document, numbering more than 100, and the
+Document's license notice requires Cover Texts, you must enclose the
+copies in covers that carry, clearly and legibly, all these Cover
+Texts: Front-Cover Texts on the front cover, and Back-Cover Texts on
+the back cover.  Both covers must also clearly and legibly identify
+you as the publisher of these copies.  The front cover must present
+the full title with all words of the title equally prominent and
+visible.  You may add other material on the covers in addition.
+Copying with changes limited to the covers, as long as they preserve
+the title of the Document and satisfy these conditions, can be treated
+as verbatim copying in other respects.
+
+If the required texts for either cover are too voluminous to fit
+legibly, you should put the first ones listed (as many as fit
+reasonably) on the actual cover, and continue the rest onto adjacent
+pages.
+
+If you publish or distribute Opaque copies of the Document numbering
+more than 100, you must either include a machine-readable Transparent
+copy along with each Opaque copy, or state in or with each Opaque copy
+a computer-network location from which the general network-using
+public has access to download using public-standard network protocols
+a complete Transparent copy of the Document, free of added material.
+If you use the latter option, you must take reasonably prudent steps,
+when you begin distribution of Opaque copies in quantity, to ensure
+that this Transparent copy will remain thus accessible at the stated
+location until at least one year after the last time you distribute an
+Opaque copy (directly or through your agents or retailers) of that
+edition to the public.
+
+It is requested, but not required, that you contact the authors of the
+Document well before redistributing any large number of copies, to
+give them a chance to provide you with an updated version of the
+Document.
+
+
+4. MODIFICATIONS
+
+You may copy and distribute a Modified Version of the Document under
+the conditions of sections 2 and 3 above, provided that you release
+the Modified Version under precisely this License, with the Modified
+Version filling the role of the Document, thus licensing distribution
+and modification of the Modified Version to whoever possesses a copy
+of it.  In addition, you must do these things in the Modified Version:
+
+A. Use in the Title Page (and on the covers, if any) a title distinct
+   from that of the Document, and from those of previous versions
+   (which should, if there were any, be listed in the History section
+   of the Document).  You may use the same title as a previous version
+   if the original publisher of that version gives permission.
+B. List on the Title Page, as authors, one or more persons or entities
+   responsible for authorship of the modifications in the Modified
+   Version, together with at least five of the principal authors of the
+   Document (all of its principal authors, if it has fewer than five),
+   unless they release you from this requirement.
+C. State on the Title page the name of the publisher of the
+   Modified Version, as the publisher.
+D. Preserve all the copyright notices of the Document.
+E. Add an appropriate copyright notice for your modifications
+   adjacent to the other copyright notices.
+F. Include, immediately after the copyright notices, a license notice
+   giving the public permission to use the Modified Version under the
+   terms of this License, in the form shown in the Addendum below.
+G. Preserve in that license notice the full lists of Invariant Sections
+   and required Cover Texts given in the Document's license notice.
+H. Include an unaltered copy of this License.
+I. Preserve the section Entitled "History", Preserve its Title, and add
+   to it an item stating at least the title, year, new authors, and
+   publisher of the Modified Version as given on the Title Page.  If
+   there is no section Entitled "History" in the Document, create one
+   stating the title, year, authors, and publisher of the Document as
+   given on its Title Page, then add an item describing the Modified
+   Version as stated in the previous sentence.
+J. Preserve the network location, if any, given in the Document for
+   public access to a Transparent copy of the Document, and likewise
+   the network locations given in the Document for previous versions
+   it was based on.  These may be placed in the "History" section.
+   You may omit a network location for a work that was published at
+   least four years before the Document itself, or if the original
+   publisher of the version it refers to gives permission.
+K. For any section Entitled "Acknowledgements" or "Dedications",
+   Preserve the Title of the section, and preserve in the section all
+   the substance and tone of each of the contributor acknowledgements
+   and/or dedications given therein.
+L. Preserve all the Invariant Sections of the Document,
+   unaltered in their text and in their titles.  Section numbers
+   or the equivalent are not considered part of the section titles.
+M. Delete any section Entitled "Endorsements".  Such a section
+   may not be included in the Modified Version.
+N. Do not retitle any existing section to be Entitled "Endorsements"
+   or to conflict in title with any Invariant Section.
+O. Preserve any Warranty Disclaimers.
+
+If the Modified Version includes new front-matter sections or
+appendices that qualify as Secondary Sections and contain no material
+copied from the Document, you may at your option designate some or all
+of these sections as invariant.  To do this, add their titles to the
+list of Invariant Sections in the Modified Version's license notice.
+These titles must be distinct from any other section titles.
+
+You may add a section Entitled "Endorsements", provided it contains
+nothing but endorsements of your Modified Version by various
+parties--for example, statements of peer review or that the text has
+been approved by an organization as the authoritative definition of a
+standard.
+
+You may add a passage of up to five words as a Front-Cover Text, and a
+passage of up to 25 words as a Back-Cover Text, to the end of the list
+of Cover Texts in the Modified Version.  Only one passage of
+Front-Cover Text and one of Back-Cover Text may be added by (or
+through arrangements made by) any one entity.  If the Document already
+includes a cover text for the same cover, previously added by you or
+by arrangement made by the same entity you are acting on behalf of,
+you may not add another; but you may replace the old one, on explicit
+permission from the previous publisher that added the old one.
+
+The author(s) and publisher(s) of the Document do not by this License
+give permission to use their names for publicity for or to assert or
+imply endorsement of any Modified Version.
+
+
+5. COMBINING DOCUMENTS
+
+You may combine the Document with other documents released under this
+License, under the terms defined in section 4 above for modified
+versions, provided that you include in the combination all of the
+Invariant Sections of all of the original documents, unmodified, and
+list them all as Invariant Sections of your combined work in its
+license notice, and that you preserve all their Warranty Disclaimers.
+
+The combined work need only contain one copy of this License, and
+multiple identical Invariant Sections may be replaced with a single
+copy.  If there are multiple Invariant Sections with the same name but
+different contents, make the title of each such section unique by
+adding at the end of it, in parentheses, the name of the original
+author or publisher of that section if known, or else a unique number.
+Make the same adjustment to the section titles in the list of
+Invariant Sections in the license notice of the combined work.
+
+In the combination, you must combine any sections Entitled "History"
+in the various original documents, forming one section Entitled
+"History"; likewise combine any sections Entitled "Acknowledgements",
+and any sections Entitled "Dedications".  You must delete all sections
+Entitled "Endorsements".
+
+
+6. COLLECTIONS OF DOCUMENTS
+
+You may make a collection consisting of the Document and other
+documents released under this License, and replace the individual
+copies of this License in the various documents with a single copy
+that is included in the collection, provided that you follow the rules
+of this License for verbatim copying of each of the documents in all
+other respects.
+
+You may extract a single document from such a collection, and
+distribute it individually under this License, provided you insert a
+copy of this License into the extracted document, and follow this
+License in all other respects regarding verbatim copying of that
+document.
+
+
+7. AGGREGATION WITH INDEPENDENT WORKS
+
+A compilation of the Document or its derivatives with other separate
+and independent documents or works, in or on a volume of a storage or
+distribution medium, is called an "aggregate" if the copyright
+resulting from the compilation is not used to limit the legal rights
+of the compilation's users beyond what the individual works permit.
+When the Document is included in an aggregate, this License does not
+apply to the other works in the aggregate which are not themselves
+derivative works of the Document.
+
+If the Cover Text requirement of section 3 is applicable to these
+copies of the Document, then if the Document is less than one half of
+the entire aggregate, the Document's Cover Texts may be placed on
+covers that bracket the Document within the aggregate, or the
+electronic equivalent of covers if the Document is in electronic form.
+Otherwise they must appear on printed covers that bracket the whole
+aggregate.
+
+
+8. TRANSLATION
+
+Translation is considered a kind of modification, so you may
+distribute translations of the Document under the terms of section 4.
+Replacing Invariant Sections with translations requires special
+permission from their copyright holders, but you may include
+translations of some or all Invariant Sections in addition to the
+original versions of these Invariant Sections.  You may include a
+translation of this License, and all the license notices in the
+Document, and any Warranty Disclaimers, provided that you also include
+the original English version of this License and the original versions
+of those notices and disclaimers.  In case of a disagreement between
+the translation and the original version of this License or a notice
+or disclaimer, the original version will prevail.
+
+If a section in the Document is Entitled "Acknowledgements",
+"Dedications", or "History", the requirement (section 4) to Preserve
+its Title (section 1) will typically require changing the actual
+title.
+
+
+9. TERMINATION
+
+You may not copy, modify, sublicense, or distribute the Document
+except as expressly provided under this License.  Any attempt
+otherwise to copy, modify, sublicense, or distribute it is void, and
+will automatically terminate your rights under this License.
+
+However, if you cease all violation of this License, then your license
+from a particular copyright holder is reinstated (a) provisionally,
+unless and until the copyright holder explicitly and finally
+terminates your license, and (b) permanently, if the copyright holder
+fails to notify you of the violation by some reasonable means prior to
+60 days after the cessation.
+
+Moreover, your license from a particular copyright holder is
+reinstated permanently if the copyright holder notifies you of the
+violation by some reasonable means, this is the first time you have
+received notice of violation of this License (for any work) from that
+copyright holder, and you cure the violation prior to 30 days after
+your receipt of the notice.
+
+Termination of your rights under this section does not terminate the
+licenses of parties who have received copies or rights from you under
+this License.  If your rights have been terminated and not permanently
+reinstated, receipt of a copy of some or all of the same material does
+not give you any rights to use it.
+
+
+10. FUTURE REVISIONS OF THIS LICENSE
+
+The Free Software Foundation may publish new, revised versions of the
+GNU Free Documentation License from time to time.  Such new versions
+will be similar in spirit to the present version, but may differ in
+detail to address new problems or concerns.  See
+http://www.gnu.org/copyleft/.
+
+Each version of the License is given a distinguishing version number.
+If the Document specifies that a particular numbered version of this
+License "or any later version" applies to it, you have the option of
+following the terms and conditions either of that specified version or
+of any later version that has been published (not as a draft) by the
+Free Software Foundation.  If the Document does not specify a version
+number of this License, you may choose any version ever published (not
+as a draft) by the Free Software Foundation.  If the Document
+specifies that a proxy can decide which future versions of this
+License can be used, that proxy's public statement of acceptance of a
+version permanently authorizes you to choose that version for the
+Document.
+
+11. RELICENSING
+
+"Massive Multiauthor Collaboration Site" (or "MMC Site") means any
+World Wide Web server that publishes copyrightable works and also
+provides prominent facilities for anybody to edit those works.  A
+public wiki that anybody can edit is an example of such a server.  A
+"Massive Multiauthor Collaboration" (or "MMC") contained in the site
+means any set of copyrightable works thus published on the MMC site.
+
+"CC-BY-SA" means the Creative Commons Attribution-Share Alike 3.0 
+license published by Creative Commons Corporation, a not-for-profit 
+corporation with a principal place of business in San Francisco, 
+California, as well as future copyleft versions of that license 
+published by that same organization.
+
+"Incorporate" means to publish or republish a Document, in whole or in 
+part, as part of another Document.
+
+An MMC is "eligible for relicensing" if it is licensed under this 
+License, and if all works that were first published under this License 
+somewhere other than this MMC, and subsequently incorporated in whole or 
+in part into the MMC, (1) had no cover texts or invariant sections, and 
+(2) were thus incorporated prior to November 1, 2008.
+
+The operator of an MMC Site may republish an MMC contained in the site
+under CC-BY-SA on the same site at any time before August 1, 2009,
+provided the MMC is eligible for relicensing.
+
+
+ADDENDUM: How to use this License for your documents
+
+To use this License in a document you have written, include a copy of
+the License in the document and put the following copyright and
+license notices just after the title page:
+
+    Copyright (c)  YEAR  YOUR NAME.
+    Permission is granted to copy, distribute and/or modify this document
+    under the terms of the GNU Free Documentation License, Version 1.3
+    or any later version published by the Free Software Foundation;
+    with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+    A copy of the license is included in the section entitled "GNU
+    Free Documentation License".
+
+If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
+replace the "with...Texts." line with this:
+
+    with the Invariant Sections being LIST THEIR TITLES, with the
+    Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.
+
+If you have Invariant Sections without Cover Texts, or some other
+combination of the three, merge those two alternatives to suit the
+situation.
+
+If your document contains nontrivial examples of program code, we
+recommend releasing these examples in parallel under your choice of
+free software license, such as the GNU General Public License,
+to permit their use in free software.
+</programlisting></para>
+  </appendix>
+
+  <colophon>
+    <para>Together Teamsolutions Co., Ltd.</para>
+
+    <address>
+	  <otheraddr>330/30 Moo 12 Pratamnak Soi 5</otheraddr>
+      <otheraddr>Nongprue Banglamung Pattaya</otheraddr>
+      <otheraddr>20260 Chonburi Thailand</otheraddr>
+      <phone>Tel. +66 38 252802</phone>
+      <fax>Fax +43 720 347872</fax>
+      <email>office@togetherteam.co.th</email>
+      <link xlink:href="www.togetherteam.co.th"
+        xmlns:xlink="http://www.w3.org/1999/xlink">www.togetherteam.co.th</link>
+    </address>
+  </colophon>
+</book>
