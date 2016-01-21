@@ -1,4 +1,6 @@
-###### TXM 2.1-1 RELEASED #####
+###### TXM 2.2-1 RELEASED #####
+
+###### TXM 2.1-1 RELEASED (2016-01-21) #####
 2016-01-06 Warut Dechma <warut@together.at>
    # Now producing setup EXE for the distribution
 
