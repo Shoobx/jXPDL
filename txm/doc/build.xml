@@ -146,10 +146,16 @@
 		</copy>
 		<copy todir="${tmp.dir}">
 			<fileset dir="" includes="*-doc.xml" excludes="*-testcases-doc.xml" />
+			<filterset>
+				<filter token="COPYRIGHT" value="${copyright.year}" />
+			</filterset>
 			<mapper type="glob" from="*.xml" to="${docbook.name}.xml"/>
 		</copy>
 		<copy todir="${tmp.dir}">
 			<fileset dir="" includes="*-testcases-doc.xml" />
+			<filterset>
+				<filter token="COPYRIGHT" value="${copyright.year}" />
+			</filterset>
 			<mapper type="glob" from="*.xml" to="${testcase.name}.xml"/>
 		</copy>
 		<!--copy file="${doc.dir}/${testcase.name}.xml" tofile="${tmp.dir}/${testcase.name}.xml" /-->

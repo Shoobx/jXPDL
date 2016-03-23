@@ -20,7 +20,7 @@
   !insertmacro MUI_LANGUAGE "English"
 
   VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${VERSION}.${RELEASE}"
-  VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "© 2011 Together Teamsolutions Co., Ltd. All rights reserved."
+  VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "© ${COPYRIGHT_YEAR} Together Teamsolutions Co., Ltd. All rights reserved."
   VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "${APP_FULL_NAME}"
   VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "${APP_FULL_NAME}"
   VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductVersion" "${VERSION}-${RELEASE}"

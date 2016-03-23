@@ -330,6 +330,12 @@
             <property name="build.timestamp" value="${buildid}" />
          </else>
       </if>
+	  <propertyregex property="copyright.year"
+              input="${build.timestamp}"
+              regexp="(^[0-9]{4})"
+              select="\1"
+              casesensitive="false" 
+			  override="true"/>
    </target>
    
    <target name="_versionUp2date" depends="init">
@@ -446,6 +452,7 @@
 					<arg line="/DAPP_FULL_NAME=&quot;${app.full.name}&quot;" />
 					<arg line="/DSHORT_NAME=&quot;${app.name}&quot;" />
 					<arg line="/DSHORT_UPPER_NAME=&quot;${project.name}&quot;" />
+					<arg line="/DCOPYRIGHT_YEAR=${copyright.year}" />
 					<arg line="/DVERSION=${version}" />
 					<arg line="/DRELEASE=${release}" />
 					<arg line="/DSIGNTOOL_PATH=&quot;${sign.tool}&quot;" />
@@ -483,6 +490,7 @@
 						<arg line="/DAPP_FULL_NAME=&quot;${app.full.name}&quot;" />
 						<arg line="/DSHORT_NAME=&quot;${app.name}&quot;" />
 						<arg line="/DSHORT_UPPER_NAME=&quot;${project.name}&quot;" />
+						<arg line="/DCOPYRIGHT_YEAR=${copyright.year}" />
 						<arg line="/DVERSION=${version}" />
 						<arg line="/DRELEASE=${release}" />
 						<arg line="/DSIGNTOOL_PATH=&quot;${sign.tool}&quot;" />
@@ -571,6 +579,7 @@
 														<arg line="/DAPP_FULL_NAME=&quot;${app.full.name}&quot;" />
 														<arg line="/DSHORT_NAME=&quot;${app.name}&quot;" />
 														<arg line="/DSHORT_UPPER_NAME=&quot;${project.name}&quot;" />
+														<arg line="/DCOPYRIGHT_YEAR=${copyright.year}" />
 														<arg line="/DVERSION=${version}" />
 														<arg line="/DRELEASE=${release}" />
 														<arg line="/DSIGNTOOL_PATH=&quot;${sign.tool}&quot;" />
