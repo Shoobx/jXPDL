@@ -1,4 +1,6 @@
 ###### TXM 2.2-1 RELEASED #####
+2016-04-15 Sasa Bojanic <sasaboy@together.at>
+   # Caching ExtendedAttributes' entries by name to improve performance when calling getFirstExtendedAttributeForName() method
 
 ###### TXM 2.1-1 RELEASED (2016-01-21) #####
 2016-01-06 Warut Dechma <warut@together.at>

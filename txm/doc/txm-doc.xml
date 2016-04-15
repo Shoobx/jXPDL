@@ -2421,7 +2421,9 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
 
       <itemizedlist>
         <listitem>
-          <para/>
+          <para>Caching ExtendedAttributes' entries by name to improve
+          performance when calling getFirstExtendedAttributeForName()
+          method</para>
         </listitem>
       </itemizedlist>
     </section>
