@@ -2421,9 +2421,8 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
 
       <itemizedlist>
         <listitem>
-          <para>Caching ExtendedAttributes' entries by name to improve
-          performance when calling getFirstExtendedAttributeForName()
-          method</para>
+          <para>StandardPackageValidator now don't validate non relevant
+          entries (to improve performance)</para>
         </listitem>
       </itemizedlist>
     </section>
