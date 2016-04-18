@@ -18,6 +18,8 @@
 
 package org.enhydra.jxpdl.elements;
 
+import java.util.Set;
+
 import org.enhydra.jxpdl.XMLAttribute;
 import org.enhydra.jxpdl.XMLComplexElement;
 import org.enhydra.jxpdl.XMLUtil;
@@ -38,8 +40,7 @@ public class Route extends XMLComplexElement {
    }
 
    /**
-    * Overrides super-class method to indicate that element is never empty, so it's tag
-    * will always be written into XML file.
+    * Overrides super-class method to indicate that element is never empty, so it's tag will always be written into XML file.
     * 
     * @return <tt>false</tt>
     */
@@ -48,26 +49,36 @@ public class Route extends XMLComplexElement {
    }
 
    protected void fillStructure() {
-      XMLAttribute attrGatewayType = new XMLAttribute(this,
-                                                      "GatewayType",
-                                                      false,
-                                                      new String[] {
-                                                            // XPDLConstants.JOIN_SPLIT_TYPE_NONE,
-                                                            XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE,
-                                                            // XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE,
-                                                            // XPDLConstants.JOIN_SPLIT_TYPE_COMPLEX,
-                                                            XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL
-                                                      },
-                                                      0) {
+      XMLAttribute attrGatewayType = new XMLAttribute(this, "GatewayType", false, new String[] {
+            // XPDLConstants.JOIN_SPLIT_TYPE_NONE,
+            XPDLConstants.JOIN_SPLIT_TYPE_EXCLUSIVE,
+            // XPDLConstants.JOIN_SPLIT_TYPE_INCLUSIVE,
+            // XPDLConstants.JOIN_SPLIT_TYPE_COMPLEX,
+            XPDLConstants.JOIN_SPLIT_TYPE_PARALLEL
+      }, 0) {
          public void setValue(String v) {
             super.setValue(v);
+            Activity act = XMLUtil.getActivity(this);
+            Set ogt = XMLUtil.getOutgoingTransitions(act);
+            Set inct = XMLUtil.getIncomingTransitions(act);
+
             Split s = XMLUtil.getSplit(XMLUtil.getActivity(this));
             if (s != null) {
-               s.set("Type", v);
+               String oldt = s.getType();
+               if (!(oldt.equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE) && ogt.size() <= 1)) {
+                  if (!oldt.equals(v)) {
+                     s.set("Type", v);
+                  }
+               }
             }
             Join j = XMLUtil.getJoin(XMLUtil.getActivity(this));
             if (j != null) {
-               j.set("Type", v);
+               String oldt = j.getType();
+               if (!(oldt.equals(XPDLConstants.JOIN_SPLIT_TYPE_NONE) && inct.size() <= 1)) {
+                  if (!oldt.equals(v)) {
+                     j.set("Type", v);
+                  }
+               }
             }
          }
       };
