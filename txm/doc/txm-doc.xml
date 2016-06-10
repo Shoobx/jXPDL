@@ -2424,6 +2424,11 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
           <para>StandardPackageValidator now don't validate non relevant
           entries (to improve performance)</para>
         </listitem>
+
+        <listitem>
+          <para>Now explicitly using XALAN for transformations (problem with
+          saxon and namespaces)</para>
+        </listitem>
       </itemizedlist>
     </section>
 

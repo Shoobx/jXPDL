@@ -204,13 +204,11 @@ public class XMLUtil {
    }
 
    /**
-    * The List of Integer values representing the position of the string 'toFind' within
-    * string toSearch.
+    * The List of Integer values representing the position of the string 'toFind' within string toSearch.
     * 
     * @param toSearch
     * @param toFind
-    * @return The List of Integer values representing the position of the string 'toFind'
-    *         within string toSearch.
+    * @return The List of Integer values representing the position of the string 'toFind' within string toSearch.
     */
    public static List getStringPositionsWithinString(String toSearch, String toFind) {
       try {
@@ -353,12 +351,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the value of the 'Id' attribute of the main document node of XML document
-    * contained within a given xml file.
+    * Returns the value of the 'Id' attribute of the main document node of XML document contained within a given xml file.
     * 
     * @param xmlFile The XML file location.
-    * @return The value of the 'Id' attribute of the main document node of XML document
-    *         contained within a given xml file.
+    * @return The value of the 'Id' attribute of the main document node of XML document contained within a given xml file.
     */
    public static synchronized String getIdFromFile(String xmlFile) {
       try {
@@ -370,12 +366,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the {@link Document} object made out of XML document contained within a
-    * given xml file.
+    * Returns the {@link Document} object made out of XML document contained within a given xml file.
     * 
     * @param xmlFile The XML file location.
-    * @return The document node of XML document contained within a given xml file or NULL
-    *         if something goes wrong.
+    * @return The document node of XML document contained within a given xml file or NULL if something goes wrong.
     */
    public static synchronized Document getDocumentFromFile(String xmlFile) {
       try {
@@ -417,7 +411,7 @@ public class XMLUtil {
          ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
          // Use a Transformer for output
-         TransformerFactory tFactory = TransformerFactory.newInstance();
+         TransformerFactory tFactory = new org.apache.xalan.processor.TransformerFactoryImpl();
          Transformer transformer = tFactory.newTransformer();
          transformer.setOutputProperty("indent", "yes");
          transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -491,12 +485,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the 'short' class name (the name without package information) for the given
-    * class name.
+    * Returns the 'short' class name (the name without package information) for the given class name.
     * 
     * @param fullClassName The full name of the class.
-    * @return The name of the class without package information for the given full class
-    *         name.
+    * @return The name of the class without package information for the given full class name.
     */
    public static String getShortClassName(String fullClassName) {
       int lastDot = fullClassName.lastIndexOf(".");
@@ -532,13 +524,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the Node representing the content of toParse string (if isFile flag is
-    * false) or content of the file referenced by 'toParse' path.
+    * Returns the Node representing the content of toParse string (if isFile flag is false) or content of the file referenced by 'toParse' path.
     * 
     * @param toParse String to parse.
     * @param isFile if true, string represents file location.
-    * @return The Node representing the content of toParse string (if isFile flag is
-    *         false) or content of the file referenced by 'toParse' path.
+    * @return The Node representing the content of toParse string (if isFile flag is false) or content of the file referenced by 'toParse' path.
     */
    public static Node parseSchemaNode(String toParse, boolean isFile) {
       Document document = null;
@@ -582,12 +572,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns string representation of XML chunk representing {@link ExtendedAttributes}
-    * element.
+    * Returns string representation of XML chunk representing {@link ExtendedAttributes} element.
     * 
     * @param extAttribs {@link ExtendedAttributes} element.
-    * @return String representation of XML chunk representing {@link ExtendedAttributes}
-    *         element.
+    * @return String representation of XML chunk representing {@link ExtendedAttributes} element.
     */
    public static String stringifyExtendedAttributes(ExtendedAttributes extAttribs) throws Exception {
       try {
@@ -610,12 +598,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns {@link ExtendedAttributes} element created by parsing given string
-    * representation.
+    * Returns {@link ExtendedAttributes} element created by parsing given string representation.
     * 
     * @param extAttribs String representing XML content of {@link ExtendedAttributes}.
-    * @return The {@link ExtendedAttributes} element created by parsing given string
-    *         representation.
+    * @return The {@link ExtendedAttributes} element created by parsing given string representation.
     */
    public static ExtendedAttributes destringyfyExtendedAttributes(String extAttribs) throws Exception {
       ExtendedAttributes extAttr = null;
@@ -684,13 +670,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the value of extended attribute with a given name by searching name/value
-    * pars given in the matrix.
+    * Returns the value of extended attribute with a given name by searching name/value pars given in the matrix.
     * 
     * @param extendedAttributes The name/value matrix of extended attributes.
     * @param extAttrName The name of extended attribute.
-    * @return the value of extended attribute with a given name by searching name/value
-    *         pars given in the matrix.
+    * @return the value of extended attribute with a given name by searching name/value pars given in the matrix.
     */
    public static String getExtendedAttributeValue(String[][] extendedAttributes, String extAttrName) {
       if (extendedAttributes != null) {
@@ -704,13 +688,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the Java type of the DataTypes element for the given DataField or
-    * FormalParameter element.
+    * Returns the Java type of the DataTypes element for the given DataField or FormalParameter element.
     * 
     * @param xmli {@link XMLInterface} instance.
     * @param dfOrFP {@link DataField} or {@link FormalParameter} instance
-    * @return The Java type of the DataTypes element for the given DataField or
-    *         FormalParameter element.
+    * @return The Java type of the DataTypes element for the given DataField or FormalParameter element.
     */
    public static String getJavaType(XMLInterface xmli, XMLCollectionElement dfOrFP) {
       DataTypes dtypes = null;
@@ -751,12 +733,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the parent Package element for the given element or null if there is no such
-    * parent.
+    * Returns the parent Package element for the given element or null if there is no such parent.
     * 
     * @param el The XMLElement instance
-    * @return The parent Package element for the given element or null if there is no such
-    *         parent.
+    * @return The parent Package element for the given element or null if there is no such parent.
     */
    public static Package getPackage(XMLElement el) {
       if (el == null)
@@ -770,12 +750,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the parent {@link WorkflowProcess} element for the given element or null if
-    * there is no such parent.
+    * Returns the parent {@link WorkflowProcess} element for the given element or null if there is no such parent.
     * 
     * @param el The {@link XMLElement} instance
-    * @return The parent {@link WorkflowProcess} element for the given element or null if
-    *         there is no such parent.
+    * @return The parent {@link WorkflowProcess} element for the given element or null if there is no such parent.
     */
    public static WorkflowProcess getWorkflowProcess(XMLElement el) {
       if (el == null)
@@ -789,12 +767,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the parent {@link Application} element for the given element or null if
-    * there is no such parent.
+    * Returns the parent {@link Application} element for the given element or null if there is no such parent.
     * 
     * @param el The {@link XMLElement} instance
-    * @return The parent {@link Application} element for the given element or null if
-    *         there is no such parent.
+    * @return The parent {@link Application} element for the given element or null if there is no such parent.
     */
    public static Application getApplication(XMLElement el) {
       if (el == null)
@@ -808,12 +784,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the parent {@link Pool} element for the given element or null if there is no
-    * such parent.
+    * Returns the parent {@link Pool} element for the given element or null if there is no such parent.
     * 
     * @param el The {@link XMLElement} instance.
-    * @return The parent {@link Pool} element for the given element or null if there is no
-    *         such parent.
+    * @return The parent {@link Pool} element for the given element or null if there is no such parent.
     */
    public static Pool getPool(XMLElement el) {
       if (el == null)
@@ -827,12 +801,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the parent {@link ActivitySet} element for the given element or null if
-    * there is no such parent.
+    * Returns the parent {@link ActivitySet} element for the given element or null if there is no such parent.
     * 
     * @param el The {@link XMLElement} instance.
-    * @return The parent {@link ActivitySet} element for the given element or null if
-    *         there is no such parent.
+    * @return The parent {@link ActivitySet} element for the given element or null if there is no such parent.
     */
    public static ActivitySet getActivitySet(XMLElement el) {
       if (el == null)
@@ -846,12 +818,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the parent {@link ActivitySet} or {@link WorkflowProcess} element for the
-    * given element or null if there is no such parent.
+    * Returns the parent {@link ActivitySet} or {@link WorkflowProcess} element for the given element or null if there is no such parent.
     * 
     * @param el The {@link XMLElement} instance.
-    * @return The parent {@link ActivitySet} or {@link WorkflowProcess} element for the
-    *         given element or null if there is no such parent.
+    * @return The parent {@link ActivitySet} or {@link WorkflowProcess} element for the given element or null if there is no such parent.
     */
    public static XMLCollectionElement getActivitySetOrWorkflowProcess(XMLElement el) {
       if (el == null)
@@ -865,12 +835,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the parent {@link Activity} element for the given element or null if there
-    * is no such parent.
+    * Returns the parent {@link Activity} element for the given element or null if there is no such parent.
     * 
     * @param el The {@link XMLElement} instance.
-    * @return The parent {@link Activity} element for the given element or null if there
-    *         is no such parent.
+    * @return The parent {@link Activity} element for the given element or null if there is no such parent.
     */
    public static Activity getActivity(XMLElement el) {
       if (el == null)
@@ -884,12 +852,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the parent {@link Artifact} element for the given element or null if there
-    * is no such parent.
+    * Returns the parent {@link Artifact} element for the given element or null if there is no such parent.
     * 
     * @param el The {@link XMLElement} instance.
-    * @return The parent {@link Artifact} element for the given element or null if there
-    *         is no such parent.
+    * @return The parent {@link Artifact} element for the given element or null if there is no such parent.
     */
    public static Artifact getArtifact(XMLElement el) {
       if (el == null)
@@ -903,12 +869,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the parent {@link Transition} element for the given element or null if there
-    * is no such parent.
+    * Returns the parent {@link Transition} element for the given element or null if there is no such parent.
     * 
     * @param el The {@link XMLElement} instance.
-    * @return The parent {@link Transition} element for the given element or null if there
-    *         is no such parent.
+    * @return The parent {@link Transition} element for the given element or null if there is no such parent.
     */
    public static Transition getTransition(XMLElement el) {
       if (el == null)
@@ -922,12 +886,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the parent {@link Association} element for the given element or null if
-    * there is no such parent.
+    * Returns the parent {@link Association} element for the given element or null if there is no such parent.
     * 
     * @param el The {@link XMLElement} instance.
-    * @return The parent {@link Association} element for the given element or null if
-    *         there is no such parent.
+    * @return The parent {@link Association} element for the given element or null if there is no such parent.
     */
    public static Association getAssociation(XMLElement el) {
       if (el == null)
@@ -941,12 +903,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the parent {@link Participant} element for the given element or null if
-    * there is no such parent.
+    * Returns the parent {@link Participant} element for the given element or null if there is no such parent.
     * 
     * @param el The {@link XMLElement} instance.
-    * @return The parent {@link Participant} element for the given element or null if
-    *         there is no such parent.
+    * @return The parent {@link Participant} element for the given element or null if there is no such parent.
     */
    public static Participant getParticipant(XMLElement el) {
       if (el == null)
@@ -960,12 +920,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the parent {@link Lane} element for the given element or null if there is no
-    * such parent.
+    * Returns the parent {@link Lane} element for the given element or null if there is no such parent.
     * 
     * @param el The {@link XMLElement} instance.
-    * @return The parent {@link Lane} element for the given element or null if there is no
-    *         such parent.
+    * @return The parent {@link Lane} element for the given element or null if there is no such parent.
     */
    public static Lane getLane(XMLElement el) {
       if (el == null)
@@ -979,13 +937,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the parent element of given 'type' for the given element or null if there is
-    * no such parent.
+    * Returns the parent element of given 'type' for the given element or null if there is no such parent.
     * 
     * @param type The class.
     * @param el {@link XMLElement} instance.
-    * @return The parent element of given 'type' for the given element or null if there is
-    *         no such parent.
+    * @return The parent element of given 'type' for the given element or null if there is no such parent.
     */
    public static XMLElement getParentElement(Class type, XMLElement el) {
       if (el == null || type == null)
@@ -999,13 +955,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the parent element of given 'assignableFrom' type for the given element or
-    * null if there is no such parent.
+    * Returns the parent element of given 'assignableFrom' type for the given element or null if there is no such parent.
     * 
     * @param assignableFrom The class.
     * @param el The {@link XMLElement} instance
-    * @return The parent element of given 'assignableFrom' type for the given element or
-    *         null if there is no such parent.
+    * @return The parent element of given 'assignableFrom' type for the given element or null if there is no such parent.
     */
    public static XMLElement getParentElementByAssignableType(Class assignableFrom, XMLElement el) {
       if (el == null || assignableFrom == null)
@@ -1078,14 +1032,13 @@ public class XMLUtil {
    }
 
    /**
-    * Returns {@link WorkflowProcess} element which Id is given one. The search starts at
-    * a 'toBegin' package and then if not found continues to the external packages.
+    * Returns {@link WorkflowProcess} element which Id is given one. The search starts at a 'toBegin' package and then if not found continues to the external
+    * packages.
     * 
     * @param xmlInterface The {@link XMLInterface} instance.
     * @param toBegin The {@link Package} element instance.
-    * @return The {@link WorkflowProcess} element which Id is given one. The search starts
-    *         at a 'toBegin' package and then if not found continues to the external
-    *         packages.
+    * @return The {@link WorkflowProcess} element which Id is given one. The search starts at a 'toBegin' package and then if not found continues to the
+    *         external packages.
     */
    public static WorkflowProcess findWorkflowProcess(XMLInterface xmlInterface, Package toBegin, String wpId) {
       WorkflowProcess wp = toBegin.getWorkflowProcess(wpId);
@@ -1106,16 +1059,14 @@ public class XMLUtil {
    }
 
    /**
-    * Returns {@link Participant} element which Id is given one. The search starts at a
-    * 'toBegin' workflow process and then if not found continues to the package and then
-    * external packages.
+    * Returns {@link Participant} element which Id is given one. The search starts at a 'toBegin' workflow process and then if not found continues to the
+    * package and then external packages.
     * 
     * @param xmlInterface The {@link XMLInterface} instance.
     * @param toBegin The {@link WorkflowProcess} element.
     * @param pId The Participant Id.
-    * @return The {@link Participant} element which Id is given one. The search starts at
-    *         a 'toBegin' workflow process and then if not found continues to the package
-    *         and then external packages.
+    * @return The {@link Participant} element which Id is given one. The search starts at a 'toBegin' workflow process and then if not found continues to the
+    *         package and then external packages.
     */
    public static Participant findParticipant(XMLInterface xmlInterface, WorkflowProcess toBegin, String pId) {
       Participant p = toBegin.getParticipant(pId);
@@ -1127,14 +1078,13 @@ public class XMLUtil {
    }
 
    /**
-    * Returns {@link Participant} element which Id is given one. The search starts at a
-    * 'toBegin' package and then if not found continues to the external packages.
+    * Returns {@link Participant} element which Id is given one. The search starts at a 'toBegin' package and then if not found continues to the external
+    * packages.
     * 
     * @param xmlInterface The {@link XMLInterface} instance.
     * @param toBegin The {@link Package} element.
     * @param pId The Participant Id.
-    * @return The {@link Participant} element which Id is given one. The search starts at
-    *         a 'toBegin' package and then if not found continues to the external
+    * @return The {@link Participant} element which Id is given one. The search starts at a 'toBegin' package and then if not found continues to the external
     *         packages.
     */
    public static Participant findParticipant(XMLInterface xmlInterface, Package toBegin, String pId) {
@@ -1156,16 +1106,14 @@ public class XMLUtil {
    }
 
    /**
-    * Returns {@link Application} element which Id is given one. The search starts at a
-    * 'toBegin' workflow process and then if not found continues to the package and then
-    * external packages.
+    * Returns {@link Application} element which Id is given one. The search starts at a 'toBegin' workflow process and then if not found continues to the
+    * package and then external packages.
     * 
     * @param xmlInterface The {@link XMLInterface} element instance.
     * @param toBegin The {@link WorkflowProcess} element instance.
     * @param id The Id of {@link Application}.
-    * @return The {@link Application} element which Id is given one. The search starts at
-    *         a 'toBegin' workflow process and then if not found continues to the package
-    *         and then external packages.
+    * @return The {@link Application} element which Id is given one. The search starts at a 'toBegin' workflow process and then if not found continues to the
+    *         package and then external packages.
     */
    public static Application findApplication(XMLInterface xmlInterface, WorkflowProcess toBegin, String id) {
       Application a = toBegin.getApplication(id);
@@ -1177,14 +1125,13 @@ public class XMLUtil {
    }
 
    /**
-    * Returns {@link Application} element which Id is given one. The search starts at a
-    * 'toBegin' package and then if not found continues to the external packages.
+    * Returns {@link Application} element which Id is given one. The search starts at a 'toBegin' package and then if not found continues to the external
+    * packages.
     * 
     * @param xmlInterface The {@link XMLInterface} instance.
     * @param toBegin The {@link Package}.
     * @param id The Id of {@link Application}.
-    * @return The {@link Application} element which Id is given one. The search starts at
-    *         a 'toBegin' package and then if not found continues to the external
+    * @return The {@link Application} element which Id is given one. The search starts at a 'toBegin' package and then if not found continues to the external
     *         packages.
     */
    public static Application getApplication(XMLInterface xmlInterface, Package toBegin, String id) {
@@ -1206,15 +1153,14 @@ public class XMLUtil {
    }
 
    /**
-    * Returns {@link TypeDeclaration} element which Id is given one. The search starts at
-    * a 'toBegin' package and then if not found continues to the external packages.
+    * Returns {@link TypeDeclaration} element which Id is given one. The search starts at a 'toBegin' package and then if not found continues to the external
+    * packages.
     * 
     * @param xmlInterface The {@link XMLInterface} instance.
     * @param toBegin The {@link Package}.
     * @param id The Id of {@link TypeDeclaration}.
-    * @return The {@link TypeDeclaration} element which Id is given one. The search starts
-    *         at a 'toBegin' package and then if not found continues to the external
-    *         packages.
+    * @return The {@link TypeDeclaration} element which Id is given one. The search starts at a 'toBegin' package and then if not found continues to the
+    *         external packages.
     */
    public static TypeDeclaration getTypeDeclaration(XMLInterface xmlInterface, Package toBegin, String id) {
       TypeDeclaration td = toBegin.getTypeDeclaration(id);
@@ -1276,30 +1222,25 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of positions (Integers) of string 'dfOrFpId' within the string
-    * 'expr'.
+    * Returns the list of positions (Integers) of string 'dfOrFpId' within the string 'expr'.
     * 
     * @param expr String to check.
     * @param dfOrFpId Id of {@link DataField} or {@link FormalParameter}.
     * @param allVars Map of variables that can occur within expression.
-    * @return The list of positions (Integers) of string 'dfOrFpId' within the string
-    *         'expr'.
+    * @return The list of positions (Integers) of string 'dfOrFpId' within the string 'expr'.
     */
    public static List getUsingPositions(String expr, String dfOrFpId, Map allVars) {
       return getUsingPositions(expr, dfOrFpId, allVars, true);
    }
 
    /**
-    * Returns the list of positions (Integers) of string 'dfOrFpId' within the string
-    * 'expr'.
+    * Returns the list of positions (Integers) of string 'dfOrFpId' within the string 'expr'.
     * 
     * @param expr String to check.
     * @param dfOrFpId Id of {@link DataField} or {@link FormalParameter}.
     * @param allVars Map of variables that can occur within expression.
-    * @param checkPrevAndNextCharacter true if characters prior and post to dfOrFpId
-    *           occurence should be checked for validity
-    * @return The list of positions (Integers) of string 'dfOrFpId' within the string
-    *         'expr'.
+    * @param checkPrevAndNextCharacter true if characters prior and post to dfOrFpId occurence should be checked for validity
+    * @return The list of positions (Integers) of string 'dfOrFpId' within the string 'expr'.
     */
    public static List getUsingPositions(String expr, String dfOrFpId, Map allVars, boolean checkPrevAndNextCharacter) {
       return getUsingPositions(expr, dfOrFpId, allVars, checkPrevAndNextCharacter, false);
@@ -1409,9 +1350,8 @@ public class XMLUtil {
    }
 
    /**
-    * Determines an order of String variables considering the usage of one variable within
-    * others. The variable that is used by another variable will have lower index in the
-    * resulting list.
+    * Determines an order of String variables considering the usage of one variable within others. The variable that is used by another variable will have lower
+    * index in the resulting list.
     */
    public static List<String> determineVariableEvaluationOrder(Map<String, String> variables) throws Exception {
       List<String> sortList = new ArrayList<String>(variables.keySet());
@@ -1610,13 +1550,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns set of given activity's exceptional outgoing transitions within collection
-    * 'tras'.
+    * Returns set of given activity's exceptional outgoing transitions within collection 'tras'.
     * 
     * @param act The {@link Activity} element.
     * @param tras The {@link Transitions} element.
-    * @return Set of given activity's exceptional outgoing transitions within collection
-    *         'tras'.
+    * @return Set of given activity's exceptional outgoing transitions within collection 'tras'.
     */
    public static Set getExceptionalOutgoingTransitions(Activity act, Transitions tras) {
       Set s = new HashSet();
@@ -1644,13 +1582,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns set of given activity's non-exceptional outgoing transitions within
-    * collection 'tras'.
+    * Returns set of given activity's non-exceptional outgoing transitions within collection 'tras'.
     * 
     * @param act The {@link Activity} element.
     * @param tras The {@link Transitions} element.
-    * @return Set of given activity's non-exceptional outgoing transitions within
-    *         collection 'tras'.
+    * @return Set of given activity's non-exceptional outgoing transitions within collection 'tras'.
     */
    public static Set getNonExceptionalOutgoingTransitions(Activity act, Transitions tras) {
       Set s = new HashSet();
@@ -1771,39 +1707,33 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the source of the given association ( {@link Activity} or {@link Artifact}
-    * object).
+    * Returns the source of the given association ( {@link Activity} or {@link Artifact} object).
     * 
     * @param a The {@link Association} element.
-    * @return The source of the given association ( {@link Activity} or {@link Artifact}
-    *         object).
+    * @return The source of the given association ( {@link Activity} or {@link Artifact} object).
     */
    public static XMLCollectionElement getAssociationSource(Association a) {
       return getAssociationSourceOrTarget(a, true);
    }
 
    /**
-    * Returns the target of the given association ( {@link Activity} or {@link Artifact}
-    * object).
+    * Returns the target of the given association ( {@link Activity} or {@link Artifact} object).
     * 
     * @param a The {@link Association} element.
-    * @return The target of the given association ( {@link Activity} or {@link Artifact}
-    *         object).
+    * @return The target of the given association ( {@link Activity} or {@link Artifact} object).
     */
    public static XMLCollectionElement getAssociationTarget(Association a) {
       return getAssociationSourceOrTarget(a, false);
    }
 
    /**
-    * Returns either the source or the target of the given association ( {@link Activity}
-    * or {@link Artifact} object), depending on given boolean parameter (true for
-    * returning the source).
+    * Returns either the source or the target of the given association ( {@link Activity} or {@link Artifact} object), depending on given boolean parameter
+    * (true for returning the source).
     * 
     * @param asoc The {@link Association} element.
     * @param source true if searching for given association's source.
-    * @return Either the source or the target of the given association ( {@link Activity}
-    *         or {@link Artifact} object), depending on given boolean parameter (true for
-    *         returning the source).
+    * @return Either the source or the target of the given association ( {@link Activity} or {@link Artifact} object), depending on given boolean parameter
+    *         (true for returning the source).
     */
    protected static XMLCollectionElement getAssociationSourceOrTarget(Association asoc, boolean source) {
       String st = "Source";
@@ -1819,12 +1749,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of artifacts and associations associated with the given
-    * {@link WorkflowProcess} or {@link ActivitySet}.
+    * Returns the list of artifacts and associations associated with the given {@link WorkflowProcess} or {@link ActivitySet}.
     * 
     * @param wpOrAs {@link WorkflowProcess} or {@link ActivitySet} element.
-    * @return The list of artifacts and associations associated with the given
-    *         {@link WorkflowProcess} or {@link ActivitySet}.
+    * @return The list of artifacts and associations associated with the given {@link WorkflowProcess} or {@link ActivitySet}.
     */
    public static List getAllArtifactsAndAssociationsForWorkflowProcessOrActivitySet(XMLCollectionElement wpOrAs) {
       List ret = new ArrayList();
@@ -1897,13 +1825,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the {@link WorkflowProcess} instance that is referenced by the given
-    * sub-flow activity.
+    * Returns the {@link WorkflowProcess} instance that is referenced by the given sub-flow activity.
     * 
     * @param xmlInterface The {@link XMLInterface} instance.
     * @param sbflwAct The {@link Activity} instance.
-    * @return The {@link WorkflowProcess} instance that is referenced by the given
-    *         sub-flow.
+    * @return The {@link WorkflowProcess} instance that is referenced by the given sub-flow.
     */
    public static WorkflowProcess getSubflowProcess(XMLInterface xmlInterface, Activity sbflwAct) {
       if (sbflwAct.getActivityType() != XPDLConstants.ACTIVITY_TYPE_SUBFLOW)
@@ -1931,12 +1857,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the {@link ActivitySet} instance that is referenced by the given block
-    * activity.
+    * Returns the {@link ActivitySet} instance that is referenced by the given block activity.
     * 
     * @param blockAct The {@link Activity} instance.
-    * @return The {@link ActivitySet} instance that is referenced by the given block
-    *         activity.
+    * @return The {@link ActivitySet} instance that is referenced by the given block activity.
     */
    public static ActivitySet getBlockActivitySet(Activity blockAct) {
       if (blockAct.getActivityType() != XPDLConstants.ACTIVITY_TYPE_BLOCK)
@@ -1949,9 +1873,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of Ids of {@link Package} elements which are referenced by the
-    * given package and recursively Ids of all the {@link Package} elements referenced by
-    * immediate external packages.
+    * Returns the list of Ids of {@link Package} elements which are referenced by the given package and recursively Ids of all the {@link Package} elements
+    * referenced by immediate external packages.
     * 
     * @param xmli The {@link XMLInterface} instance.
     * @param pkg The {@link Package} instance.
@@ -1998,8 +1921,7 @@ public class XMLUtil {
    /**
     * Returns the set of (XML) activities that have split or join.
     * 
-    * @param acts Collection of {@link Activity} objects that are checked for split or
-    *           join, depending on the second parameter.
+    * @param acts Collection of {@link Activity} objects that are checked for split or join, depending on the second parameter.
     * @param sOrJ if 0, activity is checked for split, otherwise it is checked for join
     */
    public static Set getSplitOrJoinActivities(Collection acts, int sOrJ) {
@@ -2024,10 +1946,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the set of {@link BlockActivity} objects contained within given
-    * {@link WorkflowProcess} or {@link ActivitySet}. If the ActivitySet contains other
-    * BlockActivity objects, and the second parameter is set to true, these are also
-    * returned, and so on - which means that implementation may be recursive.
+    * Returns the set of {@link BlockActivity} objects contained within given {@link WorkflowProcess} or {@link ActivitySet}. If the ActivitySet contains other
+    * BlockActivity objects, and the second parameter is set to true, these are also returned, and so on - which means that implementation may be recursive.
     * 
     * @param wpOrAs {@link WorkflowProcess} or {@link ActivitySet} instance.
     * @param recursivly true if search should be recursive.
@@ -2059,8 +1979,7 @@ public class XMLUtil {
     * Returns predefined conformanceClass number.
     * 
     * @param conformanceClass The conformance class we are looking for number
-    * @return 0 if conformance class is NON_BLOCKED, 1 if conformance class is
-    *         LOOP_BLOCKED, 2 if conformance class is FULL_BLOCKED, and -1 otherwise
+    * @return 0 if conformance class is NON_BLOCKED, 1 if conformance class is LOOP_BLOCKED, 2 if conformance class is FULL_BLOCKED, and -1 otherwise
     */
    public static int getConformanceClassNo(String conformanceClass) {
       if (conformanceClass.equals(XPDLConstants.GRAPH_CONFORMANCE_NON_BLOCKED)) {
@@ -2139,12 +2058,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns string representation of XML part representing given ExtendedAttributes
-    * element.
+    * Returns string representation of XML part representing given ExtendedAttributes element.
     * 
     * @param eas The {@link ExtendedAttributes} instance.
-    * @return The string representation of XML part representing given
-    *         {@link ExtendedAttributes} element.
+    * @return The string representation of XML part representing given {@link ExtendedAttributes} element.
     */
    public static String getExtendedAttributesString(ExtendedAttributes eas) throws Exception {
       Document document = null;
@@ -2177,8 +2094,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns a set of starting (the ones without incoming transitions) activities within
-    * the given {@link WorkflowProcess} or {@link ActivitySet}.
+    * Returns a set of starting (the ones without incoming transitions) activities within the given {@link WorkflowProcess} or {@link ActivitySet}.
     * 
     * @param procOrASDef {@link WorkflowProcess} or {@link ActivitySet} instance.
     * @return Set of {@link Activity} instances.
@@ -2205,8 +2121,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns a set of ending (the ones without outgoing transitions) activities within
-    * the given {@link WorkflowProcess} or {@link ActivitySet}.
+    * Returns a set of ending (the ones without outgoing transitions) activities within the given {@link WorkflowProcess} or {@link ActivitySet}.
     * 
     * @param procOrASDef {@link WorkflowProcess} or {@link ActivitySet} instance.
     * @return Set of {@link Activity} instances.
@@ -2234,8 +2149,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of responsibles for the process, and responsibles for whole
-    * package.
+    * Returns the list of responsibles for the process, and responsibles for whole package.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @return The list of {@link Responsible} elements.
@@ -2265,15 +2179,12 @@ public class XMLUtil {
    }
 
    /**
-    * Returns a map of the participants (keys are strings representing participant Id,
-    * values are {@link Participant} objects) accessible to be referenced from the given
-    * package level (according to XPDL spec), including the ones defined in external
-    * packages.
+    * Returns a map of the participants (keys are strings representing participant Id, values are {@link Participant} objects) accessible to be referenced from
+    * the given package level (according to XPDL spec), including the ones defined in external packages.
     * 
     * @param forPkg {@link Package} instance.
     * @param xmlInterface {@link XMLInterface} instance.
-    * @return Map where keys are strings representing participant Id, and values are
-    *         {@link Participant} instances.
+    * @return Map where keys are strings representing participant Id, and values are {@link Participant} instances.
     */
    public static SequencedHashMap getPossibleParticipants(Package forPkg, XMLInterface xmlInterface) {
       SequencedHashMap pars = new SequencedHashMap();
@@ -2298,15 +2209,12 @@ public class XMLUtil {
    }
 
    /**
-    * Returns a map of the participants (keys are strings representing participant Id,
-    * values are {@link Participant} objects) accessible to be referenced from the given
-    * workflow process (according to XPDL spec), including the ones defined in external
-    * packages.
+    * Returns a map of the participants (keys are strings representing participant Id, values are {@link Participant} objects) accessible to be referenced from
+    * the given workflow process (according to XPDL spec), including the ones defined in external packages.
     * 
     * @param forWP {@link WorkflowProcess} instance.
     * @param xmlInterface {@link XMLInterface} instance.
-    * @return Map where keys are strings representing participant Id, and values are
-    *         {@link Participant} instances.
+    * @return Map where keys are strings representing participant Id, and values are {@link Participant} instances.
     */
    public static SequencedHashMap getPossibleParticipants(WorkflowProcess forWP, XMLInterface xmlInterface) {
       List ps = forWP.getParticipants().toElements();
@@ -2320,15 +2228,12 @@ public class XMLUtil {
    }
 
    /**
-    * Returns a map of the applications (keys are strings representing application Id,
-    * values are {@link Application} objects) accessible to be referenced from the given
-    * package level (according to XPDL spec), including the ones defined in external
-    * packages.
+    * Returns a map of the applications (keys are strings representing application Id, values are {@link Application} objects) accessible to be referenced from
+    * the given package level (according to XPDL spec), including the ones defined in external packages.
     * 
     * @param forPkg {@link Package} instance.
     * @param xmlInterface {@link XMLInterface} instance.
-    * @return Map where keys are strings representing application Id, and values are
-    *         {@link Application} instances.
+    * @return Map where keys are strings representing application Id, and values are {@link Application} instances.
     */
    public static SequencedHashMap getPossibleApplications(Package forPkg, XMLInterface xmlInterface) {
       SequencedHashMap aps = new SequencedHashMap();
@@ -2353,15 +2258,12 @@ public class XMLUtil {
    }
 
    /**
-    * Returns a map of the applications (keys are strings representing application Id,
-    * values are {@link Application} objects) accessible to be referenced from the given
-    * workflow process (according to XPDL spec), including the ones defined in external
-    * packages.
+    * Returns a map of the applications (keys are strings representing application Id, values are {@link Application} objects) accessible to be referenced from
+    * the given workflow process (according to XPDL spec), including the ones defined in external packages.
     * 
     * @param forWP {@link WorkflowProcess} instance.
     * @param xmlInterface {@link XMLInterface} instance.
-    * @return Map where keys are strings representing participant Id, and values are
-    *         {@link Application} instances.
+    * @return Map where keys are strings representing participant Id, and values are {@link Application} instances.
     */
    public static SequencedHashMap getPossibleApplications(WorkflowProcess forWP, XMLInterface xmlInterface) {
       List as = forWP.getApplications().toElements();
@@ -2376,13 +2278,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns a map of the data fields (keys are strings representing data field Id,
-    * values are {@link DataField} objects) accessible to be referenced from the given
-    * package/workflow process.
+    * Returns a map of the data fields (keys are strings representing data field Id, values are {@link DataField} objects) accessible to be referenced from the
+    * given package/workflow process.
     * 
     * @param pkgOrWp {@link Package} or {@link WorkflowProcess} instance.
-    * @return Map where keys are strings representing data field Id, and values are
-    *         {@link DataField} instances.
+    * @return Map where keys are strings representing data field Id, and values are {@link DataField} instances.
     */
    public static SequencedHashMap getPossibleDataFields(XMLComplexElement pkgOrWp) {
       List ds = ((DataFields) pkgOrWp.get("DataFields")).toElements();
@@ -2399,16 +2299,12 @@ public class XMLUtil {
    }
 
    /**
-    * Returns a map of the data fields and formal parameters (keys are strings
-    * representing data field or formal parameter Id, values are {@link DataField} or
-    * {@link FormalParameter} objects) accessible to be referenced from the given element.
-    * If element is on Package level, only Package data fields will be returned,
-    * otherwise, the map will contain both Package data fields and WorkflowProcess data
-    * fields and formal parameters.
+    * Returns a map of the data fields and formal parameters (keys are strings representing data field or formal parameter Id, values are {@link DataField} or
+    * {@link FormalParameter} objects) accessible to be referenced from the given element. If element is on Package level, only Package data fields will be
+    * returned, otherwise, the map will contain both Package data fields and WorkflowProcess data fields and formal parameters.
     * 
     * @param expressionElement Instance of object derived from {@link XMLElement}.
-    * @return Map where keys are strings representing data field or formal parameter Id,
-    *         and values are {@link DataField} or {@link FormalParameter} instances.
+    * @return Map where keys are strings representing data field or formal parameter Id, and values are {@link DataField} or {@link FormalParameter} instances.
     */
    public static SequencedHashMap getPossibleVariables(XMLElement expressionElement) {
       SequencedHashMap vars = null;
@@ -2429,14 +2325,12 @@ public class XMLUtil {
    }
 
    /**
-    * Returns a map of the workflow processes (keys are strings representing workflow
-    * process Id, values are {@link WorkflowProcess} objects) accessible to be referenced
-    * by any sub-flow activity inside given {@link Package} element.
+    * Returns a map of the workflow processes (keys are strings representing workflow process Id, values are {@link WorkflowProcess} objects) accessible to be
+    * referenced by any sub-flow activity inside given {@link Package} element.
     * 
     * @param pkg {@link Package} instance.
     * @param xmlInterface {@link XMLInterface} instance.
-    * @return Map where keys are strings representing data workflow process Id, and values
-    *         are {@link WorkflowProcess} instances.
+    * @return Map where keys are strings representing data workflow process Id, and values are {@link WorkflowProcess} instances.
     */
    public static SequencedHashMap getPossibleSubflowProcesses(Package pkg, XMLInterface xmlInterface) {
       SequencedHashMap wps = new SequencedHashMap();
@@ -2461,14 +2355,12 @@ public class XMLUtil {
    }
 
    /**
-    * Returns a map of the type declarations (keys are strings representing
-    * TypeDeclaration Id, values are {@link TypeDeclaration} objects) accessible to be
+    * Returns a map of the type declarations (keys are strings representing TypeDeclaration Id, values are {@link TypeDeclaration} objects) accessible to be
     * referenced from the given package.
     * 
     * @param forPkg {@link Package} instance.
     * @param xmlInterface {@link XMLInterface} instance.
-    * @return Map where keys are strings representing type declaration Id, and values are
-    *         {@link TypeDeclaration} instances.
+    * @return Map where keys are strings representing type declaration Id, and values are {@link TypeDeclaration} instances.
     */
    public static SequencedHashMap getPossibleTypeDeclarations(Package forPkg, XMLInterface xmlInterface) {
       SequencedHashMap tds = new SequencedHashMap();
@@ -2495,10 +2387,8 @@ public class XMLUtil {
    /**
     * Returns if given activity has AND type split or join.
     * 
-    * @param act The {@link Activity} that is checked if it has a AND type split or join,
-    *           depending on the second parameter.
-    * @param sOrJ if 0, activity is checked for AND type split, otherwise it is checked
-    *           for AND type join
+    * @param act The {@link Activity} that is checked if it has a AND type split or join, depending on the second parameter.
+    * @param sOrJ if 0, activity is checked for AND type split, otherwise it is checked for AND type join
     * @return true if given activity has AND type split or join
     */
    public static boolean isANDTypeSplitOrJoin(Activity act, int sOrJ) {
@@ -2524,12 +2414,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns true if the given sub-flow activity is defined to have 'Synchronous'
-    * execution.
+    * Returns true if the given sub-flow activity is defined to have 'Synchronous' execution.
     * 
     * @param sbflwActivityDefinition {@link Activity} instance.
-    * @return true if the given sub-flow activity is defined to have 'Synchronous'
-    *         execution.
+    * @return true if the given sub-flow activity is defined to have 'Synchronous' execution.
     */
    public static boolean isSubflowSynchronous(Activity sbflwActivityDefinition) {
       String type = XPDLConstants.EXECUTION_SYNCHR;
@@ -2545,8 +2433,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the number representing the start mode of the activity (1-Manual,
-    * 0-Automatic or no mode defined).
+    * Returns the number representing the start mode of the activity (1-Manual, 0-Automatic or no mode defined).
     * 
     * @param act {@link Activity} instance.
     * @return The number representing the start mode of the activity.
@@ -2561,8 +2448,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the number representing the finish mode of the activity (1-Manual,
-    * 0-Automatic or no mode defined).
+    * Returns the number representing the finish mode of the activity (1-Manual, 0-Automatic or no mode defined).
     * 
     * @param act {@link Activity} instance.
     * @return The number representing the finish mode of the activity.
@@ -2577,8 +2463,7 @@ public class XMLUtil {
    }
 
    /**
-    * Removes given element from the given list returning the number representing its
-    * position within the list.
+    * Removes given element from the given list returning the number representing its position within the list.
     * 
     * @param l The list.
     * @param el The {@link XMLElement} instance.
@@ -2631,7 +2516,7 @@ public class XMLUtil {
          repH.toXML(document, pkg);
 
          // Use a Transformer for output
-         TransformerFactory tFactory = TransformerFactory.newInstance();
+         TransformerFactory tFactory = new org.apache.xalan.processor.TransformerFactoryImpl();
          Transformer transformer = tFactory.newTransformer();
          transformer.setOutputProperty("indent", "yes");
          transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -2647,9 +2532,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of ordered outgoing transitions (from the given set of Transition
-    * elements) for the given activity. The transitions are ordered based on TransitionRef
-    * elements' order.
+    * Returns the list of ordered outgoing transitions (from the given set of Transition elements) for the given activity. The transitions are ordered based on
+    * TransitionRef elements' order.
     * 
     * @param fromActDef {@link Activity} instance.
     * @param outTransitions Set or {@link Transition} elements.
@@ -2686,8 +2570,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the path to the directory or file, based on relative path and base directory
-    * information.
+    * Returns the path to the directory or file, based on relative path and base directory information.
     * 
     * @param basedir The path to base directory.
     * @param relpath The relative path to file or directory.
@@ -2700,8 +2583,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the path converted to the one corresponding to the OS ('\' for Windows, '/'
-    * for Linux.
+    * Returns the path converted to the one corresponding to the OS ('\' for Windows, '/' for Linux.
     * 
     * @param path The path.
     * @return OS like path.
@@ -2803,8 +2685,7 @@ public class XMLUtil {
    }
 
    /**
-    * Test method that reads input XPDL file and converts it to XPDL 2 file (normally used
-    * for testing conversion of XPDL 1 into XPDL 2 files.
+    * Test method that reads input XPDL file and converts it to XPDL 2 file (normally used for testing conversion of XPDL 1 into XPDL 2 files.
     * 
     * @param inputFile Path to XPDL file.
     * @param readExt true if external packages should be handled.
@@ -2855,8 +2736,7 @@ public class XMLUtil {
    }
 
    /**
-    * Test method that creates sample XPDL with main elements and writes it into the file
-    * specified by given parameter.
+    * Test method that creates sample XPDL with main elements and writes it into the file specified by given parameter.
     * 
     * @param outputFile The location of output file.
     */
@@ -3095,8 +2975,7 @@ public class XMLUtil {
    }
 
    /**
-    * Reads input file and creates XPDL model out of it, returns the {@link Package} -
-    * main XPDL model object.
+    * Reads input file and creates XPDL model out of it, returns the {@link Package} - main XPDL model object.
     * 
     * @param xmli The XMLInterface instance.
     * @param inputFile The path to input file.
@@ -3134,7 +3013,7 @@ public class XMLUtil {
       repH.toXML(document, pkg);
 
       // Use a Transformer for output
-      TransformerFactory tFactory = TransformerFactory.newInstance();
+      TransformerFactory tFactory = new org.apache.xalan.processor.TransformerFactoryImpl();
       Transformer transformer = tFactory.newTransformer();
       transformer.setOutputProperty("indent", "yes");
       transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
@@ -3163,8 +3042,7 @@ public class XMLUtil {
    }
 
    /**
-    * Clones given package using JAVA serialization/deserialization returning identical
-    * Package object.
+    * Clones given package using JAVA serialization/deserialization returning identical Package object.
     * 
     * @param pkg The {@link Package} instance.
     * @return {@link Package} instance.
@@ -3212,8 +3090,8 @@ public class XMLUtil {
    }
 
    /**
-    * Take the given string and chop it up into a series of strings on given boundaries.
-    * This is useful for trying to get an array of strings out of the resource file.
+    * Take the given string and chop it up into a series of strings on given boundaries. This is useful for trying to get an array of strings out of the
+    * resource file.
     * 
     * @param input The string to tokenize.
     * @param boundary The 'tokenization' string.
@@ -3249,8 +3127,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the unique Id (according to XPDL spec) for the element of the given
-    * collection.
+    * Returns the unique Id (according to XPDL spec) for the element of the given collection.
     * 
     * @param cel {@link XMLCollection} instance.
     * @param skipIds Set of Ids to skip.
@@ -3304,8 +3181,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the unique Id (according to XPDL spec) for the element of the given
-    * collection that is similar to the original Id provided.
+    * Returns the unique Id (according to XPDL spec) for the element of the given collection that is similar to the original Id provided.
     * 
     * @param cel {@link XMLCollection} instance.
     * @param skipIds Set of Ids to skip.
@@ -3323,13 +3199,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns true if the given Id for the given {@link XMLCollectionElement} is unique
-    * (according to XPDL spec).
+    * Returns true if the given Id for the given {@link XMLCollectionElement} is unique (according to XPDL spec).
     * 
     * @param el {@link XMLCollectionElement} instance.
     * @param newId The Id to check.
-    * @return true if the given Id for the given {@link XMLCollectionElement} is unique
-    *         (according to XPDL spec).
+    * @return true if the given Id for the given {@link XMLCollectionElement} is unique (according to XPDL spec).
     */
    public static boolean isIdUnique(XMLCollectionElement el, String newId) {
 
@@ -3358,39 +3232,33 @@ public class XMLUtil {
    }
 
    /**
-    * Returns true if the given Id for the given {@link Activity} is unique (according to
-    * XPDL spec).
+    * Returns true if the given Id for the given {@link Activity} is unique (according to XPDL spec).
     * 
     * @param newEl {@link Activity} instance.
     * @param newId The Id to check.
-    * @return true if the given Id for the given {@link Activity} is unique (according to
-    *         XPDL spec).
+    * @return true if the given Id for the given {@link Activity} is unique (according to XPDL spec).
     */
    public static boolean checkActivityId(Activity newEl, String newId) {
       return checkActivityOrArtifactId(newEl, newId);
    }
 
    /**
-    * Returns true if the given Id for the given {@link Artifact} is unique (according to
-    * XPDL spec).
+    * Returns true if the given Id for the given {@link Artifact} is unique (according to XPDL spec).
     * 
     * @param newEl {@link Activity} instance.
     * @param newId Id to check.
-    * @return true if the given Id for the given {@link Artifact} is unique (according to
-    *         XPDL spec).
+    * @return true if the given Id for the given {@link Artifact} is unique (according to XPDL spec).
     */
    public static boolean checkArtifactId(Artifact newEl, String newId) {
       return checkActivityOrArtifactId(newEl, newId);
    }
 
    /**
-    * Returns true if the given Id for the given {@link Activity} or {@link Artifact} is
-    * unique (according to XPDL spec).
+    * Returns true if the given Id for the given {@link Activity} or {@link Artifact} is unique (according to XPDL spec).
     * 
     * @param newEl {@link XMLCollectionElement} instance.
     * @param newId The Id to check.
-    * @return true if the given Id for the given {@link Activity} or {@link Artifact} is
-    *         unique (according to XPDL spec).
+    * @return true if the given Id for the given {@link Activity} or {@link Artifact} is unique (according to XPDL spec).
     */
    protected static boolean checkActivityOrArtifactId(XMLCollectionElement newEl, String newId) {
       List elsWithId = new ArrayList();
@@ -3412,12 +3280,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns true if the given Id for the given {@link Transition} is unique (according
-    * to XPDL spec).
+    * Returns true if the given Id for the given {@link Transition} is unique (according to XPDL spec).
     * 
     * @param newEl {@link Transition} instance.
-    * @param newId The Id to check. true if the given Id for the given {@link Transition}
-    *           is unique (according to XPDL spec).
+    * @param newId The Id to check. true if the given Id for the given {@link Transition} is unique (according to XPDL spec).
     */
    public static boolean checkTransitionId(Transition newEl, String newId) {
       WorkflowProcess proc = XMLUtil.getWorkflowProcess(newEl);
@@ -3434,13 +3300,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns true if the given Id for the given {@link ActivitySet} is unique (according
-    * to XPDL spec).
+    * Returns true if the given Id for the given {@link ActivitySet} is unique (according to XPDL spec).
     * 
     * @param newEl {@link ActivitySet} instance.
     * @param newId The Id to check.
-    * @return true if the given Id for the given {@link ActivitySet} is unique (according
-    *         to XPDL spec).
+    * @return true if the given Id for the given {@link ActivitySet} is unique (according to XPDL spec).
     */
    public static boolean checkActivitySetId(ActivitySet newEl, String newId) {
       WorkflowProcesses wps = XMLUtil.getPackage(newEl).getWorkflowProcesses();
@@ -3457,13 +3321,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns true if the given Id for the given {@link Lane} is unique (according to XPDL
-    * spec).
+    * Returns true if the given Id for the given {@link Lane} is unique (according to XPDL spec).
     * 
     * @param newEl {@link Lane} instance.
     * @param newId The Id to check.
-    * @return true if the given Id for the given {@link Lane} is unique (according to XPDL
-    *         spec).
+    * @return true if the given Id for the given {@link Lane} is unique (according to XPDL spec).
     */
    public static boolean checkLaneId(Lane newEl, String newId) {
       Iterator it = XMLUtil.getPackage(newEl).getPools().toElements().iterator();
@@ -3501,12 +3363,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns true if there is at least one Transition within the given set that is
-    * circular (has the same To and From attribute values).
+    * Returns true if there is at least one Transition within the given set that is circular (has the same To and From attribute values).
     * 
     * @param transitions A set of {@link Transition} elements.
-    * @return true if there is at least one {@link Transition} within the given set that
-    *         is circular.
+    * @return true if there is at least one {@link Transition} within the given set that is circular.
     */
    public static boolean hasCircularTransitions(Set transitions) {
       Iterator it = transitions.iterator();
@@ -3519,12 +3379,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns true if given activity does not have any incoming transitions or has only
-    * one transition which is 'circular' (going both, from and to this activity).
+    * Returns true if given activity does not have any incoming transitions or has only one transition which is 'circular' (going both, from and to this
+    * activity).
     * 
     * @param act {@link Activity} instance.
-    * @return true if given activity does not have any incoming transitions or has only
-    *         one transition which is 'circular'.
+    * @return true if given activity does not have any incoming transitions or has only one transition which is 'circular'.
     */
    public static boolean isStartingActivity(Activity act) {
       Set trans = XMLUtil.getIncomingTransitions(act);
@@ -3535,12 +3394,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns true if given activity does not have any outgoing transitions or has only
-    * one transition which is 'circular' (going both, from and to this activity).
+    * Returns true if given activity does not have any outgoing transitions or has only one transition which is 'circular' (going both, from and to this
+    * activity).
     * 
     * @param act {@link Activity} instance.
-    * @return true if given activity does not have any outgoing transitions or has only
-    *         one transition which is 'circular'.
+    * @return true if given activity does not have any outgoing transitions or has only one transition which is 'circular'.
     */
    public static boolean isEndingActivity(Activity act) {
       Set trans = XMLUtil.getNonExceptionalOutgoingTransitions(act);
@@ -3551,15 +3409,13 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (objects which are derived from {@link XMLElement}
-    * object) that have reference to the given 'referenced' element, within
+    * Returns the list of elements (objects which are derived from {@link XMLElement} object) that have reference to the given 'referenced' element, within
     * {@link Package} or {@link WorkflowProcess} 'pkgOrWp'
     * 
     * @param pkgOrWp {@link Package} or {@link WorkflowProcess} instance.
     * @param referenced {@link XMLComplexElement} instance.
     * @param xmli {@link XMLInterface} instance.
-    * @return The list of elements (objects which are derived from {@link XMLElement}
-    *         object).
+    * @return The list of elements (objects which are derived from {@link XMLElement} object).
     */
    public static List getReferences(XMLComplexElement pkgOrWp, XMLComplexElement referenced, XMLInterface xmli) {
       if (pkgOrWp instanceof Package) {
@@ -3571,14 +3427,13 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (objects which are derived from {@link XMLElement}
-    * object) that have reference to the given 'referenced' element, within given Package.
+    * Returns the list of elements (objects which are derived from {@link XMLElement} object) that have reference to the given 'referenced' element, within
+    * given Package.
     * 
     * @param pkg {@link Package} instance.
     * @param referenced {@link XMLComplexElement} instance.
     * @param xmli {@link XMLInterface} instance.
-    * @return The list of elements (objects which are derived from {@link XMLElement}
-    *         object).
+    * @return The list of elements (objects which are derived from {@link XMLElement} object).
     */
    public static List getReferences(Package pkg, XMLComplexElement referenced, XMLInterface xmli) {
       if (referenced instanceof Package) {
@@ -3600,14 +3455,12 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (objects which are derived from {@link XMLElement}
-    * object) that have reference to the given 'referenced' element, within given
-    * {@link WorkflowProcess}.
+    * Returns the list of elements (objects which are derived from {@link XMLElement} object) that have reference to the given 'referenced' element, within
+    * given {@link WorkflowProcess}.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @param referenced {@link XMLComplexElement} instance.
-    * @return The list of elements (objects which are derived from {@link XMLElement}
-    *         object).
+    * @return The list of elements (objects which are derived from {@link XMLElement} object).
     */
    public static List getReferences(WorkflowProcess wp, XMLComplexElement referenced) {
       if (referenced instanceof Participant) {
@@ -3630,8 +3483,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of {@link Package} elements that have reference to the given
-    * Package element (the given Package is an external package to those Package
+    * Returns the list of {@link Package} elements that have reference to the given Package element (the given Package is an external package to those Package
     * elements).
     * 
     * @param pkg {@link Package} instance.
@@ -3654,15 +3506,12 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from XMLElement) within given Package 'pkg'
-    * that have reference to any of the elements ( {@link Application},
-    * {@link Participant}, {@link TypeDeclaration}, {@link WorkflowProcess}) of the given
-    * 'referenced' {@link Package}.
+    * Returns the list of elements (derived from XMLElement) within given Package 'pkg' that have reference to any of the elements ( {@link Application},
+    * {@link Participant}, {@link TypeDeclaration}, {@link WorkflowProcess}) of the given 'referenced' {@link Package}.
     * 
     * @param pkg {@link Package} instance.
     * @param referenced {@link Package} instance.
-    * @return the list of elements (objects which are derived from {@link XMLElement}
-    *         object).
+    * @return the list of elements (objects which are derived from {@link XMLElement} object).
     */
    public static List getAllExternalPackageReferences(Package pkg, Package referenced) {
       List references = new ArrayList();
@@ -3694,21 +3543,18 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within given Package
-    * 'pkg' that have reference to the given 'referenced' TypeDeclaration.
+    * Returns the list of elements (derived from {@link XMLElement}) within given Package 'pkg' that have reference to the given 'referenced' TypeDeclaration.
     * 
     * @param pkg {@link Package} instance.
     * @param referenced {@link TypeDeclaration} instance.
-    * @return The list of elements (objects which are derived from {@link XMLElement}
-    *         object).
+    * @return The list of elements (objects which are derived from {@link XMLElement} object).
     */
    public static List getReferences(Package pkg, TypeDeclaration referenced) {
       return getTypeDeclarationReferences(pkg, referenced.getId());
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within given
-    * {@link WorkflowProcess} 'wp' that have reference to the given 'referenced'
+    * Returns the list of elements (derived from {@link XMLElement}) within given {@link WorkflowProcess} 'wp' that have reference to the given 'referenced'
     * {@link TypeDeclaration}.
     * 
     * @param wp {@link WorkflowProcess} instance.
@@ -3720,8 +3566,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within given
-    * {@link TypeDeclaration} 'td' that have reference to the given 'referenced'
+    * Returns the list of elements (derived from {@link XMLElement}) within given {@link TypeDeclaration} 'td' that have reference to the given 'referenced'
     * TypeDeclaration.
     * 
     * @param td {@link TypeDeclaration} instance.
@@ -3735,8 +3580,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from XMLElement) within given Package 'pkg'
-    * that have reference to the TypeDeclaration with an Id given by 'referencedId'.
+    * Returns the list of elements (derived from XMLElement) within given Package 'pkg' that have reference to the TypeDeclaration with an Id given by
+    * 'referencedId'.
     * 
     * @param pkg {@link Package} instance.
     * @param referencedId The referenced Id.
@@ -3767,9 +3612,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within given
-    * {@link Package} or {@link WorkflowProcess} 'pkgOrWp' that have reference to the
-    * {@link TypeDeclaration} with an Id given by 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within given {@link Package} or {@link WorkflowProcess} 'pkgOrWp' that have reference to
+    * the {@link TypeDeclaration} with an Id given by 'referencedId'.
     * 
     * @param pkgOrWp {@link Package} or {@link WorkflowProcess} instance.
     * @param referencedId The referenced Id.
@@ -3809,9 +3653,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of {@link DeclaredType} elements within given {@link DataTypes} 
-    * 'dts' that have reference to the {@link TypeDeclaration} with an Id given by
-    * 'typeDeclarationId'.
+    * Returns the list of {@link DeclaredType} elements within given {@link DataTypes} 'dts' that have reference to the {@link TypeDeclaration} with an Id given
+    * by 'typeDeclarationId'.
     * 
     * @param dts {@link DataTypes} instance.
     * @param typeDeclarationId The Id of {@link TypeDeclaration}
@@ -3844,8 +3687,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the Package
-    * where the given Artifact belongs that have reference to this Artifact.
+    * Returns the list of elements (derived from {@link XMLElement}) within the Package where the given Artifact belongs that have reference to this Artifact.
     * 
     * @param referenced {@link Artifact} instance.
     * @return The list of elements (derived from {@link XMLElement}).
@@ -3855,9 +3697,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package} that have reference to the {@link Artifact} with Id equals to
-    * 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package} that have reference to the {@link Artifact} with Id equals
+    * to 'referencedId'.
     * 
     * @param pkg {@link Package} instance.
     * @param referencedId The referenced Id.
@@ -3883,8 +3724,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package} that have reference to the given {@link Association}.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package} that have reference to the given {@link Association}.
     * 
     * @param pkg {@link Package} instance.
     * @param referenced {@link Association} instance.
@@ -3908,8 +3748,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess} that have reference to the given {@link Association}.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess} that have reference to the given
+    * {@link Association}.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @param referenced {@link Association} instance.
@@ -3932,8 +3772,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link ActivitySet} that have reference to the given {@link Association}.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link ActivitySet} that have reference to the given {@link Association}.
     * 
     * @param as {@link ActivitySet} instance.
     * @param referenced {@link Association} instance.
@@ -3944,14 +3783,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package}/{@link WorkflowProcess}/{@link ActivitySet} 'pkgOrWpOrAs' that have
-    * reference to the given association with.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package}/{@link WorkflowProcess}/{@link ActivitySet} 'pkgOrWpOrAs'
+    * that have reference to the given association with.
     * 
-    * @param pkgOrWpOrAs {@link Package}/{@link WorkflowProcess}/{@link ActivitySet}
-    *           instance.
-    * @param referenced {@link Association} instance. return The list of elements (derived
-    *           from {@link XMLElement}).
+    * @param pkgOrWpOrAs {@link Package}/{@link WorkflowProcess}/{@link ActivitySet} instance.
+    * @param referenced {@link Association} instance. return The list of elements (derived from {@link XMLElement}).
     */
    protected static List tGetAssociationReferences(XMLComplexElement pkgOrWpOrAs, Association referenced) {
       List references = new ArrayList();
@@ -3981,9 +3817,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package}/{@link WorkflowProcess} 'pkgOrWp' that have reference to the
-    * {@link Participant} with Id equal to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package}/{@link WorkflowProcess} 'pkgOrWp' that have reference to
+    * the {@link Participant} with Id equal to 'referencedId'.
     * 
     * @param pkgOrWp {@link Package} or {@link WorkflowProcess} instance.
     * @param referencedId The referenced Id.
@@ -4001,8 +3836,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package} that have reference to the given {@link Participant}.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package} that have reference to the given {@link Participant}.
     * 
     * @param pkg {@link Package} instance.
     * @param referenced {@link Participant} instance.
@@ -4017,9 +3851,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package} that have reference to the {@link Participant} with Id equal to
-    * 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package} that have reference to the {@link Participant} with Id
+    * equal to 'referencedId'.
     * 
     * @param pkg {@link Package} instance.
     * @param referencedId The referenced Id.
@@ -4045,8 +3878,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess} that have reference to the given {@link Participant}.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess} that have reference to the given
+    * {@link Participant}.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @param referenced {@link Participant} instance.
@@ -4065,9 +3898,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess} that have reference to the {@link Participant} with Id equal
-    * to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess} that have reference to the {@link Participant}
+    * with Id equal to 'referencedId'.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @param referencedId The referenced Id.
@@ -4090,12 +3922,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package}/{@link WorkflowProcess}/{@link ActivitySet} 'pkgOrWpOrAs' that have
-    * reference to the {@link Participant} with Id equal to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package}/{@link WorkflowProcess}/{@link ActivitySet} 'pkgOrWpOrAs'
+    * that have reference to the {@link Participant} with Id equal to 'referencedId'.
     * 
-    * @param pkgOrWpOrAs {@link Package}/{@link WorkflowProcess}/{@link ActivitySet}
-    *           instance.
+    * @param pkgOrWpOrAs {@link Package}/{@link WorkflowProcess}/{@link ActivitySet} instance.
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
@@ -4145,9 +3975,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package}/{@link WorkflowProcess} 'pkgOrWp' that have reference to the
-    * {@link Application} with Id equal to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package}/{@link WorkflowProcess} 'pkgOrWp' that have reference to
+    * the {@link Application} with Id equal to 'referencedId'.
     * 
     * @param pkgOrWp {@link Package} or {@link WorkflowProcess} instance.
     * @param referencedId The referenced Id.
@@ -4165,8 +3994,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package} that have reference to the given {@link Application}.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package} that have reference to the given {@link Application}.
     * 
     * @param pkg The {@link Package} instance.
     * @param referenced {@link Application} instance.
@@ -4181,9 +4009,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package} that have reference to the {@link Application} which Id is equal to
-    * 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package} that have reference to the {@link Application} which Id is
+    * equal to 'referencedId'.
     * 
     * @param pkg {@link Package} instance.
     * @param referencedId The referenced Id.
@@ -4207,8 +4034,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess} that have reference to the given {@link Application}.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess} that have reference to the given
+    * {@link Application}.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @param referenced {@link Application} instance.
@@ -4227,9 +4054,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess} that have reference to the {@link Application} which Id is
-    * equal to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess} that have reference to the {@link Application}
+    * which Id is equal to 'referencedId'.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @param referencedId The referenced Id.
@@ -4253,9 +4079,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess}/{@link ActivitySet} 'wpOrAs' that have reference to the
-    * {@link Application} which Id is equal to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess}/{@link ActivitySet} 'wpOrAs' that have reference
+    * to the {@link Application} which Id is equal to 'referencedId'.
     * 
     * @param wpOrAs {@link WorkflowProcess} or {@link ActivitySet} instance.
     * @param referencedId The referenced Id.
@@ -4282,9 +4107,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package}/{@link WorkflowProcess} 'pkgOrWp' that have reference to the
-    * {@link Lane} with Id equal to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package}/{@link WorkflowProcess} 'pkgOrWp' that have reference to
+    * the {@link Lane} with Id equal to 'referencedId'.
     * 
     * @param pkgOrWp {@link Package} or {@link WorkflowProcess} instance.
     * @param referencedId The referenced Id.
@@ -4302,8 +4126,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package} that have reference to the given {@link Lane}.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package} that have reference to the given {@link Lane}.
     * 
     * @param pkg {@link Package} instance.
     * @param referenced {@link Lane} instance.
@@ -4314,8 +4137,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package} that have reference to the {@link Lane} with Id equal to
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package} that have reference to the {@link Lane} with Id equal to
     * 'referencedId'.
     * 
     * @param pkg {@link Package} instance.
@@ -4348,16 +4170,14 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from XMLElement) within the given
-    * WorkflowProcess that have reference to the given Lane.
+    * Returns the list of elements (derived from XMLElement) within the given WorkflowProcess that have reference to the given Lane.
     */
    public static List getReferences(WorkflowProcess wp, Lane referenced) {
       return getLaneReferences(wp, referenced.getId());
    }
 
    /**
-    * Returns the list of elements (derived from XMLElement) within the given
-    * {@link WorkflowProcess} that have reference to the {@link Lane} with Id equal to
+    * Returns the list of elements (derived from XMLElement) within the given {@link WorkflowProcess} that have reference to the {@link Lane} with Id equal to
     * 'referencedId'.
     * 
     * @param wp {@link WorkflowProcess} instance.
@@ -4382,12 +4202,10 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package}/{@link WorkflowProcess}/{@link ActivitySet} 'pkgOrWpOrAs' that have
-    * reference to the {@link Lane} with Id equal to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package}/{@link WorkflowProcess}/{@link ActivitySet} 'pkgOrWpOrAs'
+    * that have reference to the {@link Lane} with Id equal to 'referencedId'.
     * 
-    * @param pkgOrWpOrAs {@link Package} or {@link WorkflowProcess} or {@link ActivitySet}
-    *           instance.
+    * @param pkgOrWpOrAs {@link Package} or {@link WorkflowProcess} or {@link ActivitySet} instance.
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
@@ -4442,9 +4260,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package}/{@link WorkflowProcess} 'pkgOrWp' that have reference to the
-    * {@link DataField} with Id equal to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package}/{@link WorkflowProcess} 'pkgOrWp' that have reference to
+    * the {@link DataField} with Id equal to 'referencedId'.
     * 
     * @param pkgOrWp {@link Package} or {@link WorkflowProcess} instance.
     * @param referencedId The referenced Id.
@@ -4462,8 +4279,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package} that have reference to the given {@link DataField}.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package} that have reference to the given {@link DataField}.
     * 
     * @param pkg {@link Package} instance.
     * @param referenced {@link DataField} instance.
@@ -4474,9 +4290,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package} that have reference to the {@link DataField} with Id equal to
-    * 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package} that have reference to the {@link DataField} with Id equal
+    * to 'referencedId'.
     * 
     * @param pkg {@link Package} instance.
     * @param referencedId The referenced Id.
@@ -4502,8 +4317,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess} that have reference to the given {@link DataField}.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess} that have reference to the given {@link DataField}
+    * .
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @param referenced {@link DataField} instance.
@@ -4518,9 +4333,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess} that have reference to the {@link DataField} with Id equal
-    * to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess} that have reference to the {@link DataField} with
+    * Id equal to 'referencedId'.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @param referencedId The referenced Id.
@@ -4544,8 +4358,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package} that have reference to the given {@link WorkflowProcess}.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package} that have reference to the given {@link WorkflowProcess}.
     * 
     * @param pkg {@link Package} instance.
     * @param referenced {@link WorkflowProcess} instance.
@@ -4561,9 +4374,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link Package} that have reference to the {@link WorkflowProcess} with Id equal to
-    * 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link Package} that have reference to the {@link WorkflowProcess} with Id
+    * equal to 'referencedId'.
     * 
     * @param pkg {@link Package} instance.
     * @param referencedId The referenced Id.
@@ -4593,8 +4405,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess} 'wp' that have reference to the given
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess} 'wp' that have reference to the given
     * {@link WorkflowProcess} 'referenced'.
     * 
     * @param wp {@link WorkflowProcess} instance.
@@ -4606,9 +4417,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess} 'wp' that have reference to the {@link WorkflowProcess} with
-    * Id equal to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess} 'wp' that have reference to the
+    * {@link WorkflowProcess} with Id equal to 'referencedId'.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @param referencedId The referenced Id.
@@ -4632,9 +4442,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess}/{@link ActivitySet} 'wpOrAs' that have reference to the
-    * {@link WorkflowProcess} with Id equal to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess}/{@link ActivitySet} 'wpOrAs' that have reference
+    * to the {@link WorkflowProcess} with Id equal to 'referencedId'.
     * 
     * @param wpOrAs {@link WorkflowProcess} or {@link ActivitySet} instance.
     * @param referencedId The referenced Id.
@@ -4661,8 +4470,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess} that have reference to the given {@link FormalParameter}.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess} that have reference to the given
+    * {@link FormalParameter}.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @param referenced {@link FormalParameter} instance.
@@ -4678,9 +4487,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess} that have reference to the {@link FormalParameter} with Id
-    * equal to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess} that have reference to the {@link FormalParameter}
+    * with Id equal to 'referencedId'.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @param referencedId The referenced Id.
@@ -4707,9 +4515,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess}/{@link ActivitySet} 'wpOrAs' that have reference to
-    * {@link DataField}/{@link FormalParameter} with Id equal to 'dfOrFpId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess}/{@link ActivitySet} 'wpOrAs' that have reference
+    * to {@link DataField}/{@link FormalParameter} with Id equal to 'dfOrFpId'.
     * 
     * @param wpOrAs {@link WorkflowProcess} or {@link ActivitySet} instance.
     * @param dfOrFpId The Id of {@link DataField} or {@link FormalParameter}.
@@ -4813,8 +4620,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess} that have reference to the given {@link ActivitySet}.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess} that have reference to the given
+    * {@link ActivitySet}.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @param referenced {@link ActivitySet} instance.
@@ -4825,9 +4632,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess} that have reference to the {@link ActivitySet} with Id equal
-    * to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess} that have reference to the {@link ActivitySet}
+    * with Id equal to 'referencedId'.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @param referencedId The referenced Id.
@@ -4859,9 +4665,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link ActivitySet} 'as' that have reference to the given {@link ActivitySet} 
-    * 'referenced'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link ActivitySet} 'as' that have reference to the given
+    * {@link ActivitySet} 'referenced'.
     * 
     * @param as {@link ActivitySet} instance.
     * @param referenced {@link ActivitySet} instance.
@@ -4872,9 +4677,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link ActivitySet} that have reference to the ActivitySet with Id equal to
-    * 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link ActivitySet} that have reference to the ActivitySet with Id equal
+    * to 'referencedId'.
     * 
     * @param as {@link ActivitySet} instance.
     * @param referencedId The referenced Id.
@@ -4894,8 +4698,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of {@link BlockActivity} elements within the given
-    * {@link WorkflowProcess}/{@link ActivitySet} 'wpOrAs' that have reference to the
+    * Returns the list of {@link BlockActivity} elements within the given {@link WorkflowProcess}/{@link ActivitySet} 'wpOrAs' that have reference to the
     * ActivitySet with Id equal to 'referencedId'.
     * 
     * @param wpOrAs {@link WorkflowProcess} or {@link ActivitySet} instance.
@@ -4923,9 +4726,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the whole
-    * {@link Package} where given {@link Activity} belongs that have reference to this
-    * activity.
+    * Returns the list of elements (derived from {@link XMLElement}) within the whole {@link Package} where given {@link Activity} belongs that have reference
+    * to this activity.
     * 
     * @param act The {@link Activity} instance.
     * @return The list of elements (derived from {@link XMLElement}).
@@ -4935,9 +4737,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the given
-    * {@link WorkflowProcess}/{@link ActivitySet} 'wpOrAs' that have reference to the
-    * {@link Activity} with Id equal to 'referencedId'.
+    * Returns the list of elements (derived from {@link XMLElement}) within the given {@link WorkflowProcess}/{@link ActivitySet} 'wpOrAs' that have reference
+    * to the {@link Activity} with Id equal to 'referencedId'.
     * 
     * @param wpOrAs {@link WorkflowProcess} or {@link ActivitySet} instance.
     * @param referencedId The referenced Id.
@@ -4967,9 +4768,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of elements (derived from {@link XMLElement}) within the whole
-    * {@link Package} where given {@link Transition} belongs that have reference to this
-    * transition.
+    * Returns the list of elements (derived from {@link XMLElement}) within the whole {@link Package} where given {@link Transition} belongs that have reference
+    * to this transition.
     * 
     * @param tra {@link Transition} instance.
     * @return The list of elements (derived from {@link XMLElement}).
@@ -4989,12 +4789,10 @@ public class XMLUtil {
    }
 
    /**
-    * Corrects {@link Split} and {@link Join} element of activities within the given
-    * {@link Package}. Returns true if there was at least one correction.
+    * Corrects {@link Split} and {@link Join} element of activities within the given {@link Package}. Returns true if there was at least one correction.
     * 
     * @param pkg {@link Package} instance.
-    * @return true if there was at least one correction to {@link Split}/{@link Join}
-    *         elements.
+    * @return true if there was at least one correction to {@link Split}/{@link Join} elements.
     */
    public static boolean correctSplitsAndJoins(Package pkg) {
       boolean changed = false;
@@ -5008,12 +4806,10 @@ public class XMLUtil {
    }
 
    /**
-    * Corrects {@link Split} and {@link Join} element of activities within the given
-    * {@link WorkflowProcess}. Returns true if there was at least one correction.
+    * Corrects {@link Split} and {@link Join} element of activities within the given {@link WorkflowProcess}. Returns true if there was at least one correction.
     * 
     * @param wp {@link WorkflowProcess} instance.
-    * @return true if there was at least one correction to {@link Split}/{@link Join}
-    *         elements.
+    * @return true if there was at least one correction to {@link Split}/{@link Join} elements.
     */
    public static boolean correctSplitsAndJoins(WorkflowProcess wp) {
       boolean changed = correctSplitsAndJoins(wp.getActivities().toElements());
@@ -5026,12 +4822,10 @@ public class XMLUtil {
    }
 
    /**
-    * Corrects {@link Split} and {@link Join} element of activities within the given list.
-    * Returns true if there was at least one correction.
+    * Corrects {@link Split} and {@link Join} element of activities within the given list. Returns true if there was at least one correction.
     * 
     * @param acts The list of {@link Activity} elements.
-    * @return true if there was at least one correction to {@link Split}/{@link Join}
-    *         elements.
+    * @return true if there was at least one correction to {@link Split}/{@link Join} elements.
     */
    public static boolean correctSplitsAndJoins(List acts) {
       boolean changed = false;
@@ -5044,12 +4838,10 @@ public class XMLUtil {
    }
 
    /**
-    * Corrects {@link Split} and {@link Join} element of given {@link Activity}. Returns
-    * true if there was at least one correction.
+    * Corrects {@link Split} and {@link Join} element of given {@link Activity}. Returns true if there was at least one correction.
     * 
     * @param act {@link Activity} instance.
-    * @return true if there was at least one correction to {@link Split}/{@link Join}
-    *         elements.
+    * @return true if there was at least one correction to {@link Split}/{@link Join} elements.
     */
    public static boolean correctSplitAndJoin(Activity act) {
       Set ogt = XMLUtil.getOutgoingTransitions(act);
@@ -5162,8 +4954,7 @@ public class XMLUtil {
    /**
     * Updates references to the {@link Activity} which Id changed.
     * 
-    * @param refsTrasAndAsocsToFromTargetSource The list of elements derived from
-    *           {@link XMLElement}.
+    * @param refsTrasAndAsocsToFromTargetSource The list of elements derived from {@link XMLElement}.
     * @param oldActId The old activity Id.
     * @param newActId The new activity Id.
     */
@@ -5189,8 +4980,7 @@ public class XMLUtil {
    }
 
    /**
-    * Updates references to the {@link Transition} which Id changed for activity's
-    * sub-elements for the activities within 'acts' collection.
+    * Updates references to the {@link Transition} which Id changed for activity's sub-elements for the activities within 'acts' collection.
     * 
     * @param acts {@link Activities} instance.
     * @param actFromId The old activity Id.
@@ -5203,8 +4993,7 @@ public class XMLUtil {
    }
 
    /**
-    * Updates references to the {@link Transition} which Id changed for activity's
-    * sub-elements for the given activity 'act'.
+    * Updates references to the {@link Transition} which Id changed for activity's sub-elements for the given activity 'act'.
     * 
     * @param act {@link Activity} instance.
     * @param oldTraId Old transition Id.
@@ -5223,8 +5012,7 @@ public class XMLUtil {
    }
 
    /**
-    * Updates references to the {@link Transition} which 'From' attribute changed for
-    * activity's sub-elements for the activities within 'acts' collection.
+    * Updates references to the {@link Transition} which 'From' attribute changed for activity's sub-elements for the activities within 'acts' collection.
     * 
     * @param acts {@link Activities} instance.
     * @param traId Transition Id.
@@ -5247,8 +5035,7 @@ public class XMLUtil {
    }
 
    /**
-    * Updates references to the {@link Transition} which 'To' attribute changed for
-    * activity's sub-elements for the activities within 'acts' collection.
+    * Updates references to the {@link Transition} which 'To' attribute changed for activity's sub-elements for the activities within 'acts' collection.
     * 
     * @param acts {@link Activities} instance.
     * @param traId Transition Id.
@@ -5271,8 +5058,7 @@ public class XMLUtil {
    }
 
    /**
-    * Removes the transitions that are referencing given {@link Activity} from their
-    * collection.
+    * Removes the transitions that are referencing given {@link Activity} from their collection.
     * 
     * @param act {@link Activity} instance.
     */
@@ -5300,8 +5086,7 @@ public class XMLUtil {
    }
 
    /**
-    * Removes the transitions that are referencing any of the activities within the given
-    * list from their collection.
+    * Removes the transitions that are referencing any of the activities within the given list from their collection.
     * 
     * @param acts The list of {@link Activity} elements.
     */
@@ -5344,8 +5129,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns List of {@link Transition} elements which source or target (depending on
-    * 'isToAct' parameter) is activity with Id equal to 'actId'.
+    * Returns List of {@link Transition} elements which source or target (depending on 'isToAct' parameter) is activity with Id equal to 'actId'.
     * 
     * @param tras {@link Transitions} instance.
     * @param actId The Id of activity.
@@ -5371,8 +5155,7 @@ public class XMLUtil {
    }
 
    /**
-    * Removes the associations that are referencing given {@link Activity}/
-    * {@link Artifact} from their collection.
+    * Removes the associations that are referencing given {@link Activity}/ {@link Artifact} from their collection.
     * 
     * @param a {@link Activity} or {@link Artifact} instance.
     */
@@ -5386,8 +5169,7 @@ public class XMLUtil {
    }
 
    /**
-    * Removes the associations that are referencing any of the activities/artifacts within
-    * the given list from their collection.
+    * Removes the associations that are referencing any of the activities/artifacts within the given list from their collection.
     * 
     * @param actsOrArts The list of {@link Activity} and {@link Artifact} elements.
     */
@@ -5408,8 +5190,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns set of {@link Association} elements which source or target is given
-    * {@link Activity}/{@link Artifact}.
+    * Returns set of {@link Association} elements which source or target is given {@link Activity}/{@link Artifact}.
     * 
     * @param a {@link Activity} or {@link Artifact} element.
     * @return Set of {@link Association} elements.
@@ -5421,8 +5202,8 @@ public class XMLUtil {
    }
 
    /**
-    * Returns List of {@link Association} elements which source or target (depending on
-    * 'isToA' parameter) is {@link Activity}/{@link Artifact} with Id equal to 'aId'
+    * Returns List of {@link Association} elements which source or target (depending on 'isToA' parameter) is {@link Activity}/{@link Artifact} with Id equal to
+    * 'aId'
     * 
     * @param asocs {@link Associations} instance.
     * @param aId Id of {@link Activity} or {@link Artifact}.
@@ -5500,8 +5281,7 @@ public class XMLUtil {
    }
 
    /**
-    * Creates {@link Pool} elements for all the {@link WorkflowProcess} elements from the
-    * given list.
+    * Creates {@link Pool} elements for all the {@link WorkflowProcess} elements from the given list.
     * 
     * @param wps List of {@link WorkflowProcess} instances.
     */
@@ -5533,8 +5313,7 @@ public class XMLUtil {
    }
 
    /**
-    * Removes {@link Pool} elements that are referencing {@link WorkflowProcess} elements
-    * from the given list.
+    * Removes {@link Pool} elements that are referencing {@link WorkflowProcess} elements from the given list.
     * 
     * @param wps List of {@link WorkflowProcess} elements.
     */
@@ -5547,8 +5326,7 @@ public class XMLUtil {
    }
 
    /**
-    * Removes and returns {@link Pool} element that is referencing given
-    * {@link WorkflowProcess}.
+    * Removes and returns {@link Pool} element that is referencing given {@link WorkflowProcess}.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @return {@link Pool} for the given {@link WorkflowProcess}.
@@ -5560,8 +5338,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns {@link WorkflowProcess} element that is referenced by the given {@link Pool}
-    * .
+    * Returns {@link WorkflowProcess} element that is referenced by the given {@link Pool} .
     * 
     * @param pool {@link Pool} instance.
     * @return {@link WorkflowProcess} referenced by the given {@link Pool}.
@@ -5571,8 +5348,7 @@ public class XMLUtil {
    }
 
    /**
-    * Creates {@link Pool} elements for all the {@link ActivitySet} elements from the
-    * given list.
+    * Creates {@link Pool} elements for all the {@link ActivitySet} elements from the given list.
     * 
     * @param ass List of {@link ActivitySet} elements.
     */
@@ -5604,8 +5380,7 @@ public class XMLUtil {
    }
 
    /**
-    * Removes {@link Pool} elements that are referencing {@link ActivitySet} elements from
-    * the given list.
+    * Removes {@link Pool} elements that are referencing {@link ActivitySet} elements from the given list.
     * 
     * @param ass The list of {@link ActivitySet} elements.
     */
@@ -5618,8 +5393,7 @@ public class XMLUtil {
    }
 
    /**
-    * Removes and returns {@link Pool} element that is referencing given
-    * {@link ActivitySet}.
+    * Removes and returns {@link Pool} element that is referencing given {@link ActivitySet}.
     * 
     * @param as {@link ActivitySet} instance.
     * @return {@link Pool} referencing given {@link ActivitySet}.
@@ -5641,8 +5415,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns {@link Pool} element for the given {@link WorkflowProcess}/
-    * {@link ActivitySet}.
+    * Returns {@link Pool} element for the given {@link WorkflowProcess}/ {@link ActivitySet}.
     * 
     * @param wpOrAs {@link WorkflowProcess} or {@link ActivitySet} instance.
     * @return {@link Pool} for the given {@link WorkflowProcess}/{@link ActivitySet}.
@@ -5676,12 +5449,10 @@ public class XMLUtil {
    }
 
    /**
-    * Removes all {@link Artifact} and {@link Association} objects that 'logically' belong
-    * to any of {@link WorkflowProcess} or {@link ActivitySet} elements from the given
-    * list.
+    * Removes all {@link Artifact} and {@link Association} objects that 'logically' belong to any of {@link WorkflowProcess} or {@link ActivitySet} elements
+    * from the given list.
     * 
-    * @param wpsOrAss The list of {@link WorkflowProcess} and/or {@link ActivitySet}
-    *           elements.
+    * @param wpsOrAss The list of {@link WorkflowProcess} and/or {@link ActivitySet} elements.
     */
    public static void removeArtifactAndAssociationsForProcessesOrActivitySets(List wpsOrAss) {
       Iterator it = wpsOrAss.iterator();
@@ -5692,8 +5463,7 @@ public class XMLUtil {
    }
 
    /**
-    * Removes all {@link Artifact} and {@link Association} objects that 'logically' belong
-    * to given {@link WorkflowProcess}/{@link ActivitySet}.
+    * Removes all {@link Artifact} and {@link Association} objects that 'logically' belong to given {@link WorkflowProcess}/{@link ActivitySet}.
     * 
     * @param wpOrAs {@link WorkflowProcess} or {@link ActivitySet} instance.
     * @return The list of removed {@link Artifact} and {@link Association} elements.
@@ -5709,8 +5479,7 @@ public class XMLUtil {
    }
 
    /**
-    * Removes all {@link Artifact} and {@link Association} objects that 'logically' belong
-    * to given {@link WorkflowProcess}/{@link ActivitySet}.
+    * Removes all {@link Artifact} and {@link Association} objects that 'logically' belong to given {@link WorkflowProcess}/{@link ActivitySet}.
     * 
     * @param refDeclaredTypes The list of {@link DeclaredType} elements.
     * @param newTdId The new Id of {@link TypeDeclaration}.
@@ -5724,8 +5493,7 @@ public class XMLUtil {
    }
 
    /**
-    * Updates application references of given {@link TaskApplication} elements in the list
-    * to the new {@link Application} Id.
+    * Updates application references of given {@link TaskApplication} elements in the list to the new {@link Application} Id.
     * 
     * @param refTA The list of {@link TaskApplication} elements.
     * @param newAppId The Id of new {@link Application}.
@@ -5741,8 +5509,7 @@ public class XMLUtil {
    /**
     * Updates lane references of given elements in the list to the new {@link Lane} Id.
     * 
-    * @param refNGIsAndNestedLanes List of {@link NodeGraphicsInfo} and {@link NestedLane}
-    *           elements.
+    * @param refNGIsAndNestedLanes List of {@link NodeGraphicsInfo} and {@link NestedLane} elements.
     * @param newLaneId The new Id of {@link Lane}.
     */
    public static void updateLaneReferences(List refNGIsAndNestedLanes, String newLaneId) {
@@ -5754,11 +5521,9 @@ public class XMLUtil {
    }
 
    /**
-    * Updates participant references of given elements in the list to the new
-    * {@link Participant} Id.
+    * Updates participant references of given elements in the list to the new {@link Participant} Id.
     * 
-    * @param refPerfsAndResps The list of {@link Performer} and {@link Responsible}
-    *           elements.
+    * @param refPerfsAndResps The list of {@link Performer} and {@link Responsible} elements.
     * @param newParId The new Id of {@link Participant}.
     */
    public static void updateParticipantReferences(List refPerfsAndResps, String newParId) {
@@ -5770,8 +5535,7 @@ public class XMLUtil {
    }
 
    /**
-    * Updates workflow process references of given elements in the list to the new
-    * {@link WorkflowProcess} Id.
+    * Updates workflow process references of given elements in the list to the new {@link WorkflowProcess} Id.
     * 
     * @param refSbflwsOrPools The list of {@link SubFlow} and {@link Pool} elements.
     * @param newWpId The new Id of {@link WorkflowProcess}.
@@ -5789,8 +5553,7 @@ public class XMLUtil {
    }
 
    /**
-    * Updates activity set references of given elements in the list to the new
-    * {@link ActivitySet} Id.
+    * Updates activity set references of given elements in the list to the new {@link ActivitySet} Id.
     * 
     * @param refBlocks The list of {@link BlockActivity} and {@link Pool} elements.
     * @param newAsId The new Id of {@link ActivitySet}.
@@ -5809,12 +5572,9 @@ public class XMLUtil {
    }
 
    /**
-    * Updates data field/formal parameter references of given elements in the list to the
-    * new {@link DataField}/{@link FormalParameter} Id.
+    * Updates data field/formal parameter references of given elements in the list to the new {@link DataField}/{@link FormalParameter} Id.
     * 
-    * @param refAPsOrPerfsOrCondsOrDlConds The list of {@link ActualParameter},
-    *           {@link Performer}, {@link DeadlineCondition} and {@link Condition}
-    *           elements.
+    * @param refAPsOrPerfsOrCondsOrDlConds The list of {@link ActualParameter}, {@link Performer}, {@link DeadlineCondition} and {@link Condition} elements.
     * @param oldDfOrFpId The old Id of {@link DataField} or {@link FormalParameter}.
     * @param newDfOrFpId The new Id of {@link DataField} or {@link FormalParameter}.
     */
@@ -5851,8 +5611,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of {@link Activity} elements from the given {@link Package} which
-    * type is contained in the list 'types'.
+    * Returns the list of {@link Activity} elements from the given {@link Package} which type is contained in the list 'types'.
     * 
     * @param pkg {@link Package} instance.
     * @param types The list of Integer elements representing activity types.
@@ -5869,8 +5628,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of {@link Activity} elements from the given {@link WorkflowProcess}
-    * which type is contained in the list 'types'.
+    * Returns the list of {@link Activity} elements from the given {@link WorkflowProcess} which type is contained in the list 'types'.
     * 
     * @param wp {@link WorkflowProcess} instance.
     * @param types The list of Integer elements representing activity types.
@@ -5888,8 +5646,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns the list of {@link Activity} elements from the given 'acts' collection which
-    * type is contained in the list 'types'.
+    * Returns the list of {@link Activity} elements from the given 'acts' collection which type is contained in the list 'types'.
     * 
     * @param acts {@link Activities} instance.
     * @param types The list of Integer elements representing activity types.
@@ -5911,15 +5668,13 @@ public class XMLUtil {
    }
 
    /**
-    * Returns a map of the participants (keys are strings representing participant Id,
-    * values are {@link Participant} objects) which Ids are possible values for the given
-    * {@link Responsible}.
+    * Returns a map of the participants (keys are strings representing participant Id, values are {@link Participant} objects) which Ids are possible values for
+    * the given {@link Responsible}.
     * 
     * @param resp {@link Responsibles} instance - parent of given {@link Responsible}.
     * @param rsp {@link Responsible} instance.
     * @param xmli {@link XMLInterface} instance.
-    * @return Map where keys are Strings representing Id of participant, and values are
-    *         {@link Participant} elements.
+    * @return Map where keys are Strings representing Id of participant, and values are {@link Participant} elements.
     */
    public static SequencedHashMap getPossibleResponsibles(Responsibles resp, Responsible rsp, XMLInterface xmli) {
       SequencedHashMap choices = null;
@@ -5940,13 +5695,11 @@ public class XMLUtil {
    }
 
    /**
-    * Returns true if there is a cross-reference between given {@link Package} and any of
-    * its external packages (recursivly).
+    * Returns true if there is a cross-reference between given {@link Package} and any of its external packages (recursivly).
     * 
     * @param pkg {@link Package} instance.
     * @param xmli {@link XMLInterface} instance.
-    * @return true if there is a cross-reference between given {@link Package} and any of
-    *         its external packages (recursivly).
+    * @return true if there is a cross-reference between given {@link Package} and any of its external packages (recursivly).
     */
    public static boolean doesCrossreferenceExist(Package pkg, XMLInterface xmli) {
       boolean crossRefs = false;
@@ -5983,8 +5736,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns set of all the extended attribute names for the specified element type
-    * within the given {@link Package}.
+    * Returns set of all the extended attribute names for the specified element type within the given {@link Package}.
     * 
     * @param pkg {@link Package} instance.
     * @param cel Element derived from {@link XMLComplexElement}.
@@ -6049,8 +5801,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns set of all the extended attribute names for the elements in the given
-    * collection.
+    * Returns set of all the extended attribute names for the elements in the given collection.
     * 
     * @param elements Collection of elements derived from {@link XMLComplexElement}.
     * @return Set of String elements.
@@ -6066,8 +5817,7 @@ public class XMLUtil {
    }
 
    /**
-    * Returns set of all the extended attribute names for extended attributes within given
-    * collection.
+    * Returns set of all the extended attribute names for extended attributes within given collection.
     * 
     * @param extAttribs Collection of {@link ExtendedAttribute} elements.
     * @return Set of String elements.
