@@ -176,6 +176,7 @@
          <fileset dir="${tools.dir}/xml-commons" includes="*.jar"/>
          <fileset dir="${tools.dir}/ant" includes="*.jar"/>
          <fileset dir="${tools.dir}/antcontrib" includes="*.jar"/>
+         <fileset dir="${tools.dir}/xalan" includes="*.jar"/>
       </copy>
 
       <!-- copy everything from examples directory -->
@@ -290,6 +291,9 @@
             includeAntRuntime="false">
          <classpath>
             <fileset dir="${tools.dir}/xerces">
+               <include name="*.jar" />
+            </fileset>
+            <fileset dir="${tools.dir}/xalan">
                <include name="*.jar" />
             </fileset>
          </classpath>
@@ -864,6 +868,7 @@
       </replace>
       <copy todir="${tmp.component.dir}">
          <fileset dir="${tools.dir}">
+            <include name="xalan/**" />
             <include name="xerces/**" />
             <include name="xml-commons/**" />
          </fileset>
