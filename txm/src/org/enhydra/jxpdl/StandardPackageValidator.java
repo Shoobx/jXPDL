@@ -34,6 +34,7 @@ import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -1556,6 +1557,7 @@ public class StandardPackageValidator implements XMLValidator {
          transformer.setOutputProperty("indent", "yes");
          transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
          transformer.setOutputProperty("encoding", encoding);
+         transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
          DOMSource source = new DOMSource(document);
          StreamResult result = new StreamResult(baos);
          transformer.transform(source, result);
