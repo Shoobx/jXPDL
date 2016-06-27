@@ -160,6 +160,14 @@
 		</copy>
 		<!--copy file="${doc.dir}/${testcase.name}.xml" tofile="${tmp.dir}/${testcase.name}.xml" /-->
 		
+		<copy todir="${tmp.dir}">
+			<fileset dir="${tools.dir}/fop-resources/">
+				<include name="**" />
+				<exclude name="*.properties" />
+				<exclude name="*.txt" />
+			</fileset>
+		</copy>
+		
 		<replace file="${tmp.dir}/${docbook.name}.xml" encoding="utf-8" token="../tools/docbook-dtd/dtd/docbook.dtd" value="../../tools/docbook-dtd/dtd/docbook.dtd" />
 		<replace file="${tmp.dir}/${testcase.name}.xml" encoding="utf-8" token="../tools/docbook-dtd/dtd/docbook.dtd" value="../../tools/docbook-dtd/dtd/docbook.dtd" />
 	</target>
@@ -226,7 +234,7 @@
 
 		<echo message="docbook to PDF ${tmp.dir}/${docbook.name}.xml" />
 		<java classname="org.apache.fop.cli.Main" classpathref="fop-classpath" fork="true" dir="${tmp.dir}" output="log.txt">
-			<arg line="-c ${tools.dir}/fop/userconfig.xml" />
+			<arg line="-c userconfig.xml" />
 			<arg line="-fo '${docbook.name}.fo'" />
 			<arg line="-pdf '${app.name}-current.doc.pdf'" />
 		</java>
@@ -255,7 +263,7 @@
 
 		<echo message="docbook to PDF ${tmp.dir}/${testcase.name}.xml" />
 		<java classname="org.apache.fop.cli.Main" classpathref="fop-classpath" fork="true" failonerror="true" dir="${tmp.dir}" output="log.txt">
-			<arg line="-c ${tools.dir}/fop/userconfig.xml" />
+			<arg line="-c userconfig.xml" />
 			<arg line="-fo '${testcase.name}.fo'" />
 			<arg line="-pdf '${app.name}-current.test.pdf'" />
 		</java>

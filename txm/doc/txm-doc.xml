@@ -2421,6 +2421,10 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
 
       <itemizedlist>
         <listitem>
+          <para>Support FOP 2.0 and font configuration for documentation build.</para>
+        </listitem>
+
+        <listitem>
           <para>StandardPackageValidator now don't validate non relevant
           entries (to improve performance)</para>
         </listitem>
