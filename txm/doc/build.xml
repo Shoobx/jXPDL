@@ -234,7 +234,7 @@
 
 		<echo message="docbook to PDF ${tmp.dir}/${docbook.name}.xml" />
 		<java classname="org.apache.fop.cli.Main" classpathref="fop-classpath" fork="true" dir="${tmp.dir}" output="log.txt">
-			<arg line="-c userconfig.xml" />
+			<arg line="-c conf/userconfig.xml" />
 			<arg line="-fo '${docbook.name}.fo'" />
 			<arg line="-pdf '${app.name}-current.doc.pdf'" />
 		</java>
@@ -263,7 +263,7 @@
 
 		<echo message="docbook to PDF ${tmp.dir}/${testcase.name}.xml" />
 		<java classname="org.apache.fop.cli.Main" classpathref="fop-classpath" fork="true" failonerror="true" dir="${tmp.dir}" output="log.txt">
-			<arg line="-c userconfig.xml" />
+			<arg line="-c conf/userconfig.xml" />
 			<arg line="-fo '${testcase.name}.fo'" />
 			<arg line="-pdf '${app.name}-current.test.pdf'" />
 		</java>
