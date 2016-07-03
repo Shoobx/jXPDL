@@ -3426,7 +3426,7 @@ public class XMLUtil {
       if (pkgOrWp instanceof Package) {
          return getReferences((Package) pkgOrWp, referenced, xmli);
       } else if (pkgOrWp instanceof WorkflowProcess) {
-         return getReferences((WorkflowProcess) pkgOrWp, referenced);
+         return getReferences((WorkflowProcess) pkgOrWp, referenced, xmli);
       }
       return new ArrayList();
    }
@@ -3450,7 +3450,7 @@ public class XMLUtil {
       } else if (referenced instanceof Application) {
          return getReferences(pkg, (Application) referenced);
       } else if (referenced instanceof DataField) {
-         return getReferences(pkg, (DataField) referenced);
+         return getReferences(pkg, (DataField) referenced, xmli);
       } else if (referenced instanceof WorkflowProcess) {
          return getReferences(pkg, (WorkflowProcess) referenced);
       } else if (referenced instanceof Lane) {
@@ -3467,17 +3467,17 @@ public class XMLUtil {
     * @param referenced {@link XMLComplexElement} instance.
     * @return The list of elements (objects which are derived from {@link XMLElement} object).
     */
-   public static List getReferences(WorkflowProcess wp, XMLComplexElement referenced) {
+   public static List getReferences(WorkflowProcess wp, XMLComplexElement referenced, XMLInterface xmli) {
       if (referenced instanceof Participant) {
          return getReferences(wp, (Participant) referenced);
       } else if (referenced instanceof Application) {
          return getReferences(wp, (Application) referenced);
       } else if (referenced instanceof DataField) {
-         return getReferences(wp, (DataField) referenced);
+         return getReferences(wp, (DataField) referenced, xmli);
       } else if (referenced instanceof WorkflowProcess) {
          return getReferences(wp, (WorkflowProcess) referenced);
       } else if (referenced instanceof FormalParameter) {
-         return getReferences(wp, (FormalParameter) referenced);
+         return getReferences(wp, (FormalParameter) referenced, xmli);
       } else if (referenced instanceof ActivitySet) {
          return getReferences(wp, (ActivitySet) referenced);
       } else if (referenced instanceof Lane) {
@@ -4272,15 +4272,15 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   public static List getDataFieldReferences(XMLComplexElement pkgOrWp, String referencedId) {
+   public static List getDataFieldReferences(XMLComplexElement pkgOrWp, String referencedId, XMLInterface xmli) {
       if (referencedId.equals("")) {
          return new ArrayList();
       }
       if (pkgOrWp instanceof Package) {
-         return getDataFieldReferences((Package) pkgOrWp, referencedId);
+         return getDataFieldReferences((Package) pkgOrWp, referencedId, xmli);
       }
 
-      return getDataFieldReferences((WorkflowProcess) pkgOrWp, referencedId);
+      return getDataFieldReferences((WorkflowProcess) pkgOrWp, referencedId, xmli);
    }
 
    /**
@@ -4290,8 +4290,8 @@ public class XMLUtil {
     * @param referenced {@link DataField} instance.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   public static List getReferences(Package pkg, DataField referenced) {
-      return getDataFieldReferences(pkg, referenced.getId());
+   public static List getReferences(Package pkg, DataField referenced, XMLInterface xmli) {
+      return getDataFieldReferences(pkg, referenced.getId(), xmli);
    }
 
    /**
@@ -4302,19 +4302,26 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   public static List getDataFieldReferences(Package pkg, String referencedId) {
+   public static List getDataFieldReferences(Package pkg, String referencedId, XMLInterface xmli) {
       List references = new ArrayList();
       if (referencedId.equals("")) {
          return references;
       }
 
       references.addAll(getInitialValueReferences(pkg, referencedId));
+      Map allVars = new HashMap();
+      Iterator itdf = pkg.getDataFields().toElements().iterator();
+      while (itdf.hasNext()) {
+         DataField df = (DataField) itdf.next();
+         allVars.put(df.getId(), df);
+      }
+      references.addAll(getLaneVariableReferences(pkg, referencedId, allVars, xmli));
 
       Iterator it = pkg.getWorkflowProcesses().toElements().iterator();
       while (it.hasNext()) {
          WorkflowProcess wp = (WorkflowProcess) it.next();
          if (wp.getDataField(referencedId) == null) {
-            references.addAll(getDataFieldReferences(wp, referencedId));
+            references.addAll(getDataFieldReferences(wp, referencedId, xmli));
          }
       }
 
@@ -4329,12 +4336,12 @@ public class XMLUtil {
     * @param referenced {@link DataField} instance.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   public static List getReferences(WorkflowProcess wp, DataField referenced) {
+   public static List getReferences(WorkflowProcess wp, DataField referenced, XMLInterface xmli) {
       if (XMLUtil.getWorkflowProcess(referenced) == null && (wp.getDataField(referenced.getId()) != null || wp.getFormalParameter(referenced.getId()) != null)) {
          return new ArrayList();
       }
 
-      return getDataFieldReferences(wp, referenced.getId());
+      return getDataFieldReferences(wp, referenced.getId(), xmli);
    }
 
    /**
@@ -4345,20 +4352,60 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   public static List getDataFieldReferences(WorkflowProcess wp, String referencedId) {
+   public static List getDataFieldReferences(WorkflowProcess wp, String referencedId, XMLInterface xmli) {
       List references = new ArrayList();
       if (referencedId.equals("")) {
          return references;
       }
 
-      references.addAll(getVariableReferences(wp, referencedId));
+      references.addAll(getVariableReferences(wp, referencedId, xmli));
 
       Iterator it = wp.getActivitySets().toElements().iterator();
       while (it.hasNext()) {
          ActivitySet as = (ActivitySet) it.next();
-         references.addAll(getVariableReferences(as, referencedId));
+         references.addAll(getVariableReferences(as, referencedId, xmli));
       }
 
+      return references;
+   }
+
+   public static List getLaneVariableReferences(XMLComplexElement pkgOrWpOrAs, String referencedId, Map allVars, XMLInterface xmli) {
+      List references = new ArrayList();
+      List pools = new ArrayList();
+      if (pkgOrWpOrAs instanceof Package) {
+         pools = ((Package) pkgOrWpOrAs).getPools().toElements();
+      } else {
+         Pool p = XMLUtil.getPoolForProcessOrActivitySet((XMLCollectionElement) pkgOrWpOrAs);
+         pools.add(p);
+      }
+
+      Iterator pi = pools.iterator();
+      while (pi.hasNext()) {
+         Pool p = (Pool) pi.next();
+         Iterator li = p.getLanes().toElements().iterator();
+         while (li.hasNext()) {
+            Lane l = (Lane) li.next();
+            Iterator pri = l.getPerformers().toElements().iterator();
+            while (pri.hasNext()) {
+               Performer perf = (Performer) pri.next();
+               String pv = perf.toValue();
+               boolean partRef = false;
+               Participant pcp = null;
+               if (pkgOrWpOrAs instanceof Package) {
+                  pcp = findParticipant(xmli, (Package) pkgOrWpOrAs, pv);
+               } else {
+                  pcp = findParticipant(xmli, XMLUtil.getWorkflowProcess(pkgOrWpOrAs), pv);
+               }
+               if (pv.equals(referencedId) && pcp != null) {
+                  partRef = true;
+               }
+
+               if (!partRef && XMLUtil.getUsingPositions(perf.toValue(), referencedId, allVars, true, true).size() > 0) {
+                  references.add(perf);
+               }
+            }
+         }
+      }
       return references;
    }
 
@@ -4482,13 +4529,13 @@ public class XMLUtil {
     * @param referenced {@link FormalParameter} instance.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   public static List getReferences(WorkflowProcess wp, FormalParameter referenced) {
+   public static List getReferences(WorkflowProcess wp, FormalParameter referenced, XMLInterface xmli) {
       List references = new ArrayList();
       if (!(referenced.getParent().getParent() instanceof WorkflowProcess)) {
          return references;
       }
 
-      return getFormalParameterReferences(wp, referenced.getId());
+      return getFormalParameterReferences(wp, referenced.getId(), xmli);
    }
 
    /**
@@ -4499,7 +4546,7 @@ public class XMLUtil {
     * @param referencedId The referenced Id.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   public static List getFormalParameterReferences(WorkflowProcess wp, String referencedId) {
+   public static List getFormalParameterReferences(WorkflowProcess wp, String referencedId, XMLInterface xmli) {
       List references = new ArrayList();
       if (referencedId.equals("")) {
          return references;
@@ -4508,12 +4555,12 @@ public class XMLUtil {
          return references;
       }
 
-      references.addAll(getVariableReferences(wp, referencedId));
+      references.addAll(getVariableReferences(wp, referencedId, xmli));
 
       Iterator it = wp.getActivitySets().toElements().iterator();
       while (it.hasNext()) {
          ActivitySet as = (ActivitySet) it.next();
-         references.addAll(getVariableReferences(as, referencedId));
+         references.addAll(getVariableReferences(as, referencedId, xmli));
       }
 
       return references;
@@ -4527,7 +4574,7 @@ public class XMLUtil {
     * @param dfOrFpId The Id of {@link DataField} or {@link FormalParameter}.
     * @return The list of elements (derived from {@link XMLElement}).
     */
-   public static List getVariableReferences(XMLCollectionElement wpOrAs, String dfOrFpId) {
+   public static List getVariableReferences(XMLCollectionElement wpOrAs, String dfOrFpId, XMLInterface xmli) {
       List references = new ArrayList();
       if (dfOrFpId.equals("")) {
          return references;
@@ -4564,10 +4611,15 @@ public class XMLUtil {
             }
          }
 
-         // performer (can be expression containing variable, or direct variable
-         // reference)
+         // performer - can be reference to participatn, expression containing variable, or direct variable
+         // reference(in the case it is not participant reference)
          String perf = act.getFirstPerformer();
-         if (XMLUtil.getUsingPositions(perf, dfOrFpId, allVars, true, true).size() > 0) {
+         boolean partRef = false;
+         if (perf.equals(dfOrFpId) && findParticipant(xmli, XMLUtil.getWorkflowProcess(wpOrAs), perf) != null) {
+            partRef = true;
+         }
+
+         if (!partRef && XMLUtil.getUsingPositions(perf, dfOrFpId, allVars, true, true).size() > 0) {
             references.add(act.getFirstPerformerObj());
          }
       }
@@ -4585,6 +4637,9 @@ public class XMLUtil {
       if (wpOrAs instanceof WorkflowProcess) {
          references.addAll(getInitialValueReferences(wpOrAs, dfOrFpId));
       }
+
+      references.addAll(getLaneVariableReferences(wpOrAs, dfOrFpId, allVars, xmli));
+
       return references;
    }
 

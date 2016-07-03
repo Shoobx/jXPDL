@@ -1,4 +1,8 @@
 ###### TXM 2.2-1 RELEASED #####
+2016-07-02 Sasa Bojanic <sasaboy@together.at>
+   # Now also calculating references to variables in the Lane's performer element
+   # Fix: if performer is referencing variable with the same Id as some participant, it is now considered to reference the participant
+
 2016-06-10 Sasa Bojanic <sasaboy@together.at>
    # Now explicitly using XALAN for transformations (problem with saxon and namespaces)
 
