@@ -1,4 +1,7 @@
 ###### TXM 2.2-1 RELEASED #####
+2016-07-22 Sasa Bojanic <sasaboy@together.at>
+   # Added parameter to XMLUtil.packageToStream() method to control if XPDL should be saved with XPDL prefix or not
+
 2016-07-02 Sasa Bojanic <sasaboy@together.at>
    # Now also calculating references to variables in the Lane's performer element
    # Fix: if performer is referencing variable with the same Id as some participant, it is now considered to reference the participant

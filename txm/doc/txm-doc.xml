@@ -2445,6 +2445,11 @@ sign.alias=pvktmp:3852567a-45er-567y-w456-23456789sdft</programlisting>Sign
           <para>Now explicitly using XALAN for transformations (problem with
           saxon and namespaces)</para>
         </listitem>
+
+        <listitem>
+          <para>Added parameter to XMLUtil.packageToStream() method to control
+          if XPDL should be saved with XPDL prefix or not</para>
+        </listitem>
       </itemizedlist>
     </section>
 

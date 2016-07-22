@@ -2506,7 +2506,7 @@ public class XMLUtil {
     * @param os {@link OutputStream} instance.
     * @return The stream representing the given package element.
     */
-   public static OutputStream packageToStream(Package pkg, OutputStream os) {
+   public static OutputStream packageToStream(Package pkg, OutputStream os, boolean useXPDLPrefix) {
       try {
          Document document = null;
 
@@ -2516,6 +2516,7 @@ public class XMLUtil {
 
          // Here we get all document elements set
          XPDLRepositoryHandler repH = new XPDLRepositoryHandler();
+         repH.setXPDLPrefixEnabled(useXPDLPrefix);
          repH.toXML(document, pkg);
 
          // Use a Transformer for output
