@@ -41,12 +41,14 @@ public class Package extends XMLComplexElement {
    /** Internal package version. */
    protected String internalVersion;
 
+   /** Uploaded time. */
+   protected long uploadedTime;
+
    /** Flag that indicates if Package is transient. */
    protected boolean isTransient;
 
    /**
-    * Map holding information about the mapping between references to the external
-    * packages and their Ids.
+    * Map holding information about the mapping between references to the external packages and their Ids.
     */
    protected SequencedHashMap extPkgRefsToIds = new SequencedHashMap();
 
@@ -65,6 +67,7 @@ public class Package extends XMLComplexElement {
       // createdPKGs.add(new Integer(pno));
       namespaces = new Namespaces(this);
       internalVersion = "-1";
+      uploadedTime = -1;
       isTransient = false;
    }
 
@@ -131,6 +134,16 @@ public class Package extends XMLComplexElement {
       this.internalVersion = internalVersion;
    }
 
+   /** Returns Package's uploaded time. */
+   public long getUploadedTime() {
+      return uploadedTime;
+   }
+
+   /** Sets Package's uploaded time. */
+   public void setUploadedTime(long uploadedTime) {
+      this.uploadedTime = uploadedTime;
+   }
+
    /** Adds new mapping for an external package (reference to Id). */
    public void addExternalPackageMapping(String epRef, String epId) {
       extPkgRefsToIds.put(epRef, epId);
@@ -152,8 +165,7 @@ public class Package extends XMLComplexElement {
    }
 
    /**
-    * Returns ExternalPackage object (the member of Package's ExternalPackages collection)
-    * with specified Id.
+    * Returns ExternalPackage object (the member of Package's ExternalPackages collection) with specified Id.
     */
    public ExternalPackage getExternalPackage(String id) {
       ExternalPackage toRet = null;
@@ -174,40 +186,35 @@ public class Package extends XMLComplexElement {
    }
 
    /**
-    * Returns Artifact object (the member of Package's Artifacts collection) with
-    * specified Id.
+    * Returns Artifact object (the member of Package's Artifacts collection) with specified Id.
     */
    public Artifact getArtifact(String Id) {
       return getArtifacts().getArtifact(Id);
    }
 
    /**
-    * Returns Association object (the member of Package's Associations collection) with
-    * specified Id.
+    * Returns Association object (the member of Package's Associations collection) with specified Id.
     */
    public Association getAssociation(String Id) {
       return getAssociations().getAssociation(Id);
    }
 
    /**
-    * Returns Pool object (the member of Package's Pools collection) with
-    * specified Id.
+    * Returns Pool object (the member of Package's Pools collection) with specified Id.
     */
    public Pool getPool(String Id) {
       return getPools().getPool(Id);
    }
 
    /**
-    * Returns WorkflowProcess object (the member of Package's WorkflowProcesses collection) with
-    * specified Id.
+    * Returns WorkflowProcess object (the member of Package's WorkflowProcesses collection) with specified Id.
     */
    public WorkflowProcess getWorkflowProcess(String Id) {
       return getWorkflowProcesses().getWorkflowProcess(Id);
    }
 
    /**
-    * Returns ActivitySet object (the member of Package's WorkflowProcess's ActivitySets collection) with
-    * specified Id.
+    * Returns ActivitySet object (the member of Package's WorkflowProcess's ActivitySets collection) with specified Id.
     */
    public ActivitySet getActivitySet(String Id) {
       Iterator it = getWorkflowProcesses().toElements().iterator();
@@ -222,8 +229,7 @@ public class Package extends XMLComplexElement {
    }
 
    /**
-    * Returns Activity object (the member of Package's WorkflowProcess's or their ActivitySet' Activities collection) with
-    * specified Id.
+    * Returns Activity object (the member of Package's WorkflowProcess's or their ActivitySet' Activities collection) with specified Id.
     */
    public Activity getActivity(String Id) {
       Iterator it = getWorkflowProcesses().toElements().iterator();
@@ -238,32 +244,28 @@ public class Package extends XMLComplexElement {
    }
 
    /**
-    * Returns Application object (the member of Package's Applications collection) with
-    * specified Id.
+    * Returns Application object (the member of Package's Applications collection) with specified Id.
     */
    public Application getApplication(String Id) {
       return getApplications().getApplication(Id);
    }
 
    /**
-    * Returns Application object (the member of Package's Participants collection) with
-    * specified Id.
+    * Returns Application object (the member of Package's Participants collection) with specified Id.
     */
    public Participant getParticipant(String Id) {
       return getParticipants().getParticipant(Id);
    }
 
    /**
-    * Returns DataField object (the member of Package's DataFields collection) with
-    * specified Id.
+    * Returns DataField object (the member of Package's DataFields collection) with specified Id.
     */
    public DataField getDataField(String Id) {
       return getDataFields().getDataField(Id);
    }
 
    /**
-    * Returns TypeDeclaration object (the member of Package's TypeDeclaration's collection) with
-    * specified Id.
+    * Returns TypeDeclaration object (the member of Package's TypeDeclaration's collection) with specified Id.
     */
    public TypeDeclaration getTypeDeclaration(String Id) {
       return getTypeDeclarations().getTypeDeclaration(Id);
@@ -418,12 +420,12 @@ public class Package extends XMLComplexElement {
    // System.err.println("PKG "+(pno)+" destroyed, hc="+hashCode());
    // }
 
-//   public static void dbg() {
-//      System.gc();
-      // System.err.println("Created pkgs: "+createdPKGs);
-      // System.err.println("Destroyed pkgs: "+destroyedPKGs);
-      // ArrayList inMem=new ArrayList(createdPKGs);
-      // inMem.removeAll(destroyedPKGs);
-      // System.err.println("Packages in memory: "+inMem);
-//   }
+   // public static void dbg() {
+   // System.gc();
+   // System.err.println("Created pkgs: "+createdPKGs);
+   // System.err.println("Destroyed pkgs: "+destroyedPKGs);
+   // ArrayList inMem=new ArrayList(createdPKGs);
+   // inMem.removeAll(destroyedPKGs);
+   // System.err.println("Packages in memory: "+inMem);
+   // }
 }
