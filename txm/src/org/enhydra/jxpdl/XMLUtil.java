@@ -1313,34 +1313,35 @@ public class XMLUtil {
             }
          }
          boolean isTxt = true;
-         int indofquotes = expr.lastIndexOf("\"", realPos);
-         int indofplus = expr.indexOf("+", indofquotes);
          if (foundAt == 0) {
             isTxt = false;
-         } else if (realPos > indofplus && indofquotes >= 0) {
-            if (indofplus > indofquotes) {
-               if (expr.substring(indofquotes + 1, indofplus).trim().equals("")) {
-                  isTxt = false;
+         } else {
+            // check if there are even number of quotes before the variable position (until the previous occurrence of the same variable if any) ->
+            // in this case it is not a text only
+            int hmqbefore = 0;
+            int lastpos = -1;
+            if (!positions.isEmpty()) {
+               lastpos = positions.get(positions.size() - 1).intValue();
+            }
+            int pos = realPos;
+            while (pos > 0) {
+               pos--;
+               pos = expr.lastIndexOf("\"", pos);
+               if (pos <= lastpos) {
+                  break;
                }
-            } else {
-               // check if there are even number of quotes before the variable position ->
-               // in this case it is not a text only
-               int hmq = 1;
-               int pos = indofquotes;
-               while (true) {
-                  pos--;
-                  pos = expr.lastIndexOf("\"", pos);
-                  if (pos < 0) {
-                     break;
-                  }
-                  hmq++;
+               String charBef = "";
+               if (pos > 0) {
+                  charBef = expr.substring(pos - 1, pos);
                }
-               if (hmq % 2 == 0) {
-                  isTxt = false;
+               if (!charBef.equals("\\")) {
+                  hmqbefore++;
                }
             }
-         } else if (indofquotes < 0) {
-            isTxt = false;
+            if (hmqbefore % 2 == 0) {
+               isTxt = false;
+            }
+            isTxt = hmqbefore % 2 != 0;
          }
          // if this is really the Id, add its position in expression
          if ((!checkPrevAndNextCharacter || (prevOK && nextOK)) && (!checkText || !isTxt)) {
@@ -2830,7 +2831,8 @@ public class XMLUtil {
       p.getLanes().add(l2);
       p.getLanes().add(l3);
 
-      System.out.println("......creating Artifact [Id=comment, Name=Second activity comment, Type=Annotation, TextAnnotation=This is a comment for 2nd activity]");
+      System.out
+         .println("......creating Artifact [Id=comment, Name=Second activity comment, Type=Annotation, TextAnnotation=This is a comment for 2nd activity]");
       Artifact art = (Artifact) pkg.getArtifacts().generateNewElement();
       art.setId("comment");
       art.setName("Second activity comment");
@@ -4338,7 +4340,8 @@ public class XMLUtil {
     * @return The list of elements (derived from {@link XMLElement}).
     */
    public static List getReferences(WorkflowProcess wp, DataField referenced, XMLInterface xmli) {
-      if (XMLUtil.getWorkflowProcess(referenced) == null && (wp.getDataField(referenced.getId()) != null || wp.getFormalParameter(referenced.getId()) != null)) {
+      if (XMLUtil.getWorkflowProcess(referenced) == null
+          && (wp.getDataField(referenced.getId()) != null || wp.getFormalParameter(referenced.getId()) != null)) {
          return new ArrayList();
       }
 
