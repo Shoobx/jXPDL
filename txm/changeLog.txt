@@ -1,6 +1,6 @@
 ###### TXM 2.3-1 RELEASED #####
 
-###### TXM 2.2-3 RELEASED #####
+###### TXM 2.2-3 RELEASED (2016-12-26) #####
 2016-12-21 Sasa Bojanic <sasaboy@together.at>
    # Improved implementation of XMLUtil.getUsingPositions() method to better recognize text
 

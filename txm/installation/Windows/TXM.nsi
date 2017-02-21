@@ -134,8 +134,7 @@ SetDateSave          on
   Var CREATE_STARTUP_MENU
   Var CREATE_QUICK_LAUNCH_ICON
   Var CREATE_DESKTOP_ICON
-  Var CREATE_PINTOTASKBAR
-  Var ADD_PINTOTASKBAR
+
   ;Variables for window registry 
   Var AppID
 !define AppUserModelID "Together.XPDL.Model"
@@ -155,7 +154,7 @@ SetDateSave          on
   ; it is invoked, will just write the uninstaller to some location, and then exit.
   ; Be sure to substitute the name of this script here.
    
-  !system "$\"${NSISDIR}\makensis$\" /DINNER /O..\..\log_nsis_inner.txt /DAPP_FULL_NAME=$\"${APP_FULL_NAME}$\" /DSHORT_NAME=$\"${SHORT_NAME}$\" /DSHORT_UPPER_NAME=$\"${SHORT_UPPER_NAME}$\" /DVERSION=${VERSION} /DRELEASE=${RELEASE} /DBUILDID=${BUILDID} /DTARGET_VM=$\"${TARGET_VM}$\" TXM.nsi" = 0
+  !system "$\"${NSISDIR}\makensis$\" /DINNER /O..\..\log_nsis_inner.txt /DAPP_FULL_NAME=$\"${APP_FULL_NAME}$\" /DSHORT_NAME=$\"${SHORT_NAME}$\" /DSHORT_UPPER_NAME=$\"${SHORT_UPPER_NAME}$\" /DVERSION=${VERSION} /DRELEASE=${RELEASE} /DBUILDID=${BUILDID} /DTARGET_VM=$\"${TARGET_VM}$\" /DCOPYRIGHT_YEAR=${COPYRIGHT_YEAR} TXM.nsi" = 0
  
   ; So now run that installer we just created as %TEMP%\tempinstaller.exe.  Since it
   ; calls quit the return value isn't zero.
@@ -208,7 +207,7 @@ SetDateSave          on
   !insertmacro MUI_PAGE_LICENSE "$(license_text)"
   !insertmacro TOG_CUSTOMPAGE_SETJAVA "${APP_FULL_NAME} ${VERSION}-${RELEASE}" $JAVAHOME "${TARGET_VM}";
   !insertmacro TOG_CUSTOMPAGE_DIRECTORY "${APP_FULL_NAME} ${VERSION}-${RELEASE}" $DefaultDir  ;
-  !insertmacro TOG_CUSTOMPAGE_STARTOPTION "${APP_FULL_NAME} ${VERSION}-${RELEASE}" $ADD_STARTMENU $STARTMENU_FOLDER $ENABLE_DESKTOP $ADD_DESKTOP $ENABLE_QUICKLAUNCH $ADD_QUICKLAUNCH "off" $ADD_PINTOTASKBAR ;
+  !insertmacro TOG_CUSTOMPAGE_STARTOPTION "${APP_FULL_NAME} ${VERSION}-${RELEASE}" $ADD_STARTMENU $STARTMENU_FOLDER $ENABLE_DESKTOP $ADD_DESKTOP $ENABLE_QUICKLAUNCH $ADD_QUICKLAUNCH  ;
   !insertmacro MUI_PAGE_INSTFILES
   !insertmacro MUI_PAGE_FINISH
 
@@ -230,29 +229,6 @@ SetDateSave          on
 ;---------------------------------------------------------------------------------------
 ;Installer Sections
 ;---------------------------------------------------------------------------------------
-Function PinToTaskbar	
-	 IfFileExists "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) ${VERSION}-${RELEASE}.lnk" StartPinToTaskbar Empty
-	  StartPinToTaskbar:
-			StrCpy $0 "$INSTDIR\pin.vbs"
-				nsExec::ExecToStack '"$SYSDIR\CScript.exe"  "$0" //e:vbscript "$SMPROGRAMS\$STARTMENU_FOLDER" "$(ABBREVIATION) ${VERSION}-${RELEASE}.lnk" //B //NOLOGO'
-			Delete 'pin.vbs'
-	  Empty:
-FunctionEnd
-
-!macro PINFROMTASKBAR un
-Function ${un}PinFromTaskbar
- IfFileExists "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) ${VERSION}-${RELEASE}.lnk" StartUnPinToTaskbar Empty
-	  StartUnPinToTaskbar:
-		  IfFileExists "$INSTDIR\unpin.vbs" StartUnPin Empty
-		  StartUnPin:
-				StrCpy $0 "$INSTDIR\unpin.vbs"
-				  nsExec::Exec '"$SYSDIR\CScript.exe" "$0" //e:vbscript "$SMPROGRAMS\$STARTMENU_FOLDER" "$(ABBREVIATION) ${VERSION}-${RELEASE}.lnk" //B //NOLOGO'
-	  Empty:
-FunctionEnd
-!macroend
-; Insert function as an installer and uninstaller function.
-!insertmacro PINFROMTASKBAR ""
-!insertmacro PINFROMTASKBAR "un."
 
 Section "Install" Install	
 
@@ -282,13 +258,7 @@ Section "Install" Install
 		${else}
 				StrCpy $ADD_DESKTOP "0"
 		${endif}
-		
-		${if} $CREATE_PINTOTASKBAR == "on"
-				StrCpy $ADD_PINTOTASKBAR "1"
-		${else}
-				StrCpy $ADD_PINTOTASKBAR "0"
-		${endif}
-					
+
 	${endif}
 #----------------------------------------------------
 #-------------- Clear previous version --------------
@@ -335,16 +305,12 @@ Section "Install" Install
   WriteRegStr HKLM "Software\Classes\Wow6432Node\AppID\$AppID" "RunAs" "Interactive User"
   ${EndIf}
 
-#------------ Clear Pin from taskbar previous version -----
-  Call PinFromTaskbar
-#----------------------------------------------------------
+
   ;SetOutPath "$INSTDIR\components"
     ;File /r "${APPLICATION_DIR}\components\*"
   SetOutPath "$INSTDIR"
 	File /r /x api /x example /x lib /x *current.test.pdf "${APPLICATION_DIR}\*"
 	File tog.ico
-	File pin.vbs
-	File unpin.vbs
   
   !ifndef INNER
 ;	  SetOutPath "${INSTDIR}"
@@ -447,9 +413,7 @@ Section "Install" Install
 	
 #	WinShell::SetLnkAUMI "$DESKTOP\$(ABBREVIATION) ${VERSION}-${RELEASE}.lnk" "${AppUserModelID}"
   ${endif}
-  ${If} $ADD_PINTOTASKBAR != "0"
-#	Call PinToTaskbar
-  ${endif}
+
   ; get cumulative size of all files in and under install dir
   ; report the total in KB (decimal)
   ; place the answer into $0  ($1 and $2 get other info we don't care about)
@@ -580,7 +544,7 @@ Function .onInit
 	StrCmp $R0 "create.quick.launch.icon" setquicklaunchicon
 	StrCmp $R0 "create.start.menu.entry" setstartmenuentry
 	StrCmp $R0 "create.desktop.icon" setdesktopicon
-	StrCmp $R0 "create.pin.to.taskbar" setpintotaskbar
+
 
   Goto loop
   setjdkdir:
@@ -615,9 +579,7 @@ Function .onInit
 	setdesktopicon:
 		StrCpy $CREATE_DESKTOP_ICON $R1
 		Goto loop	
-	setpintotaskbar:
-		StrCpy $CREATE_PINTOTASKBAR $R1
-		Goto loop	
+
   error_handle:
 	  Goto loopend
   loopend:
@@ -632,7 +594,6 @@ Function .onInit
   StrCpy $ADD_STARTMENU   '1'
   StrCpy $ENABLE_DESKTOP   'off'
   StrCpy $ADD_DESKTOP   '1'
-  StrCpy $ADD_PINTOTASKBAR '1'
   StrCpy $ENABLE_QUICKLAUNCH  'off'
   StrCpy $ADD_QUICKLAUNCH  '0'
   
@@ -709,7 +670,7 @@ Section "Uninstall"
 
 SetShellVarContext all
 
-  Call un.PinFromTaskbar
+
   ; remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_FULL_NAME} ${VERSION}-${RELEASE}"
   DeleteRegKey HKLM "SOFTWARE\${APP_FULL_NAME} ${VERSION}-${RELEASE}"
