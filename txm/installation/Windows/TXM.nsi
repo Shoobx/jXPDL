@@ -120,6 +120,7 @@ SetDateSave          on
 ;Variables
 
   Var STARTMENU_FOLDER
+  Var STARTMENU_APPNAME
   Var MUI_TEMP
   Var TEMP1
   Var JAVAHOME
@@ -260,6 +261,11 @@ Section "Install" Install
 		${endif}
 
 	${endif}
+	
+	Push $STARTMENU_FOLDER
+	Call RemoveSpecialChar
+	Call Trim
+	Pop  $STARTMENU_FOLDER
 #----------------------------------------------------
 #-------------- Clear previous version --------------
   ;------------ Finding AppID
@@ -345,9 +351,9 @@ Section "Install" Install
   
  ${If} $ADD_STARTMENU != '0'
    ;clear
-  IfFileExists "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) ${VERSION}-${RELEASE}.lnk" StartCleanSTARTMENU EndCleanSTARTMENU
+  IfFileExists "$SMPROGRAMS\$STARTMENU_FOLDER\$STARTMENU_APPNAME ${VERSION}-${RELEASE}.lnk" StartCleanSTARTMENU EndCleanSTARTMENU
   	StartCleanSTARTMENU:
-  			Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) ${VERSION}-${RELEASE}.lnk"
+  			Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$STARTMENU_APPNAME ${VERSION}-${RELEASE}.lnk"
   	EndCleanSTARTMENU:
   CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
   
@@ -358,16 +364,16 @@ Section "Install" Install
   #               "$JAVAHOME\bin\javaw.exe" \
   #			 "-Xmx800m -jar $\"$INSTDIR\lib\txm-launcher.jar$\"" \
   #              "$INSTDIR\tog.ico"
- CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) Documentation"
- CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) Documentation\$(ABBREVIATION) Manual HTML.lnk" \
+ CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\$STARTMENU_APPNAME Documentation"
+ CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\$STARTMENU_APPNAME Documentation\$STARTMENU_APPNAME Manual HTML.lnk" \
                 "$INSTDIR\doc\txm-current.doc.html" \
                 "" \
                 $DEFAULT_BROWSER
- CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) Documentation\$(ABBREVIATION) Manual PDF.lnk" \
+ CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\$STARTMENU_APPNAME Documentation\$STARTMENU_APPNAME Manual PDF.lnk" \
                 "$INSTDIR\doc\txm-current.doc.pdf" \
                 "" \
                 ""
- CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) Homepage.lnk" \
+ CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\$STARTMENU_APPNAME Homepage.lnk" \
                 "http://www.together.at/prod/database/txm"\
                 "" \
                 $DEFAULT_BROWSER
@@ -384,7 +390,7 @@ Section "Install" Install
  				 "/SILENT" \
  				 "$INSTDIR\uninstall.exe" 0
  	endShortCut:
- 	WinShell::SetLnkAUMI "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) ${VERSION}-${RELEASE}.lnk" "${AppUserModelID}"
+ 	WinShell::SetLnkAUMI "$SMPROGRAMS\$STARTMENU_FOLDER\$STARTMENU_APPNAME ${VERSION}-${RELEASE}.lnk" "${AppUserModelID}"
   ${endif}
   
   ${If} $ADD_QUICKLAUNCH != '0'
@@ -461,7 +467,9 @@ Section "Install" Install
   WriteRegStr HKLM 	"Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_FULL_NAME} ${VERSION}-${RELEASE}" \
   									"HelpLink" "http://www.together.at/prod/database/txm"
   WriteRegStr HKLM 	"Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_FULL_NAME} ${VERSION}-${RELEASE}" \
-  									"StartMenuFolder" "$STARTMENU_FOLDER"																	
+  									"StartMenuFolder" "$STARTMENU_FOLDER"		
+  WriteRegStr HKLM 	"Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_FULL_NAME} ${VERSION}-${RELEASE}" \
+  									"StartMenuAppName" "$STARTMENU_FOLDER"													
  ; WriteUninstaller "uninstall.exe"
   end:
  ;---------------------------------
@@ -584,6 +592,27 @@ Function .onInit
 	  Goto loopend
   loopend:
     FileClose $9
+	
+	IfFileExists $JAVAHOME\bin\javaw.exe start_initialization
+	ReadEnvStr $JAVAHOME "JAVA_HOME"
+	${if} $JAVAHOME == ""
+		ClearErrors
+		ReadRegStr $JAVAHOME HKCU "Environment" "JAVA_HOME"  
+	${endif}
+  
+  IfFileExists $JAVAHOME\bin\javaw.exe start_initialization
+	${if} ${RunningX64}
+		SetRegView 64
+	${else}
+		SetRegView 32
+	${endif}
+	ReadRegStr $R9 HKLM "SOFTWARE\JavaSoft\Java Development Kit" 	  "CurrentVersion"
+	ReadRegStr $JAVAHOME HKLM "SOFTWARE\JavaSoft\Java Development Kit\$R9"  "JavaHome"
+	
+  IfFileExists $JAVAHOME\bin\javaw.exe start_initialization	
+	ReadRegStr $R9 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
+	ReadRegStr $JAVAHOME HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$R9" "JavaHome"
+	
   end:
   
 #------- seting silent installation -----------------#
@@ -591,6 +620,10 @@ Function .onInit
   IfSilent end_splash_screen
   
   normal_default:
+  Push "${APP_FULL_NAME} ${VERSION}-${RELEASE}"  ; push a default value onto the stack
+  Pop $2
+  StrCpy $STARTMENU_FOLDER $2
+  
   StrCpy $ADD_STARTMENU   '1'
   StrCpy $ENABLE_DESKTOP   'off'
   StrCpy $ADD_DESKTOP   '1'
@@ -609,6 +642,16 @@ Function .onInit
 # end splash screen
 end_splash_screen:
   
+    StrCpy $STARTMENU_APPNAME $(ABBREVIATION)
+  	Push $STARTMENU_APPNAME
+	Call RemoveSpecialChar
+	Call Trim
+	Pop $STARTMENU_APPNAME
+  
+	Push $STARTMENU_FOLDER
+	Call RemoveSpecialChar
+	Call Trim
+	Pop  $STARTMENU_FOLDER
 FunctionEnd
 ;---------------------------------------------------------------------------------
  ; ConvertOptionToDigit
@@ -681,17 +724,17 @@ SetShellVarContext all
   RMDir /r "$INSTDIR"
 
   ; remove shortcuts, if any.
-  Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) Homepage.lnk"
-  Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) ${VERSION}-${RELEASE}.lnk"
-  Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) Documentation\$(ABBREVIATION) Manual HTML.lnk"
-  Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) Documentation\$(ABBREVIATION) Manual PDF.lnk"
+  Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$STARTMENU_APPNAME Homepage.lnk"
+  Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$STARTMENU_APPNAME ${VERSION}-${RELEASE}.lnk"
+  Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$STARTMENU_APPNAME Documentation\$STARTMENU_APPNAME Manual HTML.lnk"
+  Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$STARTMENU_APPNAME Documentation\$STARTMENU_APPNAME Manual PDF.lnk"
   Delete "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk"
 
-  Delete "$DESKTOP\$(ABBREVIATION) ${VERSION}-${RELEASE}.lnk"
-  Delete "$QUICKLAUNCH\$(ABBREVIATION) ${VERSION}-${RELEASE}.lnk"
+  Delete "$DESKTOP\$STARTMENU_APPNAME ${VERSION}-${RELEASE}.lnk"
+  Delete "$QUICKLAUNCH\$STARTMENU_APPNAME ${VERSION}-${RELEASE}.lnk"
 
-  RMDir "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) Documentation"
-  RMDir "$SMPROGRAMS\$STARTMENU_FOLDER"
+  RMDir /r "$SMPROGRAMS\$STARTMENU_FOLDER\$STARTMENU_APPNAME Documentation"
+  RMDir /r "$SMPROGRAMS\$STARTMENU_FOLDER"
 
   ;Delete empty start menu parent diretories
   StrCpy $MUI_TEMP "$SMPROGRAMS\$MUI_TEMP"
@@ -749,6 +792,7 @@ Function un.onInit
   ;Get language from registry
   ReadRegStr $LANGUAGE HKCU "Software\${APP_FULL_NAME}" "Installer Language"
   ReadRegStr $STARTMENU_FOLDER HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_FULL_NAME} ${VERSION}-${RELEASE}" "StartMenuFolder"
+  ReadRegStr $STARTMENU_APPNAME HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_FULL_NAME} ${VERSION}-${RELEASE}" "StartMenuAppName"
   Pop $1
   Pop $0
 
@@ -774,14 +818,14 @@ Function Cleanup
   RMDir /r "$INSTDIR"
 
   ; remove shortcuts, if any.
-  Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) Documentation.lnk"
-  Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$(ABBREVIATION) ${VERSION}-${RELEASE}.lnk"
+  Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$STARTMENU_APPNAME Documentation.lnk"
+  Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$STARTMENU_APPNAME ${VERSION}-${RELEASE}.lnk"
   Delete "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk"
   
-  Delete "$DESKTOP\$(ABBREVIATION) ${VERSION}-${RELEASE}.lnk"
-  Delete "$QUICKLAUNCH\$(ABBREVIATION) ${VERSION}-${RELEASE}.lnk"
+  Delete "$DESKTOP\$STARTMENU_APPNAME ${VERSION}-${RELEASE}.lnk"
+  Delete "$QUICKLAUNCH\$STARTMENU_APPNAME ${VERSION}-${RELEASE}.lnk"
 
-  RMDir "$SMPROGRAMS\$STARTMENU_FOLDER"
+  RMDir /r "$SMPROGRAMS\$STARTMENU_FOLDER"
 
   ;Delete empty start menu parent diretories
   StrCpy $MUI_TEMP "$SMPROGRAMS\$MUI_TEMP"
@@ -894,7 +938,7 @@ Function ReplaceChar
   Push $6 ; tmp - from found char witch need to change + 1 to end ($3)
   Push $7 ; tmp - position where found char witch need to change + 1
   StrLen $3 $0
-  StrCpy $4 1
+  StrCpy $4 0
   loop:
     StrCpy $5 $0 1 $4
     StrCmp $5 "" exit
@@ -1601,4 +1645,40 @@ done:
   Pop $R2
   Pop $R1
   Exch $R0
+FunctionEnd
+
+;------------------------------------------------------------------
+; Usage:
+;   Push "original_text";   
+;   Call RemoveSpecialChar
+;   Pop $R0
+;  ($R0 is text without special character")
+;------------------------------------------------------------------
+Function RemoveSpecialChar
+	Pop $R1
+	StrCpy $0 "|\/:*?<>"
+	StrLen $3 $0
+	StrCpy $1 0
+	; remove special character
+	Loop_Replace:
+	StrCpy $R2 $0 1 $1
+	Push $R1
+	Push $R2
+	Push " "
+	Call ReplaceChar
+	Pop $R1
+	IntOp $1 $1 + 1
+	IntCmp $1 $3 Loop_Replace Loop_Replace 0	
+	; remove empty spaces
+	StrLen $3 $R1
+	StrCpy $1 0
+	Loop_Remove:
+	Push $R1
+	Push "  "
+	Push " "
+	Call StrReplace
+	Pop $R1
+	IntOp $1 $1 + 1
+	IntCmp $1 $3 Loop_Remove Loop_Remove 0	
+	Push $R1
 FunctionEnd
