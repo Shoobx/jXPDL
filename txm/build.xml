@@ -463,14 +463,14 @@
 					<arg line="/DKEY_PATH=&quot;${sign.privatekey}&quot;" />
 					<arg line="/DPASSWORD=&quot;${sign.pwd}&quot;" />
 					<arg line="/DFULL_NAME=&quot;${application.name} ${version}-${release}&quot;" />
-					<arg line="/DLICENSE=${output.dir}/licenses/License.txt" />
+					<arg line="/DLICENSE=&quot;${output.dir}/licenses/License.txt&quot;" />
 					<arg line="/DOUTPUT_DIR=&quot;${dist.community.dir}&quot;" />
 					<arg line="/DSERVER_TIMEOUT=&quot;${server.timeout}&quot;" />
 					<arg line="/DBUILDID=&quot;${build.timestamp}&quot;" />
 					<arg line="/DTIMESTAMP_URL=&quot;@{sign.timestamp.url}&quot;" />
 					<arg line="/DSIGN_SETUP_TIMESTAMP=&quot;${sign.setup.timestamp}&quot;" />
 					<arg line="/DTARGET_VM=&quot;${targetVM}&quot;"/>
-					<arg line="${nsi.script}" />
+					<arg line="&quot;${nsi.script}&quot;" />
 				</exec>
 
 			</then>
@@ -501,14 +501,14 @@
 						<arg line="/DKEY_PATH=&quot;${sign.privatekey}&quot;" />
 						<arg line="/DPASSWORD=&quot;${sign.pwd}&quot;" />
 						<arg line="/DFULL_NAME=&quot;${application.name} ${version}-${release}&quot;" />
-						<arg line="/DLICENSE=${output.dir}/licenses/License.txt" />
+						<arg line="/DLICENSE=&quot;${output.dir}/licenses/License.txt&quot;" />
 						<arg line="/DOUTPUT_DIR=&quot;${dist.community.dir}&quot;" />
 						<arg line="/DSERVER_TIMEOUT=&quot;${server.timeout}&quot;" />
 						<arg line="/DBUILDID=&quot;${build.timestamp}&quot;" />
 						<arg line="/DTIMESTAMP_URL=&quot;@{sign.timestamp.url}&quot;" />
 						<arg line="/DSIGN_SETUP_TIMESTAMP=&quot;${sign.setup.timestamp}&quot;" />
 						<arg line="/DTARGET_VM=&quot;${targetVM}&quot;"/>
-						<arg line="${nsi.script}" />
+						<arg line="&quot;${nsi.script}&quot;" />
 					</exec>
 				</then>
 			</elseif>
@@ -590,14 +590,14 @@
 														<arg line="/DKEY_PATH=&quot;${sign.privatekey}&quot;" />
 														<arg line="/DPASSWORD=&quot;${sign.pwd}&quot;" />
 														<arg line="/DFULL_NAME=&quot;${application.name} ${version}-${release}&quot;" />
-														<arg line="/DLICENSE=${output.dir}/licenses/License.txt" />
+														<arg line="/DLICENSE=&quot;${output.dir}/licenses/License.txt&quot;" />
 														<arg line="/DOUTPUT_DIR=&quot;${dist.community.dir}&quot;" />
 														<arg line="/DSERVER_TIMEOUT=&quot;${server.timeout}&quot;" />
 														<arg line="/DBUILDID=&quot;${build.timestamp}&quot;" />
 														<arg line="/DTIMESTAMP_URL=&quot;@{sign.timestamp.url}&quot;" />
 														<arg line="/DSIGN_SETUP_TIMESTAMP=&quot;${sign.setup.timestamp}&quot;" />
 														<arg line="/DTARGET_VM=&quot;${targetVM}&quot;"/>
-														<arg line="${nsi.script}" />
+														<arg line="&quot;${nsi.script}&quot;" />
 													</exec>
 
 												</then>
