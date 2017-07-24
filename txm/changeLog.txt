@@ -1,4 +1,6 @@
-###### TXM 2.3-1 RELEASED #####
+###### TXM 2.4-1 RELEASED #####
+
+###### TXM 2.3-1 RELEASED (2017-07-22) #####
 
 ###### TXM 2.2-3 RELEASED (2016-12-26) #####
 2016-12-21 Sasa Bojanic <sasaboy@together.at>
