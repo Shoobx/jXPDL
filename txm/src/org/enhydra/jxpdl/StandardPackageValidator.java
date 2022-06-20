@@ -1552,7 +1552,7 @@ public class StandardPackageValidator implements XMLValidator {
          repH.toXML(document, pkg);
 
          // Use a Transformer for output
-         TransformerFactory tFactory = new org.apache.xalan.processor.TransformerFactoryImpl();
+         TransformerFactory tFactory = TransformerFactory.newInstance();
          Transformer transformer = tFactory.newTransformer();
          transformer.setOutputProperty("indent", "yes");
          transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
